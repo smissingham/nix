@@ -15,7 +15,6 @@
     alacritty
 
     # TODO find better solution to share across daily driver hosts
-    filen-desktop
     vscode
     spotify
     telegram-desktop
