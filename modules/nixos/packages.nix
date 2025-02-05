@@ -1,12 +1,15 @@
-# ----- PACKAGES TO INSTALL ON ALL (DARWIN + NIXOS) SYSTEMS -----#
-{ pkgs, mainUser, ... }:
+# ----- PACKAGES TO INSTALL ONLY ON NIXOS SYSTEMS -----#
+{
+  pkgs,
+  mainUser,
+  ...
+}:
 {
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    raycast
+    floorp
   ];
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-
   ];
 }

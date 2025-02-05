@@ -13,13 +13,18 @@ let
     rev = "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7";
     hash = "sha256-H8bouVCS46h0DgQ+oYY8JitahQDj0V9p2cOoD4cQX+Q=";
   };
+
+  hostRebuildCli = (if pkgs.stdenv.isDarwin then "darwin-rebuild" else "sudo nixos-rebuild");
+
   shellAliases = {
+    cl = "clear";
+    ll = "eza -l";
+    la = "eza -la";
     clip = "xclip -selection clipboard";
-    nxfmt = "find $NIX_CONFIG_HOME -name '*.nix' -exec nixfmt {} \\;";
-    nxrb = "nxfmt; git add .; sudo nixos-rebuild $1 --flake $NIX_CONFIG_HOME#$(hostname) --show-trace";
-    nxrbs = "nxrb switch";
-    nxrbb = "nxrb build; rm -rf $NIX_CONFIG_HOME/result;";
-    nxcommit = ''nxfmt; git add $NIX_CONFIG_HOME; git commit $NIX_CONFIG_HOME -m "$(nixos-rebuild list-generations | grep current)";'';
+    nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
+    nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
+    nxrbs = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --show-trace; popd";
+    nxcommit = ''nxfmt; git add $NIX_CONFIG_HOME; git commit $NIX_CONFIG_HOME -m "$(nix-host-rebuild list-generations | grep current)";'';
     nxgc = "nix-collect-garbage --delete-old";
     nxshell = "nix-shell -p $1";
 
@@ -102,6 +107,10 @@ in
           enable = true;
           settings = {
             general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
+            font = {
+              size = 13; # 14 creates glitches on p10k prompt
+              normal.family = lib.mkForce "MesloLGS Nerd Font"; # p10k recommends
+            };
             env = {
               TERM = "xterm-256color";
             };
