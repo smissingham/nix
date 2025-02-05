@@ -6,7 +6,7 @@
 }:
 
 let
-  moduleSet = "mySystemModules";
+  moduleSet = "sharedModules";
   moduleCategory = "coding";
   moduleName = "vscodium";
 

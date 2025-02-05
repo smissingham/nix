@@ -4,6 +4,7 @@
   imports = [
     ./home.nix
     ./packages.nix
+    ./coding/vscodium.nix
   ];
 
   nixpkgs = {
@@ -25,4 +26,9 @@
     "nix-command"
     "flakes"
   ];
+
+  sharedModules.coding.vscodium = {
+    enable = true;
+    #TODO implement "withRemote"
+  };
 }

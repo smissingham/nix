@@ -10,7 +10,6 @@
   # TODO implement dynamic discovery of all imports in modules directory
   imports = [
     ./packages.nix
-    ./coding/vscodium.nix
     ./access/sunshine.nix
     ./access/tailscale.nix
     ./entertainment/gaming.nix
