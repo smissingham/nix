@@ -1,4 +1,5 @@
 *.log
 *.env
+*.DS_Store
 
 secrets.*

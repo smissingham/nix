@@ -22,6 +22,7 @@ in
       lutris
       protonup-ng
       xboxdrv
+      gamescope
     ];
     programs = {
       steam = {

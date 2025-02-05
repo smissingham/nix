@@ -1,14 +1,22 @@
 { pkgs, lib, ... }:
 let
   theme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  sourceUrl = "https://wallpaperswide.com/download/spaceman_art-wallpaper-5120x2160.jpg";
-  sourceSha = "f4d9ae0338b7b57dffd335cdcb21552113927ad063c8104c7bbc9dfeacea42f0";
+  sourceUrl = "https://wallpaperswide.com/download/mountain_lakeside_view-wallpaper-5120x2160.jpg";
+  sourceSha = "sha256-avDEuBwd1+7AxlqUjeWTtTVT9DynmoN4iYxOVMgCUSE=";
   sourceImage = pkgs.fetchurl {
     url = sourceUrl;
     sha256 = sourceSha;
   };
 in
 {
+  home-manager.sharedModules = [
+    {
+      stylix.targets = {
+        alacritty.enable = false;
+        kde.enable = false;
+      };
+    }
+  ];
 
   stylix = {
     enable = true;
@@ -18,12 +26,12 @@ in
 
     fonts = {
       monospace = {
-        name = "JetBrainsMono Nerd Font Mono";
+        name = "JetBrainsMono Nerd Font";
         package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       };
       sansSerif = {
         name = "Ubuntu Nerd Font";
-        package = pkgs.nerdfonts;
+        package = pkgs.nerdfonts.override { fonts = [ "Ubuntu" ]; };
       };
       # serif = {
       #   name = "DejaVu Serif";

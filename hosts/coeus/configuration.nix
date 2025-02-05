@@ -21,15 +21,15 @@
 
     virt = {
       kvm = {
-        enable = true;
-        withCliTools = true;
-        withGuiTools = true;
+        enable = false;
+        withCliTools = false;
+        withGuiTools = false;
       };
       podman = {
-        enable = true;
-        dockerCompat = true;
-        withCliTools = true;
-        withGuiTools = true;
+        enable = false;
+        dockerCompat = false;
+        withCliTools = false;
+        withGuiTools = false;
       };
     };
   };
@@ -58,28 +58,17 @@
     #floorp
     firefox
 
-    # Entertainment
-    spotify
-
     # Work
     teams-for-linux
 
-    # Communication
-    telegram-desktop
-    discord
-
     # Office
     libreoffice
-    obsidian
     thunderbird
     filen-desktop
 
     # Dev Tools
     kdePackages.kate
     jetbrains-toolbox
-    vscode
-    gitkraken
-    bruno
   ];
 
   # Configure networking
