@@ -15,8 +15,8 @@
     access = {
       sunshine.enable = true;
       sunshine.withMoonlight = true;
-      #tailscale.enable = true;
-      #tailscale.authKey = secrets.tailscale.authkey;
+      tailscale.enable = true;
+      tailscale.authKey = "";
     };
 
     virt = {
