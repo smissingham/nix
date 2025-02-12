@@ -26,9 +26,4 @@
     "nix-command"
     "flakes"
   ];
-
-  sharedModules.coding.vscodium = {
-    enable = true;
-    #TODO implement "withRemote"
-  };
 }

@@ -53,6 +53,12 @@ in
         home = {
           username = mainUser.username;
           homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
+          file = {
+            ".continue" = {
+              source = ../../dots/.continue;
+              recursive = true;
+            };
+          };
         };
 
         xdg = {
@@ -135,6 +141,70 @@ in
             set -g default-terminal "tmux-256color"
             set -ag terminal-overrides ",xterm-256color:RGB"
           '';
+        };
+
+        programs.vscode = {
+          enable = true;
+          mutableExtensionsDir = false;
+          package = pkgs.vscodium;
+          extensions = with pkgs.vscode-extensions; [
+            # UI
+            #enkia.tokyo-night
+            catppuccin.catppuccin-vsc
+            vscode-icons-team.vscode-icons
+            #iuyoy.highlight-string-code
+
+            # Basic Language Support
+            redhat.vscode-yaml
+
+            # First Class Language Support
+            ms-python.python
+            ms-python.vscode-pylance
+
+            # Nix
+            bbenoist.nix
+            jnoortheen.nix-ide
+
+            # Remote Access
+            ms-vscode-remote.remote-ssh
+
+            # Data Science Related
+            ms-toolsai.datawrangler
+            ms-toolsai.jupyter
+            #ms-toolsai.vscode-jupyter-powertoys
+            ms-toolsai.jupyter-renderers
+
+            # Code Formatting
+            esbenp.prettier-vscode
+
+            # Version Control
+            eamodio.gitlens
+
+            # AI Assist
+            continue.continue
+          ];
+
+          userSettings = {
+
+            "workbench.colorTheme" = "Catppuccin Macchiato";
+            "workbench.iconTheme" = "vscode-icons";
+            "editor.formatOnSave" = true;
+            "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";
+
+            # ---- Extension Settings ---- #
+            "nix" = {
+              "serverPath" = "nixd";
+              "formatterPath" = "nixfmt";
+            };
+
+            "continue" = {
+              "telemetryEnabled" = false;
+            };
+            "vsicons.dontShowNewVersionMessage" = true;
+            "gitlens.telemetry.enabled" = false;
+
+            "explorer.confirmDragAndDrop" = false;
+          };
         };
 
         home.stateVersion = "24.11"; # READ DOCS BEFORE CHANGING

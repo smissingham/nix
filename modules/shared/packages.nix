@@ -15,14 +15,16 @@
     alacritty
 
     # TODO find better solution to share across daily driver hosts
-    vscode
+    #vscode
     spotify
     telegram-desktop
     obsidian
     discord
+    #lmstudio
     bruno
     gitkraken
     bruno
+    gimp
   ];
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -36,6 +38,7 @@
     xclip
     zoxide
 
-    nixfmt-rfc-style
+    nixfmt-rfc-style # formatter
+    nixd # lsp
   ];
 }
