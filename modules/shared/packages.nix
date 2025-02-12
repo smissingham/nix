@@ -2,6 +2,8 @@
 {
   pkgs,
   mainUser,
+  inputs,
+  system,
   ...
 }:
 {
@@ -20,7 +22,7 @@
     telegram-desktop
     obsidian
     discord
-    #lmstudio
+    lmstudio
     bruno
     gitkraken
     bruno

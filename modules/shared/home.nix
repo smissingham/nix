@@ -186,7 +186,7 @@ in
 
           userSettings = {
 
-            "workbench.colorTheme" = "Catppuccin Macchiato";
+            "workbench.colorTheme" = lib.mkForce "Catppuccin Macchiato";
             "workbench.iconTheme" = "vscode-icons";
             "editor.formatOnSave" = true;
             "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";

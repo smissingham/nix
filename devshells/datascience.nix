@@ -5,10 +5,13 @@
 }:
 
 pkgs.mkShell {
+  shellHook = ''
+    zsh
+  '';
+
   nativeBuildInputs = with pkgs; [
 
-    # --- Python ---
-    # binary installs to /run/current-system/sw/bin/python
+    # --- Python --- #
     (python311.withPackages (
       ps: with ps; [
         numpy # these two are
@@ -21,6 +24,7 @@ pkgs.mkShell {
 
         openpyxl # pandas xlsx reader
         xlsx2csv # polars xlsx reader
+        fastexcel # polars excel compat
         pyarrow # polars pivot
 
         pip

@@ -44,6 +44,7 @@
     inputs@{
       self,
       nixpkgs,
+      nixpkgs-unstable,
       nix-darwin,
       home-manager,
       plasma-manager,
@@ -52,7 +53,9 @@
     let
       inherit (self) outputs;
 
-      overlays = [ inputs.agenix.overlays.default ];
+      overlays = [
+        inputs.agenix.overlays.default
+      ];
 
       sharedModules = [ ./modules/shared ];
 
@@ -75,51 +78,40 @@
         email = "sean@missingham.com";
       };
 
+      specialArgs = {
+        inherit
+          inputs
+          outputs
+          overlays
+          mainUser
+          ;
+      };
     in
     {
 
       darwinConfigurations = {
         plutus = nix-darwin.lib.darwinSystem {
+          inherit specialArgs;
           system = "aarch64-darwin";
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              overlays
-              mainUser
-              ;
-          };
           modules = darwinModules ++ [ ./hosts/plutus/configuration.nix ];
         };
       };
 
-      nixosConfigurations =
-        let
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              overlays
-              mainUser
-              plasma-manager
-              ;
-          };
-        in
-        {
-          # My home desktop / server
-          coeus = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            inherit specialArgs;
-            modules = nixosModules ++ [ ./hosts/coeus/configuration.nix ];
-          };
-
-          # kvm sandbox
-          thalos = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            inherit specialArgs;
-            modules = sharedModules ++ nixosModules ++ [ ./hosts/thalos/configuration.nix ];
-          };
-
+      nixosConfigurations = {
+        # My home desktop / server
+        coeus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = nixosModules ++ [ ./hosts/coeus/configuration.nix ];
         };
+
+        # kvm sandbox
+        thalos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = sharedModules ++ nixosModules ++ [ ./hosts/thalos/configuration.nix ];
+        };
+
+      };
     };
 }

@@ -1,20 +1,17 @@
 {
     "models": [
       {
-        "title": "LM Studio - Phi 4",
+        "title": "Qwen Coder 14b",
         "provider": "lmstudio",
-        "model": "phi-4",
+        "model": "qwen2.5-coder-14b-instruct",
         "apiBase": "http://localhost:1234/v1"
       }
     ],
-    "embeddingsProvider": {
+    "tabAutocompleteModel": 
+    {
+      "title": "Qwen Coder 14b",
       "provider": "lmstudio",
-      "model": "text-embedding-nomic-embed-text-v1.5"
-    },
-    "tabAutocompleteModel": {
-      "title": "LM Studio",
-      "provider": "lmstudio",
-      "model": "qwen2.5-coder-32b-instruct",
+      "model": "qwen2.5-coder-14b-instruct",
       "apiBase": "http://localhost:1234/v1"
     },
     "customCommands": [

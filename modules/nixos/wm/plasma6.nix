@@ -3,7 +3,7 @@
   pkgs,
   lib,
   mainUser,
-  plasma-manager,
+  inputs,
   ...
 }:
 let
@@ -14,10 +14,6 @@ let
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
 
 in
-#plasma-manager = builtins.fetchTarball {
-#  url = "https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz";
-#  sha256 = "0cb7hnfaj2pqm4a2j50v96bknamrmhrhpp4yhilylxcp9kv1srbx";
-#};
 {
 
   options.${moduleSet}.${moduleCategory}.${moduleName} = with lib; {
@@ -32,7 +28,7 @@ in
 
     home-manager = {
       users.${mainUser.username} = {
-        imports = [ (import "${plasma-manager}/modules") ];
+        imports = [ (import "${inputs.plasma-manager}/modules") ];
 
         home.packages = with pkgs; [ kdePackages.plasma-browser-integration ];
 
