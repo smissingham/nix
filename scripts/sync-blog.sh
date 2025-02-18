@@ -2,8 +2,9 @@
 set -e
 
 LOGFILE=$NIX_CONFIG_HOME/logs/sync-blog.log
-OBSIDIAN_PUBLIC_FOLDER="/home/smissingham/Documents/Obsidian/notes/@Public/";
-WEBSITE_CONTENT_FOLDER="/home/smissingham/Documents/Projects/missingham.net/content/";
+OBSIDIAN_PUBLIC_FOLDER="$HOME/Documents/secondbrain/@Public/";
+WEBSITE_CONTENT_FOLDER="$HOME/Documents/Projects/missingham.net/content/";
+
 DATE=$(date +'%B %d, %Y %H:%M %p')
 
 mkdir -p $NIX_CONFIG_HOME/logs

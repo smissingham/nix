@@ -190,6 +190,9 @@ in
             "workbench.iconTheme" = "vscode-icons";
             "editor.formatOnSave" = true;
             "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";
+            "explorer.compactFolders" = false;
+            "explorer.confirmDragAndDrop" = false;
+            "explorer.confirmDelete" = false;
 
             # ---- Extension Settings ---- #
             "nix" = {
@@ -202,8 +205,6 @@ in
             };
             "vsicons.dontShowNewVersionMessage" = true;
             "gitlens.telemetry.enabled" = false;
-
-            "explorer.confirmDragAndDrop" = false;
           };
         };
 

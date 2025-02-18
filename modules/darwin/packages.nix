@@ -4,6 +4,7 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     raycast
+    rectangle
   ];
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
