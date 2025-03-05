@@ -12,6 +12,7 @@
     nerdfonts
     font-awesome
   ];
+
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     alacritty
@@ -28,12 +29,15 @@
     bruno
     gimp
   ];
+
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
     pciutils
     #usbutils
     findutils
 
+    git
+    gnupg
     eza
     fzf
     tldr
