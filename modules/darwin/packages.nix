@@ -4,7 +4,6 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     raycast
-    rectangle
     stats
   ];
   #----- Applications in System Space -----#
@@ -12,3 +11,8 @@
 
   ];
 }
+
+# ----- NOTING MANUALLY INSTALLED PACKAGES, NOT SUPPORTED BY NIX -----#
+# AltTab
+# Moom
+# Cursor

@@ -74,6 +74,9 @@ in
         programs.git = {
           userName = mainUser.name;
           userEmail = mainUser.email;
+          signing = {
+            format = "openpgp";
+          };
         };
 
         programs.bash = {
