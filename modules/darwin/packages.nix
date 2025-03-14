@@ -10,6 +10,33 @@
   environment.systemPackages = with pkgs; [
 
   ];
+
+  # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
+  homebrew = {
+    enable = true;
+    taps = [
+      "homebrew/core"
+      "homebrew/cask"
+      "homebrew/bundle"
+    ];
+
+    casks = [
+
+    ];
+
+    brews = [
+      "duckdb"
+    ];
+
+    onActivation = {
+      cleanup = "zap";
+    };
+
+    # ----- MAC APP STORE APPS -----#
+    masApps = {
+
+    };
+  };
 }
 
 # ----- NOTING MANUALLY INSTALLED PACKAGES, NOT SUPPORTED BY NIX -----#
