@@ -21,7 +21,7 @@
     ];
 
     casks = [
-
+      "google-chrome"
     ];
 
     brews = [

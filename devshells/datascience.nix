@@ -1,13 +1,17 @@
 # Dev shell with python and common dependencies I use for data science and exploration
+# shell hook installs jupyter kernel and starts jupyter server
 
 {
   pkgs ? import <nixpkgs> { },
 }:
 
 pkgs.mkShell {
+  # install jupyter kernel and start server
   shellHook = ''
-    zsh
+    jupyter kernel install --user --name=datascience
   '';
+  # to auto-start jupyter server, move this line to shellHook
+  # jupyter server --no-browser --ip=0.0.0.0 --port=8888 --NotebookApp.token=\'\' --NotebookApp.password=\'\'
 
   nativeBuildInputs = with pkgs; [
 
@@ -22,9 +26,13 @@ pkgs.mkShell {
         statsmodels
         scikitlearn
 
+        langchain
+        langchain-core
+        langchain-community
+
         openpyxl # pandas xlsx reader
         xlsx2csv # polars xlsx reader
-        fastexcel # polars excel compat
+        #fastexcel # polars excel compat
         pyarrow # polars pivot
 
         pip
