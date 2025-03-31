@@ -26,6 +26,9 @@
 
     brews = [
       "duckdb"
+      "libomp"
+      "podman"
+      "podman-compose"
     ];
 
     onActivation = {
