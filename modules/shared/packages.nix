@@ -17,13 +17,11 @@
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     alacritty
     brave # for testing on chromium-based browsers
-
-    # TODO find better solution to share across daily driver hosts
-    #vscode
+    vscode
     spotify
     telegram-desktop
     obsidian
-    discord
+    vesktop
     lmstudio
     bruno
     gitkraken

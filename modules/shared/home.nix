@@ -146,7 +146,7 @@ in
         programs.vscode = {
           enable = true;
           mutableExtensionsDir = false;
-          package = pkgs.vscodium;
+          #package = pkgs.vscodium;
           extensions = with pkgs.vscode-extensions; [
             # UI
             #enkia.tokyo-night

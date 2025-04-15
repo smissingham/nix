@@ -4,7 +4,6 @@
   imports = [
     ./home.nix
     ./packages.nix
-    ./coding/vscodium.nix
   ];
 
   nixpkgs = {
