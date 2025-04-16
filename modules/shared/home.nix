@@ -58,6 +58,10 @@ in
               source = ../../dots/.continue;
               recursive = true;
             };
+            ".config/nixpkgs" = {
+              source = ../../dots/nixpkgs;
+              recursive = true;
+            };
           };
         };
 
