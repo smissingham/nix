@@ -3,7 +3,7 @@
 {
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-
+    appcleaner
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -27,6 +27,10 @@
       "cursor"
       "moom"
       "onyx"
+
+      "microsoft-teams"
+      "microsoft-excel"
+      "microsoft-powerpoint"
     ];
 
     brews = [
