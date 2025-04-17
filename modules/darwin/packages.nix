@@ -31,6 +31,7 @@
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
+      "microsoft-word"
     ];
 
     brews = [
