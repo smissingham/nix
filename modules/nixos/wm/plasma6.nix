@@ -30,7 +30,11 @@ in
       users.${mainUser.username} = {
         imports = [ (import "${inputs.plasma-manager}/modules") ];
 
-        home.packages = with pkgs; [ kdePackages.plasma-browser-integration ];
+        home.packages = with pkgs; [
+          kdePackages.plasma-browser-integration
+          kdePackages.partitionmanager
+
+        ];
 
         programs.plasma = {
           enable = true;
@@ -61,6 +65,7 @@ in
               "Meta+Tab"
             ];
             "kwin"."Overview" = "Meta+W";
+            "org.kde.krunner.desktop"."_launch" = "Ctrl+Space";
             "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Print";
           };
 
@@ -88,7 +93,7 @@ in
                       "applications:org.kde.dolphin.desktop"
                       "applications:org.kde.konsole.desktop"
                       "applications:floorp.desktop"
-                      "applications:jetbrains-toolbox.desktop"
+                      #"applications:jetbrains-toolbox.desktop"
                     ];
                   };
                 }

@@ -9,6 +9,7 @@
 
   # TODO implement dynamic discovery of all imports in modules directory
   imports = [
+    ./home.nix
     ./packages.nix
     ./access/sunshine.nix
     ./access/tailscale.nix

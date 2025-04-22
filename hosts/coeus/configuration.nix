@@ -15,7 +15,7 @@
     access = {
       sunshine.enable = true;
       sunshine.withMoonlight = true;
-      tailscale.enable = true;
+      tailscale.enable = false;
       tailscale.authKey = "";
     };
 
@@ -35,8 +35,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # System Utilities
-    v4l-utils
   ];
 
   services.keyd = {
@@ -53,24 +51,6 @@
       };
     };
   };
-
-  home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    #floorp
-    firefox
-    filen-desktop
-
-    # Work
-    teams-for-linux
-
-    # Office
-    libreoffice
-    thunderbird
-    filen-desktop
-
-    # Dev Tools
-    kdePackages.kate
-    jetbrains-toolbox
-  ];
 
   # Configure networking
   networking.hostName = "coeus";

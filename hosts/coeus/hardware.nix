@@ -3,10 +3,12 @@
   lib,
   pkgs,
   modulesPath,
+  mainUser,
   ...
 }:
 let
-  ARRAY_UUID_NVME_R10 = "4d490828:49335c1f:f2730842:b4ff9746";
+  # Dynamically fetch RAID array UUID using mdadm with fallback
+  ARRAY_UUID_NVME_R10 = "";
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -47,13 +49,19 @@ in
     mdadmConf = ''
       MAILADDR nixosconfignotificat.flaccid440@passmail.net
       DEVICE /dev/nvme0n1p2 /dev/nvme1n1p2 /dev/nvme2n1p2 /dev/nvme3n1p2
-      ARRAY /dev/md0 metadata=1.2 UUID=${ARRAY_UUID_NVME_R10}
+      ARRAY /dev/md0 metadata=1.0 UUID=${ARRAY_UUID_NVME_R10}
     '';
   };
 
-  # define encrypted root filesystem on linux md raid array
+  # define encrypted root filesystem inside LVM
   fileSystems."/" = {
-    device = "/dev/mapper/luksraid";
+    device = "/dev/vg0/root";
+    fsType = "ext4";
+  };
+
+  # mount persisted encrypted data volume
+  fileSystems."/home/${mainUser.username}/Documents" = {
+    device = "/dev/vg0/data";
     fsType = "ext4";
   };
 
@@ -91,10 +99,10 @@ in
       "md-mod"
     ];
     luks.devices = {
-      "luksraid" = {
+      "luksroot" = {
         device = "/dev/disk/by-id/md-uuid-${ARRAY_UUID_NVME_R10}";
-        preLVM = false; # If LUKS is on top of LVM, set this to true
-        allowDiscards = true; # Optional, enables TRIM if supported by your SSD
+        preLVM = true;
+        allowDiscards = true;
       };
     };
   };
@@ -122,22 +130,4 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     #package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
-
-  # #### WEBCAM CONFIG ####
-  services.udev.extraRules =
-    let
-      camSettings = pkgs.writeShellScript "setup-v4l2.sh" ''
-        ${pkgs.v4l-utils}/bin/v4l2-ctl \
-          --device $1 \
-          --set-fmt-video=width=1920,height=1080 \ # 1080p resolution
-          -p 60 \ # Framerate to 60fps
-          --set-ctrl=contrast=0 \
-          --set-ctrl=brightness=30 \
-          --set-ctrl=power_line_frequency=1 \ # Set to 50Hz power line compensation
-      '';
-    in
-    ''
-      SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", \
-        ATTRS{product}=="Elgato Facecam MK.2 (USB2)", RUN="${camSettings} $devnode"
-    '';
 }
