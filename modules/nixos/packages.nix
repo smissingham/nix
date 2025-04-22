@@ -7,7 +7,6 @@
 {
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    floorp
   ];
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [

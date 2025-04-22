@@ -7,8 +7,6 @@
 {
   home-manager.users.${mainUser.username}.home = {
     packages = with pkgs; [
-      #floorp
-      firefox
       filen-desktop
 
       # Work

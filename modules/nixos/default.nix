@@ -21,7 +21,6 @@
   ];
 
   programs.git.enable = true;
-  programs.firefox.enable = lib.mkForce false;
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [ ];

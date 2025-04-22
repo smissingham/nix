@@ -38,10 +38,21 @@ let
   };
 in
 {
+  imports = [
+    ./firefox.nix
+  ];
+
+  myHomeModules = {
+    browsers = {
+      firefox.enable = true;
+    };
+  };
+
   users.users.${mainUser.username} = {
     name = mainUser.username;
     home = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
   };
+
   home-manager = {
     # Allow unfree packages
     useGlobalPkgs = true;
@@ -55,11 +66,11 @@ in
           homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
           file = {
             ".continue" = {
-              source = ../../dots/.continue;
+              source = ../../../dots/.continue;
               recursive = true;
             };
             ".config/nixpkgs" = {
-              source = ../../dots/nixpkgs;
+              source = ../../../dots/nixpkgs;
               recursive = true;
             };
           };

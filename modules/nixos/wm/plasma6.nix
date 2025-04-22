@@ -92,7 +92,7 @@ in
                     launchers = [
                       "applications:org.kde.dolphin.desktop"
                       "applications:org.kde.konsole.desktop"
-                      "applications:floorp.desktop"
+                      "applications:firefox.desktop"
                       #"applications:jetbrains-toolbox.desktop"
                     ];
                   };
