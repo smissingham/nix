@@ -30,17 +30,17 @@
     networkmanager.enable = true;
   };
 
-  # TODO extract to module
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = true;
-      AllowUsers = [ mainUser.username ];
-      UseDns = true;
-    };
-  };
+  # # TODO extract to module
+  # networking.firewall.allowedTCPPorts = [ 22 ];
+  # services.openssh = {
+  #   enable = true;
+  #   ports = [ 22 ];
+  #   settings = {
+  #     PasswordAuthentication = true;
+  #     AllowUsers = [ mainUser.username ];
+  #     UseDns = true;
+  #   };
+  # };
 
   # TODO extract to module
   services.fail2ban = {

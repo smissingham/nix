@@ -1,4 +1,9 @@
-{ pkgs, mainUser, ... }:
+{
+  pkgs,
+  lib,
+  mainUser,
+  ...
+}:
 {
   imports = [
     ../../styles/catppuccin-mocha.nix
@@ -8,14 +13,17 @@
 
   mySystemModules = {
     # Window Manager
-    wm.plasma6.enable = true;
-    #wm.gnome-xserver.enable = true;
+    wm = {
+      plasma6.enable = true;
+      #gnome-xserver.enable = true;
+    };
+
     entertainment.gaming.enable = true;
 
     access = {
       sunshine.enable = true;
       sunshine.withMoonlight = true;
-      tailscale.enable = false;
+      tailscale.enable = true;
       tailscale.authKey = "";
     };
 
@@ -26,16 +34,19 @@
         withGuiTools = false;
       };
       podman = {
-        enable = false;
-        dockerCompat = false;
+        enable = true;
+        dockerCompat = true;
         withCliTools = false;
-        withGuiTools = false;
+        withGuiTools = true;
       };
     };
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
+  networking.hostName = "coeus";
+  networking.useDHCP = lib.mkDefault true;
+  #networking.interfaces.enp8s0.useDHCP = true;
+
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
   services.keyd = {
     enable = true;
@@ -52,8 +63,6 @@
     };
   };
 
-  # Configure networking
-  networking.hostName = "coeus";
   time.timeZone = "America/Chicago";
 
   # Enable sound with pipewire.

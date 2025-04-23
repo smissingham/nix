@@ -41,6 +41,7 @@
     tldr
     xclip
     zoxide
+    dig
 
     nixfmt-rfc-style # formatter
     nixd # lsp

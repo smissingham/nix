@@ -8,7 +8,7 @@
 }:
 let
   # Dynamically fetch RAID array UUID using mdadm with fallback
-  ARRAY_UUID_NVME_R10 = "";
+  ARRAY_UUID_NVME_R10 = "15c09973:5a7c5d14:fbf6a709:77a116cb";
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -113,8 +113,6 @@ in
   boot.extraModulePackages = [ ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  networking.useDHCP = lib.mkDefault true;
 
   # #### NVIDIA CONFIG ####
   hardware.graphics.enable = true; # Enable OpenGL

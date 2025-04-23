@@ -30,6 +30,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
     users.users.${mainUser.username}.extraGroups = [ "podman" ];
 
     networking.firewall.interfaces."podman+".allowedUDPPorts = [
