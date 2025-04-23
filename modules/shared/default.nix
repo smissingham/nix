@@ -11,7 +11,7 @@
       allowUnfree = true;
       allowUnfreePredicate = _: true;
       packageOverrides = pkgs: {
-        filen-desktop = pkgs.callPackage ../../packages/filen-desktop/package.appimage.nix { };
+        filen-desktop = pkgs.callPackage ../../packages/filen-desktop/package.nix { };
       };
     };
   };
