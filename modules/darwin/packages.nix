@@ -27,6 +27,7 @@
       "cursor"
       "moom"
       "onyx"
+      "balenaetcher"
 
       "microsoft-teams"
       "microsoft-excel"

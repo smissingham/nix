@@ -27,6 +27,11 @@ in
   config = lib.mkIf cfg.enable {
     services.tailscale.enable = true;
 
+    # reading https://github.com/tailscale/tailscale/issues/4254
+    services.resolved.enable = true;
+    #networking.useNetworkd = true;
+    networking.interfaces.tailscale0.useDHCP = lib.mkForce false;
+
     # always allow traffic from your Tailscale network
     networking.firewall.trustedInterfaces = [ "tailscale0" ];
 

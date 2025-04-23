@@ -2,18 +2,21 @@
   description = "Sean's Multi-System Flake";
 
   inputs = {
-
-    # nix
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-24.11";
+    };
+    nixpkgs-unstable = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # home manager
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # agenix (secrets manager)
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -33,7 +35,6 @@
       };
     };
 
-    # stylix
     stylix = {
       url = "github:danth/stylix/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +45,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Optional: Declarative tap management
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -72,25 +72,20 @@
     let
       inherit (self) outputs;
 
-      overlays = [
-        inputs.agenix.overlays.default
-      ];
+      overlays = [ inputs.agenix.overlays.default ];
 
       sharedModules = [ ./modules/shared ];
-
       darwinModules = sharedModules ++ [
         ./modules/darwin
         home-manager.darwinModules.home-manager
       ];
-
       nixosModules = sharedModules ++ [
         ./modules/nixos
         inputs.agenix.nixosModules.default
-        inputs.home-manager.nixosModules.default
+        home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
       ];
 
-      # ----- MAIN USER SETTINGS ----- #
       mainUser = {
         username = "smissingham";
         name = "Sean Missingham";
@@ -104,37 +99,49 @@
           overlays
           mainUser
           ;
+        rootPath = ./.;
       };
+
+      mkSystem =
+        {
+          system,
+          builder,
+          modules,
+        }:
+        let
+          pkgsUnstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          extendedArgs = specialArgs // {
+            inherit pkgsUnstable;
+          };
+        in
+        builder {
+          inherit system;
+          specialArgs = extendedArgs;
+          modules = modules;
+        };
+
     in
     {
-
       darwinConfigurations = {
-        plutus = nix-darwin.lib.darwinSystem {
-          inherit specialArgs;
+        plutus = mkSystem {
           system = "aarch64-darwin";
+          builder = nix-darwin.lib.darwinSystem;
           modules = darwinModules ++ [
             ./hosts/plutus/configuration.nix
             inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
-                # Install Homebrew under the default prefix
                 enable = true;
-
-                # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
                 enableRosetta = true;
-
-                # User owning the Homebrew prefix
                 user = mainUser.username;
-
-                # Optional: Declarative tap management
                 taps = {
                   "homebrew/homebrew-core" = inputs.homebrew-core;
                   "homebrew/homebrew-cask" = inputs.homebrew-cask;
                   "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
                 };
-
-                # Optional: Enable fully-declarative tap management
-                # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
                 mutableTaps = false;
               };
             }
@@ -143,20 +150,17 @@
       };
 
       nixosConfigurations = {
-        # My home desktop / server
-        coeus = nixpkgs.lib.nixosSystem {
+        coeus = mkSystem {
           system = "x86_64-linux";
-          inherit specialArgs;
+          builder = nixpkgs.lib.nixosSystem;
           modules = nixosModules ++ [ ./hosts/coeus/configuration.nix ];
         };
 
-        # kvm sandbox
-        thalos = nixpkgs.lib.nixosSystem {
+        thalos = mkSystem {
           system = "x86_64-linux";
-          inherit specialArgs;
-          modules = sharedModules ++ nixosModules ++ [ ./hosts/thalos/configuration.nix ];
+          builder = nixpkgs.lib.nixosSystem;
+          modules = nixosModules ++ [ ./hosts/thalos/configuration.nix ];
         };
-
       };
     };
 }

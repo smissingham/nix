@@ -30,7 +30,11 @@ in
       users.${mainUser.username} = {
         imports = [ (import "${inputs.plasma-manager}/modules") ];
 
-        home.packages = with pkgs; [ kdePackages.plasma-browser-integration ];
+        home.packages = with pkgs; [
+          kdePackages.plasma-browser-integration
+          kdePackages.partitionmanager
+
+        ];
 
         programs.plasma = {
           enable = true;
@@ -40,6 +44,14 @@ in
             theme = "breeze-dark";
             colorScheme = "BreezeDark";
           };
+
+          kwin.virtualDesktops.names = [
+            "Home Base"
+            "Home Projects"
+            "Work Base"
+            "Work Project 1"
+            "Work Project 2"
+          ];
 
           hotkeys.commands = {
             "launch-system-monitor" = {
@@ -61,6 +73,7 @@ in
               "Meta+Tab"
             ];
             "kwin"."Overview" = "Meta+W";
+            "org.kde.krunner.desktop"."_launch" = "Ctrl+Space";
             "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Print";
           };
 
@@ -87,8 +100,8 @@ in
                     launchers = [
                       "applications:org.kde.dolphin.desktop"
                       "applications:org.kde.konsole.desktop"
-                      "applications:floorp.desktop"
-                      "applications:jetbrains-toolbox.desktop"
+                      "applications:firefox.desktop"
+                      #"applications:jetbrains-toolbox.desktop"
                     ];
                   };
                 }

@@ -9,6 +9,7 @@
 
   # TODO implement dynamic discovery of all imports in modules directory
   imports = [
+    ./home.nix
     ./packages.nix
     ./access/sunshine.nix
     ./access/tailscale.nix
@@ -20,7 +21,6 @@
   ];
 
   programs.git.enable = true;
-  programs.firefox.enable = lib.mkForce false;
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [ ];
@@ -30,17 +30,17 @@
     networkmanager.enable = true;
   };
 
-  # TODO extract to module
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = true;
-      AllowUsers = [ mainUser.username ];
-      UseDns = true;
-    };
-  };
+  # # TODO extract to module
+  # networking.firewall.allowedTCPPorts = [ 22 ];
+  # services.openssh = {
+  #   enable = true;
+  #   ports = [ 22 ];
+  #   settings = {
+  #     PasswordAuthentication = true;
+  #     AllowUsers = [ mainUser.username ];
+  #     UseDns = true;
+  #   };
+  # };
 
   # TODO extract to module
   services.fail2ban = {

@@ -1,24 +1,23 @@
 {
   "models": [
     {
-      "title": "qwen_qwq-32b",
-      "provider": "lmstudio",
-      "model": "qwen_qwq-32b",
-      "apiBase": "http://localhost:1234/v1"
-      
+      "title": "claude-3.5",
+      "provider": "openai",
+      "model": "claude-3.5",
+      "apiBase": "https://litellm.coeus.missingham.net/v1"
     },
     {
-      "title": "qwen2.5-coder-3b-instruct",
-      "provider": "lmstudio",
-      "model": "qwen2.5-coder-3b-instruct",
-      "apiBase": "http://localhost:1234/v1"
+      "title": "qwen2.5-coder:7b",
+      "provider": "openai",
+      "model": "qwen2.5-coder:7b",
+      "apiBase": "https://litellm.coeus.missingham.net/v1"
     }
   ],
   "tabAutocompleteModel": {
-    "title": "qwen2.5-coder-3b-instruct",
-    "provider": "lmstudio",
-    "model": "qwen2.5-coder-3b-instruct",
-    "apiBase": "http://localhost:1234/v1"
+    "title": "qwen2.5-coder:7b",
+    "provider": "openai",
+    "model": "qwen2.5-coder:7b",
+    "apiBase": "https://litellm.coeus.missingham.net/v1"
   },
   "customCommands": [
     {

@@ -38,10 +38,25 @@ let
   };
 in
 {
+  imports = [
+    ./firefox.nix
+    ./vscode.nix
+  ];
+
+  myHomeModules = {
+    browsers = {
+      firefox.enable = true;
+    };
+    devtools = {
+      vscode.enable = true;
+    };
+  };
+
   users.users.${mainUser.username} = {
     name = mainUser.username;
     home = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
   };
+
   home-manager = {
     # Allow unfree packages
     useGlobalPkgs = true;
@@ -54,12 +69,8 @@ in
           username = mainUser.username;
           homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
           file = {
-            ".continue" = {
-              source = ../../dots/.continue;
-              recursive = true;
-            };
             ".config/nixpkgs" = {
-              source = ../../dots/nixpkgs;
+              source = ../../../dots/nixpkgs;
               recursive = true;
             };
           };
@@ -69,8 +80,8 @@ in
           enable = true;
           userDirs = {
             extraConfig = {
-              XDG_GAME_DIR = "${config.home.homeDirectory}/Media/Games";
-              XDG_GAME_SAVE_DIR = "${config.home.homeDirectory}/Media/GameSaves";
+              XDG_GAME_DIR = "${config.home.homeDirectory}/Documents/Games";
+              XDG_GAME_SAVE_DIR = "${config.home.homeDirectory}/Documents/GameSaves";
             };
           };
         };
@@ -145,71 +156,6 @@ in
             set -g default-terminal "tmux-256color"
             set -ag terminal-overrides ",xterm-256color:RGB"
           '';
-        };
-
-        programs.vscode = {
-          enable = true;
-          mutableExtensionsDir = false;
-          #package = pkgs.vscodium;
-          extensions = with pkgs.vscode-extensions; [
-            # UI
-            #enkia.tokyo-night
-            catppuccin.catppuccin-vsc
-            vscode-icons-team.vscode-icons
-            #iuyoy.highlight-string-code
-
-            # Basic Language Support
-            redhat.vscode-yaml
-
-            # First Class Language Support
-            ms-python.python
-            ms-python.vscode-pylance
-
-            # Nix
-            bbenoist.nix
-            jnoortheen.nix-ide
-
-            # Remote Access
-            ms-vscode-remote.remote-ssh
-
-            # Data Science Related
-            ms-toolsai.datawrangler
-            ms-toolsai.jupyter
-            #ms-toolsai.vscode-jupyter-powertoys
-            ms-toolsai.jupyter-renderers
-
-            # Code Formatting
-            esbenp.prettier-vscode
-
-            # Version Control
-            eamodio.gitlens
-
-            # AI Assist
-            continue.continue
-          ];
-
-          userSettings = {
-
-            "workbench.colorTheme" = lib.mkForce "Catppuccin Macchiato";
-            "workbench.iconTheme" = "vscode-icons";
-            "editor.formatOnSave" = true;
-            "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";
-            "explorer.compactFolders" = false;
-            "explorer.confirmDragAndDrop" = false;
-            "explorer.confirmDelete" = false;
-
-            # ---- Extension Settings ---- #
-            "nix" = {
-              "serverPath" = "nixd";
-              "formatterPath" = "nixfmt";
-            };
-
-            "continue" = {
-              "telemetryEnabled" = false;
-            };
-            "vsicons.dontShowNewVersionMessage" = true;
-            "gitlens.telemetry.enabled" = false;
-          };
         };
 
         home.stateVersion = "24.11"; # READ DOCS BEFORE CHANGING
