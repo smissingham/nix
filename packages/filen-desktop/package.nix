@@ -5,6 +5,26 @@
   fetchFromGitHub,
   makeDesktopItem,
 }:
+let
+  desktopItem = makeDesktopItem {
+    name = "filen-desktop";
+    exec = "filen-desktop";
+    icon = "filen-desktop";
+    desktopName = "Filen Desktop";
+    genericName = "Encrypted Cloud Storage";
+    comment = "Secure cloud storage client";
+    categories = [
+      "Network"
+      "FileTransfer"
+      "Utility"
+    ];
+    keywords = [
+      "cloud"
+      "storage"
+      "encrypted"
+    ];
+  };
+in
 
 buildNpmPackage rec {
   pname = "filen-desktop";
@@ -36,7 +56,7 @@ buildNpmPackage rec {
     # If needed, you can add a patch to make the build use the system electron
     # This depends on how the project is structured
     substituteInPlace package.json \
-      --replace '"electron": "^33.2.0"' '"electron": "*"'
+      --replace-fail '"electron": "^33.2.0"' '"electron": "*"'
       
     # Modify package.json to disable electron-builder in the build script
     substituteInPlace package.json \
@@ -57,7 +77,9 @@ buildNpmPackage rec {
     #!/bin/sh
     exec ${pkgs.electron}/bin/electron $out/lib/node_modules/@filen/desktop/dist
     EOF
+
     chmod +x $out/bin/filen-desktop
+    cp -rt $out/bin ${desktopItem}/share/applications 
 
     # Install icons of all available sizes from the /icons/png folder
     for size in 16 24 32 48 64 96 128 256 512 1024; do
@@ -68,26 +90,8 @@ buildNpmPackage rec {
     done
   '';
 
-  desktopItems = [
-    (makeDesktopItem {
-      name = "filen-desktop";
-      exec = "filen-desktop";
-      icon = "filen-desktop";
-      desktopName = "Filen Desktop";
-      genericName = "Encrypted Cloud Storage";
-      comment = "Secure cloud storage client";
-      categories = [
-        "Network"
-        "FileTransfer"
-        "Utility"
-      ];
-      keywords = [
-        "cloud"
-        "storage"
-        "encrypted"
-      ];
-    })
-  ];
+  # This ensures the desktop item is correctly handled
+  nativeBuildInputs = [ pkgs.copyDesktopItems ];
 
   meta = with lib; {
     homepage = "https://filen.io/products";
