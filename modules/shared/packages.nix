@@ -1,6 +1,7 @@
 # ----- PACKAGES TO INSTALL ON ALL (DARWIN + NIXOS) SYSTEMS -----#
 {
   pkgs,
+  pkgsUnstable,
   mainUser,
   inputs,
   system,
@@ -30,7 +31,7 @@
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
     pciutils
-    #usbutils
+    pkgsUnstable.usbutils
     findutils
 
     git
