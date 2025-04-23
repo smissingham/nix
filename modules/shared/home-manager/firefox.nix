@@ -3,6 +3,7 @@
   lib,
   pkgs,
   mainUser,
+  pkgsUnstable,
   ...
 }:
 
@@ -25,6 +26,7 @@ in
 
       programs.firefox = {
         enable = true;
+        package = pkgsUnstable.firefox;
         profiles.default = {
           id = 0;
           name = mainUser.username;
