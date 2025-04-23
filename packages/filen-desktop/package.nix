@@ -3,8 +3,6 @@
   pkgs,
   buildNpmPackage,
   fetchFromGitHub,
-  cacert,
-  copyDesktopItems,
   makeDesktopItem,
 }:
 
@@ -20,35 +18,12 @@ buildNpmPackage rec {
     hash = "sha256-HpyASSpjRgBTkV7L5bfi65rO+MnrSP7VdeuL/VXBlSo=";
   };
 
-  env = {
-    NODE_EXTRA_CA_CERTS = "${cacert}/etc/ssl/certs/ca-bundle.crt";
-    npm_config_strict_ssl = "false";
-
-    # Assume CI environment to skip interactive steps
-    CI = "true";
-
-    CSC_IDENTITY_AUTO_DISCOVERY = "false";
-    CSC_NAME = "-"; # Ad-hoc signing identity
-  };
-
   npmDepsHash = "sha256-uePTd8y26hyLYcazlrOyrH+7CRjav+/d6HLMSKEGWiA=";
   npmBuildScript = "build:${(if pkgs.stdenv.isDarwin then "mac" else "linux")}";
-
-  buildInputs = [ cacert ];
-  nativeBuildInputs =
-    [ copyDesktopItems ]
-    ++ lib.optionals pkgs.stdenv.isDarwin [
-      pkgs.darwin.sigtool # Provides codesign utility
-    ];
 
   postPatch = ''
     chmod +w package-lock.json
     cp ${./package-lock.json} package-lock.json
-  '';
-
-  preBuild = ''
-    export NODE_EXTRA_CA_CERTS="${cacert}/etc/ssl/certs/ca-bundle.crt"
-    npm config set strict-ssl false
   '';
 
   postInstall = ''
