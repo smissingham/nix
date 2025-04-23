@@ -44,7 +44,6 @@
 
   networking.hostName = "coeus";
   networking.useDHCP = lib.mkDefault true;
-  #networking.interfaces.enp8s0.useDHCP = true;
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 

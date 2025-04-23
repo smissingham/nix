@@ -45,6 +45,14 @@ in
             colorScheme = "BreezeDark";
           };
 
+          kwin.virtualDesktops.names = [
+            "Home Base"
+            "Home Projects"
+            "Work Base"
+            "Work Project 1"
+            "Work Project 2"
+          ];
+
           hotkeys.commands = {
             "launch-system-monitor" = {
               name = "Launch System Monitor";
