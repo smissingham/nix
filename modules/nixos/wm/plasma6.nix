@@ -13,6 +13,13 @@ let
 
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
 
+  wallpaperUrl = "https://wallpaperswide.com/download/coral_reef_3-wallpaper-5120x2160.jpg";
+  wallpaperSha = "sha256-AztMjrvRZtCe/MQZ5GvO/x+k/8YPmgqSu7hYt3Vlfew=";
+  wallpaperImage = pkgs.fetchurl {
+    url = wallpaperUrl;
+    sha256 = wallpaperSha;
+  };
+
 in
 {
 
@@ -43,6 +50,34 @@ in
             lookAndFeel = "org.kde.breezedark.desktop";
             theme = "breeze-dark";
             colorScheme = "BreezeDark";
+            wallpaper = wallpaperImage;
+          };
+
+          fonts = {
+            general = {
+              family = "Ubuntu Nerd Font";
+              pointSize = 10;
+            };
+            fixedWidth = {
+              family = "JetBrainsMono Nerd Font";
+              pointSize = 10;
+            };
+            small = {
+              family = "Ubuntu Nerd Font";
+              pointSize = 10;
+            };
+            toolbar = {
+              family = "Ubuntu Nerd Font";
+              pointSize = 10;
+            };
+            menu = {
+              family = "Ubuntu Nerd Font";
+              pointSize = 10;
+            };
+            windowTitle = {
+              family = "Ubuntu Nerd Font";
+              pointSize = 10;
+            };
           };
 
           kwin.virtualDesktops.names = [

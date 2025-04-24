@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   theme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  sourceUrl = "https://wallpaperswide.com/download/mountain_lakeside_view-wallpaper-5120x2160.jpg";
+  sourceUrl = "https://wallpaperswide.com/download/coral_reef_3-wallpaper-5120x2160.jpg";
   sourceSha = "sha256-avDEuBwd1+7AxlqUjeWTtTVT9DynmoN4iYxOVMgCUSE=";
   sourceImage = pkgs.fetchurl {
     url = sourceUrl;
@@ -12,14 +12,15 @@ in
   home-manager.sharedModules = [
     {
       stylix.targets = {
-        alacritty.enable = false;
-        kde.enable = false;
+        #alacritty.enable = false;
+        #kde.enable = false;
       };
     }
   ];
 
   stylix = {
-    enable = false;
+    enable = true;
+    autoEnable = false;
     polarity = "dark";
     base16Scheme = theme;
     image = sourceImage;

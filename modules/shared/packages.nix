@@ -42,6 +42,7 @@
     xclip
     zoxide
     dig
+    bat
 
     nixfmt-rfc-style # formatter
     nixd # lsp
