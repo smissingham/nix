@@ -1,37 +1,85 @@
+{ pkgs, ... }:
 {
-  # Import all your configuration modules here
-  imports = [ ./bufferline.nix ];
+  # Import all configuration modules
+  imports = [
+    ./keymaps.nix
+    ./plugins/avante.nix
+    ./plugins/bufferline.nix
+    ./plugins/treesitter.nix
+  ];
 
+  # Theme configuration
   colorschemes.catppuccin = {
     enable = true;
     settings.flavour = "mocha";
   };
 
+  # Editor options
+  # Global vim options
+  globalOpts = {
+    autoindent = true;
+    backspace = "indent,eol,start";
+    expandtab = true;
+    hidden = true;
+    hlsearch = true;
+    ignorecase = true;
+    incsearch = true;
+    mouse = "a";
+    number = true;
+    relativenumber = true;
+    smartcase = true;
+    smartindent = true;
+    sts = 2;
+    sw = 2;
+  };
+
+  # Local buffer options
+  localOpts = {
+    number = true;
+    relativenumber = true;
+  };
+
+  # Window options
   opts = {
     number = true; # Show line numbers
     relativenumber = true; # Show relative line numbers
     shiftwidth = 2; # Tab width should be 2
-    termguicolors = true;
+    termguicolors = true; # Enable true color support
   };
 
+  # Plugin configurations
   plugins = {
-
-    telescope = {
+    # Completion plugins
+    cmp = {
       enable = true;
-      extensions = {
-        fzf-native.enable = true;
+      autoEnableSources = true;
+      settings = {
+
+        completion.autoComplete = true;
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "buffer"; }
+          { name = "path"; }
+        ];
       };
     };
 
-    lualine = {
+    # Code formatting
+    conform-nvim = {
       enable = true;
-      #settings.options.theme = "catpuccin_mocha"; # implemented with stylix
+      settings = {
+        notify_on_error = true;
+        format_on_save = {
+          enable = true;
+          lspFallback = true;
+        };
+        formatters_by_ft = {
+          nix = [ "nixfmt" ];
+        };
+      };
     };
 
-    oil.enable = true;
-    treesitter.enable = true;
-    luasnip.enable = true;
-
+    # Language server protocol
     lsp = {
       enable = true;
       servers = {
@@ -40,15 +88,24 @@
       };
     };
 
-    cmp = {
+    # Lazy loading
+    lz-n = {
       enable = true;
-      autoEnableSources = true;
-      settings.sources = [
-        { name = "nvim_lsp"; }
-        { name = "path"; }
-        { name = "buffer"; }
-      ];
+      autoLoad = true;
+    };
+
+    # Status line
+    lualine = {
+      enable = true;
+    };
+
+    # Fuzzy finder
+    telescope = {
+      enable = true;
+      extensions = {
+        file-browser.enable = true;
+        fzf-native.enable = true;
+      };
     };
   };
-
 }

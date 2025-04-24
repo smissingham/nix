@@ -112,6 +112,7 @@ in
             "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Print";
           };
 
+          input.keyboard.numlockOnStartup = "on";
           input.mice = [
             {
               vendorId = "046d";
