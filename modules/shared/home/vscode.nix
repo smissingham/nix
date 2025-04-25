@@ -34,7 +34,7 @@ in
     home-manager.users.${mainUser.username} = {
 
       home.file.".continue" = {
-        source = "${rootPath}/dots/.continue";
+        source = ./dots/.continue;
         recursive = true;
       };
 

@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  # Extra packages needed for plugins
+  extraPackages = [
+    pkgs.ripgrep # For telescope live grep functionality
+  ];
+
   # Import all configuration modules
   imports = [
     ./keymaps.nix
@@ -107,5 +112,18 @@
         fzf-native.enable = true;
       };
     };
+
+    # File Browser
+    neo-tree = {
+      enable = true;
+      enableGitStatus = true;
+      enableModifiedMarkers = true;
+      enableRefreshOnWrite = true;
+      closeIfLastWindow = true;
+      eventHandlers = {
+
+      };
+    };
+
   };
 }

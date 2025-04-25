@@ -70,7 +70,7 @@ in
           homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
           file = {
             ".config/nixpkgs" = {
-              source = ../../../dots/nixpkgs;
+              source = ./dots/nixpkgs;
               recursive = true;
             };
           };
@@ -143,19 +143,18 @@ in
           };
         };
 
+        # note after rebuild, to force tmux conf switch: `tmux source ~/.config/tmux/tmux.conf`
         programs.tmux = {
           enable = true;
-          clock24 = true;
+          clock24 = false;
+          shell = "${pkgs.zsh}/bin/zsh";
           plugins = with pkgs; [
             tmuxPlugins.catppuccin
             tmuxPlugins.better-mouse-mode
             tmuxPlugins.sensible
             tmuxPlugins.vim-tmux-navigator
           ];
-          extraConfig = ''
-            set -g default-terminal "tmux-256color"
-            set -ag terminal-overrides ",xterm-256color:RGB"
-          '';
+          extraConfig = builtins.readFile ./dots/tmux/tmux.conf;
         };
 
         home.stateVersion = "24.11"; # READ DOCS BEFORE CHANGING

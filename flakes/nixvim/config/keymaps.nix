@@ -3,12 +3,12 @@
     # ----- FILE OPERATIONS ----- #
     {
       mode = "n";
-      key = "<leader>w";
+      key = "<leader>s";
       action = ":w<CR>";
       options = {
         silent = true;
         noremap = true;
-        desc = "Write file";
+        desc = "Save (Write) File";
       };
     }
 
@@ -21,6 +21,18 @@
         noremap = true;
         desc = "Quit";
       };
+    }
+
+    {
+      mode = "n";
+      key = "<leader>re";
+      action = ":e!<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Abandon active file changes";
+      };
+
     }
 
     # ----- TELESCOPE ----- #
@@ -44,6 +56,16 @@
         desc = "File browser";
       };
     }
+    {
+      mode = "n";
+      key = "<leader>fg";
+      action = "<cmd>Telescope live_grep<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Live grep search";
+      };
+    }
 
     # ----- TAB MANAGEMENT ----- #
     {
@@ -64,6 +86,28 @@
         silent = true;
         noremap = true;
         desc = "Close tab";
+      };
+    }
+
+    # ----- NEOTREE ----- #
+    {
+      mode = "n";
+      key = "\\ft";
+      action = ":Neotree<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Toggle Neotree";
+      };
+    }
+    {
+      mode = "n";
+      key = "\\ftt";
+      action = ":Neotree toggle<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Toggle Neotree";
       };
     }
   ];

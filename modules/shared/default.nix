@@ -2,7 +2,7 @@
 { mainUser, pkgs, ... }:
 {
   imports = [
-    ./home-manager/default.nix
+    ./home/default.nix
     ./packages.nix
   ];
 
