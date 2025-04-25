@@ -4,6 +4,7 @@
   lib,
   pkgs,
   mainUser,
+  pkgsUnstable,
   ...
 }:
 let
@@ -147,9 +148,12 @@ in
         programs.tmux = {
           enable = true;
           clock24 = false;
+          prefix = "C-Space";
           shell = "${pkgs.zsh}/bin/zsh";
           plugins = with pkgs; [
-            tmuxPlugins.catppuccin
+            pkgsUnstable.tmuxPlugins.catppuccin
+            tmuxPlugins.cpu
+            tmuxPlugins.battery
             tmuxPlugins.better-mouse-mode
             tmuxPlugins.sensible
             tmuxPlugins.vim-tmux-navigator
