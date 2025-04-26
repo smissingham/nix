@@ -4,7 +4,7 @@
     {
       mode = "n";
       key = "<leader>s";
-      action = ":w<CR>";
+      action = "<cmd>w<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -15,7 +15,7 @@
     {
       mode = "n";
       key = "<leader>q";
-      action = ":q<CR>";
+      action = "<cmd>q<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -26,7 +26,7 @@
     {
       mode = "n";
       key = "<leader>re";
-      action = ":e!<CR>";
+      action = "<cmd>e!<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -38,12 +38,31 @@
     # ----- TELESCOPE ----- #
     {
       mode = "n";
+      key = "<leader>te";
+      action = "<cmd>Telescope<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+      };
+    }
+    {
+      mode = "n";
       key = "<leader>ff";
       action = "<cmd>Telescope find_files<CR>";
       options = {
         silent = true;
         noremap = true;
-        desc = "Find files";
+        desc = "Find Files";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>fb";
+      action = "<cmd>Telescope buffers<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Switch between open buffers";
       };
     }
     {
@@ -71,7 +90,7 @@
     {
       mode = "n";
       key = "<leader>tn";
-      action = ":tabnew<CR>";
+      action = "<cmd>tabnew<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -81,7 +100,7 @@
     {
       mode = "n";
       key = "<leader>tc";
-      action = ":tabclose<CR>";
+      action = "<cmd>tabclose<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -93,7 +112,7 @@
     {
       mode = "n";
       key = "\\ft";
-      action = ":Neotree<CR>";
+      action = "<cmd>Neotree<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -103,7 +122,7 @@
     {
       mode = "n";
       key = "\\ftt";
-      action = ":Neotree toggle<CR>";
+      action = "<cmd>Neotree toggle<CR>";
       options = {
         silent = true;
         noremap = true;

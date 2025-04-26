@@ -18,6 +18,10 @@ let
   hostRebuildCli = (if pkgs.stdenv.isDarwin then "darwin-rebuild" else "sudo nixos-rebuild");
 
   shellAliases = {
+    # replicate neovim binds to cli
+    q = "exit";
+    v = "nv";
+
     cl = "clear";
     ll = "eza -l";
     la = "eza -la";

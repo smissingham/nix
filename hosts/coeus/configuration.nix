@@ -21,6 +21,8 @@
     entertainment.gaming.enable = true;
 
     access = {
+      ssh.enable = true;
+      fail2ban.enable = true;
       sunshine.enable = true;
       sunshine.withMoonlight = true;
       tailscale.enable = true;

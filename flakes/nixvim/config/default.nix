@@ -125,5 +125,9 @@
       };
     };
 
+    tmux-navigator = {
+      enable = true;
+    };
+
   };
 }
