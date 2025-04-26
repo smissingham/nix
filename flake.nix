@@ -57,6 +57,8 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs =

@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ../../styles/catppuccin-mocha.nix
     ./hardware.nix
     ./systemd.nix
   ];

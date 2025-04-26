@@ -13,6 +13,8 @@
     ./packages.nix
     ./access/sunshine.nix
     ./access/tailscale.nix
+    ./access/ssh.nix
+    ./access/fail2ban.nix
     ./entertainment/gaming.nix
     ./virt/kvm.nix
     ./virt/podman.nix
