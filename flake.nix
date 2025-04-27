@@ -72,8 +72,7 @@
     let
       inherit (self) outputs;
 
-      # Import utils.nix to make utility functions available
-      utils = import ./utils.nix;
+      myUtils = import ./myUtils.nix;
 
       overlays = [ inputs.agenix.overlays.default ];
 
@@ -101,7 +100,7 @@
           outputs
           overlays
           mainUser
-          utils
+          myUtils
           ;
         rootPath = ./.;
       };

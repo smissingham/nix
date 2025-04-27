@@ -2,11 +2,11 @@
 {
   mainUser,
   pkgs,
-  utils,
+  myUtils,
   ...
 }:
 {
-  imports = utils.importDir ./home ++ [ ./packages.nix ];
+  imports = myUtils.importDir ./home ++ [ ./packages.nix ];
 
   nixpkgs = {
     config = {
