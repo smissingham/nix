@@ -1,10 +1,12 @@
 # ----- DEFAULTS TO APPLY ON ALL (DARWIN + NIXOS) SYSTEMS -----#
-{ mainUser, pkgs, ... }:
 {
-  imports = [
-    ./home/default.nix
-    ./packages.nix
-  ];
+  mainUser,
+  pkgs,
+  utils,
+  ...
+}:
+{
+  imports = utils.importDir ./home ++ [ ./packages.nix ];
 
   nixpkgs = {
     config = {
@@ -25,4 +27,16 @@
     "nix-command"
     "flakes"
   ];
+
+  myHomeModules = {
+    browsers = {
+      firefox.enable = true;
+    };
+    devtools = {
+      vscode.enable = true;
+    };
+    productivity = {
+      syncthing.enable = true;
+    };
+  };
 }

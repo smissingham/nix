@@ -26,7 +26,7 @@ in
 
       programs.firefox = {
         enable = true;
-        package = pkgsUnstable.firefox;
+        package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
         profiles.default = {
           id = 0;
           name = mainUser.username;
@@ -80,15 +80,21 @@ in
               };
               "NixOS Wiki" = {
                 urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
-                iconUpdateURL = "https://nixos.wiki/favicon.png";
+                iconUpdateURL = "https://twenty-icons.com/nixos.org";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@nw" ];
               };
               "SearXNG" = {
                 urls = [ { template = "https://searxng.coeus.missingham.net?q={searchTerms}"; } ];
-                iconUpdateURL = "https://nixos.wiki/favicon.png";
+                iconUpdateURL = "https://twenty-icons.com/searxng.org";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@sx" ];
+              };
+              "GitHub" = {
+                urls = [ { template = "https://github.com/search?q={searchTerms}&type=code"; } ];
+                iconUpdateURL = "https://twenty-icons.com/github.com";
+                updateInterval = 24 * 60 * 60 * 1000; # every day
+                definedAliases = [ "@gh" ];
               };
               "Bing".metaData.hidden = true;
               "DuckDuckGo".metaData.alias = "@ddg";

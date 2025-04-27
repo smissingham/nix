@@ -9,6 +9,7 @@
 
   system = {
 
+    # https://macos-defaults.com/
     defaults = {
 
       ".GlobalPreferences"."com.apple.mouse.scaling" = 2.5;
@@ -54,6 +55,14 @@
           type = "png";
         };
 
+        "com.apple.dock" = {
+          # Disable switching workspace automatically
+          workspaces-auto-swoosh = false;
+
+          # Disable workspace reordering by most-recently-used
+          mru-spaces = false;
+        };
+
         "com.apple.SoftwareUpdate" = {
           AutomaticCheckEnabled = true;
           # Check for software updates daily, not just once per week
@@ -63,14 +72,13 @@
           # Install System data files & security updates
           CriticalUpdateInstall = 1;
         };
-
       };
 
       dock = {
         autohide = true;
         show-recents = false;
         launchanim = true;
-        orientation = "bottom";
+        orientation = "right";
         magnification = true;
         largesize = 64;
         tilesize = 48;
@@ -104,18 +112,21 @@
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
       };
-
     };
 
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
+      #swapLeftCommandAndLeftAlt = true;
+      userKeyMapping = [
+
+      ];
     };
 
     # Following line should allow us to avoid a logout/login cycle
     activationScripts.postUserActivation.text = ''
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
-  };
 
+  };
 }

@@ -48,15 +48,6 @@ in
     ./vscode.nix
   ];
 
-  myHomeModules = {
-    browsers = {
-      firefox.enable = true;
-    };
-    devtools = {
-      vscode.enable = true;
-    };
-  };
-
   users.users.${mainUser.username} = {
     name = mainUser.username;
     home = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
@@ -134,7 +125,7 @@ in
           settings = {
             general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
             font = {
-              size = 11; # 14 creates glitches on p10k prompt
+              size = 12; # 14 creates glitches on p10k prompt
               normal.family = lib.mkForce "MesloLGS Nerd Font"; # p10k recommends
             };
             env = {

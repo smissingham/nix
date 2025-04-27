@@ -17,6 +17,8 @@ let
 
   # Import the extension builder only at the top level
   inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
+
+  ctrlKey = if pkgs.stdenv.isDarwin then "cmd" else "ctrl";
 in
 {
   options.${moduleSet}.${moduleCategory}.${moduleName} = with lib; {
@@ -32,6 +34,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
     #----- Applications in User Space -----#
     home-manager.users.${mainUser.username} = {
 
@@ -42,7 +45,7 @@ in
 
       programs.vscode = {
         enable = true;
-        package = if cfg.useCodium then pkgsUnstable.vscodium else pkgsUnstable.vscode;
+        package = (if cfg.useCodium then pkgsUnstable.vscodium else pkgsUnstable.vscode);
         mutableExtensionsDir = cfg.mutableExtensionsDir;
 
         userSettings = {
@@ -70,36 +73,13 @@ in
 
         keybindings = [
           {
-            key = "shift+space";
+            key = "${ctrlKey}+shift+space";
             command = "periscope.search";
           }
         ];
 
         extensions =
           with pkgs.vscode-extensions;
-          let
-            # ----- Manually Specified Extensions ----- #
-            continue = buildVscodeMarketplaceExtension {
-              mktplcRef = {
-                name = "continue";
-                publisher = "continue";
-                version = "1.1.26";
-                sha256 = "sha256-3WQ1dCOaU42a4loHTLlGsV3RPGJibqtC++yId1UMC3g=";
-              };
-              nativeBuildInputs = [
-                pkgs.autoPatchelfHook
-              ];
-              buildInputs = [ pkgs.stdenv.cc.cc.lib ];
-            };
-            periscope = buildVscodeMarketplaceExtension {
-              mktplcRef = {
-                name = "periscope";
-                publisher = "joshmu";
-                version = "1.10.0";
-                sha256 = "sha256-Y94JwNoBhKIi/51YlPWoit6LW/AbWf190YARoKEQQew=";
-              };
-            };
-          in
           [
             # UI
             catppuccin.catppuccin-vsc
@@ -129,12 +109,34 @@ in
 
             # Version Control
             eamodio.gitlens
+          ]
 
-            # AI Assist
-            continue
+          # ----- Manually Specified Extensions ----- #
+          ++ [
 
             # File Nav
-            periscope
+            (buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "periscope";
+                publisher = "joshmu";
+                version = "1.10.0";
+                sha256 = "sha256-Y94JwNoBhKIi/51YlPWoit6LW/AbWf190YARoKEQQew=";
+              };
+            })
+
+            # AI Agent
+            (buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "continue";
+                publisher = "continue";
+                version = "1.1.26";
+                sha256 = "sha256-3WQ1dCOaU42a4loHTLlGsV3RPGJibqtC++yId1UMC3g=";
+              };
+              # nativeBuildInputs = [
+              #   pkgs.autoPatchelfHook
+              # ];
+              buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+            })
           ];
       };
     };

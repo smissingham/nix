@@ -21,6 +21,7 @@
 
     casks = [
       "google-chrome"
+      "firefox"
       "raycast"
       "alt-tab"
       "filen"

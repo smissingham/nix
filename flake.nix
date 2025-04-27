@@ -57,8 +57,6 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
-
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs =
@@ -73,6 +71,9 @@
     }:
     let
       inherit (self) outputs;
+
+      # Import utils.nix to make utility functions available
+      utils = import ./utils.nix;
 
       overlays = [ inputs.agenix.overlays.default ];
 
@@ -100,6 +101,7 @@
           outputs
           overlays
           mainUser
+          utils
           ;
         rootPath = ./.;
       };
