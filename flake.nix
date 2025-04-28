@@ -59,7 +59,7 @@
     };
 
     my-nixvim = {
-      url = "path:./flakes/nixvim";
+      url = "path:flakes/nixvim";
     };
   };
 

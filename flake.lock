@@ -583,11 +583,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-idlaybSDSzJmd7fgi1DgEZgzErXzfS1KzfMTU+8MUiE=",
-        "path": "./flakes/nixvim",
+        "path": "flakes/nixvim",
         "type": "path"
       },
       "original": {
-        "path": "./flakes/nixvim",
+        "path": "flakes/nixvim",
         "type": "path"
       }
     },
