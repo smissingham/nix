@@ -57,6 +57,10 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+
+    my-nixvim = {
+      url = "path:./flakes/nixvim";
+    };
   };
 
   outputs =
@@ -67,6 +71,7 @@
       nix-darwin,
       home-manager,
       plasma-manager,
+      my-nixvim,
       ...
     }:
     let

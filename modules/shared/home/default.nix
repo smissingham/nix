@@ -5,6 +5,7 @@
   pkgs,
   mainUser,
   pkgsUnstable,
+  inputs,
   ...
 }:
 let
@@ -70,6 +71,8 @@ in
               recursive = true;
             };
           };
+
+          packages = [ inputs.my-nixvim.packages.${pkgs.system}.default ];
         };
 
         xdg = {
