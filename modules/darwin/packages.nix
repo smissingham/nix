@@ -20,6 +20,7 @@
     ];
 
     casks = [
+      "arc"
       "google-chrome"
       "firefox"
       "raycast"

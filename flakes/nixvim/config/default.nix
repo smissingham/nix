@@ -111,6 +111,9 @@
         file-browser.enable = true;
         fzf-native.enable = true;
       };
+      lazyLoad.settings = {
+        cmd = "Telescope";
+      };
     };
 
     # File Browser

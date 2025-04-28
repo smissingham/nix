@@ -38,10 +38,10 @@ in
     #----- Applications in User Space -----#
     home-manager.users.${mainUser.username} = {
 
-      home.file.".continue" = {
-        source = ./dots/.continue;
-        recursive = true;
-      };
+      # home.file.".continue" = {
+      #   source = ./dots/.continue;
+      #   recursive = true;
+      # };
 
       programs.vscode = {
         enable = true;
@@ -97,7 +97,7 @@ in
             jnoortheen.nix-ide
 
             # Remote Access
-            #ms-vscode-remote.remote-ssh
+            pkgsUnstable.vscode-extensions.ms-vscode-remote.remote-ssh
 
             # Data Science Related
             ms-toolsai.datawrangler

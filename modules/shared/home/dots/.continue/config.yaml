@@ -1,0 +1,25 @@
+name: Assistant Config
+version: 1.0.0
+schema: v1
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+
+models:
+  - name: LiteLLM Proxy on Coeus
+    provider: openai
+    model: AUTODETECT
+    apiBase: https://litellm.coeus.missingham.net/v1
+    default: true
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+    capabilities:
+      - tool_use

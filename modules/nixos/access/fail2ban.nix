@@ -25,6 +25,7 @@ in
       maxretry = 5;
       ignoreIP = [
         # Whitelist
+        "plutus"
       ];
       bantime = "24h"; # Ban IPs for one day on the first ban
       bantime-increment = {
