@@ -21,7 +21,7 @@ let
   shellAliases = {
     # replicate neovim binds to cli
     q = "exit";
-    v = "nv";
+    v = "nvim";
 
     cl = "clear";
     ll = "eza -l";
@@ -36,7 +36,7 @@ let
 
     # TODO: Staging Area. Once happy this is mature, move it up among the rest
     nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
-    nv = "nix run $NIX_CONFIG_HOME/flakes/nixvim# -- $1";
+    nvb = "nix run $NIX_CONFIG_HOME/flakes/nixvim# -- $1";
     dwrb = "nxfmt; git add .; darwin-rebuild $1 --flake $NIX_CONFIG_HOME#$(hostname) --show-trace"; # merge with nxrbs?
 
     # TODO: Keep Empty. Temp aliases for currently common activities that shouldnt stay common
@@ -106,7 +106,7 @@ in
           enable = true;
           enableCompletion = true;
           shellAliases = shellAliases;
-          autosuggestion.enable = true;
+          #autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
           initExtra = "source ~/.p10k.zsh";
 
@@ -120,6 +120,15 @@ in
               src = pkgs.zsh-powerlevel10k;
               file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
             }
+            {
+              name = "zsh-autosuggestions";
+              src = pkgs.fetchFromGitHub {
+                owner = "zsh-users";
+                repo = "zsh-autosuggestions";
+                rev = "v0.4.0";
+                sha256 = "0z6i9wjjklb4lvr7zjhbphibsyx51psv50gm07mbb0kj9058j6kc";
+              };
+            }
           ];
         };
 
@@ -128,8 +137,8 @@ in
           settings = {
             general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
             font = {
-              size = 12; # 14 creates glitches on p10k prompt
-              normal.family = lib.mkForce "MesloLGS Nerd Font"; # p10k recommends
+              #size = 12; # 14 creates glitches on p10k prompt
+              normal.family = lib.mkForce "JetBrainsMono Nerd Font"; # "MesloLGS Nerd Font"; # p10k recommends
             };
             env = {
               TERM = "xterm-256color";
@@ -157,6 +166,21 @@ in
             tmuxPlugins.vim-tmux-navigator
           ];
           extraConfig = builtins.readFile ./dots/tmux/tmux.conf;
+        };
+
+        programs.wezterm = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          # colorSchemes = {
+          #   catpuccin-mocha = "${alacrittyColors}/catppuccin-mocha.toml";
+          # };
+          extraConfig = ''
+            return {
+              color_scheme = "Catppuccin Mocha"
+            }
+          '';
+
         };
 
         home.stateVersion = "24.11"; # READ DOCS BEFORE CHANGING
