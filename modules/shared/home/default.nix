@@ -21,7 +21,11 @@ let
   shellAliases = {
     # replicate neovim binds to cli
     q = "exit";
-    v = "nvim";
+
+    # stable nvim, installed in nix store
+    v = "NVIM_APPNAME=nvim-stable nvim";
+    # run nvim against current config for iterating on builds before install to nix store
+    vl = "NVIM_APPNAME=nvim-live nvim --clean --cmd \"set runtimepath+=$NIX_CONFIG_HOME/modules/shared/home/dots/nvim/\" -c \"source $NIX_CONFIG_HOME/modules/shared/home/dots/nvim/init.lua\"";
 
     cl = "clear";
     ll = "eza -l";
@@ -30,16 +34,11 @@ let
     nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
     nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
     nxrbs = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --show-trace; popd";
-    nxcommit = ''nxfmt; git add $NIX_CONFIG_HOME; git commit $NIX_CONFIG_HOME -m "$(nix-host-rebuild list-generations | grep current)";'';
     nxgc = "nix-collect-garbage --delete-old";
     nxshell = "nix-shell -p $1";
 
     # TODO: Staging Area. Once happy this is mature, move it up among the rest
     nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
-    nvb = "nix run $NIX_CONFIG_HOME/flakes/nixvim# -- $1";
-    dwrb = "nxfmt; git add .; darwin-rebuild $1 --flake $NIX_CONFIG_HOME#$(hostname) --show-trace"; # merge with nxrbs?
-
-    # TODO: Keep Empty. Temp aliases for currently common activities that shouldnt stay common
 
   };
 in
@@ -47,6 +46,7 @@ in
   imports = [
     ./firefox.nix
     ./vscode.nix
+    ./nvim.nix
   ];
 
   users.users.${mainUser.username} = {
@@ -71,8 +71,6 @@ in
               recursive = true;
             };
           };
-
-          packages = [ inputs.my-nixvim.packages.${pkgs.system}.default ];
         };
 
         xdg = {
