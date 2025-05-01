@@ -92,6 +92,7 @@
         username = "smissingham";
         name = "Sean Missingham";
         email = "sean@missingham.com";
+        homeDir = (if nixpkgs.stdenv.isDarwin then "/Users" else "/home/") ++ "smissingham";
       };
 
       specialArgs = {

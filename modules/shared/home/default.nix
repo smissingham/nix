@@ -23,9 +23,10 @@ let
     q = "exit";
 
     # stable nvim, installed in nix store
-    v = "NVIM_APPNAME=nvim-stable nvim";
+    v = "nvim";
     # run nvim against current config for iterating on builds before install to nix store
     vl = "NVIM_APPNAME=nvim-live nvim --clean --cmd \"set runtimepath+=$NIX_CONFIG_HOME/modules/shared/home/dots/nvim/\" -c \"source $NIX_CONFIG_HOME/modules/shared/home/dots/nvim/init.lua\"";
+    vclear = "rm -rf ~/.local/share/nvim*";
 
     cl = "clear";
     ll = "eza -l";
@@ -135,7 +136,7 @@ in
           settings = {
             general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
             font = {
-              #size = 12; # 14 creates glitches on p10k prompt
+              size = 12; # 14 creates glitches on p10k prompt
               normal.family = lib.mkForce "JetBrainsMono Nerd Font"; # "MesloLGS Nerd Font"; # p10k recommends
             };
             env = {
@@ -146,15 +147,21 @@ in
               padding.x = 12;
               padding.y = 12;
             };
+            keyboard.bindings = [
+              {
+                key = "Space";
+                mods = "Alt";
+                chars = "\\u001b ";
+              }
+            ];
           };
         };
 
         # note after rebuild, to force tmux conf switch: `tmux source ~/.config/tmux/tmux.conf`
         programs.tmux = {
           enable = true;
-          clock24 = false;
-          prefix = "C-Space";
           shell = "${pkgs.zsh}/bin/zsh";
+          #prefix = (if pkgs.stdenv.isDarwin then "M-Space" else "C-Space");
           plugins = with pkgs; [
             pkgsUnstable.tmuxPlugins.catppuccin
             tmuxPlugins.cpu
