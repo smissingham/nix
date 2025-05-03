@@ -10,6 +10,8 @@
     ./systemd.nix
   ];
 
+  environment.systemPackages = [ pkgs.cudaPackages.cudnn ];
+
   mySystemModules = {
     # Window Manager
     wm = {

@@ -41,6 +41,7 @@ let
     # TODO: Staging Area. Once happy this is mature, move it up among the rest
     nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
 
+    pyenv = "python3 -m venv .venv";
   };
 in
 {
@@ -182,6 +183,7 @@ in
           # };
           extraConfig = ''
             return {
+              font = wezterm.font("JetBrains Mono"),
               color_scheme = "Catppuccin Mocha"
             }
           '';

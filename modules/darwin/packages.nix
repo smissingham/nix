@@ -3,7 +3,7 @@
 {
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    appcleaner
+    #appcleaner
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -21,12 +21,12 @@
 
     casks = [
       "arc"
-      "google-chrome"
+      #"google-chrome"
       "firefox"
       "raycast"
       "alt-tab"
       "filen"
-      "cursor"
+      #"cursor"
       "moom"
       "onyx"
       "balenaetcher"

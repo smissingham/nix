@@ -13,7 +13,7 @@
       lazygit
 
       # required by lazy
-      python313
+      python312
 
       ripgrep
       gcc
@@ -26,9 +26,14 @@
 
       dwt1-shell-color-scripts # snacks dashboard coloring
 
-      # LSP Servers
+      # Language Servers & Formatters
       lua-language-server
       nixd
+
+      # Shouldn't need project specific LSP's, put them in Nix flakes!
+      #taplo
+      #rust_analyzer
+      #rustfmt
     ];
 
     home.file = {

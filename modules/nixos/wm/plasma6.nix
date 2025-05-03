@@ -98,7 +98,7 @@ in
             "launch-terminal" = {
               name = "Launch Terminal";
               key = "Ctrl+`";
-              command = "alacritty";
+              command = mainUser.terminalApp;
             };
           };
 

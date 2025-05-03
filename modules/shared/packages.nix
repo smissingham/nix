@@ -21,7 +21,7 @@
     telegram-desktop
     obsidian
     vesktop
-    lmstudio
+    #lmstudio
     bruno
     gitkraken
     bruno

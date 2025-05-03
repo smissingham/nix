@@ -19,7 +19,7 @@
 
       # Dev Tools
       kdePackages.kate
-      #jetbrains-toolbox
+      jetbrains-toolbox
     ];
   };
 }

@@ -96,6 +96,12 @@ in
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@gh" ];
               };
+              "YouTube" = {
+                urls = [ { template = "https://youtube.com/results?search_query={search_query}"; } ];
+                iconUpdateURL = "https://twenty-icons.com/YouTube.com";
+                updateInterval = 24 * 60 * 60 * 1000; # every day
+                definedAliases = [ "@yt" ];
+              };
               "Bing".metaData.hidden = true;
               "DuckDuckGo".metaData.alias = "@ddg";
               "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias

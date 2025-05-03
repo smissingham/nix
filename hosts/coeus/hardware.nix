@@ -11,7 +11,10 @@ let
   ARRAY_UUID_NVME_R10 = "15c09973:5a7c5d14:fbf6a709:77a116cb";
 in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    #./nvfancontrol.nix
+  ];
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
