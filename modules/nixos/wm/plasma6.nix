@@ -108,7 +108,7 @@ in
               "Meta+Tab"
             ];
             "kwin"."Overview" = "Meta+W";
-            "org.kde.krunner.desktop"."_launch" = "Ctrl+Space";
+            "org.kde.krunner.desktop"."_launch" = "Alt+Space";
             "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Print";
           };
 
