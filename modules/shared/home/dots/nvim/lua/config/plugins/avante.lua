@@ -4,17 +4,37 @@ return {
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "litellm_claude",
+      provider = "litellm_gemini_flash",
       vendors = {
         litellm_claude = {
           __inherited_from = "openai",
           endpoint = "https://litellm.coeus.missingham.net/v1",
           model = "ANT-claude-3.7:sonnet",
           api_key_name = "",
-          timeout = 30000,          -- Timeout in milliseconds, increase this for reasoning models
+          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
           temperature = 0,
           max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-          reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
+        },
+        litellm_gemini_pro = {
+          __inherited_from = "openai",
+          endpoint = "https://litellm.coeus.missingham.net/v1",
+          model = "ORT-gemini-2.5-pro",
+          api_key_name = "",
+          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
+          temperature = 0,
+          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
+        },
+        litellm_gemini_flash = {
+          __inherited_from = "openai",
+          endpoint = "https://litellm.coeus.missingham.net/v1",
+          model = "ORT-gemini-2.5-flash",
+          api_key_name = "",
+          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
+          temperature = 0,
+          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
         },
       },
     },
@@ -27,12 +47,12 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
-      "echasnovski/mini.pick",        -- for file_selector provider mini.pick
+      "echasnovski/mini.pick",         -- for file_selector provider mini.pick
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp",             -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua",             -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons",  -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",       -- for providers='copilot'
+      "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua",              -- for file_selector provider fzf
+      "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",        -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",

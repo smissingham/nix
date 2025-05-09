@@ -110,7 +110,10 @@ in
           shellAliases = shellAliases;
           #autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
-          initExtra = "source ~/.p10k.zsh";
+          initExtra = ''
+            source ~/.p10k.zsh
+            source ~/.secrets/api-keys.env
+          '';
 
           history = {
             size = 10000;

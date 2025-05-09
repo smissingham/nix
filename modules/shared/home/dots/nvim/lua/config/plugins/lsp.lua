@@ -43,7 +43,10 @@ return {
   -- ##### BLINK CMP ##### --
   {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'Kaiser-Yang/blink-cmp-avante',
+    },
     version = '1.*',
     opts = {
       keymap = { preset = 'enter' },
@@ -52,7 +55,7 @@ return {
       },
       completion = { documentation = { auto_show = false } },
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'avante', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -60,6 +63,13 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+            opts = {
+              -- options for blink-cmp-avante
+            }
+          }
         },
       },
       fuzzy = { implementation = "prefer_rust_with_warning" }
