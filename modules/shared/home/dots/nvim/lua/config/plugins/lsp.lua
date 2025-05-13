@@ -8,7 +8,8 @@ return {
         lua_ls = {},
         nixd = {},
         rust_analyzer = {},
-        taplo = {}
+        taplo = {},
+        ts_ls = {},
       }
     },
     config = function(_, opts)

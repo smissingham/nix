@@ -1,4 +1,4 @@
-# ----- HOME CONFIGURATION TO APPLY ON ALL (DARWIN + NIXOS) SYSTEMS -----#
+# ----- HOME CONFIGURATION T
 {
   config,
   lib,
@@ -20,6 +20,7 @@ let
   shellAliases = {
     # GENERAL
     q = "exit";
+    ls = "eza";
     cl = "clear";
     ll = "eza -l";
     la = "eza -la";
@@ -102,6 +103,11 @@ in
           enable = true;
           enableZshIntegration = true;
           nix-direnv.enable = true;
+        };
+
+        programs.zoxide = {
+          enable = true;
+          enableZshIntegration = true;
         };
 
         programs.zsh = {

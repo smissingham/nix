@@ -54,13 +54,17 @@ return {
       },
       picker = {
         enabled = true,
-        hidden = true,
-        --ignored = true,
         sources = {
+          explorer = {
+            hidden = true,
+            ignored = true
+          },
           files = {
             hidden = true,
-            --ignored = true,
           },
+        },
+        include = {
+          ".env"
         },
       },
       quickfile = { enabled = true },

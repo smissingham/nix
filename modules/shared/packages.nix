@@ -22,7 +22,7 @@
     obsidian
     vesktop
     #lmstudio
-    bruno
+    pkgsUnstable.zed-editor
     gitkraken
     bruno
     gimp
@@ -40,7 +40,6 @@
     fzf
     tldr
     xclip
-    zoxide
     dig
     bat
 

@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "litellm_gemini_flash",
+      provider = "litellm_gemini_flash_thinking",
       vendors = {
         litellm_claude = {
           __inherited_from = "openai",
@@ -26,10 +26,10 @@ return {
           max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
           reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
         },
-        litellm_gemini_flash = {
+        litellm_gemini_flash_thinking = {
           __inherited_from = "openai",
           endpoint = "https://litellm.coeus.missingham.net/v1",
-          model = "ORT-gemini-2.5-flash",
+          model = "ORT-gemini-2.5-flash-thinking",
           api_key_name = "",
           timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
           temperature = 0,
