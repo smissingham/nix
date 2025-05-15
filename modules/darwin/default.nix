@@ -1,12 +1,6 @@
 # ----- DEFAULTS TO APPLY ONLY ON DARWIN SYSTEMS -----#
 { mainUser, pkgs, ... }:
 {
-
-  imports = [
-    ./home.nix
-    ./packages.nix
-  ];
-
   system =
     let
       appShortcuts = {

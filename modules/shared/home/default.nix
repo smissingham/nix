@@ -28,7 +28,7 @@ let
 
     # NEOVIM
     v = "nvim";
-    vl = "NVIM_APPNAME=nvim-live nvim --clean --cmd \"set runtimepath+=$NIX_CONFIG_HOME/modules/shared/home/dots/nvim/\" -c \"source $NIX_CONFIG_HOME/modules/shared/home/dots/nvim/init.lua\"";
+    vl = "NVIM_APPNAME=nvim-live nvim --clean --cmd \"set runtimepath+=$NIX_CONFIG_HOME/dots/nvim/\" -c \"source $NIX_CONFIG_HOME/dots/nvim/init.lua\"";
     vclear = "rm -rf ~/.local/share/nvim*";
 
     # TMUX
@@ -37,7 +37,7 @@ let
     # NIX
     nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
     nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
-    nxrbs = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --show-trace; popd";
+    nxr = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --show-trace; popd";
     nxgc = "nix-collect-garbage --delete-old";
     nxshell = "nix-shell -p";
     nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
@@ -47,11 +47,6 @@ let
   };
 in
 {
-  imports = [
-    ./firefox.nix
-    ./vscode.nix
-    ./nvim.nix
-  ];
 
   users.users.${mainUser.username} = {
     name = mainUser.username;
@@ -72,7 +67,7 @@ in
           homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + mainUser.username;
           file = {
             ".config/nixpkgs" = {
-              source = ./dots/nixpkgs;
+              source = mainUser.dotsPath + /nixpkgs;
               recursive = true;
             };
           };
@@ -144,74 +139,78 @@ in
         };
 
         # note after rebuild, to force tmux conf switch: `tmux source ~/.config/tmux/tmux.conf`
-        programs.tmux = {
+        # programs.tmux = {
+        #   enable = true;
+        #   shell = "${pkgs.zsh}/bin/zsh";
+        #   plugins = with pkgs; [
+        #     pkgsUnstable.tmuxPlugins.catppuccin
+        #     tmuxPlugins.cpu
+        #     tmuxPlugins.battery
+        #     tmuxPlugins.better-mouse-mode
+        #     tmuxPlugins.sensible
+        #     tmuxPlugins.vim-tmux-navigator
+        #   ];
+        #   extraConfig = builtins.readFile mainUser.dotsPath + /tmux/tmux.conf;
+        # };
+
+        programs.ghostty = {
           enable = true;
-          shell = "${pkgs.zsh}/bin/zsh";
-          plugins = with pkgs; [
-            pkgsUnstable.tmuxPlugins.catppuccin
-            tmuxPlugins.cpu
-            tmuxPlugins.battery
-            tmuxPlugins.better-mouse-mode
-            tmuxPlugins.sensible
-            tmuxPlugins.vim-tmux-navigator
-          ];
-          extraConfig = builtins.readFile ./dots/tmux/tmux.conf;
         };
 
-        programs.alacritty = {
-          enable = true;
-          settings = {
-            general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
-            font = {
-              #size = 12; # 14 creates glitches on p10k prompt
-              normal.family = lib.mkForce "JetBrainsMono Nerd Font"; # "MesloLGS Nerd Font"; # p10k recommends
-            };
-            env = {
-              TERM = "xterm-256color";
-            };
-            window = {
-              opacity = lib.mkForce 0.975;
-              padding.x = 12;
-              padding.y = 12;
-            };
-            keyboard.bindings =
-              [
-
-              ]
-              ++ (
-                if pkgs.stdenv.isDarwin then
-                  [
-
-                    # Terminal controls (match Linux behavior)
-                    {
-                      key = "S";
-                      mods = "Command";
-                      chars = "\\u0013";
-                    }
-
-                    {
-                      key = "Slash";
-                      mods = "Command";
-                      chars = "\\u001f";
-                    }
-
-                    {
-                      key = "Z";
-                      mods = "Command";
-                      chars = "\\u001a";
-                    }
-
-                    {
-                      key = "Space";
-                      mods = "Command";
-                      chars = "\\u0000";
-                    }
-                  ]
-                else
-                  [ ]
-              );
-          };
-        };
+        # programs.alacritty = {
+        #   enable = true;
+        #   settings = {
+        #     general.import = [ "${alacrittyColors}/catppuccin-mocha.toml" ];
+        #     font = {
+        #       #size = 12; # 14 creates glitches on p10k prompt
+        #       normal.family = lib.mkForce "JetBrainsMono Nerd Font"; # "MesloLGS Nerd Font"; # p10k recommends
+        #     };
+        #     env = {
+        #       TERM = "xterm-256color";
+        #     };
+        #     window = {
+        #       opacity = lib.mkForce 0.975;
+        #       padding.x = 12;
+        #       padding.y = 12;
+        #     };
+        #     keyboard.bindings =
+        #       [
+        #
+        #       ]
+        #       ++ (
+        #         if pkgs.stdenv.isDarwin then
+        #           [
+        #
+        #             # Terminal controls (match Linux behavior)
+        #             {
+        #               key = "S";
+        #               mods = "Command";
+        #               chars = "\\u0013";
+        #             }
+        #
+        #             {
+        #               key = "Slash";
+        #               mods = "Command";
+        #               chars = "\\u001f";
+        #             }
+        #
+        #             {
+        #               key = "Z";
+        #               mods = "Command";
+        #               chars = "\\u001a";
+        #             }
+        #
+        #             {
+        #               key = "Space";
+        #               mods = "Command";
+        #               chars = "\\u0000";
+        #             }
+        #           ]
+        #         else
+        #           [ ]
+        #       );
+        #   };
+        # };
 
         #        programs.wezterm = {
         #          enable = true;

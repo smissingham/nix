@@ -66,23 +66,44 @@
       nixpkgs-unstable,
       nix-darwin,
       home-manager,
-      plasma-manager,
       ...
     }:
     let
       inherit (self) outputs;
-
-      myUtils = import ./myUtils.nix;
-
       overlays = [ inputs.agenix.overlays.default ];
 
-      sharedModules = [ ./modules/shared ];
+      importDir =
+        dir:
+        let
+          entries = builtins.readDir dir;
+          processEntry =
+            name: type:
+            if type == "regular" && builtins.match ".*\\.nix" name != null then
+              [ (dir + "/${name}") ]
+            else if type == "directory" then
+              importDir (dir + "/${name}")
+            else
+              [ ];
+        in
+        builtins.concatMap (name: processEntry name entries.${name}) (builtins.attrNames entries);
+
+      importDarwinModules = {
+        imports = importDir ./modules/darwin;
+      };
+      importNixosModules = {
+        imports = importDir ./modules/nixos;
+      };
+      importSharedModules = {
+        imports = importDir ./modules/shared;
+      };
+
+      sharedModules = [ importSharedModules ];
       darwinModules = sharedModules ++ [
-        ./modules/darwin
+        importDarwinModules
         home-manager.darwinModules.home-manager
       ];
       nixosModules = sharedModules ++ [
-        ./modules/nixos
+        importNixosModules
         inputs.agenix.nixosModules.default
         home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
@@ -93,7 +114,8 @@
         name = "Sean Missingham";
         email = "sean@missingham.com";
         homeDir = (if nixpkgs.stdenv.isDarwin then "/Users" else "/home/") ++ "smissingham";
-        terminalApp = "alacritty";
+        dotsPath = ./dots;
+        terminalApp = "ghostty";
       };
 
       specialArgs = {
@@ -102,7 +124,6 @@
           outputs
           overlays
           mainUser
-          myUtils
           ;
         rootPath = ./.;
       };

@@ -17,6 +17,7 @@
     wm = {
       plasma6.enable = true;
       #gnome-xserver.enable = true;
+      hyprland.enable = true;
     };
 
     entertainment.gaming.enable = true;

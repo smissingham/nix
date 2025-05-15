@@ -2,12 +2,9 @@
 {
   mainUser,
   pkgs,
-  myUtils,
   ...
 }:
 {
-  imports = myUtils.importDir ./home ++ [ ./packages.nix ];
-
   nixpkgs = {
     config = {
       allowUnfree = true;

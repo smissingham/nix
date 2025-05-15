@@ -1,31 +1,13 @@
 # ----- DEFAULTS TO APPLY ONLY ON NIXOS SYSTEMS -----#
 {
   mainUser,
-  lib,
   pkgs,
   ...
 }:
 {
 
-  # TODO implement dynamic discovery of all imports in modules directory
-  imports = [
-    ./home.nix
-    ./packages.nix
-    ./access/sunshine.nix
-    ./access/tailscale.nix
-    ./access/ssh.nix
-    ./access/fail2ban.nix
-    ./entertainment/gaming.nix
-    ./virt/kvm.nix
-    ./virt/podman.nix
-    ./wm/gnome-xserver.nix
-    ./wm/plasma6.nix
-  ];
-
   programs.git.enable = true;
   programs.zsh.enable = true;
-
-  environment.systemPackages = with pkgs; [ ];
 
   networking = {
     firewall.enable = true;

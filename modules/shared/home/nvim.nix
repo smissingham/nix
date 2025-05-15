@@ -2,7 +2,7 @@
 {
 
   environment.variables = {
-    NVIM_CONF = "$NIX_CONFIG_HOME/modules/shared/home/dots/nvim";
+    NVIM_CONF = mainUser.dotsPath + /nvim;
   };
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username} = {
@@ -38,7 +38,7 @@
 
     home.file = {
       ".config/nvim" = {
-        source = ./dots/nvim;
+        source = mainUser.dotsPath + /nvim;
         recursive = true;
       };
     };

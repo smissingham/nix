@@ -168,7 +168,25 @@ return {
             },
           })
         end,
-      }
+      },
+      {
+        "<leader>W",
+        desc = "Personal Shortcuts Documentation",
+        function()
+          Snacks.win({
+            file = vim.fn.expand("~/Documents/Obsidian/second-brain/@Public/Software Engineering/Neovim & Tmux.md"),
+            width = 0.8,
+            height = 0.8,
+            wo = {
+              spell = false,
+              wrap = false,
+              signcolumn = "yes",
+              statuscolumn = " ",
+              conceallevel = 3,
+            },
+          })
+        end,
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
