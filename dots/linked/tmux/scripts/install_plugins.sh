@@ -3,7 +3,7 @@
 # Define tmux config directory
 TMUX_DIR="$HOME/.config/tmux"
 TPM_DIR="$TMUX_DIR/plugins/tpm"
-LOG_FILE="./install_plugins.log"
+LOG_FILE="$TMUX_DIR/scripts/install_plugins.log"
 
 # Delete log file if it exists
 rm -f "$LOG_FILE"
