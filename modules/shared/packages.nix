@@ -3,8 +3,6 @@
   pkgs,
   pkgsUnstable,
   mainUser,
-  inputs,
-  system,
   ...
 }:
 {
@@ -16,7 +14,6 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    alacritty
     spotify
     telegram-desktop
     obsidian

@@ -4,6 +4,7 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #appcleaner
+    skhd
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -27,6 +28,7 @@
       "alt-tab"
       "filen"
       #"cursor"
+      "ghostty"
       "moom"
       "onyx"
       "balenaetcher"

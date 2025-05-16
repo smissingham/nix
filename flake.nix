@@ -117,7 +117,7 @@
         username = "smissingham";
         name = "Sean Missingham";
         email = "sean@missingham.com";
-        homeDir = (if isDarwin system then "/Users" else "/home/") + "smissingham";
+        homeDir = (if isDarwin system then "/Users" else "/home") + "/smissingham";
         dotsPath = ./dots;
         terminalApp = "ghostty";
       };

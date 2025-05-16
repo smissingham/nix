@@ -1,20 +1,10 @@
-# ----- HOME CONFIGURATION T
+# ----- HOME CONFIGURATION
 {
-  config,
-  lib,
   pkgs,
   mainUser,
-  pkgsUnstable,
   ...
 }:
 let
-  alacrittyColors = pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "alacritty";
-    rev = "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7";
-    hash = "sha256-H8bouVCS46h0DgQ+oYY8JitahQDj0V9p2cOoD4cQX+Q=";
-  };
-
   hostRebuildCli = (if pkgs.stdenv.isDarwin then "darwin-rebuild" else "sudo nixos-rebuild");
 
   shellAliases = {
@@ -45,7 +35,6 @@ let
     # PROGRAMMING
     pyenv = "python3 -m venv .venv";
   };
-
 in
 {
 
@@ -83,25 +72,29 @@ in
           homeDirectory = mainUser.homeDir;
           activation = {
             stowDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              DOTS_DIR="/home/smissingham/Documents/Nix/dots"
+              DOTS_DIR="${builtins.getEnv "NIX_CONFIG_HOME"}/dots"
               cd "$DOTS_DIR"
 
-              # Stow each directory in dots to ~/.config
+              # Stow each directory in dots to $HOME/.config
               for dir in */; do
                 ${pkgs.stow}/bin/stow -t "$HOME/.config" -d "$DOTS_DIR" -R ''${dir%/}
-                echo "Stowed ''${dir%/} to ~/.config"
+                echo "Stowed ''${dir%/} to $HOME/.config"
               done
             '';
           };
         };
 
         # Terminal related packages to install for user home but configuration not controlled with nix (use dots folder above)
-        home.packages = with pkgs; [
-          stow
-          yazi
-          tmux
-          ghostty
-        ];
+        home.packages =
+          with pkgs;
+          [
+            stow
+            yazi
+            tmux
+          ]
+          ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+            pkgsUnstable.ghostty
+          ];
 
         programs.git = {
           userName = mainUser.name;
