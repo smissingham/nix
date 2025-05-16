@@ -61,7 +61,7 @@
 
           "com.apple.dock" = {
             # Disable switching workspace automatically
-            workspaces-auto-swoosh = false;
+            #workspaces-auto-swoosh = false;
 
             # Disable workspace reordering by most-recently-used
             mru-spaces = false;

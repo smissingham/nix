@@ -3,3 +3,4 @@
 *.st*
 
 secrets.*
+dots/linked/tmux/plugins

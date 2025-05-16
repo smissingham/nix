@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "litellm_gemini_flash_thinking",
+      provider = "litellm_claude",
       vendors = {
         litellm_claude = {
           __inherited_from = "openai",

@@ -97,7 +97,7 @@ in
                 definedAliases = [ "@gh" ];
               };
               "YouTube" = {
-                urls = [ { template = "https://youtube.com/results?search_query={search_query}"; } ];
+                urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
                 iconUpdateURL = "https://twenty-icons.com/YouTube.com";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@yt" ];

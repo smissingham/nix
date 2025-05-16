@@ -15,7 +15,7 @@
   mySystemModules = {
     # Window Manager
     wm = {
-      plasma6.enable = true;
+      #plasma6.enable = true;
       #gnome-xserver.enable = true;
       hyprland.enable = true;
     };

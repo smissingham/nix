@@ -109,22 +109,26 @@
         inputs.stylix.nixosModules.stylix
       ];
 
-      mainUser = {
+      # Function to determine if a system is Darwin based on the system string
+      isDarwin = system: builtins.match ".*-darwin" system != null;
+
+      # Function to create mainUser with the correct homeDir based on system
+      mkMainUser = system: {
         username = "smissingham";
         name = "Sean Missingham";
         email = "sean@missingham.com";
-        homeDir = (if nixpkgs.stdenv.isDarwin then "/Users" else "/home/") ++ "smissingham";
+        homeDir = (if isDarwin system then "/Users" else "/home/") + "smissingham";
         dotsPath = ./dots;
         terminalApp = "ghostty";
       };
 
-      specialArgs = {
+      specialArgs = system: {
         inherit
           inputs
           outputs
           overlays
-          mainUser
           ;
+        mainUser = mkMainUser system;
         rootPath = ./.;
       };
 
@@ -139,7 +143,8 @@
             inherit system;
             config.allowUnfree = true;
           };
-          extendedArgs = specialArgs // {
+          args = specialArgs system;
+          extendedArgs = args // {
             inherit pkgsUnstable;
           };
         in
@@ -162,7 +167,7 @@
               nix-homebrew = {
                 enable = true;
                 enableRosetta = true;
-                user = mainUser.username;
+                user = (mkMainUser "aarch64-darwin").username;
                 taps = {
                   "homebrew/homebrew-core" = inputs.homebrew-core;
                   "homebrew/homebrew-cask" = inputs.homebrew-cask;

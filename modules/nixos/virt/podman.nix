@@ -78,34 +78,20 @@ in
         (lib.mkIf cfg.dockerCompat [ podman-compose ])
       ];
 
-    # Automatically start containers on boot
-    # Use a systemd timer to periodically ensure containers are running
-    # systemd.services.podman-autostart = {
-    #   enable = true;
-    #   description = "Automatically start containers with --restart=always tag";
-    #   path = [ pkgs.podman ];
-    #
-    #   serviceConfig = {
-    #     Type = "oneshot";
-    #     User = mainUser.username;
-    #     ExecStart = ''${pkgs.podman}/bin/podman start --all --filter restart-policy=always'';
-    #     # Restart on failure
-    #     Restart = "on-failure";
-    #     RestartSec = "30s";
-    #   };
-    # };
-    #
-    # # Add a timer to run the service periodically
-    # systemd.timers.podman-autostart = {
-    #   enable = true;
-    #   description = "Timer for podman-autostart service";
-    #   wantedBy = [ "timers.target" ];
-    #
-    #   timerConfig = {
-    #     OnBootSec = "2min"; # Run 2 minutes after boot
-    #     OnUnitActiveSec = "10min"; # Run every 10 minutes thereafter
-    #     Unit = "podman-autostart.service";
-    #   };
-    # };
+    # Simple one-shot service to restart containers with restart-policy=always after user login
+    systemd.user.services.podman-restart-always = {
+      enable = true;
+      description = "Restart containers with restart-policy=always";
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.writeShellScript "restart-always-containers" ''
+          ${pkgs.podman}/bin/podman restart $(${pkgs.podman}/bin/podman ps -q --filter 'restart-policy=always')
+        ''}";
+      };
+
+      # This makes the service run after the user logs in
+      wantedBy = [ "default.target" ];
+    };
   };
 }

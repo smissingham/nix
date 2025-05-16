@@ -24,19 +24,25 @@ in
       withUWSM = true;
     };
 
-    environment.systemPackages = [
-
+    environment.systemPackages = with pkgs; [
+      hyprlock
+      hyprpaper
+      waybar
+      wofi
+      wl-clipboard
+      clipman
+      xfce.thunar
     ];
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     home-manager.users.${mainUser.username} = {
-      home.file = {
-        ".config/hypr" = {
-          source = mainUser.dotsPath + /hypr;
-          recursive = true;
-        };
-      };
+      # home.file = {
+      #   ".config/hypr" = {
+      #     source = mainUser.dotsPath + /hypr;
+      #     recursive = true;
+      #   };
+      # };
     };
   };
 }

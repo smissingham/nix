@@ -1,9 +1,6 @@
 { mainUser, pkgs, ... }:
 {
 
-  environment.variables = {
-    NVIM_CONF = mainUser.dotsPath + /nvim;
-  };
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username} = {
 
@@ -36,11 +33,5 @@
       #rustfmt
     ];
 
-    home.file = {
-      ".config/nvim" = {
-        source = mainUser.dotsPath + /nvim;
-        recursive = true;
-      };
-    };
   };
 }
