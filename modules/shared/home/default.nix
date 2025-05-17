@@ -10,15 +10,15 @@ let
   shellAliases = {
     # GENERAL
     q = "exit";
-    ls = "eza";
     cl = "clear";
+    ls = "eza";
+    gg = "lazygit";
     ll = "eza -l";
     la = "eza -la";
     clip = "xclip -selection clipboard";
 
     # NEOVIM
     v = "nvim";
-    vl = "NVIM_APPNAME=nvim-live nvim --clean --cmd \"set runtimepath+=$NIX_CONFIG_HOME/dots/nvim/\" -c \"source $NIX_CONFIG_HOME/dots/nvim/init.lua\"";
     vclear = "rm -rf ~/.local/share/nvim*";
 
     # TMUX

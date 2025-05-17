@@ -5,7 +5,7 @@
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #appcleaner
     skhd
-    yabai
+    aerospace
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [

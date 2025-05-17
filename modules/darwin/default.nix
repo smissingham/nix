@@ -124,7 +124,6 @@
         remapCapsLockToEscape = true;
         #swapLeftCommandAndLeftAlt = true;
         userKeyMapping = [
-
         ];
       };
 
