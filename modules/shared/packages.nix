@@ -18,7 +18,6 @@
     telegram-desktop
     obsidian
     vesktop
-    #lmstudio
     pkgsUnstable.zed-editor
     gitkraken
     bruno
@@ -39,6 +38,9 @@
     xclip
     dig
     bat
+    stow
+    yazi
+    tmux
 
     nixfmt-rfc-style # formatter
     nixd # lsp

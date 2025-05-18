@@ -1,6 +1,7 @@
 # ----- HOME CONFIGURATION
 {
   pkgs,
+  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -72,7 +73,7 @@ in
           homeDirectory = mainUser.homeDir;
           activation = {
             stowDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              DOTS_DIR="${builtins.getEnv "NIX_CONFIG_HOME"}/dots"
+              DOTS_DIR="$HOME/Documents/Nix/dots"
               cd "$DOTS_DIR"
 
               # Stow each directory in dots to $HOME/.config
@@ -83,18 +84,6 @@ in
             '';
           };
         };
-
-        # Terminal related packages to install for user home but configuration not controlled with nix (use dots folder above)
-        home.packages =
-          with pkgs;
-          [
-            stow
-            yazi
-            tmux
-          ]
-          ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-            pkgsUnstable.ghostty
-          ];
 
         programs.git = {
           userName = mainUser.name;
@@ -122,7 +111,6 @@ in
           enable = true;
           enableCompletion = true;
           shellAliases = shellAliases;
-          #autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
           initExtra = ''
             source ~/.p10k.zsh

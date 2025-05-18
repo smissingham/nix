@@ -5,21 +5,17 @@
   ...
 }:
 {
-  home-manager.users.${mainUser.username}.home = {
-    packages = with pkgs; [
-      filen-desktop
-
-      # Work
-      teams-for-linux
-
-      # Office
-      libreoffice
-      #thunderbird
-      filen-desktop
-
-      # Dev Tools
-      kdePackages.kate
-      jetbrains-toolbox
-    ];
+  home-manager.users.${mainUser.username} = {
+    gtk = {
+      enable = true;
+      theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome.adwaita-icon-theme;
+      };
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+    };
   };
 }
