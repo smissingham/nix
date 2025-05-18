@@ -27,4 +27,7 @@ vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true, silent = true })
 
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {})
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {})
+
 vim.cmd("ShowkeysToggle");

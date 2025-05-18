@@ -25,7 +25,19 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     --	  { "folke/tokyonight.nvim", lazy=false, priority=1000, config = function() vim.cmd.colorscheme "tokyonight-storm" end },
-    { "catppuccin/nvim",        name = "catppuccin", priority = 1000, config = function() vim.cmd.colorscheme "catppuccin-macchiato" end },
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      opts = {
+        term_colors = true,
+        transparent_background = true,
+      },
+      config = function(_, opts)
+        require('catppuccin').setup({ opts })
+        vim.cmd.colorscheme "catppuccin-macchiato"
+      end
+    },
     -- import your plugins
     { import = "config.plugins" },
   },
