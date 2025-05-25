@@ -1,30 +1,14 @@
-:: terminal_apps : ghostty
+####################
+# Project Repo: https://github.com/koekeishiya/skhd
+# Reload SKHD: `skhd -r`
+# Test Keys: `skhd -o`
+####################
+
+
 
 # Launch a new terminal with ctrl+` (ctrl+tilde)
-ctrl - 0x32 : open -na ghostty
+cmd - 0x32 : open -na ghostty
 
 # Launch Firefox with ctrl+shift+` (ctrl+shift+tilde)
-ctrl + shift - 0x32 : open -na Firefox
+cmd + shift - 0x32 : open -na Firefox
 
-# Map Ctrl+o/t/w/n/a to Cmd+o/t/w/n/a globally
-ctrl - o : skhd -k "cmd - o"
-ctrl - t : skhd -k "cmd - t" 
-ctrl - w : skhd -k "cmd - w"
-ctrl - n : skhd -k "cmd - n"
-ctrl - a : skhd -k "cmd - a"
-
-# Map Ctrl+c/v/x to Cmd+c/v/x except in terminal apps
-ctrl - c [
-    "$terminal_apps" ~
-    "*" : skhd -k "cmd - c"
-]
-
-ctrl - v [
-    "$terminal_apps" ~
-    "*" : skhd -k "cmd - v"
-]
-
-ctrl - x [
-    "$terminal_apps" ~
-    "*" : skhd -k "cmd - x"
-]

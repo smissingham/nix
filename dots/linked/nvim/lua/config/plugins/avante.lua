@@ -36,6 +36,14 @@ return {
           max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
           reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
         },
+        devstral_lmstudio = {
+          __inherited_from = "openai",
+          endpoint = "http://localhost:1234/v1",
+          model = "devstral-small-2505",
+          api_key_name = "",
+          max_completion_tokens = 8192,
+          reasoning_effort = "medium"
+        }
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

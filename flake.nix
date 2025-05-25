@@ -27,19 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
-
-    stylix = {
-      url = "github:danth/stylix/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,7 +57,7 @@
     }:
     let
       inherit (self) outputs;
-      overlays = [ inputs.agenix.overlays.default ];
+      overlays = [ ];
 
       importDir =
         dir:
@@ -104,9 +91,7 @@
       ];
       nixosModules = sharedModules ++ [
         importNixosModules
-        inputs.agenix.nixosModules.default
         home-manager.nixosModules.default
-        inputs.stylix.nixosModules.stylix
       ];
 
       # Function to determine if a system is Darwin based on the system string

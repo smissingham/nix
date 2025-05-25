@@ -33,6 +33,7 @@
       "moom"
       "onyx"
       "balenaetcher"
+      "lm-studio"
 
       "microsoft-teams"
       "microsoft-excel"
