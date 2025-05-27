@@ -9,13 +9,15 @@ vim.opt.expandtab = true          -- Use spaces instead of tabs
 vim.opt.smartindent = true        -- Smart autoindenting
 vim.opt.number = true             -- Show line numbers
 vim.opt.relativenumber = true     -- Show relative line numbers
+vim.opt.colorcolumn = '80'        -- Show vertical line guide at char 80
 vim.opt.undofile = true           -- Persistent undo/redo tree save to file in ~/.local...
 vim.opt.wrap = false              -- Disable word wrapping
 vim.opt.cursorline = true         -- Highlight the current line
 vim.opt.wrap = false              -- Disable word wrapping
 vim.opt.cursorline = true         -- Highlight the current line
 vim.opt.clipboard = 'unnamedplus' -- Allow sharing the system clipboard
-vim.opt.smartcase = true          -- Make search case-insensitive unless upper case letters used
+vim.opt.ignorecase = true         -- Make search case-insensitive by default
+vim.opt.smartcase = true          -- Make search case-sensitive when using uppercase letters
 
 
 vim.keymap.set('n', '<esc><esc>', ':noh<CR>', { noremap = true, silent = true })
