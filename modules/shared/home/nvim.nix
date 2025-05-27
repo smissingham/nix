@@ -23,12 +23,13 @@
 
       dwt1-shell-color-scripts # snacks dashboard coloring
 
-      # Language Servers & Formatters
-      lua-language-server
-      nixd
+      # Language Servers & Formatters Required Often/Everywhere
+      lua-language-server # Lua
+      nixd # Nix
+      taplo # TOML
+      vscode-langservers-extracted # HTML, CSS, JSON, JS
 
       # Shouldn't need project specific LSP's, put them in Nix flakes!
-      #taplo
       #rust_analyzer
       #rustfmt
     ];
