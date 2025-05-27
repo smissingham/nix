@@ -6,9 +6,11 @@
 
 
 
-# Launch a new terminal with ctrl+` (ctrl+tilde)
+# Launch Terminal with Mod + Tilde
 cmd - 0x32 : open -na ghostty
+alt - 0x32 : open -na ghostty
 
-# Launch Firefox with ctrl+shift+` (ctrl+shift+tilde)
+# Launch Firefox with Mod + Shift + Tilde
 cmd + shift - 0x32 : open -na Firefox
+alt + shift - 0x32 : open -na Firefox
 
