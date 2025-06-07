@@ -21,7 +21,7 @@ return {
           Groq = '',
           Openrouter = '󱂇',
           Ollama = '󰳆',
-          Litellm = '🚆',
+          LiteLLM = '🚆',
           ['Llama.cpp'] = '󰳆',
           Deepseek = ''
         }

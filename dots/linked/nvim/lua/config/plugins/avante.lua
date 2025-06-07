@@ -4,46 +4,14 @@ return {
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "litellm_claude",
-      vendors = {
-        litellm_claude = {
+      provider = "litellm_default",
+      providers = {
+        litellm_default = {
           __inherited_from = "openai",
           endpoint = "https://litellm.coeus.missingham.net/v1",
-          model = "ANT-claude-3.7:sonnet",
-          api_key_name = "",
-          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
-          temperature = 0,
-          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
+          model = "code-agent",
+          api_key_name = "LITELLM_API_KEY"
         },
-        litellm_gemini_pro = {
-          __inherited_from = "openai",
-          endpoint = "https://litellm.coeus.missingham.net/v1",
-          model = "ORT-gemini-2.5-pro",
-          api_key_name = "",
-          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
-          temperature = 0,
-          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
-        },
-        litellm_gemini_flash_thinking = {
-          __inherited_from = "openai",
-          endpoint = "https://litellm.coeus.missingham.net/v1",
-          model = "ORT-gemini-2.5-flash-thinking",
-          api_key_name = "",
-          timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
-          temperature = 0,
-          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-          reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
-        },
-        devstral_lmstudio = {
-          __inherited_from = "openai",
-          endpoint = "http://localhost:1234/v1",
-          model = "devstral-small-2505",
-          api_key_name = "",
-          max_completion_tokens = 8192,
-          reasoning_effort = "medium"
-        }
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
