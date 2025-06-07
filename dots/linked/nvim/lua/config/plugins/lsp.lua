@@ -37,10 +37,14 @@ return {
     config = function()
       require("conform").setup({
         formatters_by_ft = {
+          nix = { "nixfmt" },
           lua = { "stylua" },
           python = { "isort", "black" },
           rust = { "rustfmt", lsp_format = "fallback" },
-          javascript = { "prettierd", "prettier", stop_after_first = true },
+          javascript = { "prettierd" },
+          typescript = { "prettierd" },
+          css = { "prettierd" },
+          html = { "prettierd" }
         },
         format_on_save = {
           timeout_ms = 500,

@@ -28,6 +28,8 @@
       nixd # Nix
       taplo # TOML
       vscode-langservers-extracted # HTML, CSS, JSON, JS
+      #nodePackages_latest.prettier
+      prettierd
 
       # Shouldn't need project specific LSP's, put them in Nix flakes!
       #rust_analyzer

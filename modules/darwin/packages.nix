@@ -22,8 +22,8 @@
     ];
 
     casks = [
-      "arc"
-      #"google-chrome"
+      #"arc"
+      "google-chrome"
       "firefox"
       "raycast"
       #"alt-tab"

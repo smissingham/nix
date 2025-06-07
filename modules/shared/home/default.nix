@@ -86,6 +86,7 @@ in
         };
 
         programs.git = {
+          enable = true;
           userName = mainUser.name;
           userEmail = mainUser.email;
         };

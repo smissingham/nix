@@ -84,7 +84,7 @@
         };
 
         NSGlobalDomain = {
-          AppleICUForce24HourTime = true;
+          AppleICUForce24HourTime = false;
           AppleInterfaceStyle = "Dark";
           AppleInterfaceStyleSwitchesAutomatically = false;
           AppleMeasurementUnits = "Centimeters";
