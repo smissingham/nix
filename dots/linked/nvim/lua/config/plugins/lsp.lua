@@ -42,7 +42,9 @@ return {
           python = { "isort", "black" },
           rust = { "rustfmt", lsp_format = "fallback" },
           javascript = { "prettierd" },
+          javascriptreact = { "prettierd" },
           typescript = { "prettierd" },
+          typescriptreact = { "prettierd" },
           css = { "prettierd" },
           html = { "prettierd" }
         },
