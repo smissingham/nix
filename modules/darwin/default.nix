@@ -70,6 +70,7 @@
           magnification = true;
           largesize = 64;
           tilesize = 48;
+          expose-group-apps = true; # Group windows by application
         };
 
         finder = {
@@ -82,6 +83,8 @@
           ShowStatusBar = true;
           ShowPathbar = true;
         };
+
+        spaces.spans-displays = false;
 
         NSGlobalDomain = {
           AppleICUForce24HourTime = false;

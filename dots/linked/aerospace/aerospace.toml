@@ -113,7 +113,7 @@ alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 alt-shift-m = "fullscreen"
-alt-shift-f = "layout floating tiling"
+alt-shift-n = "layout floating tiling"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-shift-minus = 'resize smart -50'
@@ -156,7 +156,7 @@ alt-w = 'workspace W'
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
-#alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-4 = 'move-node-to-workspace 4'
 #alt-shift-5 = 'move-node-to-workspace 5'
 #alt-shift-6 = 'move-node-to-workspace 6'
 #alt-shift-7 = 'move-node-to-workspace 7'
@@ -167,7 +167,7 @@ alt-shift-a = 'move-node-to-workspace A'
 #alt-shift-c = 'move-node-to-workspace C'
 alt-shift-d = 'move-node-to-workspace D'
 alt-shift-e = 'move-node-to-workspace E'
-#alt-shift-f = 'move-node-to-workspace F'
+alt-shift-f = 'move-node-to-workspace F'
 #alt-shift-g = 'move-node-to-workspace G'
 #alt-shift-i = 'move-node-to-workspace I'
 #alt-shift-m = 'move-node-to-workspace M'
@@ -175,7 +175,7 @@ alt-shift-e = 'move-node-to-workspace E'
 #alt-shift-o = 'move-node-to-workspace O'
 #alt-shift-p = 'move-node-to-workspace P'
 alt-shift-q = 'move-node-to-workspace Q'
-#alt-shift-r = 'move-node-to-workspace R'
+alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S'
 #alt-shift-t = 'move-node-to-workspace T'
 #alt-shift-u = 'move-node-to-workspace U'
@@ -194,6 +194,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 1 = ['secondary', 'main']
 2 = ['secondary', 'main']
 3 = ['secondary', 'main']
+4 = ['secondary', 'main']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
