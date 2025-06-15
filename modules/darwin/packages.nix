@@ -6,6 +6,9 @@
     #appcleaner
     skhd
     aerospace
+    jankyborders
+    sketchybar
+    flameshot
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -23,6 +26,7 @@
 
     casks = [
       #"arc"
+      "ferdium"
       "google-chrome"
       "firefox"
       "raycast"
@@ -35,6 +39,8 @@
       #"balenaetcher"
       "lm-studio"
 
+      "orbstack"
+
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
@@ -44,8 +50,8 @@
     brews = [
       "duckdb"
       "libomp"
-      "podman"
-      "podman-compose"
+      #"podman"
+      #"podman-compose"
     ];
 
     onActivation = {
