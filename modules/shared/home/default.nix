@@ -17,6 +17,7 @@ let
     ll = "eza -l";
     la = "eza -la";
     clip = "xclip -selection clipboard";
+    t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
 
     # NEOVIM
     v = "nvim";

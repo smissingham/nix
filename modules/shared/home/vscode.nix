@@ -1,3 +1,9 @@
+##
+#
+# Nuke Installed Config & State: rm -rf ~/Library/Application\ Support/VSCodium && rm -rf ~/Library/Application\ Support/Code && rm -rf ~/.vscode && rm -rf ~/.vscode-oss
+#
+##
+
 {
   config,
   lib,
@@ -43,6 +49,24 @@ in
       #   recursive = true;
       # };
 
+      # home.packages =
+      #   with pkgs;
+      #   [
+      #     prettierd
+      #
+      #     python312
+      #   ]
+      #   ++ (with pkgs.python312Packages; [
+      #     pip
+      #     virtualenv
+      #     setuptools
+      #     wheel
+      #     ipykernel
+      #
+      #     pandas
+      #     duckdb
+      #   ]);
+
       programs.vscode = {
         enable = true;
         package = (if cfg.useCodium then pkgsUnstable.vscodium else pkgsUnstable.vscode);
@@ -63,6 +87,15 @@ in
             "serverPath" = "nixd";
             "formatterPath" = "nixfmt";
           };
+
+          "notebook.defaultFormatter" = "ms-toolsai.jupyter";
+          "[python]" = {
+            "editor.defaultFormatter" = "ms-python.black-formatter";
+          };
+          "[jupyter]" = {
+            "editor.defaultFormatter" = "ms-python.black-formatter";
+          };
+          "jupyter.askForKernelRestart" = false;
 
           "continue" = {
             "telemetryEnabled" = false;
@@ -91,6 +124,7 @@ in
             # First Class Language Support
             ms-python.python
             ms-python.vscode-pylance
+            ms-python.black-formatter
 
             # Nix
             bbenoist.nix
@@ -104,7 +138,7 @@ in
             ms-toolsai.jupyter
             ms-toolsai.jupyter-renderers
 
-            # Code Formatting
+            # Code ormatting
             esbenp.prettier-vscode
 
             # Version Control
@@ -114,7 +148,32 @@ in
           # ----- Manually Specified Extensions ----- #
           ++ [
 
-            # File Nav
+            (buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "vim";
+                publisher = "vscodevim";
+                version = "1.30.1";
+                sha256 = "sha256-cKdVQTGj7R37YefQAaTspF1RVul/9wv7u9b5TpGZN5k=";
+              };
+            })
+
+            (buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "vscode-jupytext";
+                publisher = "congyiwu";
+                version = "0.1.2";
+                sha256 = "sha256-V9V4O1fdhY/ReKskixn113O0G1Mu1x9Z9SdChw9uVqU=";
+              };
+            })
+            (buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "vscode-sanddance";
+                publisher = "msrvida";
+                version = "4.1.0";
+                sha256 = "sha256-Ho2bkVRURP2UDYX9Z8FQAe9KBzIL8panXiSTI310ea8=";
+              };
+            })
+
             (buildVscodeMarketplaceExtension {
               mktplcRef = {
                 name = "periscope";
@@ -124,7 +183,6 @@ in
               };
             })
 
-            # AI Agent
             (buildVscodeMarketplaceExtension {
               mktplcRef = {
                 name = "continue";

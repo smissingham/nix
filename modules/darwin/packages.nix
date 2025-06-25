@@ -32,6 +32,7 @@
       "raycast"
       #"alt-tab"
       #"filen"
+      "floorp"
       #"cursor"
       "ghostty"
       #"moom"

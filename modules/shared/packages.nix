@@ -29,6 +29,7 @@
     pkgsUnstable.usbutils
     findutils
 
+    btop
     git
     gnupg
     eza
