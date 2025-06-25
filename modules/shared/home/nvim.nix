@@ -1,4 +1,9 @@
-{ mainUser, pkgs, ... }:
+{
+  mainUser,
+  pkgs,
+  inputs,
+  ...
+}:
 {
 
   #----- Applications in User Space -----#
@@ -7,6 +12,7 @@
     home.packages = with pkgs; [
       neovim
 
+      inputs.mcp-hub.packages."${system}".default
       lazygit
 
       # required by lazy

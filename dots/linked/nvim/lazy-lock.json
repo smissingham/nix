@@ -16,6 +16,7 @@
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lazydev.nvim": { "branch": "main", "commit": "2367a6c0a01eb9edb0464731cc0fb61ed9ab9d2c" },
   "lualine.nvim": { "branch": "master", "commit": "a94fc68960665e54408fe37dcf573193c4ce82c9" },
+  "mcphub.nvim": { "branch": "main", "commit": "03f79df34bb356648e3ca2f84c4a037dcd3bea15" },
   "mini.bracketed": { "branch": "main", "commit": "079b8375e40ebf3f8af319ad835263ff390c3965" },
   "mini.pairs": { "branch": "main", "commit": "69864a2efb36c030877421634487fd90db1e4298" },
   "mini.pick": { "branch": "main", "commit": "ebe3dacb352bb054607e5ed0fd461e2251a7a280" },

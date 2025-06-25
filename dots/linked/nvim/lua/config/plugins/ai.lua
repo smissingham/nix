@@ -1,4 +1,18 @@
 return {
+
+  -- ##### MCP HUB ##### --
+  {
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    --   build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+    config = function()
+      require("mcphub").setup()
+    end
+  },
+
+  -- ##### AVANTE AGENT ##### --
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
@@ -13,6 +27,17 @@ return {
           api_key_name = "LITELLM_API_KEY"
         },
       },
+
+      system_prompt = function()
+        local hub = require("mcphub").get_hub_instance()
+        return hub and hub:get_active_servers_prompt() or ""
+      end,
+
+      custom_tools = function()
+        return {
+          require("mcphub.extensions.avante").mcp_tool(),
+        }
+      end,
     },
     build = "make",
     dependencies = {
@@ -48,5 +73,7 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
+
+
   }
 }

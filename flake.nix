@@ -44,6 +44,11 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+
+    mcp-hub = {
+      url = "github:ravitemer/mcp-hub";
+    };
+
   };
 
   outputs =
