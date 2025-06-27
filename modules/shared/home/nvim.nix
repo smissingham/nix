@@ -17,6 +17,7 @@
 
       # required by lazy
       python312
+      uv
 
       ripgrep
       gcc
@@ -40,7 +41,9 @@
       # Shouldn't need project specific LSP's, put them in Nix flakes!
       #rust_analyzer
       #rustfmt
-    ];
 
+      ### TO REMOVE !! Hacking things in while I test different tools ###
+      claude-code
+    ];
   };
 }
