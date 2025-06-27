@@ -1,0 +1,44 @@
+  {
+    "mcpServers": {
+      "memory": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-memory"
+        ]
+      },
+      "time": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-time",
+          "--local-timezone=America/Chicago"
+        ]
+      },
+      "second-brain": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-obsidian",
+          "/app/data/obsidian/second-brain"
+        ]
+      },
+      "searxng": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-searxng"
+        ],
+        "env": {
+          "SEARXNG_URL": "https://searxng.coeus.missingham.net"
+        }
+      },
+      "tavily": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "tavily-mcp@0.2.2"
+        ]
+      }
+    },
+    "nativeMCPServers": []
+  }
