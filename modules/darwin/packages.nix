@@ -26,21 +26,22 @@
 
     casks = [
       #"arc"
-      "ferdium"
+      #"ferdium"
       "google-chrome"
-      "firefox"
+      #"firefox"
       "raycast"
       #"alt-tab"
-      #"filen"
-      "floorp"
+      "filen"
+      #"floorp"
       #"cursor"
       "ghostty"
       #"moom"
       "onyx"
       #"balenaetcher"
       "lm-studio"
+      #"proton-drive"
 
-      "orbstack"
+      #"orbstack"
 
       "microsoft-teams"
       "microsoft-excel"

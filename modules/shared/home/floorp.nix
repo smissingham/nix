@@ -10,7 +10,7 @@
 let
   moduleSet = "myHomeModules";
   moduleCategory = "browsers";
-  moduleName = "firefox";
+  moduleName = "floorp";
 
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
 in
@@ -24,9 +24,10 @@ in
     #----- Applications in User Space -----#
     home-manager.users.${mainUser.username} = {
 
-      programs.firefox = {
+      programs.floorp = {
         enable = true;
-        package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
+        package = pkgsUnstable.floorp;
+        #package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
         profiles.default = {
           id = 0;
           name = mainUser.username;

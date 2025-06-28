@@ -3,6 +3,7 @@ return {
   -- ##### MCP HUB ##### --
   {
     "ravitemer/mcphub.nvim",
+    tag = "v5.9.0",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -18,7 +19,7 @@ return {
     event = "VeryLazy",
     version = false,
     opts = {
-      provider = "litellm_default",
+      provider = "openrouter",
       providers = {
         litellm_default = {
           __inherited_from = "openai",
@@ -26,6 +27,12 @@ return {
           model = "code-agent",
           api_key_name = "LITELLM_API_KEY"
         },
+        openrouter = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          model = "anthropic/claude-4-sonnet-20250522",
+          api_key_name = "OPENROUTER_API_KEY"
+        }
       },
 
       system_prompt = function()

@@ -31,7 +31,7 @@ in
 
   myHomeModules = {
     browsers = {
-      firefox.enable = true;
+      floorp.enable = true;
     };
     devtools = {
       vscode.enable = true;

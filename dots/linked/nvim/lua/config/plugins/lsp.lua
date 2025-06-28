@@ -9,7 +9,13 @@ return {
         html = {},   -- HTML
         cssls = {},  -- CSS
         jsonls = {}, -- JSON
-        eslint = {}, -- Javascript
+        eslint = {
+          settings = {
+            rulesCustomizations = {
+              { rule = "tailwindcss/classnames-order", severity = "off" }
+            }
+          }
+        }, -- Javascript
 
         -- System Configuration Related --
         lua_ls = {}, -- Lua
