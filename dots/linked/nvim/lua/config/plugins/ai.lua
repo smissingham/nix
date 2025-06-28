@@ -12,6 +12,9 @@ return {
       require("mcphub").setup({
         auto_approve = true
       })
+
+      -- Add keymap for MCPHub command
+      vim.keymap.set('n', '<leader>am', '<cmd>MCPHub<cr>', { desc = 'Open MCPHub' })
     end
   },
 
@@ -32,7 +35,8 @@ return {
         openrouter = {
           __inherited_from = "openai",
           endpoint = "https://openrouter.ai/api/v1",
-          model = "anthropic/claude-4-sonnet-20250522",
+          --model = "anthropic/claude-4-sonnet-20250522",
+          model = "google/gemini-2.5-flash-preview-05-20",
           api_key_name = "OPENROUTER_API_KEY"
         }
       },

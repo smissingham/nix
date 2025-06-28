@@ -1,44 +1,75 @@
-  {
-    "mcpServers": {
-      "memory": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-memory"
-        ]
+{
+  "mcpServers": {
+    "searxng": {
+      "command": "npx",
+      "env": {
+        "SEARXNG_URL": "https://searxng.coeus.missingham.net"
       },
-      "time": {
-        "command": "uvx",
-        "args": [
-          "mcp-server-time",
-          "--local-timezone=America/Chicago"
-        ]
-      },
-      "second-brain": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "mcp-obsidian",
-          "/app/data/obsidian/second-brain"
-        ]
-      },
-      "searxng": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "mcp-searxng"
-        ],
-        "env": {
-          "SEARXNG_URL": "https://searxng.coeus.missingham.net"
-        }
-      },
-      "tavily": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "tavily-mcp@0.2.2"
-        ]
-      }
+      "args": [
+        "-y",
+        "mcp-searxng"
+      ]
     },
-    "nativeMCPServers": []
-  }
+    "ripgrep": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-ripgrep@latest"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "tavily": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tavily-mcp@0.2.2"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "second-brain": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-obsidian",
+        "/app/data/obsidian/second-brain"
+      ]
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=America/Chicago"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "disabled": false,
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "~/Documents/"
+      ]
+    }
+  },
+  "nativeMCPServers": [
+    
+  ]
+}
