@@ -4,3 +4,5 @@
 
 secrets.*
 dots/linked/tmux/plugins
+
+dots/linked/nvim/lazy-lock.json
