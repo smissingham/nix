@@ -9,7 +9,9 @@ return {
     },
     --   build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
     config = function()
-      require("mcphub").setup()
+      require("mcphub").setup({
+        auto_approve = true
+      })
     end
   },
 
@@ -45,6 +47,10 @@ return {
           require("mcphub.extensions.avante").mcp_tool(),
         }
       end,
+
+      disabled_tools = {
+        "web_search"
+      },
     },
     build = "make",
     dependencies = {
