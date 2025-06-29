@@ -1,72 +1,88 @@
 {
   "mcpServers": {
+    "filesystem": {
+      "disabled": false,
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "~/Documents/"
+      ],
+      "command": "npx"
+    },
+    "git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx"
+    },
+    "memory": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "command": "npx"
+    },
+    "tavily": {
+      "disabled": true,
+      "args": [
+        "-y",
+        "tavily-mcp@0.2.2"
+      ],
+      "command": "npx"
+    },
     "searxng": {
-      "command": "npx",
       "env": {
         "SEARXNG_URL": "https://searxng.coeus.missingham.net"
       },
       "args": [
         "-y",
         "mcp-searxng"
-      ]
-    },
-    "ripgrep": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-ripgrep@latest"
-      ]
-    },
-    "git": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-git"
-      ]
-    },
-    "tavily": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "tavily-mcp@0.2.2"
-      ]
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
+      ],
+      "command": "npx"
     },
     "second-brain": {
-      "command": "npx",
+      "disabled": true,
       "args": [
         "-y",
         "mcp-obsidian",
         "/app/data/obsidian/second-brain"
-      ]
+      ],
+      "command": "npx"
+    },
+    "sequential-thinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx"
+    },
+    "pricefx": {
+      "env": {
+        "PRICEFX_USERNAME": "admin",
+        "PRICEFX_PARTITION": "demofx_smissingham",
+        "PRICEFX_PASSWORD": "jTAbsArDiVk2fZw",
+        "PRICEFX_DOMAIN": "demo.pricefx.com"
+      },
+      "disabled": false,
+      "args": [
+        "/Users/smissingham/Documents/Pricefx/02-tools/browser-extension/mcp/dist/index.js"
+      ],
+      "command": "node"
     },
     "time": {
-      "command": "uvx",
       "args": [
         "mcp-server-time",
         "--local-timezone=America/Chicago"
-      ]
+      ],
+      "command": "uvx"
     },
-    "filesystem": {
-      "command": "npx",
-      "disabled": false,
+    "ripgrep": {
+      "disabled": true,
       "args": [
         "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "~/Documents/"
-      ]
+        "mcp-ripgrep@latest"
+      ],
+      "command": "npx"
     }
   },
   "nativeMCPServers": [
