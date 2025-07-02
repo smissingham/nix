@@ -7,20 +7,20 @@
         "@modelcontextprotocol/server-filesystem",
         "~/Documents/"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "git": {
       "args": [
         "mcp-server-git"
       ],
-      "command": "uvx"
+      "command": "/etc/profiles/per-user/smissingham/bin/uvx"
     },
     "memory": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-memory"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "tavily": {
       "disabled": true,
@@ -28,7 +28,7 @@
         "-y",
         "tavily-mcp@0.2.2"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "searxng": {
       "env": {
@@ -38,7 +38,7 @@
         "-y",
         "mcp-searxng"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "second-brain": {
       "disabled": true,
@@ -47,14 +47,14 @@
         "mcp-obsidian",
         "/app/data/obsidian/second-brain"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "sequential-thinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     },
     "pricefx": {
       "env": {
@@ -67,14 +67,14 @@
       "args": [
         "/Users/smissingham/Documents/Pricefx/02-tools/browser-extension/mcp/dist/index.js"
       ],
-      "command": "node"
+      "command": "/etc/profiles/per-user/smissingham/bin/node"
     },
     "time": {
       "args": [
         "mcp-server-time",
         "--local-timezone=America/Chicago"
       ],
-      "command": "uvx"
+      "command": "/etc/profiles/per-user/smissingham/bin/uvx"
     },
     "ripgrep": {
       "disabled": true,
@@ -82,10 +82,8 @@
         "-y",
         "mcp-ripgrep@latest"
       ],
-      "command": "npx"
+      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     }
   },
-  "nativeMCPServers": [
-    
-  ]
+  "nativeMCPServers": []
 }
