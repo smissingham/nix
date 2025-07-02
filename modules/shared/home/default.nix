@@ -29,7 +29,7 @@ let
     # NIX
     nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
     nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
-    nxr = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --impure --show-trace; popd";
+    nxr = "pushd $NIX_CONFIG_HOME; nix flake update; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --impure --show-trace; popd";
     nxgc = "nix-collect-garbage --delete-old";
     nxshell = "nix-shell -p";
     nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';

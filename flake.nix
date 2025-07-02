@@ -45,10 +45,11 @@
       flake = false;
     };
 
-    mcp-hub = {
-      url = "github:ravitemer/mcp-hub";
+    mypkgs = {
+      url = "path:./packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
-
   };
 
   outputs =
@@ -62,7 +63,7 @@
     }:
     let
       inherit (self) outputs;
-      overlays = [ ];
+      overlays = [ inputs.mypkgs.overlays.default ];
 
       importDir =
         dir:
@@ -141,7 +142,9 @@
         builder {
           inherit system;
           specialArgs = extendedArgs;
-          modules = modules;
+          modules = modules ++ [
+            { nixpkgs.overlays = overlays; }
+          ];
         };
 
     in

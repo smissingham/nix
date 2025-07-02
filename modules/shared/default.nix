@@ -4,18 +4,11 @@
   pkgs,
   ...
 }:
-let
-  customPackagesDir = ../../packages;
-in
 {
   nixpkgs = {
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
-      packageOverrides = pkgs: {
-        filen-desktop = pkgs.callPackage ../../packages/filen-desktop/package.appimage.nix { };
-        claude-code = pkgs.callPackage (customPackagesDir + "/claude-code/package.nix") { };
-      };
     };
   };
 

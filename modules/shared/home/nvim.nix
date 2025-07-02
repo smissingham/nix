@@ -1,49 +1,46 @@
 {
   mainUser,
   pkgs,
-  inputs,
   ...
 }:
+let
+  inherit (pkgs) mypkgs;
+in
 {
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username} = {
 
     home.packages = with pkgs; [
+      # ----- Core Packages Required -----#
       neovim
 
-      inputs.mcp-hub.packages."${system}".default
+      # ----- Developer Tools -----#
       lazygit
+      mypkgs.mcp-hub
+      mypkgs.claude-code
 
-      # required by lazy
-      python312
-      uv
-
+      # ----- CLI Utilities -----#
+      fd
       ripgrep
       gcc
       gnumake
 
-      fd
-
-      tree-sitter # for :TSInstallFromGrammar
+      # ----- Required Runtimes -----#
+      python312
       nodejs_20 # for :TSInstallFromGrammar
+      uv
 
-      dwt1-shell-color-scripts # snacks dashboard coloring
-
-      # Language Servers & Formatters Required Often/Everywhere
+      # ----- Language Servers -----#
       lua-language-server # Lua
       nixd # Nix
       taplo # TOML
       vscode-langservers-extracted # HTML, CSS, JSON, JS
-      #nodePackages_latest.prettier
       prettierd
 
-      # Shouldn't need project specific LSP's, put them in Nix flakes!
-      #rust_analyzer
-      #rustfmt
-
-      ### TO REMOVE !! Hacking things in while I test different tools ###
-      claude-code
+      #----- Required by Plugins -----#
+      tree-sitter # for :TSInstallFromGrammar
+      dwt1-shell-color-scripts # snacks dashboard coloring
     ];
   };
 }

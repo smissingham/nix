@@ -5,11 +5,14 @@
   mainUser,
   ...
 }:
+let
+  inherit (pkgs) mypkgs;
+in
 {
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     pkgsUnstable.ghostty
-    filen-desktop
+    mypkgs.filen-desktop
 
     # Work
     teams-for-linux
