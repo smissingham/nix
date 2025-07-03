@@ -9,6 +9,8 @@
       };
     in
     {
+      primaryUser = mainUser.username;
+
       # https://macos-defaults.com/
       defaults = {
 
@@ -115,9 +117,9 @@
       };
 
       # Following line should allow us to avoid a logout/login cycle
-      activationScripts.postUserActivation.text = ''
-        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-      '';
+      #      activationScripts.postUserActivation.text = ''
+      #        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+      #      '';
 
     };
 }

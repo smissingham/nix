@@ -13,13 +13,13 @@
     };
 
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/fc843893cecc1838a59713ee3e50e9e7edc6207c"; # Pinned to a specific commit
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     plasma-manager = {
@@ -120,7 +120,6 @@
           overlays
           ;
         mainUser = mkMainUser system;
-        system.primaryUser = mkMainUser.username;
         rootPath = ./.;
       };
 
