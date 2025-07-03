@@ -17,7 +17,7 @@ in
 
       # ----- Developer Tools -----#
       lazygit
-      mypkgs.mcp-hub
+      #mypkgs.mcp-hub
       mypkgs.claude-code
 
       # ----- CLI Utilities -----#
