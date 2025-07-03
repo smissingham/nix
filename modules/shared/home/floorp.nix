@@ -55,12 +55,12 @@ in
             force = true;
             default = "SearXNG";
             order = [
-              "SearXNG"
+              "searxng"
               "ddg"
-              "Google"
+              "google"
             ];
             engines = {
-              "Nix Packages" = {
+              "nixospackages" = {
                 urls = [
                   {
                     template = "https://search.nixos.org/packages";
@@ -79,33 +79,33 @@ in
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@np" ];
               };
-              "NixOS Wiki" = {
+              "nixoswiki" = {
                 urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
-                iconUpdateURL = "https://twenty-icons.com/nixos.org";
+                icon = "https://twenty-icons.com/nixos.org";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@nw" ];
               };
-              "SearXNG" = {
+              "searxng" = {
                 urls = [ { template = "https://searxng.coeus.missingham.net?q={searchTerms}"; } ];
-                iconUpdateURL = "https://twenty-icons.com/searxng.org";
+                icon = "https://twenty-icons.com/searxng.org";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@sx" ];
               };
-              "GitHub" = {
+              "github" = {
                 urls = [ { template = "https://github.com/search?q={searchTerms}&type=code"; } ];
-                iconUpdateURL = "https://twenty-icons.com/github.com";
+                icon = "https://twenty-icons.com/github.com";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@gh" ];
               };
-              "YouTube" = {
+              "youtube" = {
                 urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
-                iconUpdateURL = "https://twenty-icons.com/YouTube.com";
+                icon = "https://twenty-icons.com/YouTube.com";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
                 definedAliases = [ "@yt" ];
               };
-              "Bing".metaData.hidden = true;
-              "DuckDuckGo".metaData.alias = "@ddg";
-              "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+              "bing".metaData.hidden = true;
+              "ddg".metaData.alias = "@ddg";
+              "google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
             };
           };
 

@@ -120,6 +120,8 @@
       #      activationScripts.postUserActivation.text = ''
       #        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
       #      '';
-
+      activationScripts.extraActivation.text = ''
+        softwareupdate --install-rosetta --agree-to-license
+      '';
     };
 }

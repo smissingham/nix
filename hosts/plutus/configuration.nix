@@ -2,18 +2,67 @@
   config,
   nixpkgs,
   pkgs,
+  mainUser,
   ...
 }:
 {
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ ];
   networking.hostName = "plutus";
-
-  # Use custom location for configuration.nix.
-  environment.darwinConfig = "$HOME/.config/nix-darwin/configuration.nix";
+  networking.computerName = "plutus";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
+
+  myDarwinModules = {
+    #access.tailscale.enable = true;
+    wm.sol.enable = true;
+    wm.aerospace.enable = true;
+  };
+
+  #----- Nixpkgs Applications in User Space -----#
+  home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+    #appcleaner
+    skhd
+    flameshot
+  ];
+  #----- Nixpkgs Applications in System Space -----#
+  environment.systemPackages = with pkgs; [
+
+  ];
+
+  # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
+  homebrew = {
+    enable = true;
+    taps = [
+      "homebrew/core"
+      "homebrew/cask"
+      "homebrew/bundle"
+    ];
+
+    casks = [
+      "google-chrome"
+      "ghostty"
+      "onyx"
+      "lm-studio"
+
+      "microsoft-teams"
+      "microsoft-excel"
+      "microsoft-powerpoint"
+      "microsoft-word"
+    ];
+
+    brews = [
+      "duckdb"
+      "libomp"
+    ];
+
+    onActivation = {
+      cleanup = "zap";
+    };
+
+    # ----- MAC APP STORE APPS -----#
+    masApps = {
+
+    };
+  };
 }

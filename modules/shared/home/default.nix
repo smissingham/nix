@@ -1,11 +1,13 @@
 # ----- HOME CONFIGURATION
 {
+  config,
   pkgs,
   pkgsUnstable,
   mainUser,
   ...
 }:
 let
+  autoDotsPath = "${config.environment.variables.NIX_CONFIG_HOME}/dots/auto";
   hostRebuildCli = (if pkgs.stdenv.isDarwin then "sudo darwin-rebuild" else "sudo nixos-rebuild");
 
   shellAliases = {
@@ -76,15 +78,9 @@ in
           username = mainUser.username;
           homeDirectory = mainUser.homeDir;
           activation = {
-            stowDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              DOTS_DIR="$HOME/Documents/Nix/dots"
-              cd "$DOTS_DIR"
-
-              # Stow each directory in dots to $HOME/.config
-              for dir in */; do
-                ${pkgs.stow}/bin/stow -t "$HOME/.config" -d "$DOTS_DIR" -R ''${dir%/}
-                echo "Stowed ''${dir%/} to $HOME/.config"
-              done
+            stowAutoDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${autoDotsPath}" -R .
+              echo "Stowed automatically linked dots"
             '';
           };
         };
