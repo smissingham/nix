@@ -16,7 +16,7 @@ All of the configuration for that is declarative, and version controlled, right 
 
 
 3. Git clone the system flake repo
-`cd Documents && git clone https://github.com/smissingham/nix Nix`
+`cd Documents && git clone -b jose https://github.com/smissingham/nix Nix`
 - Follow prompt for installing mac dev tools, necessary anyway
 
 
