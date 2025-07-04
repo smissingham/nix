@@ -10,6 +10,15 @@
   networking.hostName = "plutus";
   networking.computerName = "plutus";
 
+  myHomeModules = {
+    browsers = {
+      floorp.enable = true;
+    };
+    devtools = {
+      vscode.enable = true;
+    };
+  };
+
   myDarwinModules = {
     wm.sol.enable = true;
     wm.aerospace.enable = true;
