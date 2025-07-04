@@ -80,6 +80,7 @@
     # ----- MAC APP STORE APPS -----#
     masApps = {
       Xnip = 1221250572;
+      Dropover = 1355679052;
     };
   };
 
@@ -114,7 +115,7 @@
       };
 
       finder = {
-        _FXShowPosixPathInTitle = true;
+        _FXShowPosixPathInTitle = false;
         FXEnableExtensionChangeWarning = false;
         FXPreferredViewStyle = "Nlsv";
         AppleShowAllExtensions = true;
@@ -160,10 +161,10 @@
           FXPreferredViewStyle = "Nlsv"; # Default to list view
           SidebarZoneOrder1 = [
             "favorites"
-            "devices"
-            "locations"
-            "tags"
             "icloud_drive"
+            "locations"
+            "devices"
+            "tags"
           ];
         };
 
@@ -175,9 +176,12 @@
         "com.apple.dock" = {
           # Disable switching workspace automatically
           workspaces-auto-swoosh = true;
+          mineffect = "scale";
 
           # Disable workspace reordering by most-recently-used
           mru-spaces = false;
+          show-recents = false;
+          scroll-to-open = true;
         };
 
         "com.apple.SoftwareUpdate" = {
