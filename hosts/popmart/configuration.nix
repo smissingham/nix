@@ -11,7 +11,7 @@
   networking.computerName = "popmart";
 
   myDarwinModules = {
-    wm.sol.enable = true;
+    #wm.sol.enable = true;
     wm.aerospace.enable = true;
   };
 
@@ -29,6 +29,7 @@
     casks = [
       "orion"
       "ghostty"
+      "raycast"
       #"tailscale" # -- DOES NOT WORK! Get's stuck in install/uninstall loop
 
       "microsoft-teams"
