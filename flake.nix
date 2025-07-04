@@ -177,6 +177,27 @@
             }
           ];
         };
+        popmart = mkSystem {
+          system = "aarch64-darwin";
+          builder = nix-darwin.lib.darwinSystem;
+          modules = darwinModules ++ [
+            ./hosts/plutus/configuration.nix
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = (mkMainUser "aarch64-darwin").username;
+                taps = {
+                  "homebrew/homebrew-core" = inputs.homebrew-core;
+                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                };
+                mutableTaps = false;
+              };
+            }
+          ];
+        };
       };
 
       nixosConfigurations = {
