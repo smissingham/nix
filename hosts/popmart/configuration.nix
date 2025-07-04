@@ -25,6 +25,8 @@
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
+  # ⁠SketchyBar, Borders, Dropover, Portal, Supernote, Swish, Xnip #
+
   homebrew = {
     casks = [
 
@@ -44,6 +46,7 @@
       "microsoft-powerpoint"
       "microsoft-word"
       "microsoft-edge"
+      "microsoft-outlook"
 
       # Data Science
       "knime"
@@ -52,6 +55,22 @@
       "aldente"
       "visual-studio-code"
       "gitkraken"
+      "bitwarden"
+      "whatsapp"
+      "bartender"
+      # "r" is weird, it installs and uninstalls everytime nxr is run
+      "bambu-studio"
+      "discord"
+      "logi-options+"
+      "logitune"
+      "obsidian"
+      "nvidia-geforce-now"
+      "todoist-app"
+      "windows-app"
+      "onedrive"
+      "chatgpt"
+      "autodesk-fusion"
+
     ];
 
     brews = [
@@ -60,6 +79,7 @@
 
     # ----- MAC APP STORE APPS -----#
     masApps = {
+      Xnip = 1221250572;
     };
   };
 
@@ -71,7 +91,7 @@
 
     keyboard = {
       enableKeyMapping = true;
-      remapCapsLockToEscape = true;
+      remapCapsLockToEscape = false;
       #swapLeftCommandAndLeftAlt = true;
       userKeyMapping = [
       ];
@@ -83,10 +103,10 @@
       spaces.spans-displays = false;
 
       dock = {
-        autohide = true;
+        autohide = false;
         show-recents = false;
         launchanim = true;
-        orientation = "right";
+        orientation = "bottom";
         magnification = true;
         largesize = 64;
         tilesize = 48;
@@ -99,7 +119,7 @@
         FXPreferredViewStyle = "Nlsv";
         AppleShowAllExtensions = true;
         AppleShowAllFiles = true;
-        QuitMenuItem = true;
+        QuitMenuItem = false;
         ShowStatusBar = true;
         ShowPathbar = true;
       };
