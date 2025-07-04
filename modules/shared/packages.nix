@@ -15,13 +15,6 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    spotify
-    #telegram-desktop
-    obsidian
-    pkgsUnstable.zed-editor
-    gitkraken
-    bruno
-    gimp
   ];
 
   #----- Applications in System Space -----#

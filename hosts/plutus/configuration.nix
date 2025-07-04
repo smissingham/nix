@@ -2,6 +2,7 @@
   config,
   nixpkgs,
   pkgs,
+  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -17,6 +18,15 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     flameshot
+
+    spotify
+    #telegram-desktop
+    obsidian
+    pkgsUnstable.zed-editor
+    gitkraken
+    bruno
+    gimp
+
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -30,7 +40,7 @@
       "ghostty"
       "onyx"
       "lm-studio"
-      "tailscale"
+      #"tailscale" # -- DOES NOT WORK! Get's stuck in install/uninstall loop
 
       "microsoft-teams"
       "microsoft-excel"
