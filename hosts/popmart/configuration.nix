@@ -27,6 +27,7 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     casks = [
+      "google-chrome"
       "orion"
       "ghostty"
       "raycast"
