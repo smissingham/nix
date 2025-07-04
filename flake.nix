@@ -111,10 +111,10 @@
 
       # Function to create mainUser with the correct homeDir based on system
       mkMainUser = system: {
-        username = "smissingham";
-        name = "Sean Missingham";
-        email = "sean@missingham.com";
-        homeDir = (if isDarwin system then "/Users" else "/home") + "/smissingham";
+        username = "regionativo";
+        name = "Jose Paez";
+        email = "jopaez@gmail.com";
+        homeDir = (if isDarwin system then "/Users" else "/home") + "/regionativo";
         dotsPath = ./dots;
         terminalApp = "ghostty";
       };
