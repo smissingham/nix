@@ -3,6 +3,6 @@
 *.st*
 
 secrets.*
-dots/linked/tmux/plugins
 
-dots/linked/nvim/lazy-lock.json
+dots/auto/tmux/plugins
+dots/auto/nvim/lazy-lock.json

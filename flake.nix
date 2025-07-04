@@ -181,7 +181,7 @@
           system = "aarch64-darwin";
           builder = nix-darwin.lib.darwinSystem;
           modules = darwinModules ++ [
-            ./hosts/plutus/configuration.nix
+            ./hosts/popmart/configuration.nix
             inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
