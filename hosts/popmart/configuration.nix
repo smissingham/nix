@@ -48,6 +48,10 @@
       # Data Science
       "knime"
       "rstudio"
+
+      "aldente"
+      "visual-studio-code"
+      "gitkraken"
     ];
 
     brews = [
