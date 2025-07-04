@@ -11,7 +11,7 @@
   networking.computerName = "popmart";
 
   myDarwinModules = {
-    wm.sol.enable = true;
+    #wm.sol.enable = true;
     wm.aerospace.enable = true;
   };
 
@@ -27,14 +27,31 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     casks = [
-      "orion"
-      "ghostty"
-      #"tailscale" # -- DOES NOT WORK! Get's stuck in install/uninstall loop
 
+      # Browsers
+      "google-chrome"
+      "orion"
+
+      # Terminal
+      "ghostty"
+
+      # Workflow
+      "raycast"
+
+      # Productivity
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
+      "microsoft-edge"
+
+      # Data Science
+      "knime"
+      "rstudio"
+
+      "aldente"
+      "visual-studio-code"
+      "gitkraken"
     ];
 
     brews = [

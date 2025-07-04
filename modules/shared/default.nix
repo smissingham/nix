@@ -21,16 +21,4 @@
     "nix-command"
     "flakes"
   ];
-
-  myHomeModules = {
-    browsers = {
-      floorp.enable = true;
-    };
-    devtools = {
-      vscode.enable = true;
-    };
-    productivity = {
-      #syncthing.enable = true;
-    };
-  };
 }
