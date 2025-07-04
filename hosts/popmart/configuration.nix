@@ -17,7 +17,6 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    spotify
     obsidian
   ];
   #----- Nixpkgs Applications in System Space -----#
@@ -31,7 +30,6 @@
     casks = [
 
       # Browsers
-      "google-chrome"
       "orion"
 
       # Terminal
@@ -90,14 +88,6 @@
     # READ DOCS BEFORE CHANGING
     stateVersion = 5;
 
-    keyboard = {
-      enableKeyMapping = true;
-      remapCapsLockToEscape = false;
-      #swapLeftCommandAndLeftAlt = true;
-      userKeyMapping = [
-      ];
-    };
-
     defaults = {
 
       ".GlobalPreferences"."com.apple.mouse.scaling" = 2.5;
@@ -141,6 +131,7 @@
         NSAutomaticSpellingCorrectionEnabled = true;
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
+        AppleKeyboardUIMode = 2;
       };
 
       CustomUserPreferences = {

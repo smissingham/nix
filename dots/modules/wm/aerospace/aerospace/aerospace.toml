@@ -5,7 +5,7 @@ after-startup-command = [
   'exec-and-forget /etc/profiles/per-user/smissingham/bin/borders active_color=0xffcba6f7 inactive_color=0xff000 width=6.0',
 ]
 
-start-at-login = true
+start-at-login = false
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
