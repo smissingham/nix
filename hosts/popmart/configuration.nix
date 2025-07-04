@@ -27,16 +27,27 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     casks = [
+
+      # Browsers
       "google-chrome"
       "orion"
-      "ghostty"
-      "raycast"
-      #"tailscale" # -- DOES NOT WORK! Get's stuck in install/uninstall loop
 
+      # Terminal
+      "ghostty"
+
+      # Workflow
+      "raycast"
+
+      # Productivity
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
+      "microsoft-edge"
+
+      # Data Science
+      "knime"
+      "rstudio"
     ];
 
     brews = [
