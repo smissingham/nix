@@ -39,6 +39,7 @@ in
             aerospace
             jankyborders
             sketchybar
+            skhd
           ];
           activation = {
             ${fullModuleName} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -54,21 +55,23 @@ in
         serviceConfig = {
           ProgramArguments = [ "${pkgs.skhd}/bin/skhd" ];
           RunAtLoad = true;
-          KeepAlive = true;
           StandardOutPath = "/tmp/skhd.log";
           StandardErrorPath = "/tmp/skhd.log";
         };
       };
-
-      aerospace = {
-        serviceConfig = {
-          ProgramArguments = [ "${pkgs.aerospace}/bin/aerospace" ];
-          RunAtLoad = true;
-          KeepAlive = true;
-          StandardOutPath = "/tmp/aerospace.log";
-          StandardErrorPath = "/tmp/aerospace.log";
-        };
-      };
+      #
+      # aerospace = {
+      #   serviceConfig = {
+      #     ProgramArguments = [
+      #       "/usr/bin/open"
+      #       "-a"
+      #       "${pkgs.aerospace}/Applications/AeroSpace.app"
+      #     ];
+      #     KeepAlive = true;
+      #     StandardOutPath = "/tmp/aerospace.log";
+      #     StandardErrorPath = "/tmp/aerospace.log";
+      #   };
+      # };
 
     };
   };
