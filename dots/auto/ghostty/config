@@ -1,2 +1,3 @@
 theme = catppuccin-macchiato
-background-opacity = 0.95
+background-opacity = 1
+keybind = shift+enter=text:\n

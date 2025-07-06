@@ -68,6 +68,7 @@
       "onedrive"
       "chatgpt"
       "autodesk-fusion"
+      "pearcleaner"
 
     ];
 
