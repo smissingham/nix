@@ -35,8 +35,9 @@
       # Terminal
       "ghostty"
 
-      # Workflow
+      # Workflow & PKM
       "raycast"
+      "obsidian"
 
       # Productivity
       "microsoft-teams"
@@ -45,30 +46,38 @@
       "microsoft-word"
       "microsoft-edge"
       "microsoft-outlook"
-
-      # Data Science
-      "knime"
-      "rstudio"
-
-      "aldente"
-      "visual-studio-code"
-      "gitkraken"
-      "bitwarden"
-      "whatsapp"
-      "bartender"
-      # "r" is weird, it installs and uninstalls everytime nxr is run
-      "bambu-studio"
-      "discord"
-      "logi-options+"
-      "logitune"
-      "obsidian"
-      "nvidia-geforce-now"
       "todoist-app"
       "windows-app"
       "onedrive"
+
+      # Data Science & Coding
+      "knime"
+      "rstudio"
+      "visual-studio-code"
+      "gitkraken"
       "chatgpt"
-      "autodesk-fusion"
+      # "r" is weird, it installs and uninstalls everytime nxr is run
+
+      # Mac Utils
+      "aldente"
+      "bitwarden"
+      "bartender" # Might end up removing, seems to consume a lot of resources
+      "logi-options+"
+      "logitune"
       "pearcleaner"
+      "finicky"
+
+      # Messaging
+      "whatsapp"
+      "discord"
+
+      # 3D Printing & Design
+      "bambu-studio"
+      "autodesk-fusion"
+
+      # Gaming
+      "nvidia-geforce-now"
+      "steam"
 
     ];
 
@@ -80,6 +89,7 @@
     masApps = {
       Xnip = 1221250572;
       Dropover = 1355679052;
+      Supernote = 1494992020;
     };
   };
 
@@ -101,8 +111,9 @@
         orientation = "bottom";
         magnification = true;
         largesize = 64;
-        tilesize = 48;
+        tilesize = 43;
         expose-group-apps = true; # Group windows by application
+        minimize-to-application = true; # Minimize windows to the application icon in the Dock
       };
 
       finder = {
