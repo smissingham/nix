@@ -1,5 +1,5 @@
 export default {
-  defaultBrowser: "Orion",
+  defaultBrowser: "Safari",
   handlers: [
     {
       match: (_url, app) =>
