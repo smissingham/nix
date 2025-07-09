@@ -46,6 +46,10 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+    timrogers-tap = {
+      url = "github:timrogers/homebrew-tap";
+      flake = false;
+    };
 
     mypkgs = {
       url = "path:./packages";
@@ -192,6 +196,7 @@
                   "homebrew/homebrew-core" = inputs.homebrew-core;
                   "homebrew/homebrew-cask" = inputs.homebrew-cask;
                   "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                  "timrogers/homebrew-tap" = inputs.timrogers-tap;
                 };
                 mutableTaps = false;
               };

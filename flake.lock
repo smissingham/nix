@@ -323,7 +323,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "plasma-manager": "plasma-manager"
+        "plasma-manager": "plasma-manager",
+        "timrogers-tap": "timrogers-tap"
       }
     },
     "systems": {
@@ -338,6 +339,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-darwin",
+        "type": "github"
+      }
+    },
+    "timrogers-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751279411,
+        "narHash": "sha256-xeKxFt/0oxiL/3o6cXBYs5v/OUVg9r61mu5GHNtGiTg=",
+        "owner": "timrogers",
+        "repo": "homebrew-tap",
+        "rev": "4925a0ba608755667f7bc9e4bb0f605f096d38d2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "timrogers",
+        "repo": "homebrew-tap",
         "type": "github"
       }
     }

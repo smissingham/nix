@@ -1,10 +1,10 @@
 export default {
-  defaultBrowser: "Safari",
+  defaultBrowser: "Orion",
   handlers: [
     {
-      match: (_url, app) =>
-        app.bundleId?.startsWith("com.microsoft.") ||
-        app.bundleId === "com.todoist.mac.Todoist",
+      match: ({ opener }) =>
+        opener.bundleId.startsWith("com.microsoft.") ||
+        opener.bundleId === "com.todoist.mac.Todoist",
       browser: "Microsoft Edge"
     }
   ]

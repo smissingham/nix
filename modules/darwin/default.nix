@@ -16,6 +16,7 @@
       "homebrew/core"
       "homebrew/cask"
       "homebrew/bundle"
+      "timrogers/tap"
     ];
 
     onActivation = {

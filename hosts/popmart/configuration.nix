@@ -66,6 +66,7 @@
       "logitune"
       "pearcleaner"
       "finicky"
+      "browserosaurus"
 
       # Messaging
       "whatsapp"
@@ -75,14 +76,17 @@
       "bambu-studio"
       "autodesk-fusion"
 
-      # Gaming
+      # Gaming & Media
       "nvidia-geforce-now"
       "steam"
+      "vlc"
 
     ];
 
     brews = [
       "duckdb"
+      "mas"
+      "litra"
     ];
 
     # ----- MAC APP STORE APPS -----#
