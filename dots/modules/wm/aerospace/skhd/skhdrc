@@ -4,7 +4,7 @@
 # Test Keys: `skhd -o`
 ####################
 
-
+#0x3F : cmd + shift + alt + ctrl
 
 # Launch Terminal with Mod + Tilde
 cmd - 0x32 : open -na ghostty
@@ -16,3 +16,5 @@ alt + shift - 0x32 : open -na Floorp
 
 # Set active window size to 1080p
 alt + shift - 0x2B : osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}'
+
+cmd - h : # empty command disables it

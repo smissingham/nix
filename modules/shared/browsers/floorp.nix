@@ -26,7 +26,7 @@ in
 
       programs.floorp = {
         enable = true;
-        package = pkgsUnstable.floorp;
+        package = pkgs.floorp;
         #package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
         profiles.default = {
           id = 0;

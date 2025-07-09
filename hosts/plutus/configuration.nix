@@ -20,7 +20,7 @@
   };
 
   myDarwinModules = {
-    wm.sol.enable = true;
+    #wm.sol.enable = true;
     wm.aerospace.enable = true;
   };
 
@@ -35,6 +35,7 @@
     gitkraken
     bruno
     gimp
+    scrcpy
 
   ];
   #----- Nixpkgs Applications in System Space -----#
@@ -44,17 +45,20 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     casks = [
+      "raycast"
       "filen"
       "google-chrome"
       "ghostty"
       "onyx"
-      "lm-studio"
-      #"tailscale" # -- DOES NOT WORK! Get's stuck in install/uninstall loop
+      "stremio"
+      "commander-one"
 
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
+
+      "intellij-idea-ce"
     ];
 
     brews = [

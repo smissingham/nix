@@ -19,6 +19,7 @@ let
     ll = "eza -l";
     la = "eza -la";
     clip = "xclip -selection clipboard";
+    jk = "s$NIX_CONFIG_HOME/scripts/delete_junk_files.sh";
     t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
 
     # NEOVIM
