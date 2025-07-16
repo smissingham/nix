@@ -5,7 +5,7 @@
 }:
 let
   moduleSet = "myDarwinModules";
-  moduleCategory = "wm";
+  moduleCategory = "workflow";
   moduleName = "sol";
 
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};

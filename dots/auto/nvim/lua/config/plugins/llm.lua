@@ -24,7 +24,7 @@ return {
     event = "VeryLazy",
     version = false,
     opts = {
-      provider = "openrouter",
+      provider = "litellm_default",
       providers = {
         litellm_default = {
           __inherited_from = "openai",
@@ -81,13 +81,6 @@ return {
             use_absolute_path = true,
           },
         },
-      },
-      {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
       },
     },
 

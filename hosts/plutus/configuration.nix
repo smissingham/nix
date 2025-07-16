@@ -21,12 +21,13 @@
 
   myDarwinModules = {
     #wm.sol.enable = true;
-    wm.aerospace.enable = true;
+    workflow.aerospace.enable = true;
   };
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     flameshot
+    qbittorrent
 
     spotify
     #telegram-desktop
@@ -44,6 +45,9 @@
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
+    taps = [
+      "sst/tap"
+    ];
     casks = [
       "raycast"
       "filen"
@@ -52,17 +56,20 @@
       "onyx"
       "stremio"
       "commander-one"
+      "vlc"
 
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
+      "onedrive"
 
       "intellij-idea-ce"
     ];
 
     brews = [
       "duckdb"
+      "opencode"
     ];
 
     # ----- MAC APP STORE APPS -----#

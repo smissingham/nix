@@ -7,9 +7,9 @@
 }:
 let
   moduleSet = "myDarwinModules";
-  moduleCategory = "wm";
+  moduleCategory = "workflow";
   moduleName = "aerospace";
-  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/dots/modules/wm/aerospace";
+  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/dots/modules/${moduleCategory}/aerospace";
 
   optionPath = [
     moduleSet
