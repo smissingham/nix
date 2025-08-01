@@ -23,40 +23,67 @@ return {
     "yetone/avante.nvim",
     event = "VeryLazy",
     version = false,
-    opts = {
-      provider = "litellm_default",
-      providers = {
-        litellm_default = {
-          __inherited_from = "openai",
-          endpoint = "https://litellm.coeus.missingham.net/v1",
-          model = "code-agent",
-          api_key_name = "LITELLM_API_KEY"
+
+    opts = function()
+      local litellm_conf = {
+        __inherited_from = "openai",
+        endpoint = "https://litellm.coeus.missingham.net/v1",
+        api_key_name = "LITELLM_API_KEY",
+      }
+
+      return {
+
+        provider = "code_agent",
+        auto_suggestion_provider = "code_completion",
+
+        providers = {
+          code_agent = vim.tbl_extend("force", litellm_conf, {
+            model = "code-agent"
+          }),
+          code_completion = vim.tbl_extend("force", litellm_conf, {
+            model = "code-completion"
+          }),
+          morph = {
+            model = "morph-v3-large" -- FastApply Model
+          },
         },
-        openrouter = {
-          __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          --model = "anthropic/claude-4-sonnet-20250522",
-          model = "google/gemini-2.5-flash-preview-05-20",
-          api_key_name = "OPENROUTER_API_KEY"
-        }
-      },
 
-      system_prompt = function()
-        local hub = require("mcphub").get_hub_instance()
-        return hub and hub:get_active_servers_prompt() or ""
-      end,
+        behaviour = {
+          auto_suggestions = true,
+          enable_fastapply = true,
+        },
 
-      custom_tools = function()
-        return {
-          require("mcphub.extensions.avante").mcp_tool(),
-        }
-      end,
+        disabled_tools = {
+          "web_search"
+        },
 
-      disabled_tools = {
-        "web_search"
-      },
-    },
+        mappings = {
+          submit = {
+            insert = "<C-m>" -- Ctrl + Enter
+          }
+        },
+
+        windows = {
+          input = {
+            height = 10
+          }
+        },
+
+        system_prompt = function()
+          local hub = require("mcphub").get_hub_instance()
+          return hub and hub:get_active_servers_prompt() or ""
+        end,
+
+        custom_tools = function()
+          return {
+            require("mcphub.extensions.avante").mcp_tool(),
+          }
+        end,
+      }
+    end,
+
     build = "make",
+
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
