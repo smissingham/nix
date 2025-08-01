@@ -53,7 +53,7 @@ in
 
           search = {
             force = true;
-            default = "SearXNG";
+            default = "searxng";
             order = [
               "searxng"
               "ddg"

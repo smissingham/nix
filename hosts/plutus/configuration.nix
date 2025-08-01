@@ -46,30 +46,44 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     taps = [
-      "sst/tap"
+      #"sst/tap"
     ];
+
     casks = [
+
+      # ----- WORKFLOW ----- #
       "raycast"
       "filen"
       "google-chrome"
-      "ghostty"
-      "onyx"
-      "stremio"
-      "commander-one"
-      "vlc"
 
+      # ----- MEDIA ----- #
+      "stremio"
+      "vlc"
+      "comfyui"
+
+      # ----- COMMUNICATIONS ----- #
+      "signal"
+      "legcord"
+
+      # ----- WORK / PRODUCTIVITY ----- #
       "microsoft-teams"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
       "onedrive"
 
+      # ----- OS / SYSTEM ----- #
+      "ghostty"
+      "onyx"
+      "commander-one"
+
+      # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
     ];
 
     brews = [
       "duckdb"
-      "opencode"
+      # "opencode"
     ];
 
     # ----- MAC APP STORE APPS -----#
