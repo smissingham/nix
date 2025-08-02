@@ -1,5 +1,7 @@
-theme = catppuccin-macchiato
 font-size = 18
 background-opacity = 0.95
-keybind = shift+enter=text:\n
 
+theme = catppuccin-macchiato
+cursor-color = #ed8796
+
+keybind = shift+enter=text:\n
