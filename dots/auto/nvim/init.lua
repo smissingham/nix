@@ -21,16 +21,11 @@ vim.opt.smartcase = true          -- Make search case-sensitive when using upper
 
 
 vim.keymap.set('n', '<esc><esc>', ':noh<CR>', { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>x", "<cmd>.lua<CR>")
-
-
-vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {})
 vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {})
+vim.keymap.set({ 'n', 'v' }, 'H', '^')
+vim.keymap.set({ 'n', 'v' }, 'L', '$')
 
 --vim.cmd("ShowkeysToggle");
 vim.cmd.colorscheme "catppuccin"
