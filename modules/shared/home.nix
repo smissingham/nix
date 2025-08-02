@@ -116,7 +116,11 @@ in
           syntaxHighlighting.enable = true;
           initContent = ''
             source ~/.p10k.zsh
+            export LITELLM_API_KEY=$(cat ${config.sops.secrets.LITELLM_API_KEY.path})
           '';
+          sessionVariables = {
+            EDITOR = "nvim";
+          };
 
           history = {
             size = 10000;

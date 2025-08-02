@@ -23,6 +23,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -98,7 +102,9 @@
         inputs.mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
         ({
-          home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
+          home-manager.sharedModules = [
+            inputs.mac-app-util.homeManagerModules.default
+          ];
         })
       ];
       nixosModules = sharedModules ++ [

@@ -2,7 +2,7 @@
 *.DS_Store
 *.st*
 
-secrets.*
+private/*
 
 dots/auto/tmux/plugins
 dots/auto/nvim/lazy-lock.json
