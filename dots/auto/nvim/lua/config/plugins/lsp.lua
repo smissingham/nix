@@ -24,7 +24,8 @@ return {
 
         -- Development Projects --
         rust_analyzer = {}, -- Rust
-        ts_ls = {},         -- Typescript
+        --ts_ls = {},         -- Typescript
+        vtsls = {}          -- Better Typescript
       }
     },
     config = function(_, opts)

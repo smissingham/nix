@@ -35,7 +35,8 @@ in
       lua-language-server # Lua
       nixd # Nix
       taplo # TOML
-      vscode-langservers-extracted # HTML, CSS, JSON, JS
+      vscode-langservers-extracted # HTML, CSS, JSON, JS, TS
+      vtsls # Typescript
       prettierd
 
       #----- Required by Plugins -----#

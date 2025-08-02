@@ -44,7 +44,7 @@ return {
             model = "code-completion"
           }),
           morph = {
-            model = "morph-v3-large" -- FastApply Model
+            model = "auto" -- FastApply Model
           },
         },
 

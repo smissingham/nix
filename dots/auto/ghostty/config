@@ -1,3 +1,5 @@
 theme = catppuccin-macchiato
+font-size = 18
 background-opacity = 0.95
 keybind = shift+enter=text:\n
+
