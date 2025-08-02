@@ -24,6 +24,12 @@
     workflow.aerospace.enable = true;
   };
 
+  mySharedModules = {
+    workflow = {
+      sops.enable = true;
+    };
+  };
+
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     flameshot
