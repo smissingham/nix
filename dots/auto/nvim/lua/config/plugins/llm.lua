@@ -60,7 +60,13 @@ return {
         mappings = {
           submit = {
             insert = "<C-m>" -- Ctrl + Enter
-          }
+          },
+          suggestion = {
+            accept = "<Tab>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<M-Esc>",
+          },
         },
 
         windows = {
