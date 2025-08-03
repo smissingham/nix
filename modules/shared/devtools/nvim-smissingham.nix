@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  mainUser,
   ...
 }:
 let
@@ -14,10 +15,13 @@ let
     moduleCategory
     moduleName
   ];
+  fullModuleName = lib.concatStringsSep "." optionPath;
   enablePath = optionPath ++ [ "enable" ];
 
-  flake = builtins.getFlake "path:${config.environment.variables.NIX_CONFIG_HOME}/flakes/nvim-smissingham";
   binaryName = "nvim-smissingham";
+  flakePath = "${config.environment.variables.NIX_CONFIG_HOME}/flakes/nvim-smissingham";
+  flake = builtins.getFlake "path:${flakePath}";
+
 in
 {
   options = lib.setAttrByPath optionPath {
@@ -25,39 +29,77 @@ in
     withAliases = lib.mkOption {
       type = lib.types.bool;
       default = true;
+      description = "Includes Sean's favourite shell alias helpers";
     };
     withEnvVars = lib.mkOption {
       type = lib.types.bool;
       default = true;
+      description = "Includes Sean's favourite env var helpers";
+    };
+    liveConfig = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Removes the nix-store symlinked config and replaces with direct symlink for live updates";
     };
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-    environment = lib.mkMerge [
-
-      # ----- Always Install -----#
+    home-manager.users.${mainUser.username} =
+      let
+        systemConfig = config;
+      in
       {
-        systemPackages = flake.packages.${pkgs.system}.systemPackages;
-      }
+        config,
+        ...
+      }:
+      let
+        srcConfigDir = "${flakePath}/nvim";
+        tgtConfigDir = "${config.xdg.configHome}/${binaryName}";
 
-      # ----- Optional: Favourite Aliases -----#
-      (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "withAliases" ]) config) {
-        shellAliases = {
-          sv = "${binaryName}";
-          svda = "svdPerms && svdConfig && svdShare && svdState";
-          svdPerms = "chmod -R 755 ~/.config/${binaryName}";
-          svdConfig = "rm -rf ~/.config/${binaryName}";
-          svdShare = "rm -rf ~/.local/share/${binaryName}";
-          svdState = "rm -rf ~/.local/state/${binaryName}";
-        };
-      })
+        tgtConfDelete = "rm -rf ${tgtConfigDir}";
+        tgtConfLiveSymlink = "ln -s ${srcConfigDir} ${tgtConfigDir}";
+      in
+      {
+        home = lib.mkMerge [
 
-      # ----- Optional: Env Variables-----#
-      (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "withEnvVars" ]) config) {
-        variables = {
-          EDITOR = "${binaryName}";
-        };
-      })
-    ];
+          # ----- Always Install -----#
+          {
+            packages = flake.packages.${pkgs.system}.systemPackages;
+          }
+
+          # ----- Optional: Favourite Aliases -----#
+          (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "withAliases" ]) systemConfig) {
+            shellAliases = {
+              sv = "${binaryName}";
+              svda = "svdPerms && svdConfig && svdShare && svdState && svdLink";
+              svdLink = "echo \"Config Linked to Nix Store\"";
+              svdPerms = "chmod -R 755 ${tgtConfigDir}";
+              svdConfig = "rm -rf ${tgtConfigDir}";
+              svdShare = "rm -rf ~/.local/share/${binaryName}";
+              svdState = "rm -rf ~/.local/state/${binaryName}";
+            };
+          })
+
+          # ----- Optional: Env Variables-----#
+          (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "withEnvVars" ]) systemConfig) {
+            sessionVariables = {
+              EDITOR = "${binaryName}";
+            };
+          })
+
+          # ----- Optional: Live Config Stow instead of Symlink to Nix Store -----#
+          (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "liveConfig" ]) systemConfig) {
+            activation = {
+              ${fullModuleName} = ''
+                ${tgtConfDelete}
+                ${tgtConfLiveSymlink}
+              '';
+            };
+            shellAliases = {
+              svdLink = lib.mkForce "${tgtConfLiveSymlink} && echo \"Config Linked to Live Folder\"";
+            };
+          })
+        ];
+      };
   };
 }
