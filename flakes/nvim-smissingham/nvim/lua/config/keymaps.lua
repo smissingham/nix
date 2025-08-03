@@ -1,0 +1,5 @@
+vim.keymap.set('n', '<esc><esc>', ':noh<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {})
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {})
+vim.keymap.set({ 'n', 'v' }, 'H', '^')
+vim.keymap.set({ 'n', 'v' }, 'L', '$')

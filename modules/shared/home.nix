@@ -22,10 +22,6 @@ let
     jk = "sh $NIX_CONFIG_HOME/scripts/delete_junk_files.sh";
     t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
 
-    # NEOVIM
-    v = "nvim";
-    vclear = "rm -rf ~/.local/share/nvim*";
-
     # TMUX
     tm = "tmux new-session -A -s";
 
@@ -119,7 +115,7 @@ in
             export LITELLM_API_KEY=$(cat ${config.sops.secrets.LITELLM_API_KEY.path})
           '';
           sessionVariables = {
-            EDITOR = "nvim";
+            #EDITOR = "nvim";
           };
 
           history = {

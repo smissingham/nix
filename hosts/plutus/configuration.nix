@@ -1,6 +1,4 @@
 {
-  config,
-  nixpkgs,
   pkgs,
   pkgsUnstable,
   mainUser,
@@ -20,11 +18,13 @@
   };
 
   myDarwinModules = {
-    #wm.sol.enable = true;
     workflow.aerospace.enable = true;
   };
 
   mySharedModules = {
+    devtools = {
+      nvim-smissingham.enable = true;
+    };
     workflow = {
       sops.enable = true;
     };
