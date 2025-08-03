@@ -27,12 +27,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -71,6 +69,8 @@
       inherit (self) outputs;
       overlays = [ inputs.mypkgs.overlays.default ];
 
+      isDarwin = system: builtins.match ".*-darwin" system != null;
+
       importDir =
         dir:
         let
@@ -97,111 +97,82 @@
       };
 
       sharedModules = [ importSharedModules ];
-      darwinModules = sharedModules ++ [
-        importDarwinModules
-        inputs.mac-app-util.darwinModules.default
-        home-manager.darwinModules.home-manager
-        ({
-          home-manager.sharedModules = [
-            inputs.mac-app-util.homeManagerModules.default
-          ];
-        })
-      ];
-      nixosModules = sharedModules ++ [
-        importNixosModules
-        home-manager.nixosModules.default
-      ];
-
-      # Function to determine if a system is Darwin based on the system string
-      isDarwin = system: builtins.match ".*-darwin" system != null;
-
-      # Function to create mainUser with the correct homeDir based on system
-      mkMainUser = system: {
-        username = "smissingham";
-        name = "Sean Missingham";
-        email = "sean@missingham.com";
-        homeDir = (if isDarwin system then "/Users" else "/home") + "/smissingham";
-        dotsPath = ./dots;
-        terminalApp = "ghostty";
-      };
-
-      specialArgs = system: {
-        inherit
-          inputs
-          outputs
-          overlays
-          ;
-        mainUser = mkMainUser system;
-        rootPath = ./.;
-      };
-
       mkSystem =
         {
+          mainUser,
           system,
-          builder,
-          modules,
+          systemModules,
         }:
         let
           pkgsUnstable = import nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
           };
-          args = specialArgs system;
-          extendedArgs = args // {
-            inherit pkgsUnstable;
-          };
+          builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+          platformModules =
+
+            # ----- Nix Darwin Modules ----- #
+            if isDarwin system then
+              [
+                importDarwinModules
+                inputs.mac-app-util.darwinModules.default
+                home-manager.darwinModules.home-manager
+                {
+                  home-manager.sharedModules = [
+                    inputs.mac-app-util.homeManagerModules.default
+                  ];
+                }
+                inputs.nix-homebrew.darwinModules.nix-homebrew
+                {
+                  nix-homebrew = {
+                    enable = true;
+                    enableRosetta = true;
+                    user = mainUser.username;
+                    taps = {
+                      "homebrew/homebrew-core" = inputs.homebrew-core;
+                      "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                      "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                    };
+                    mutableTaps = false;
+                  };
+                }
+              ]
+
+            # ----- NixOS Modules -----#
+            else
+              [
+                importNixosModules
+                home-manager.nixosModules.default
+              ];
+
         in
         builder {
           inherit system;
-          specialArgs = extendedArgs;
-          modules = modules ++ [
-            { nixpkgs.overlays = overlays; }
-          ];
+          modules = systemModules ++ sharedModules ++ platformModules ++ [ { nixpkgs.overlays = overlays; } ];
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              overlays
+              mainUser
+              pkgsUnstable
+              ;
+          };
         };
-
     in
     {
       darwinConfigurations = {
         plutus = mkSystem {
+          mainUser = import ./profiles/smissingham/default.nix;
           system = "aarch64-darwin";
-          builder = nix-darwin.lib.darwinSystem;
-          modules = darwinModules ++ [
+          systemModules = [
             ./hosts/plutus/configuration.nix
-            inputs.nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = (mkMainUser "aarch64-darwin").username;
-                taps = {
-                  "homebrew/homebrew-core" = inputs.homebrew-core;
-                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                };
-                mutableTaps = false;
-              };
-            }
           ];
         };
         popmart = mkSystem {
           system = "aarch64-darwin";
-          builder = nix-darwin.lib.darwinSystem;
-          modules = darwinModules ++ [
+          systemModules = [
             ./hosts/popmart/configuration.nix
-            inputs.nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = (mkMainUser "aarch64-darwin").username;
-                taps = {
-                  "homebrew/homebrew-core" = inputs.homebrew-core;
-                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                };
-                mutableTaps = false;
-              };
-            }
           ];
         };
       };
@@ -209,14 +180,16 @@
       nixosConfigurations = {
         coeus = mkSystem {
           system = "x86_64-linux";
-          builder = nixpkgs.lib.nixosSystem;
-          modules = nixosModules ++ [ ./hosts/coeus/configuration.nix ];
+          modules = [
+            ./hosts/coeus/configuration.nix
+          ];
         };
 
         thalos = mkSystem {
           system = "x86_64-linux";
-          builder = nixpkgs.lib.nixosSystem;
-          modules = nixosModules ++ [ ./hosts/thalos/configuration.nix ];
+          modules = [
+            ./hosts/thalos/configuration.nix
+          ];
         };
       };
     };

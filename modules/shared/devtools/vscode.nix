@@ -9,7 +9,6 @@
   lib,
   pkgs,
   mainUser,
-  rootPath,
   pkgsUnstable,
   ...
 }:

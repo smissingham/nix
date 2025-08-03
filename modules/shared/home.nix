@@ -1,8 +1,8 @@
 # ----- HOME CONFIGURATION
 {
   config,
+  lib,
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -10,41 +10,33 @@ let
   autoDotsPath = "${config.environment.variables.NIX_CONFIG_HOME}/dots/auto";
   hostRebuildCli = (if pkgs.stdenv.isDarwin then "sudo darwin-rebuild" else "sudo nixos-rebuild");
 
-  shellAliases = {
-    # GENERAL
-    q = "exit";
-    cl = "clear";
-    ls = "eza";
-    gg = "lazygit";
-    ll = "eza -l";
-    la = "eza -la";
-    clip = "xclip -selection clipboard";
-    jk = "sh $NIX_CONFIG_HOME/scripts/delete_junk_files.sh";
-    t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
+  shellAliases = lib.mkMerge [
+    mainUser.shellAliases
+    {
+      # GENERAL
+      jk = "sh $NIX_CONFIG_HOME/scripts/delete_junk_files.sh";
+      t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
 
-    # TMUX
-    tm = "tmux new-session -A -s";
+      # TMUX
+      tm = "tmux new-session -A -s";
 
-    # NIX
-    nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
-    nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
-    nxr = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --impure --show-trace; popd";
-    nxu = "pushd $NIX_CONFIG_HOME; find . -name \"flake.lock\" -delete; nix flake update; popd";
-    nxgc = "nix-collect-garbage --delete-old";
-    nxshell = "nix-shell -p";
-    nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
+      # NIX
+      nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
+      nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
+      nxr = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --impure --show-trace; popd";
+      nxu = "pushd $NIX_CONFIG_HOME; find . -name \"flake.lock\" -delete; nix flake update; popd";
+      nxgc = "nix-collect-garbage --delete-old";
+      nxshell = "nix-shell -p";
+      nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
+    }
+  ];
 
-    # PROGRAMMING
-    pyenv = "python3 -m venv .venv";
-
-    fw = "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
-  };
+  mainUserHome = (if pkgs.stdenv.isDarwin then "/Users" else "/home") + "/${mainUser.username}";
 in
 {
-
   users.users.${mainUser.username} = {
     name = mainUser.username;
-    home = mainUser.homeDir;
+    home = mainUserHome;
   };
 
   home-manager = {
@@ -73,7 +65,7 @@ in
         home = {
           stateVersion = "24.11"; # READ DOCS BEFORE CHANGING
           username = mainUser.username;
-          homeDirectory = mainUser.homeDir;
+          homeDirectory = mainUserHome;
           activation = {
             stowAutoDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${autoDotsPath}" -R .
@@ -114,9 +106,6 @@ in
             source ~/.p10k.zsh
             export LITELLM_API_KEY=$(cat ${config.sops.secrets.LITELLM_API_KEY.path})
           '';
-          sessionVariables = {
-            #EDITOR = "nvim";
-          };
 
           history = {
             size = 10000;
