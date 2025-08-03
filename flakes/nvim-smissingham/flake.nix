@@ -3,9 +3,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    mcp-hub.url = "github:ravitemer/mcp-hub";
   };
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       flake-utils,
@@ -26,6 +27,7 @@
         complementaryTools = with pkgs; [
           # ----- TUI Tools -----#
           lazygit
+          inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
           nixd # Nix

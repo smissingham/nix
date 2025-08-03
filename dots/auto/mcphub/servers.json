@@ -1,13 +1,45 @@
 {
   "mcpServers": {
-    "filesystem": {
-      "disabled": false,
+    "sequential-thinking": {
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "~/Documents/"
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
+      "command": "/bin/sh"
+    },
+    "memory": {
+      "args": [
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-memory"
+      ],
+      "command": "/bin/sh"
+    },
+    "userDocuments": {
+      "args": [
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/"
+      ],
+      "command": "/bin/sh",
+      "disabled": false
+    },
+    "ripgrep": {
+      "args": [
+        "-c",
+        "exec $(which npx) -y mcp-ripgrep@latest"
+      ],
+      "command": "/bin/sh",
+      "disabled": false
+    },
+    "searxng": {
+      "env": {
+        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
+      },
+      "args": [
+        "-c",
+        "exec $(which npx) -y mcp-searxng@latest"
+      ],
+      "command": "/bin/sh",
+      "disabled": false
     },
     "git": {
       "args": [
@@ -15,74 +47,12 @@
       ],
       "command": "/etc/profiles/per-user/smissingham/bin/uvx"
     },
-    "memory": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
-    },
-    "tavily": {
-      "disabled": true,
-      "args": [
-        "-y",
-        "tavily-mcp@0.2.2"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
-    },
-    "searxng": {
-      "env": {
-        "SEARXNG_URL": "https://searxng.coeus.missingham.net"
-      },
-      "args": [
-        "-y",
-        "mcp-searxng"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
-    },
-    "second-brain": {
-      "disabled": true,
-      "args": [
-        "-y",
-        "mcp-obsidian",
-        "/app/data/obsidian/second-brain"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
-    },
-    "sequential-thinking": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
-    },
-    "pricefx": {
-      "env": {
-        "PRICEFX_USERNAME": "admin",
-        "PRICEFX_PARTITION": "demofx_smissingham",
-        "PRICEFX_PASSWORD": "jTAbsArDiVk2fZw",
-        "PRICEFX_DOMAIN": "demo.pricefx.com"
-      },
-      "disabled": false,
-      "args": [
-        "/Users/smissingham/Documents/Pricefx/02-tools/browser-extension/mcp/dist/index.js"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/node"
-    },
     "time": {
       "args": [
         "mcp-server-time",
         "--local-timezone=America/Chicago"
       ],
       "command": "/etc/profiles/per-user/smissingham/bin/uvx"
-    },
-    "ripgrep": {
-      "disabled": true,
-      "args": [
-        "-y",
-        "mcp-ripgrep@latest"
-      ],
-      "command": "/etc/profiles/per-user/smissingham/bin/npx"
     }
   },
   "nativeMCPServers": []

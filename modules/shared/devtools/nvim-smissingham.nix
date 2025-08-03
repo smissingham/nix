@@ -70,7 +70,11 @@ in
           # ----- Optional: Favourite Aliases -----#
           (lib.mkIf (lib.getAttrFromPath (optionPath ++ [ "withAliases" ]) systemConfig) {
             shellAliases = {
-              sv = "${binaryName}";
+              # ---- Launch Shortcuts -----#
+              sv = "${binaryName}"; # --- Launch Main Binary
+              svf = "nix develop ${flakePath}#default -c ${binaryName}"; # --- Launch Nix Flake In Place
+
+              # ----- Config & State Resetting -----#
               svda = "svdPerms && svdConfig && svdShare && svdState && svdLink";
               svdLink = "echo \"Config Linked to Nix Store\"";
               svdPerms = "chmod -R 755 ${tgtConfigDir}";

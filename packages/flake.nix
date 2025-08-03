@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #mcp-hub.url = "github:ravitemer/mcp-hub";
   };
 
   outputs =
@@ -47,7 +46,6 @@
         {
           filen-desktop = pkgs.callPackage ./filen-desktop/package.appimage.nix { };
           claude-code = pkgs.callPackage ./claude-code/package.nix { };
-          #mcp-hub = inputs.mcp-hub.packages."${system}".default;
         }
       );
 
