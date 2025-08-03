@@ -51,6 +51,18 @@ in
         lib,
         ...
       }:
+      let
+        # Get keys from mainUser.sops.secrets.terminal
+        exportKeys = builtins.attrNames mainUser.sops.secrets.autoExport;
+
+        terminalSecretExports = builtins.concatStringsSep "\n" (
+          builtins.attrValues (
+            builtins.mapAttrs (name: value: "export ${name}=\"$(cat ${value.path})\"") (
+              lib.filterAttrs (name: value: builtins.elem name exportKeys) config.sops.secrets
+            )
+          )
+        );
+      in
       {
         xdg = {
           enable = true;
@@ -104,7 +116,7 @@ in
           syntaxHighlighting.enable = true;
           initContent = ''
             source ~/.p10k.zsh
-            export LITELLM_API_KEY=$(cat ${config.sops.secrets.LITELLM_API_KEY.path})
+            ${terminalSecretExports}
           '';
 
           history = {

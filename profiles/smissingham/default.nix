@@ -1,8 +1,24 @@
-{
+let
+  #----- Basic User Info -----#
   username = "smissingham";
   name = "Sean Missingham";
   email = "sean@missingham.com";
   terminalApp = "ghostty";
+
+  sops = {
+    getPath = getSopsPath;
+    ageKeyFileName = "keys.txt";
+    secretsFileName = "secrets.yaml";
+    secrets = {
+      autoExport = {
+        LITELLM_API_KEY = { };
+        MORPH_API_KEY = { };
+      };
+      other = {
+      };
+    };
+  };
+
   shellAliases = {
     q = "exit";
     cl = "clear";
@@ -11,5 +27,26 @@
     ll = "eza -l";
     la = "eza -la";
     clip = "xclip -selection clipboard";
+    sec = "pushd ${getSopsPath { }}; sops ${sops.secretsFileName}; popd";
   };
+
+  # ----- Helper Functions -----#
+  isDarwin = { }: builtins.match ".*-darwin" builtins.currentSystem != null;
+  getHome = { }: "${(if isDarwin { } then "/Users" else "/home")}/${username}";
+  getNixConfPath = { }: "${(getHome { })}/Documents/Nix";
+  getProfilePath = { }: "${(getNixConfPath { })}/profiles/${username}";
+  getSopsPath = { }: "${(getProfilePath { })}/private/sops";
+in
+{
+  inherit
+    username
+    name
+    email
+    terminalApp
+    sops
+    shellAliases
+    getHome
+    getNixConfPath
+    getProfilePath
+    ;
 }

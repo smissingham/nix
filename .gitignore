@@ -3,7 +3,7 @@
 *.st*
 *lazy-lock.json
 
-private/*
+**/private/*
 
 dots/auto/tmux/plugins
 dots/auto/nvim/lazy-lock.json

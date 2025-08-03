@@ -17,7 +17,6 @@ let
     moduleName
   ];
   enablePath = optionPath ++ [ "enable" ];
-  secretsFilePath = "${config.environment.variables.NIX_CONFIG_HOME}/private/secrets.yaml";
 in
 {
   options = lib.setAttrByPath optionPath {
@@ -25,16 +24,11 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-    #environment.variables.SOPS_SECRETS = secretsFilePath;
-
     home-manager.users.${mainUser.username} =
-      {
-        config,
-        ...
-      }:
       let
-        keyDir = "${config.xdg.configHome}/sops/age";
-        keyFile = "${keyDir}/keys.txt";
+        sopsPath = mainUser.sops.getPath { };
+        secretsFile = "${sopsPath}/${mainUser.sops.secretsFileName}";
+        ageKeyFile = "${sopsPath}/${mainUser.sops.ageKeyFileName}";
       in
       {
         imports = [
@@ -42,16 +36,14 @@ in
         ];
 
         sops = {
-          defaultSopsFile = secretsFilePath;
+          defaultSopsFile = /. + secretsFile;
           validateSopsFiles = false;
 
           age = {
-            keyFile = keyFile;
+            keyFile = ageKeyFile;
           };
 
-          secrets = {
-            LITELLM_API_KEY = { };
-          };
+          secrets = mainUser.sops.secrets.autoExport // mainUser.sops.secrets.other;
         };
 
         home = {
@@ -61,9 +53,12 @@ in
           ];
           activation = {
             createKeyIfNotExists = ''
-              if [ ! -f ${keyFile} ]; then
-                mkdir -p ${keyDir}
-                ${pkgs.age}/bin/age-keygen -o ${keyFile}
+              if [ ! -d ${sopsPath} ]; then
+                mkdir -p ${sopsPath}
+              fi
+
+              if [ ! -f ${ageKeyFile} ]; then
+                ${pkgs.age}/bin/age-keygen -o ${ageKeyFile}
               fi
             '';
           };

@@ -71,6 +71,7 @@
 
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
+      # Import all .nix files from a directory recursively and return as module imports
       importDir =
         dir:
         let
@@ -80,23 +81,17 @@
             if type == "regular" && builtins.match ".*\\.nix" name != null then
               [ (dir + "/${name}") ]
             else if type == "directory" then
-              importDir (dir + "/${name}")
+              (importDir (dir + "/${name}")).imports
             else
               [ ];
+          moduleFiles = builtins.concatMap (name: processEntry name entries.${name}) (
+            builtins.attrNames entries
+          );
         in
-        builtins.concatMap (name: processEntry name entries.${name}) (builtins.attrNames entries);
+        {
+          imports = moduleFiles;
+        };
 
-      importDarwinModules = {
-        imports = importDir ./modules/darwin;
-      };
-      importNixosModules = {
-        imports = importDir ./modules/nixos;
-      };
-      importSharedModules = {
-        imports = importDir ./modules/shared;
-      };
-
-      sharedModules = [ importSharedModules ];
       mkSystem =
         {
           mainUser,
@@ -114,7 +109,7 @@
             # ----- Nix Darwin Modules ----- #
             if isDarwin system then
               [
-                importDarwinModules
+                (importDir ./modules/darwin)
                 inputs.mac-app-util.darwinModules.default
                 home-manager.darwinModules.home-manager
                 {
@@ -141,10 +136,12 @@
             # ----- NixOS Modules -----#
             else
               [
-                importNixosModules
+                (importDir ./modules/nixos)
                 home-manager.nixosModules.default
               ];
 
+          # ------ Modules Shared Across All Systems -----#
+          sharedModules = [ (importDir ./modules/shared) ];
         in
         builder {
           inherit system;
