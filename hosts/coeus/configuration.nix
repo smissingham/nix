@@ -20,7 +20,7 @@
       nvim-smissingham.enable = true;
     };
     workflow = {
-      #sops.enable = true;
+      sops.enable = true;
     };
   };
 

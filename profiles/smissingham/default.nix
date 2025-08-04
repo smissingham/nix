@@ -12,6 +12,7 @@ let
     secrets = {
       autoExport = {
         LITELLM_API_KEY = { };
+        LITELLM_API_URL = { };
         MORPH_API_KEY = { };
       };
       other = {

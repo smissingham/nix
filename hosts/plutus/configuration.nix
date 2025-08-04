@@ -77,6 +77,7 @@
       "ghostty"
       "onyx"
       "commander-one"
+      "xquartz"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
