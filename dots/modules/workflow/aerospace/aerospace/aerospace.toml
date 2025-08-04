@@ -53,29 +53,44 @@ alt-shift-n = "layout floating tiling"
 
 # Workspaces!
 alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-a = 'workspace A'
-alt-d = 'workspace D'
-alt-e = 'workspace E'
-alt-f = 'workspace F'
 alt-q = 'workspace Q'
-alt-r = 'workspace R'
-alt-s = 'workspace S'
+alt-a = 'workspace A'
+
+alt-2 = 'workspace 2'
 alt-w = 'workspace W'
+alt-s = 'workspace S'
+
+alt-3 = 'workspace 3'
+alt-e = 'workspace E'
+alt-d = 'workspace D'
+
+alt-4 = 'workspace 4'
+alt-r = 'workspace R'
+alt-f = 'workspace F'
+
+alt-5 = 'workspace 5'
+alt-t = 'workspace T'
+alt-g = 'workspace G'
+
 alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-a = 'move-node-to-workspace A'
-alt-shift-d = 'move-node-to-workspace D'
-alt-shift-e = 'move-node-to-workspace E'
-alt-shift-f = 'move-node-to-workspace F'
 alt-shift-q = 'move-node-to-workspace Q'
-alt-shift-r = 'move-node-to-workspace R'
-alt-shift-s = 'move-node-to-workspace S'
+alt-shift-a = 'move-node-to-workspace A'
+
+alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-w = 'move-node-to-workspace W'
+alt-shift-s = 'move-node-to-workspace S'
+
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-e = 'move-node-to-workspace E'
+alt-shift-d = 'move-node-to-workspace D'
+
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-r = 'move-node-to-workspace R'
+alt-shift-f = 'move-node-to-workspace F'
+
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-t = 'move-node-to-workspace T'
+alt-shift-g = 'move-node-to-workspace G'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
