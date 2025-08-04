@@ -21,7 +21,7 @@ in
     environment.systemPackages = with pkgs; [
       lutris
       protonup-ng
-      xboxdrv
+      #xboxdrv #-- Replaced by in-tree kernel driver, removed from nixos at 25.05
       gamescope
     ];
     programs = {

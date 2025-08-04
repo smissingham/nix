@@ -58,7 +58,7 @@ in
         terminalSecretExports = builtins.concatStringsSep "\n" (
           builtins.attrValues (
             builtins.mapAttrs (name: value: "export ${name}=\"$(cat ${value.path})\"") (
-              lib.filterAttrs (name: value: builtins.elem name exportKeys) config.sops.secrets
+              lib.filterAttrs (name: value: builtins.elem name exportKeys) (config.sops.secrets or { })
             )
           )
         );
@@ -75,7 +75,7 @@ in
         };
 
         home = {
-          stateVersion = "24.11"; # READ DOCS BEFORE CHANGING
+          stateVersion = "25.05"; # READ DOCS BEFORE CHANGING
           username = mainUser.username;
           homeDirectory = mainUserHome;
           activation = {
@@ -114,7 +114,7 @@ in
           enableCompletion = true;
           shellAliases = shellAliases;
           syntaxHighlighting.enable = true;
-          initContent = ''
+          initExtra = ''
             source ~/.p10k.zsh
             ${terminalSecretExports}
           '';

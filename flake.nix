@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-24.11";
+      url = "github:NixOS/nixpkgs/nixos-25.05";
     };
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     sops-nix = {
@@ -176,16 +176,10 @@
 
       nixosConfigurations = {
         coeus = mkSystem {
+          mainUser = import ./profiles/smissingham/default.nix;
           system = "x86_64-linux";
-          modules = [
+          systemModules = [
             ./hosts/coeus/configuration.nix
-          ];
-        };
-
-        thalos = mkSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/thalos/configuration.nix
           ];
         };
       };

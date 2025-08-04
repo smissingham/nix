@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  mainUser,
   ...
 }:
 {
@@ -15,9 +14,9 @@
   mySystemModules = {
     # Window Manager
     wm = {
-      #plasma6.enable = true;
+      plasma6.enable = true;
       #gnome-xserver.enable = true;
-      hyprland.enable = true;
+      #hyprland.enable = true;
     };
 
     entertainment.gaming.enable = true;
@@ -87,5 +86,5 @@
     AllowSuspendThenHibernate=no
   '';
 
-  system.stateVersion = "24.11"; # Did you read the docs?
+  system.stateVersion = "25.05"; # Did you read the docs?
 }
