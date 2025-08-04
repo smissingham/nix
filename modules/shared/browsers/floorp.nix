@@ -8,7 +8,7 @@
 }:
 
 let
-  moduleSet = "myHomeModules";
+  moduleSet = "mySharedModules";
   moduleCategory = "browsers";
   moduleName = "floorp";
 

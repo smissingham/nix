@@ -23,3 +23,12 @@ All of the configuration for that is declarative, and version controlled, right 
 4. Install the system flake using temporary nix-darwin 
 `sudo nix run nix-darwin/nix-darwin-25.05#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch --flake .#popmart`
 
+
+
+# Forcing Nix Darwin Version
+
+```
+nix-channel --add https://nixos.org/channels/nixpkgs-25.05-darwin nixpkgs
+nix-channel --add https://github.com/nix-darwin/nix-darwin/archive/nix-darwin-25.05.tar.gz darwin
+nix-channel --update
+```

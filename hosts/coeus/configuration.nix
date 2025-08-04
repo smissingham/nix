@@ -11,7 +11,20 @@
 
   environment.systemPackages = [ pkgs.cudaPackages.cudnn ];
 
-  mySystemModules = {
+  mySharedModules = {
+    browsers = {
+      floorp.enable = true;
+    };
+    devtools = {
+      vscode.enable = true;
+      nvim-smissingham.enable = true;
+    };
+    workflow = {
+      #sops.enable = true;
+    };
+  };
+
+  myNixOSModules = {
     # Window Manager
     wm = {
       plasma6.enable = true;

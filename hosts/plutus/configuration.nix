@@ -8,21 +8,16 @@
   networking.hostName = "plutus";
   networking.computerName = "plutus";
 
-  myHomeModules = {
-    browsers = {
-      floorp.enable = true;
-    };
-    devtools = {
-      vscode.enable = true;
-    };
-  };
-
   myDarwinModules = {
     workflow.aerospace.enable = true;
   };
 
   mySharedModules = {
+    browsers = {
+      floorp.enable = true;
+    };
     devtools = {
+      vscode.enable = true;
       nvim-smissingham.enable = true;
     };
     workflow = {

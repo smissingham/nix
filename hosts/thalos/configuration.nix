@@ -9,7 +9,7 @@
     NIX_CONFIG_HOME = "/home/smissingham/Documents/Nix";
   };
 
-  mySystemModules = {
+  myNixOSModules = {
     wm.gnome-xserver.enable = true;
     access.sunshine.enable = true;
     coding.vscodium.enable = true;

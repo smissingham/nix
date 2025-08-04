@@ -14,7 +14,7 @@
 }:
 
 let
-  moduleSet = "myHomeModules";
+  moduleSet = "mySharedModules";
   moduleCategory = "devtools";
   moduleName = "vscode";
 

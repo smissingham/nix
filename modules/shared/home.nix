@@ -114,7 +114,7 @@ in
           enableCompletion = true;
           shellAliases = shellAliases;
           syntaxHighlighting.enable = true;
-          initExtra = ''
+          initContent = ''
             source ~/.p10k.zsh
             ${terminalSecretExports}
           '';

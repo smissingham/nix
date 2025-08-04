@@ -6,7 +6,7 @@
   ...
 }:
 let
-  moduleSet = "myHomeModules";
+  moduleSet = "mySharedModules";
   moduleCategory = "productivity";
   moduleName = "syncthing";
 

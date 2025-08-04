@@ -7,7 +7,7 @@
 }:
 
 let
-  moduleSet = "mySystemModules";
+  moduleSet = "myNixOSModules";
   moduleCategory = "access";
   moduleName = "ssh";
 

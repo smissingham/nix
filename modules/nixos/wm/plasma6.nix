@@ -7,7 +7,7 @@
   ...
 }:
 let
-  moduleSet = "mySystemModules";
+  moduleSet = "myNixOSModules";
   moduleCategory = "wm";
   moduleName = "plasma6";
 
