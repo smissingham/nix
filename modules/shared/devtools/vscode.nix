@@ -66,6 +66,14 @@ in
       #     duckdb
       #   ]);
 
+      home.packages = with pkgs; [
+
+        # ----- File Export & Conversion -----#
+        pandoc
+        texliveFull
+        texlivePackages.tcolorbox
+      ];
+
       programs.vscode = {
         enable = true;
         package = (if cfg.useCodium then pkgsUnstable.vscodium else pkgsUnstable.vscode);

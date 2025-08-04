@@ -28,6 +28,7 @@
           # ----- TUI Tools -----#
           lazygit
           inputs.mcp-hub.packages."${system}".default
+          opencode
 
           # ----- Language Servers -----#
           nixd # Nix

@@ -11,9 +11,12 @@ let
     secretsFileName = "secrets.yaml";
     secrets = {
       autoExport = {
+        ANTHROPIC_API_KEY = { };
         LITELLM_API_KEY = { };
         LITELLM_API_URL = { };
         MORPH_API_KEY = { };
+        OPENROUTER_API_KEY = { };
+        OPENROUTER_API_URL = { };
       };
       other = {
       };
@@ -29,6 +32,10 @@ let
     la = "eza -la";
     clip = "xclip -selection clipboard";
     sec = "pushd ${getSopsPath { }}; sops ${sops.secretsFileName}; popd";
+
+    # ----- Developer Stuff -----#
+    oc = "opencode";
+    cc = "claude-code";
   };
 
   # ----- Helper Functions -----#

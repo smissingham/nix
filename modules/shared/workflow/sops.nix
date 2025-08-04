@@ -51,6 +51,9 @@ in
             age
             sops
           ];
+          sessionVariables = {
+            SOPS_AGE_KEY_FILE = "${ageKeyFile}";
+          };
           activation = {
             createKeyIfNotExists = ''
               if [ ! -d ${sopsPath} ]; then
