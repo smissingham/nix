@@ -100,6 +100,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 2 = ['secondary', 'main']
 3 = ['secondary', 'main']
 4 = ['secondary', 'main']
+5 = ['secondary', 'main']
 
 alt-shift-semicolon = 'mode service'
 
