@@ -31,6 +31,8 @@
           opencode
 
           # ----- Language Servers -----#
+          emmet-language-server
+          lua-language-server
           nixd # Nix
           taplo # Toml
           vtsls # Typescript
@@ -43,7 +45,8 @@
           black
 
           # ----- SDK's & Runtimes -----#
-          uv
+          #nodejs_20
+          #uv
 
           # ----- CLI Utils -----#
           fd
