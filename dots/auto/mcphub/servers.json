@@ -15,10 +15,10 @@
     },
     "pricefx-demofx-smissingham": {
       "args": [
-        "-y",
-        "pricefx-mcp@latest"
+        "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/dist/index.js"
       ],
-      "command": "/run/current-system/sw/bin/npx",
+      "command": "node",
+      "disabled": false,
       "env": {
         "PRICEFX_DOMAIN": "demo.pricefx.com",
         "PRICEFX_PARTITION": "demofx_smissingham",
@@ -57,7 +57,7 @@
         "mcp-server-time",
         "--local-timezone=America/Chicago"
       ],
-      "command": "/etc/profiles/per-user/smissingham/bin/uvx",
+      "command": "uvx",
       "disabled": false
     },
     "userDocuments": {
