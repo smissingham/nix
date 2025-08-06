@@ -27,8 +27,8 @@
         complementaryTools = with pkgs; [
           # ----- TUI Tools -----#
           lazygit
-          inputs.mcp-hub.packages."${system}".default
           opencode
+          inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
           emmet-language-server

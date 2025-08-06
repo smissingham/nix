@@ -5,4 +5,4 @@ require("config.keymaps")
 require("config.options")
 require("config.plugins") -- Lazy nvim
 
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme("tokyonight")

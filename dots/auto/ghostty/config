@@ -1,7 +1,12 @@
+# Reload Config: Cmd + Shift + ,
+
 font-size = 16
 background-opacity = 0.95
 
-theme = catppuccin-macchiato
+#theme = catppuccin-macchiato
+#theme = catppuccin-mocha
+theme = tokyonight_night
+#theme = Github Dark
 cursor-color = #ed8796
 
 keybind = shift+enter=text:\n

@@ -1,0 +1,5 @@
+git:
+  paging:
+    pager: delta --dark --paging=never
+  diff:
+    pager: delta --dark --paging=never

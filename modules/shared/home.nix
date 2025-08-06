@@ -84,12 +84,23 @@ in
               echo "Stowed automatically linked dots"
             '';
           };
+          packages = with pkgs; [
+          ];
         };
 
         programs.git = {
           enable = true;
           userName = mainUser.name;
           userEmail = mainUser.email;
+          delta = {
+            enable = true;
+            options = {
+              navigate = true;
+              side-by-side = true;
+              line-numbers = true;
+              dark = true;
+            };
+          };
         };
 
         programs.bash = {
