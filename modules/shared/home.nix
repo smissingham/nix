@@ -115,8 +115,9 @@ in
           shellAliases = shellAliases;
           syntaxHighlighting.enable = true;
           initContent = ''
-            source ~/.p10k.zsh
             ${terminalSecretExports}
+            bindkey -r '^L'
+            source ~/.p10k.zsh
           '';
 
           history = {

@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   pkgsUnstable,
   mainUser,
@@ -31,17 +32,20 @@
     qbittorrent
 
     spotify
-    #telegram-desktop
     obsidian
     pkgsUnstable.zed-editor
     gitkraken
     bruno
     gimp
     scrcpy
-
   ];
+
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
+
+    # SDK Build Packages
+    nodejs_20
+    uv
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
@@ -56,6 +60,7 @@
       "raycast"
       "filen"
       "google-chrome"
+      "claude"
 
       # ----- MEDIA ----- #
       "stremio"

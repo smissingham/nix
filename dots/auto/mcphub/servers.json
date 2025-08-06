@@ -1,11 +1,10 @@
 {
   "mcpServers": {
-    "sequential-thinking": {
+    "git": {
       "args": [
-        "-c",
-        "exec $(which npx) -y @modelcontextprotocol/server-sequential-thinking"
+        "mcp-server-git"
       ],
-      "command": "/bin/sh"
+      "command": "uvx"
     },
     "memory": {
       "args": [
@@ -14,13 +13,18 @@
       ],
       "command": "/bin/sh"
     },
-    "userDocuments": {
+    "pricefx-demofx-smissingham": {
       "args": [
-        "-c",
-        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/"
+        "-y",
+        "pricefx-mcp@latest"
       ],
-      "command": "/bin/sh",
-      "disabled": false
+      "command": "/run/current-system/sw/bin/npx",
+      "env": {
+        "PRICEFX_DOMAIN": "demo.pricefx.com",
+        "PRICEFX_PARTITION": "demofx_smissingham",
+        "PRICEFX_PASSWORD": "FZv3ZWydN9rXANALNyJK3O9Z",
+        "PRICEFX_USERNAME": "sean+mcp"
+      }
     },
     "ripgrep": {
       "args": [
@@ -31,28 +35,38 @@
       "disabled": false
     },
     "searxng": {
-      "env": {
-        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
-      },
       "args": [
         "-c",
         "exec $(which npx) -y mcp-searxng@latest"
       ],
       "command": "/bin/sh",
-      "disabled": false
+      "disabled": false,
+      "env": {
+        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
+      }
     },
-    "git": {
+    "sequential-thinking": {
       "args": [
-        "mcp-server-git"
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "/etc/profiles/per-user/smissingham/bin/uvx"
+      "command": "/bin/sh"
     },
     "time": {
       "args": [
         "mcp-server-time",
         "--local-timezone=America/Chicago"
       ],
-      "command": "/etc/profiles/per-user/smissingham/bin/uvx"
+      "command": "/etc/profiles/per-user/smissingham/bin/uvx",
+      "disabled": false
+    },
+    "userDocuments": {
+      "args": [
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/"
+      ],
+      "command": "/bin/sh",
+      "disabled": false
     }
   },
   "nativeMCPServers": []
