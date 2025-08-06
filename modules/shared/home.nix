@@ -14,7 +14,6 @@ let
     mainUser.shellAliases
     {
       # GENERAL
-      jk = "sh $NIX_CONFIG_HOME/scripts/delete_junk_files.sh";
       t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
 
       # TMUX
@@ -28,6 +27,8 @@ let
       nxgc = "nix-collect-garbage --delete-old";
       nxshell = "nix-shell -p";
       nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
+
+      nxflake = "nxflake() { nix flake init --template $NIX_CONFIG_HOME/flakes/templates#\"$@\"; }; nxflake";
     }
   ];
 
@@ -129,6 +130,13 @@ in
             ${terminalSecretExports}
             bindkey -r '^L'
             source ~/.p10k.zsh
+
+            SHELL_FUNCS_DIR=${config.xdg.configHome}/shellfn
+            if [ -d "$SHELL_FUNCS_DIR" ]; then
+              for file in "$SHELL_FUNCS_DIR"/*.sh; do
+                source "$file"
+              done
+            fi
           '';
 
           history = {

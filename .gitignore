@@ -3,7 +3,8 @@
 *.st*
 *lazy-lock.json
 
+**/.direnv/*
+**/node_modules/*
 **/private/*
 
-dots/auto/tmux/plugins
-dots/auto/nvim/lazy-lock.json
+**/tmux/plugins*
