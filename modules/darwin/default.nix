@@ -4,10 +4,12 @@
   system = {
     primaryUser = mainUser.username;
 
+    # Auto install Rosetta if it's not already installed and we're on Apple Silicon
     activationScripts.extraActivation.text = ''
-      softwareupdate --install-rosetta --agree-to-license
+      if [[ $(uname -m) == "arm64" ]] && ! pkgutil --pkgs | grep -q "com.apple.pkg.RosettaUpdateAuto"; then
+        softwareupdate --install-rosetta --agree-to-license
+      fi
     '';
-
   };
 
   homebrew = {

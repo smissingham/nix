@@ -31,14 +31,16 @@
           inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
-          emmet-language-server
-          lua-language-server
-          nixd # Nix
+          bash-language-server # sh / bash
+          lua-language-server # lua
+          nil # Nix
           taplo # Toml
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
+          emmet-language-server # html shortcode expansions
 
           # ----- Formatters -----#
+          shfmt
           prettierd
           rustfmt
           stylua

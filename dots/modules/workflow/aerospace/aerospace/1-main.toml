@@ -1,0 +1,33 @@
+after-login-command = []
+
+after-startup-command = [
+  'exec-and-forget /etc/profiles/per-user/smissingham/sketchybar',
+  'exec-and-forget /etc/profiles/per-user/smissingham/bin/borders active_color=0xffcba6f7 inactive_color=0xff000 width=6.0',
+]
+
+start-at-login = true
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = false
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Finder'
+run = 'layout floating'
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 12
+inner.vertical = 12
+outer.left = 6
+outer.bottom = 6
+outer.top = 6
+outer.right = 6
+
+[mode.main.binding]

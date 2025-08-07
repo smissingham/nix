@@ -50,7 +50,7 @@
     };
 
     mypkgs = {
-      url = "path:./packages";
+      url = "path:./overlays";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };

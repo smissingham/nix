@@ -15,3 +15,6 @@ vim.keymap.set("n", "<leader>rr", "<cmd>e!<CR>", { desc = "Reload current buffer
 -- Remap Ctrl Up/Down Keys
 --vim.keymap.set({ "n", "v" }, "<C-u>", "<C-d>", { noremap = true, desc = "" })
 --vim.keymap.set({ "n", "v" }, "<C-i>", "<C-u>", { noremap = true, desc = "" })
+
+-- Leader Keymaps
+vim.keymap.set("n", "<leader>xr", "<cmd>ReloadConfig<CR>", { desc = "Reload config" })

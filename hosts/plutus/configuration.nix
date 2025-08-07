@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -29,20 +27,18 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     flameshot
-    qbittorrent
-
     spotify
     obsidian
-    pkgsUnstable.zed-editor
     gitkraken
     bruno
     gimp
-    scrcpy
+
+    mypkgs.pfxpackage
+    fswatch
   ];
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-
     # SDK Build Packages
     nodejs_20
     uv
@@ -86,6 +82,7 @@
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
+      "jetbrains-toolbox"
     ];
 
     brews = [
@@ -203,6 +200,12 @@
           AutomaticDownload = 0;
           # Install System data files & security updates
           CriticalUpdateInstall = 1;
+        };
+
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            "60".enabled = false; # usually defaults to Ctrl-Space, conflicts with tmux
+          };
         };
       };
 

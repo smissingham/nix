@@ -20,15 +20,10 @@ let
       tm = "tmux new-session -A -s";
 
       # NIX
-      nxrepl = "nix repl --expr 'import <nixpkgs>{}'";
       nxfmt = "find . -name '*.nix' -exec nixfmt {} \\;";
       nxr = "pushd $NIX_CONFIG_HOME; nxfmt; git add .; ${hostRebuildCli} switch --flake .#$(hostname) --impure --show-trace; popd";
       nxu = "pushd $NIX_CONFIG_HOME; find . -name \"flake.lock\" -delete; nix flake update; popd";
       nxgc = "nix-collect-garbage --delete-old";
-      nxshell = "nix-shell -p";
-      nxbuild = ''nix-build -E 'with import <nixpkgs> {}; callPackage '"$1"' {}' --show-trace'';
-
-      nxflake = "nxflake() { nix flake init --template $NIX_CONFIG_HOME/flakes/templates#\"$@\"; }; nxflake";
     }
   ];
 

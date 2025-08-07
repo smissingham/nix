@@ -33,6 +33,16 @@ in
         pkgs,
         ...
       }:
+      let
+        buildScriptName = "build-and-reload-aerospace";
+        buildAerospaceScript = pkgs.writeShellScriptBin "${buildScriptName}" ''
+          pushd "${config.xdg.configHome}/aerospace";
+            cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
+            ${pkgs.aerospace}/bin/aerospace reload-config
+            echo "Aerospace config file generated & reloaded"
+          popd;
+        '';
+      in
       {
         home = {
           packages = with pkgs; [
@@ -40,11 +50,16 @@ in
             jankyborders
             sketchybar
             skhd
+            buildAerospaceScript
           ];
+          shellAliases = {
+
+          };
           activation = {
             ${fullModuleName} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${moduleDots}" -R .
               echo "Stowed dots for module ${fullModuleName}"
+              ${buildAerospaceScript}/bin/${buildScriptName}
             '';
           };
         };
@@ -59,20 +74,6 @@ in
           StandardErrorPath = "/tmp/skhd.log";
         };
       };
-      #
-      # aerospace = {
-      #   serviceConfig = {
-      #     ProgramArguments = [
-      #       "/usr/bin/open"
-      #       "-a"
-      #       "${pkgs.aerospace}/Applications/AeroSpace.app"
-      #     ];
-      #     KeepAlive = true;
-      #     StandardOutPath = "/tmp/aerospace.log";
-      #     StandardErrorPath = "/tmp/aerospace.log";
-      #   };
-      # };
-
     };
   };
 }

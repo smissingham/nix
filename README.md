@@ -17,7 +17,7 @@ This repository provides a template for declarative configuration of NixOS and m
 │   ├── darwin/             # macOS-specific modules
 │   ├── nixos/              # NixOS-specific modules
 │   └── shared/             # Cross-platform modules for both NixOS and macOS
-├── packages/               # Custom package definitions
+├── overlays/               # Custom package definitions
 ├── profiles/               # User-specific configurations (e.g., 'work' or 'personal' profiles)
 └── projects/               # Development project configurations using flakes
 ```

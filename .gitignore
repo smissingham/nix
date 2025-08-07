@@ -6,5 +6,6 @@
 **/.direnv/*
 **/node_modules/*
 **/private/*
-
 **/tmux/plugins*
+
+overlays/*/result

@@ -193,11 +193,11 @@
         ]
       },
       "locked": {
-        "path": "./packages",
+        "path": "./overlays",
         "type": "path"
       },
       "original": {
-        "path": "./packages",
+        "path": "./overlays",
         "type": "path"
       },
       "parent": []
