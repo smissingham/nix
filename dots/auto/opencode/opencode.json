@@ -41,19 +41,18 @@
         "--local-timezone=America/Chicago"
       ]
     },
-    "test_prompt_library": {
+    "prompt-lib": {
       "type": "local",
-      "enabled": false,
+      "enabled": true,
       "command": [
-        "bun",
-        "--watch",
-        "run",
-        "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/"
+        "npx",
+        "-y",
+        "prompt-library-mcp@latest"
       ],
       "environment": {
-        "SERVER_NAME": "test_p_lib",
-        "SERVER_LOG": "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/server.log",
-        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/"
+        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
+        "DEFAULT_PROMPTS": "true",
+        "SERVER_NAME": "Personal Prompt Library"
       }
     },
     "git": {
