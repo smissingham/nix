@@ -12,5 +12,87 @@
         }
       }
     }
+  },
+  "mcp": {
+    "memory": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-memory"
+      ]
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "time": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "mcp-server-time",
+        "--local-timezone=America/Chicago"
+      ]
+    },
+    "test_prompt_library": {
+      "type": "local",
+      "enabled": false,
+      "command": [
+        "bun",
+        "--watch",
+        "run",
+        "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/"
+      ],
+      "environment": {
+        "SERVER_NAME": "test_p_lib",
+        "SERVER_LOG": "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/server.log",
+        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/"
+      }
+    },
+    "git": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "mcp-server-git"
+      ]
+    },
+    "ripgrep": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y mcp-ripgrep@latest"
+      ]
+    },
+    "userDocuments": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/"
+      ]
+    },
+    "searxng": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y mcp-searxng@latest"
+      ],
+      "environment": {
+        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
+      }
+    }
   }
 }

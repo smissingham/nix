@@ -1,10 +1,11 @@
 {
-  "name": "llm-shared",
+  "name": "mcp-configs",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "mcp-configs": "bun ./mcp-configs/index.ts"
+    "build": "bun run index.ts",
+    "dev": "bun --watch ."
   },
   "devDependencies": {
     "@types/bun": "latest"

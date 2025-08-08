@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "llm-shared",
+      "name": "mcp-configs",
       "devDependencies": {
         "@types/bun": "latest",
       },

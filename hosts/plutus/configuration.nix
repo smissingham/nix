@@ -41,6 +41,7 @@
   environment.systemPackages = with pkgs; [
     # SDK Build Packages
     nodejs_20
+    bun
     uv
   ];
 
