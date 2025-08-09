@@ -55,7 +55,7 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
-      "filen"
+      #"filen"
       "google-chrome"
       "claude"
 
