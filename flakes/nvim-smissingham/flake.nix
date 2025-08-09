@@ -15,7 +15,14 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        overlay = final: prev: {
+          opencode = final.callPackage ./packages/opencode/package.nix { };
+        };
+
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
 
         vimName = "nvim-smissingham";
 
