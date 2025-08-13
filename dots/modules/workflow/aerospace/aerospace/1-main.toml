@@ -2,7 +2,7 @@ after-login-command = []
 
 after-startup-command = [
   'exec-and-forget /etc/profiles/per-user/smissingham/sketchybar',
-  'exec-and-forget /etc/profiles/per-user/smissingham/bin/borders active_color=0xffcba6f7 inactive_color=0xff000 width=6.0',
+  'exec-and-forget /etc/profiles/per-user/smissingham/bin/borders',
 ]
 
 start-at-login = true
@@ -12,8 +12,10 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 accordion-padding = 30
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 automatically-unhide-macos-hidden-apps = false
+
+# Mouse lazily follows any focus (window or workspace)
+on-focus-changed = ['move-mouse window-lazy-center']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Finder'
@@ -23,11 +25,11 @@ run = 'layout floating'
 preset = 'qwerty'
 
 [gaps]
-inner.horizontal = 12
-inner.vertical = 12
-outer.left = 6
-outer.bottom = 6
-outer.top = 6
-outer.right = 6
+inner.horizontal = 24
+inner.vertical = 24
+outer.left = 12
+outer.bottom = 12
+outer.top = 12
+outer.right = 12
 
 [mode.main.binding]

@@ -34,6 +34,14 @@ rl() {
 
   # reload aerospace from custom script defined in aerospace nix module
   build-and-reload-aerospace
+
+  # re-source jankyborders settings
+  sh "$CONF/borders/bordersrc"
+
+  # rebuild and rewrite MCP config files
+  pushd "$NIX_CONFIG_HOME/projects/mcp-configs" || return
+  bun dist
+  popd || return
 }
 
 git_files_unstaged() {

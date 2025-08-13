@@ -29,7 +29,7 @@ writeJsonFile(
     mcpServers: {
       ...getMcpServers(McpCategory.GeneralPurpose),
       ...getMcpServers(McpCategory.Research),
-      //...getMcpServers(McpCategory.McpTesting),
+      ...getMcpServers(McpCategory.McpTesting),
     },
   },
 );
@@ -152,21 +152,35 @@ function getMcpServers(category: McpCategory) {
           },
           command: "bun",
         },
-        plib_dist: {
+        pricefx: {
           disabled: true,
           args: [
-            "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/dist/index.js",
+            "--cwd",
+            "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp",
+            "dev",
           ],
           env: {
-            SERVER_NAME: "plib_dist",
-            DEFAULT_PROMPTS: "true",
+            SERVER_NAME: "demofx_smissingham",
             SERVER_LOG:
-              "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
-            LIBRARY_PATH:
-              "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
+              "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/logs/server.log",
           },
-          command: "node",
+          command: "/run/current-system/sw/bin/bun",
         },
+        // plib_dist: {
+        //   disabled: true,
+        //   args: [
+        //     "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/dist/index.js",
+        //   ],
+        //   env: {
+        //     SERVER_NAME: "plib_dist",
+        //     DEFAULT_PROMPTS: "true",
+        //     SERVER_LOG:
+        //       "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
+        //     LIBRARY_PATH:
+        //       "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
+        //   },
+        //   command: "node",
+        // },
       };
   }
 }
