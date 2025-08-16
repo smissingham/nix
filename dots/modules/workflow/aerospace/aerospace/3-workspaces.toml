@@ -38,8 +38,8 @@ alt-shift-5 = 'move-node-to-workspace 5'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-g = 'move-node-to-workspace G'
 
-alt-tab = 'workspace-back-and-forth'
-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+alt-shift-tab = 'workspace-back-and-forth'
+#alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 
 [workspace-to-monitor-force-assignment]
@@ -48,5 +48,3 @@ alt-shift-semicolon = 'mode service'
 3 = ['secondary', 'main']
 4 = ['secondary', 'main']
 5 = ['secondary', 'main']
-
-

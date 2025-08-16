@@ -7,15 +7,13 @@
 #0x3F : cmd + shift + alt + ctrl
 
 # Launch Terminal with Mod + Tilde
-cmd - 0x32 : open -na ghostty
-alt - 0x32 : open -na ghostty
+cmd - 0x32 : open -na $TERMINAL
 
 # Launch Firefox with Mod + Shift + Tilde
-cmd + shift - 0x32 : open -na Floorp
-alt + shift - 0x32 : open -na Floorp
+cmd + shift - 0x32 : open -na $BROWSER
 
 # Set active window size to 1080p
-alt + shift - 0x2B : osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}'
+alt - 0x32: osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}'
 
 cmd - h : # empty command disables it
 

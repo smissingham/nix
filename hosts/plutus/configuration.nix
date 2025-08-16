@@ -26,7 +26,7 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    flameshot
+    #flameshot
     spotify
     obsidian
     gitkraken
@@ -40,7 +40,7 @@
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
     # SDK Build Packages
-    nodejs_20
+    nodejs_22
     bun
     uv
   ];
@@ -58,6 +58,9 @@
       #"filen"
       "google-chrome"
       "claude"
+      "lm-studio"
+      #"anythingllm"
+      "shottr"
 
       # ----- MEDIA ----- #
       "stremio"

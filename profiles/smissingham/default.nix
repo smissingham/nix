@@ -4,6 +4,8 @@ let
   name = "Sean Missingham";
   email = "sean@missingham.com";
   terminalApp = "ghostty";
+  browserApp = "Floorp";
+  editorApp = "nvim-smissingham";
 
   sops = {
     getPath = getSopsPath;

@@ -82,6 +82,11 @@ in
           };
           packages = with pkgs; [
           ];
+          sessionVariables = lib.mkMerge [
+            (lib.optionalAttrs (mainUser ? terminalApp) { TERMINAL = mainUser.terminalApp; })
+            (lib.optionalAttrs (mainUser ? browserApp) { BROWSER = mainUser.browserApp; })
+            (lib.optionalAttrs (mainUser ? editorApp) { EDITOR = mainUser.editorApp; })
+          ];
         };
 
         programs.git = {
