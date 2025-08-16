@@ -53,6 +53,8 @@ in
     name
     email
     terminalApp
+    editorApp
+    browserApp
     sops
     shellAliases
     getHome

@@ -74,19 +74,17 @@ in
           stateVersion = "25.05"; # READ DOCS BEFORE CHANGING
           username = mainUser.username;
           homeDirectory = mainUserHome;
+          sessionVariables = {
+            TERMINAL = lib.mkDefault mainUser.terminalApp;
+            BROWSER = lib.mkDefault mainUser.browserApp;
+            EDITOR = lib.mkDefault mainUser.editorApp;
+          };
           activation = {
             stowAutoDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${autoDotsPath}" -R .
               echo "Stowed automatically linked dots"
             '';
           };
-          packages = with pkgs; [
-          ];
-          sessionVariables = lib.mkMerge [
-            (lib.optionalAttrs (mainUser ? terminalApp) { TERMINAL = mainUser.terminalApp; })
-            (lib.optionalAttrs (mainUser ? browserApp) { BROWSER = mainUser.browserApp; })
-            (lib.optionalAttrs (mainUser ? editorApp) { EDITOR = mainUser.editorApp; })
-          ];
         };
 
         programs.git = {
@@ -103,13 +101,6 @@ in
             };
           };
         };
-
-        programs.bash = {
-          enable = true;
-          enableCompletion = true;
-          shellAliases = shellAliases;
-        };
-
         programs.direnv = {
           enable = true;
           enableZshIntegration = true;
@@ -119,6 +110,12 @@ in
         programs.zoxide = {
           enable = true;
           enableZshIntegration = true;
+        };
+
+        programs.bash = {
+          enable = true;
+          enableCompletion = true;
+          shellAliases = shellAliases;
         };
 
         programs.zsh = {

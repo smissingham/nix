@@ -2,20 +2,30 @@
 # Project Repo: https://github.com/koekeishiya/skhd
 # Reload SKHD: `skhd -r`
 # Test Keys: `skhd -o`
+#
+# Known Special Key Chars:
+# 0x32 = grave (tilde)
+# 0x37 = CMD (gui)
 ####################
 
-#0x3F : cmd + shift + alt + ctrl
-
-# Launch Terminal with Mod + Tilde
-cmd - 0x32 : open -na $TERMINAL
-
-# Launch Firefox with Mod + Shift + Tilde
-cmd + shift - 0x32 : open -na $BROWSER
+cmd - h : # empty command disables it
 
 # Set active window size to 1080p
 alt - 0x32: osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}'
 
-cmd - h : # empty command disables it
+
+# TERMINAL Launch Shortcut and behaviours
+cmd - 0x32 : open -na $TERMINAL
+
+# BROWSER Launch Shortcut and behaviours
+cmd + shift - 0x32 : open -na $BROWSER
+cmd - q [
+  "Floorp": skhd -k "cmd + shift - w"
+  "Firefox": skhd -k "cmd + shift - w"
+  "Google Chrome": skhd -k "cmd + shift - w"
+  "Brave": skhd -k "cmd + shift - w"
+] 
+
 
 
 # HYPER SHORTCUTS
