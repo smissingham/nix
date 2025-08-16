@@ -5,7 +5,8 @@ enum McpCategory {
   GeneralPurpose,
   Coding,
   Research,
-  McpTesting,
+  McpDev,
+  McpTest,
 }
 
 const userHome = process.env.HOME;
@@ -18,7 +19,7 @@ writeJsonFile(`${xdgConf}/mcphub/servers.json`, {
     ...getMcpServers(McpCategory.GeneralPurpose),
     ...getMcpServers(McpCategory.Coding),
     ...getMcpServers(McpCategory.Research),
-    ...getMcpServers(McpCategory.McpTesting),
+    ...getMcpServers(McpCategory.McpDev),
   },
 });
 
@@ -29,7 +30,7 @@ writeJsonFile(
     mcpServers: {
       ...getMcpServers(McpCategory.GeneralPurpose),
       ...getMcpServers(McpCategory.Research),
-      ...getMcpServers(McpCategory.McpTesting),
+      ...getMcpServers(McpCategory.McpDev),
     },
   },
 );
@@ -43,6 +44,7 @@ openCodeConfig.mcp = Object.entries({
   ...getMcpServers(McpCategory.GeneralPurpose),
   ...getMcpServers(McpCategory.Coding),
   ...getMcpServers(McpCategory.Research),
+  ...getMcpServers(McpCategory.McpDev),
 }).reduce((acc: Record<string, any>, [key, value]: [string, any]) => {
   acc[key] = {
     type: "local",
@@ -133,10 +135,10 @@ function getMcpServers(category: McpCategory) {
           },
         },
       };
-    case McpCategory.McpTesting:
+    case McpCategory.McpDev:
       return {
         plib_dev: {
-          disabled: true,
+          disabled: false,
           args: [
             "--cwd",
             "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp",
@@ -152,35 +154,35 @@ function getMcpServers(category: McpCategory) {
           },
           command: "bun",
         },
-        pricefx: {
-          disabled: true,
+        pricefx_dev: {
+          disabled: false,
           args: [
             "--cwd",
             "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp",
             "dev",
           ],
           env: {
-            SERVER_NAME: "demofx_smissingham",
             SERVER_LOG:
               "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/logs/server.log",
           },
           command: "/run/current-system/sw/bin/bun",
         },
-        // plib_dist: {
-        //   disabled: true,
-        //   args: [
-        //     "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/dist/index.js",
-        //   ],
-        //   env: {
-        //     SERVER_NAME: "plib_dist",
-        //     DEFAULT_PROMPTS: "true",
-        //     SERVER_LOG:
-        //       "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
-        //     LIBRARY_PATH:
-        //       "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
-        //   },
-        //   command: "node",
-        // },
+      };
+    case McpCategory.McpTest:
+      return {
+        pricefx_dist: {
+          disabled: false,
+          args: [
+            "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/dist/index.js",
+          ],
+          env: {
+            PRICEFX_DOMAIN: "demo.pricefx.com",
+            PRICEFX_PARTITION: "demofx_smissingham",
+            PRICEFX_USERNAME: "sean+mcp",
+            PRICEFX_PASSWORD: "FZv3ZWydN9rXANALNyJK3O9Z",
+          },
+          command: "/run/current-system/sw/bin/node",
+        },
       };
   }
 }

@@ -2,9 +2,17 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
   "theme": "opencode",
-  "model": "openrouter/qwen/qwen3-coder",
-  "small_model": "openrouter/google/gemini-2.5-flash-lite",
   "provider": {
+    "lmstudio": {
+      "options": {
+        "baseURL": "http://localhost:1234/v1"
+      },
+      "models": {
+        "qwen/qwen3-30b-a3b-2507": {
+          "name": "Qwen 3 30B"
+        }
+      }
+    },
     "openrouter": {
       "models": {
         "google/gemini-2.5-flash-lite": {
@@ -118,6 +126,35 @@
       ],
       "environment": {
         "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
+      }
+    },
+    "plib_dev": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "bun",
+        "--cwd",
+        "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp",
+        "dev"
+      ],
+      "environment": {
+        "SERVER_NAME": "plib_live",
+        "DEFAULT_PROMPTS": "true",
+        "SERVER_LOG": "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
+        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/"
+      }
+    },
+    "pricefx_dev": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/run/current-system/sw/bin/bun",
+        "--cwd",
+        "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp",
+        "dev"
+      ],
+      "environment": {
+        "SERVER_LOG": "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/logs/server.log"
       }
     }
   }
