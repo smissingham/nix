@@ -83,6 +83,7 @@
       "onyx"
       "commander-one"
       "xquartz"
+      "yubico-authenticator"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"

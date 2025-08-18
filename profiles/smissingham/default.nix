@@ -12,6 +12,9 @@ let
     ageKeyFileName = "keys.txt";
     secretsFileName = "secrets.yaml";
     secrets = {
+
+      # SECURITY NOTE: These are auto-sourced into user shell env.
+      # Add nothing here that you might not want stolen by a malicious CLI app
       autoExport = {
         ANTHROPIC_API_KEY = { };
         LITELLM_API_KEY = { };
@@ -20,6 +23,8 @@ let
         OPENROUTER_API_KEY = { };
         OPENROUTER_API_URL = { };
       };
+
+      # Put secrets here that are needed in nix but not auto-exported to env
       other = {
       };
     };

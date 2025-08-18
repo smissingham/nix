@@ -50,6 +50,11 @@ in
           packages = with pkgs; [
             age
             sops
+
+            #TODO: Extract these as optional module setting
+            age-plugin-yubikey
+            yubico-piv-tool
+            yubikey-manager
           ];
           sessionVariables = {
             SOPS_AGE_KEY_FILE = "${ageKeyFile}";

@@ -30,6 +30,8 @@ rl() {
     done
   fi
 
+  source "$NIX_CONFIG_HOME/profiles/smissingham/private/yubikey-sops/helpers.sh"
+
   # reload tmux
   tmux source "$CONF"/tmux/tmux.conf
 
