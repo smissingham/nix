@@ -14,6 +14,11 @@ jk() {
   done
 }
 
+# Sources yubikey helper functions and env vars for use with sops yubikey setup
+yk() {
+  source "$NIX_CONFIG_HOME/profiles/smissingham/private/yubikey-sops/helpers.sh"
+}
+
 # Reload/Re-Source Configuration
 # Reloads shell functions, tmux config, and aerospace config
 # Usage: rl
@@ -29,8 +34,6 @@ rl() {
       echo "Re-Sourced $file"
     done
   fi
-
-  source "$NIX_CONFIG_HOME/profiles/smissingham/private/yubikey-sops/helpers.sh"
 
   # reload tmux
   tmux source "$CONF"/tmux/tmux.conf

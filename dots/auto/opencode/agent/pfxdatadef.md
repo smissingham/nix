@@ -19,34 +19,6 @@ tools:
 
 JUST DOCUMENT WHAT YOU FIND, AND EXPLAIN IT.
 
-## Data Assets to Collect
-
-Please gather information about the following data assets (expand this list as needed):
-
-- **Product Master Data**
-  - Product hierarchies and categories
-  - Product attributes and specifications
-  - Product lifecycle information
-
-- **Customer Master Data**
-  - Customer hierarchies and segments
-  - Customer attributes and classifications
-  - Account relationships
-
-- **Pricing Data**
-  - Live Price Grids and Price Lists
-  - Historical pricing information (often in DMDS or PX)
-
-- **Transaction Data**
-  - Sales transactions
-  - Quote and proposal data
-  - Contract information
-
-- **Configuration Data**
-  - System configurations
-  - Business logic definitions
-  - Workflow configurations
-
 ## Key Locations / Items to Check
 For each of the following, only check the meta data
 Be careful not to enumerate too many records from within.

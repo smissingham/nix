@@ -33,6 +33,8 @@
     bruno
     gimp
 
+    mypkgs.filen-desktop
+
     mypkgs.pfxpackage
     fswatch
   ];
@@ -58,14 +60,11 @@
       #"filen"
       "google-chrome"
       "claude"
-      "lm-studio"
-      #"anythingllm"
       "shottr"
 
       # ----- MEDIA ----- #
       "stremio"
       "vlc"
-      "comfyui"
 
       # ----- COMMUNICATIONS ----- #
       "signal"
@@ -88,6 +87,11 @@
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
       "jetbrains-toolbox"
+
+      # ----- AI TOOLS ----- #
+      "lm-studio"
+      #"anythingllm"
+      #"comfyui"
     ];
 
     brews = [

@@ -137,23 +137,23 @@ function getMcpServers(category: McpCategory) {
       };
     case McpCategory.McpDev:
       return {
-        plib_dev: {
-          disabled: false,
-          args: [
-            "--cwd",
-            "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp",
-            "dev",
-          ],
-          env: {
-            SERVER_NAME: "plib_live",
-            DEFAULT_PROMPTS: "true",
-            SERVER_LOG:
-              "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
-            LIBRARY_PATH:
-              "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
-          },
-          command: "bun",
-        },
+        // plib_dev: {
+        //   disabled: true,
+        //   args: [
+        //     "--cwd",
+        //     "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp",
+        //     "dev",
+        //   ],
+        //   env: {
+        //     SERVER_NAME: "plib_live",
+        //     DEFAULT_PROMPTS: "true",
+        //     SERVER_LOG:
+        //       "/Users/smissingham/Documents/Nix/projects/prompt-library-mcp/logs/server.log",
+        //     LIBRARY_PATH:
+        //       "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
+        //   },
+        //   command: "bun",
+        // },
         pricefx_dev: {
           disabled: false,
           args: [

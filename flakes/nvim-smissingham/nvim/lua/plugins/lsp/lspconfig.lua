@@ -44,12 +44,31 @@ return {
 				rust_analyzer = {}, -- Rust
 				--ts_ls = {},         -- Typescript
 				vtsls = {}, -- Better Typescript
+
+				-- jdtls = {
+				-- 	filetypes = { "java", "groovy" },
+				-- 	cmd = { "jdtls", "--jvm-arg=-Dfile.encoding=UTF-8" },
+				-- },
+
+				groovyls = {
+					filetypes = { "groovy" },
+					cmd = { "groovyls" },
+				},
 			},
 		},
 		config = function(_, opts)
 			local lspconfig = require("lspconfig")
 			for server, config in pairs(opts.servers) do
 				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+
+				-- if server == "jdtls" then
+				-- 	config.root_dir = require("lspconfig.util").root_pattern("build.gradle", "pom.xml", ".git")
+				-- end
+
+				if server == "groovyls" then
+					config.root_dir = lspconfig.util.root_pattern("build.gradle", "pom.xml", ".git")
+				end
+
 				lspconfig[server].setup(config)
 			end
 		end,

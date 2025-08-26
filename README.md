@@ -7,19 +7,19 @@ This repository provides a template for declarative configuration of NixOS and m
 ```
 .
 ├── dots/                   # Dotfiles and application configurations
-│   ├── auto/               # Configurations to be automatically linked
-│   └── modules/            # Modular workflow configurations (e.g., window manager setups)
+│   ├── auto/               # Configurations to be automatically linked into XDG_CONFIG_HOME
+│   └── modules/            # Dotfile setups that relate to toggleable nix modules (manually linked by module)
 ├── flakes/                 # Custom Nix flakes for things like editors or project templates
 │   ├── nvim-smissingham/   # Sean Missingham's Neovim, wrapped in a self contained nix flake
-│   └── templates/          # Project templates
+│   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes 
+│   └── templates/          # Flake templates, for quick devenv inits
 ├── hosts/                  # Host-specific configurations (one directory per machine)
 ├── modules/                # Reusable Nix modules for configuring systems and home environments
 │   ├── darwin/             # macOS-specific modules
 │   ├── nixos/              # NixOS-specific modules
 │   └── shared/             # Cross-platform modules for both NixOS and macOS
-├── overlays/               # Custom package definitions
 ├── profiles/               # User-specific configurations (e.g., 'work' or 'personal' profiles)
-└── projects/               # Development project configurations using flakes
+└── projects/               # Mini projects related to my system configuration
 ```
 
 ### Key Directories
