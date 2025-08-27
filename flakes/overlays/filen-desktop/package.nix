@@ -69,6 +69,7 @@ buildNpmPackage rec {
     pixman
     cairo
     pango
+    stdenv.cc.cc.lib
   ];
 
   # Override package-lock.json electron version to use what's given by nixpkgs
@@ -89,7 +90,14 @@ buildNpmPackage rec {
   postInstall = ''
     makeWrapper ${pkgs.electron}/bin/electron $out/bin/${binaryName} \
         --set-default ELECTRON_IS_DEV 0 \
-        --add-flags $out/lib/node_modules/@filen/desktop/dist/index.js;
+        --add-flags $out/lib/node_modules/@filen/desktop/dist/index.js \
+        --prefix LD_LIBRARY_PATH : "${
+          pkgs.lib.makeLibraryPath [
+            pkgs.stdenv.cc.cc.lib
+            pkgs.glib
+            pkgs.gtk3
+          ]
+        }"
 
     mkdir -p $out/share/applications
     cp ${desktopItem}/share/applications/* $out/share/applications/
