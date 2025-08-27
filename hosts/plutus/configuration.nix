@@ -26,7 +26,6 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    #flameshot
     spotify
     obsidian
     gitkraken
@@ -50,14 +49,12 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     taps = [
-      #"sst/tap"
     ];
 
     casks = [
 
       # ----- WORKFLOW ----- #
       "raycast"
-      #"filen"
       "google-chrome"
       "claude"
       "shottr"
