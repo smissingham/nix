@@ -40,7 +40,6 @@ in
         home.packages = with pkgs; [
           kdePackages.plasma-browser-integration
           kdePackages.partitionmanager
-
         ];
 
         programs.plasma = {
@@ -136,8 +135,7 @@ in
                     launchers = [
                       "applications:org.kde.dolphin.desktop"
                       "applications:org.kde.konsole.desktop"
-                      "applications:firefox.desktop"
-                      #"applications:jetbrains-toolbox.desktop"
+                      "applications:${lib.toLower mainUser.browserApp}.desktop"
                     ];
                   };
                 }

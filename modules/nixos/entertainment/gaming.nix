@@ -32,7 +32,6 @@ in
       gamemode.enable = true;
       corectrl = {
         enable = true;
-        gpuOverclock.enable = true;
       };
     };
   };

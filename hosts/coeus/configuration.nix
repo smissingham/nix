@@ -1,36 +1,29 @@
 {
   pkgs,
-  lib,
+  pkgsUnstable,
+  mainUser,
   ...
 }:
 {
   imports = [
     ./hardware.nix
-    ./systemd.nix
+    #./systemd.nix
   ];
 
-  environment.systemPackages = [ pkgs.cudaPackages.cudnn ];
+  networking.hostName = "coeus";
+  time.timeZone = "America/Chicago";
 
   mySharedModules = {
-    browsers = {
-      floorp.enable = true;
-    };
-    devtools = {
-      vscode.enable = true;
-      nvim-smissingham.enable = true;
-    };
-    workflow = {
-      sops.enable = true;
-    };
+    browsers.floorp.enable = true;
+    workflow.sops.enable = true;
+    devtools.vscode.enable = true;
+    devtools.nvim-smissingham.enable = true;
   };
 
   myNixOSModules = {
-    # Window Manager
-    wm = {
-      plasma6.enable = true;
-      #gnome-xserver.enable = true;
-      #hyprland.enable = true;
-    };
+    wm.plasma6.enable = true;
+    #wm.gnome-xserver.enable = true;
+    #wm.hyprland.enable = true;
 
     entertainment.gaming.enable = true;
 
@@ -58,32 +51,29 @@
     };
   };
 
-  networking.hostName = "coeus";
-  networking.useDHCP = lib.mkDefault true;
+  #----- Applications in User Space -----#
+  home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+    pkgsUnstable.ghostty
+    mypkgs.filen-desktop
+
+    # Work
+    teams-for-linux
+
+    # Office
+    libreoffice
+  ];
+
+  #----- Applications in System Space -----#
+  environment.systemPackages = with pkgs; [
+    cudaPackages.cudnn
+  ];
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = [ "*" ];
-        settings = {
-          main = {
-            capslock = "esc";
-            #esc = "capslock";
-          };
-        };
-      };
-    };
-  };
-
-  time.timeZone = "America/Chicago";
-
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   security.rtkit.enable = true;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -98,6 +88,4 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
-
-  system.stateVersion = "25.05"; # Did you read the docs?
 }

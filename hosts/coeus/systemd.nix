@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  environment,
   ...
 }:
 {
@@ -13,7 +11,7 @@
     startLimitBurst = 5;
     startLimitIntervalSec = 500;
     serviceConfig = {
-      ExecStart = "${pkgs.filen-desktop}/bin/filen-desktop";
+      ExecStart = "${pkgs.mypkgs.filen-desktop}/bin/filen-desktop";
       Restart = "on-failure";
       RestartSec = "5s";
     };

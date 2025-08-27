@@ -2,16 +2,21 @@
 {
   mainUser,
   pkgs,
+  lib,
   ...
 }:
 {
-
-  programs.git.enable = true;
-  programs.zsh.enable = true;
+  system.stateVersion = "25.05"; # Did you read the docs?
 
   networking = {
+    useDHCP = lib.mkDefault true;
     firewall.enable = true;
     networkmanager.enable = true;
+  };
+
+  programs = {
+    zsh.enable = true;
+    git.enable = true;
   };
 
   users.users.${mainUser.username} = {
@@ -32,7 +37,6 @@
         settings = {
           main = {
             capslock = "esc";
-            #esc = "capslock";
           };
         };
       };
@@ -52,4 +56,5 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+
 }
