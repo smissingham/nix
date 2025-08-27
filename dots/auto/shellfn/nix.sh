@@ -22,8 +22,5 @@ nxbuild() {
     return 1
   fi
 
-  test
-
-  echo "Building $package_file with args: $args"
-  nix-build -E "(import <nixpkgs> {}).callPackage $package_file $args"
+  nix-build --quiet --no-build-output -E "(import <nixpkgs> {}).callPackage $package_file $args"
 }

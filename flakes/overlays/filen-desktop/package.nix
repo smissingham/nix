@@ -1,18 +1,23 @@
 {
   lib,
   pkgs,
+  stdenv,
   buildNpmPackage,
   fetchFromGitHub,
   makeDesktopItem,
+  desktopToDarwinBundle,
 }:
 let
+  packageName = "filen-desktop";
+  binaryName = "filen-desktop";
+  desktopName = "Filen Desktop";
   desktopItem = makeDesktopItem {
-    name = "filen-desktop";
-    exec = "filen-desktop";
-    icon = "filen-desktop";
-    desktopName = "Filen Desktop";
-    genericName = "Encrypted Cloud Storage";
-    comment = "Secure cloud storage client";
+    name = binaryName;
+    exec = binaryName;
+    icon = binaryName;
+    startupWMClass = binaryName;
+    desktopName = desktopName;
+    comment = "Encrypted Cloud Storage";
     categories = [
       "Network"
       "FileTransfer"
@@ -24,74 +29,78 @@ let
       "encrypted"
     ];
   };
-in
 
+  iconPrefix = if stdenv.hostPlatform.isDarwin then "darwin" else "linux";
+  iconSuffix = if stdenv.hostPlatform.isDarwin then "icns" else "png";
+in
 buildNpmPackage rec {
-  pname = "filen-desktop";
+  pname = packageName;
   version = "3.0.47";
   makeCacheWritable = true;
 
   src = fetchFromGitHub {
     owner = "FilenCloudDienste";
-    repo = "filen-desktop";
+    repo = packageName;
     rev = "v${version}";
     hash = "sha256-WS9JqErfsRtt6zF+LrKkpiscJ25MRXmRxmIm3GH6xf0=";
   };
 
-  npmDepsHash = "sha256-W2xJDUAJHQHYMiurCMlWbIzjddUywB2whItuBmj5Nr8=";
+  npmDepsHash = "sha256-+Ul2z6faZvAeCHq35janVTUNoqTQ5JNDeLbCV220nFU=";
   npmBuildScript = "build";
-  dontNpmBuild = true; # Skip the electron-builder build step
 
-  # Add environment variables to prevent Electron from downloading
+  # Prevent attempts to download electron binaries during build
   ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
 
-  # Add electron as a build dependency
-  buildInputs = [ pkgs.electron ];
+  # Dependencies only at time of build
+  nativeBuildInputs =
+    with pkgs;
+    [
+      pkg-config
+      electron
+      makeWrapper
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      desktopToDarwinBundle
+    ];
 
+  # Dependencies also needed at runtime
+  buildInputs = with pkgs; [
+    pixman
+    cairo
+    pango
+  ];
+
+  # Override package-lock.json electron version to use what's given by nixpkgs
   postPatch = ''
-    chmod +w package-lock.json
-    cp ${./package-lock.json} package-lock.json
-
-    # Override package-lock.json electron version to use whatever it's given by nixpkgs
     substituteInPlace package.json \
       --replace-fail '"electron": "^34.1.1"' '"electron": "*"'
-
-    # Prevent electron-builder in package.json scripts
-    substituteInPlace package.json \
-      --replace-fail '&& electron-builder ' ' '
   '';
 
-  postBuild = ''
-    # Run the TypeScript build
-    npm run clear
-    npm run lint
-    npm run tsc
+  # Set up icon assets in path required by desktopItem
+  preInstall = ''
+    mkdir -p $out/share/pixmaps
+    cp $src/assets/icons/app/${iconPrefix}.${iconSuffix} $out/share/pixmaps/${binaryName}.${iconSuffix}
+    cp $src/assets/icons/app/${iconPrefix}Notification.${iconSuffix} $out/share/pixmaps/${binaryName}-notification.${iconSuffix}
   '';
 
+  # Create binary wrapper and desktopItem
+  # desktopItem auto-creates the .app bundle for Darwin
   postInstall = ''
-    # Install executable wrapper script
-    mkdir -p $out/bin
-    cat > $out/bin/filen-desktop <<EOF
-    #!/bin/sh
-    exec ${pkgs.electron}/bin/electron $out/lib/node_modules/@filen/desktop/dist
-    EOF
+    makeWrapper ${pkgs.electron}/bin/electron $out/bin/${binaryName} \
+        --set-default ELECTRON_IS_DEV 0 \
+        --add-flags $out/lib/node_modules/@filen/desktop/dist/index.js;
 
-    chmod +x $out/bin/filen-desktop
-    cp -rt $out/bin ${desktopItem}/share/applications 
-
-    # Install icons of all available sizes from the /icons/png folder
-    for size in 16 24 32 48 64 96 128 256 512 1024; do
-      if [ -f "$src/build/icons/png/''${size}x''${size}.png" ]; then
-        mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps
-        cp $src/build/icons/png/''${size}x''${size}.png $out/share/icons/hicolor/''${size}x''${size}/apps/filen-desktop.png
-      fi
-    done
+    mkdir -p $out/share/applications
+    cp ${desktopItem}/share/applications/* $out/share/applications/
   '';
 
-  # This ensures the desktop item is correctly handled
-  nativeBuildInputs = [ pkgs.copyDesktopItems ];
+  # Write correct darwin icons to .app contents
+  postFixup = lib.optionalString stdenv.hostPlatform.isDarwin ''
+    cp -rf $out/share/pixmaps/* "$out/Applications/${desktopName}.app/Contents/Resources"
+  '';
 
+  # Application Metadata
   meta = with lib; {
     homepage = "https://filen.io/products";
     downloadPage = "https://filen.io/products/desktop";
@@ -101,9 +110,12 @@ buildNpmPackage rec {
       Sync your data, mount network drives, collaborate with others and access files natively — 
       powered by robust encryption and seamless integration.
     '';
-    mainProgram = "filen-desktop";
+    mainProgram = binaryName;
     platforms = platforms.linux ++ platforms.darwin;
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ smissingham ];
+    maintainers = with maintainers; [
+      smissingham
+      kashw2
+    ];
   };
 }
