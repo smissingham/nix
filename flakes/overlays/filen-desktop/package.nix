@@ -9,13 +9,13 @@
 }:
 let
   packageName = "filen-desktop";
-  binaryName = "filen-desktop";
+  packageVersion = "3.0.47";
   desktopName = "Filen Desktop";
   desktopItem = makeDesktopItem {
-    name = binaryName;
-    exec = binaryName;
-    icon = binaryName;
-    startupWMClass = binaryName;
+    name = packageName;
+    exec = packageName;
+    icon = packageName;
+    startupWMClass = packageName;
     desktopName = desktopName;
     comment = "Encrypted Cloud Storage";
     categories = [
@@ -33,15 +33,15 @@ let
   iconPrefix = if stdenv.hostPlatform.isDarwin then "darwin" else "linux";
   iconSuffix = if stdenv.hostPlatform.isDarwin then "icns" else "png";
 in
-buildNpmPackage rec {
+buildNpmPackage {
   pname = packageName;
-  version = "3.0.47";
+  version = packageVersion;
   makeCacheWritable = true;
 
   src = fetchFromGitHub {
     owner = "FilenCloudDienste";
     repo = packageName;
-    rev = "v${version}";
+    rev = "v${packageVersion}";
     hash = "sha256-WS9JqErfsRtt6zF+LrKkpiscJ25MRXmRxmIm3GH6xf0=";
   };
 
@@ -53,23 +53,20 @@ buildNpmPackage rec {
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
 
   # Dependencies only at time of build
-  nativeBuildInputs =
-    with pkgs;
-    [
-      pkg-config
-      electron
-      makeWrapper
-    ]
-    ++ lib.optionals stdenv.isDarwin [
-      desktopToDarwinBundle
-    ];
+  nativeBuildInputs = [
+    pkgs.pkg-config
+    pkgs.electron
+    pkgs.makeWrapper
+  ]
+  ++ lib.optionals stdenv.isDarwin [
+    desktopToDarwinBundle
+  ];
 
   # Dependencies also needed at runtime
-  buildInputs = with pkgs; [
-    pixman
-    cairo
-    pango
-    stdenv.cc.cc.lib
+  buildInputs = [
+    pkgs.pixman
+    pkgs.cairo
+    pkgs.pango
   ];
 
   # Override package-lock.json electron version to use what's given by nixpkgs
@@ -81,23 +78,17 @@ buildNpmPackage rec {
   # Set up icon assets in path required by desktopItem
   preInstall = ''
     mkdir -p $out/share/pixmaps
-    cp $src/assets/icons/app/${iconPrefix}.${iconSuffix} $out/share/pixmaps/${binaryName}.${iconSuffix}
-    cp $src/assets/icons/app/${iconPrefix}Notification.${iconSuffix} $out/share/pixmaps/${binaryName}-notification.${iconSuffix}
+    cp $src/assets/icons/app/${iconPrefix}.${iconSuffix} $out/share/pixmaps/${packageName}.${iconSuffix}
+    cp $src/assets/icons/app/${iconPrefix}Notification.${iconSuffix} $out/share/pixmaps/${packageName}-notification.${iconSuffix}
   '';
 
   # Create binary wrapper and desktopItem
   # desktopItem auto-creates the .app bundle for Darwin
   postInstall = ''
-    makeWrapper ${pkgs.electron}/bin/electron $out/bin/${binaryName} \
-        --set-default ELECTRON_IS_DEV 0 \
-        --add-flags $out/lib/node_modules/@filen/desktop/dist/index.js \
-        --prefix LD_LIBRARY_PATH : "${
-          pkgs.lib.makeLibraryPath [
-            pkgs.stdenv.cc.cc.lib
-            pkgs.glib
-            pkgs.gtk3
-          ]
-        }"
+    makeWrapper ${pkgs.electron}/bin/electron $out/bin/${packageName} \
+      --set-default ELECTRON_IS_DEV 0 \
+      --add-flags $out/lib/node_modules/@filen/desktop/dist/index.js \
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}"
 
     mkdir -p $out/share/applications
     cp ${desktopItem}/share/applications/* $out/share/applications/
@@ -115,10 +106,9 @@ buildNpmPackage rec {
     description = "Filen Desktop Client";
     longDescription = ''
       Encrypted Cloud Storage built for your Desktop.
-      Sync your data, mount network drives, collaborate with others and access files natively — 
-      powered by robust encryption and seamless integration.
+      Sync your data, mount network drives, collaborate with others and access files natively powered by robust encryption and seamless integration.
     '';
-    mainProgram = binaryName;
+    mainProgram = packageName;
     platforms = platforms.linux ++ platforms.darwin;
     license = licenses.agpl3Only;
     maintainers = with maintainers; [
