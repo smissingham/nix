@@ -7,7 +7,7 @@
 {
   imports = [
     ./hardware.nix
-    #./systemd.nix
+    ./systemd.nix
   ];
 
   networking.hostName = "coeus";
