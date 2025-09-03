@@ -28,8 +28,8 @@ writeJsonFile(
   `${userHome}/Library/Application Support/Claude/claude_desktop_config.json`,
   {
     mcpServers: {
-      ...getMcpServers(McpCategory.GeneralPurpose),
-      ...getMcpServers(McpCategory.Research),
+      // ...getMcpServers(McpCategory.GeneralPurpose),
+      // ...getMcpServers(McpCategory.Research),
       ...getMcpServers(McpCategory.McpDev),
     },
   },

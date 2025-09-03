@@ -3,6 +3,7 @@ return {
 	-- Config: https://ravitemer.github.io/mcphub.nvim/configuration.html
 	{
 		"ravitemer/mcphub.nvim",
+		version = "4.2.0",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},

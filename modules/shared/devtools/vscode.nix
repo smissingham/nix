@@ -42,36 +42,7 @@ in
 
     #----- Applications in User Space -----#
     home-manager.users.${mainUser.username} = {
-
-      # home.file.".continue" = {
-      #   source = ./dots/.continue;
-      #   recursive = true;
-      # };
-
-      # home.packages =
-      #   with pkgs;
-      #   [
-      #     prettierd
-      #
-      #     python312
-      #   ]
-      #   ++ (with pkgs.python312Packages; [
-      #     pip
-      #     virtualenv
-      #     setuptools
-      #     wheel
-      #     ipykernel
-      #
-      #     pandas
-      #     duckdb
-      #   ]);
-
       home.packages = with pkgs; [
-
-        # ----- File Export & Conversion -----#
-        pandoc
-        texliveFull
-        texlivePackages.tcolorbox
       ];
 
       programs.vscode = {
@@ -86,6 +57,7 @@ in
             "workbench.iconTheme" = "vscode-icons";
             "editor.formatOnSave" = true;
             "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";
+            "terminal.integrated.defaultLocation" = "editor";
             "explorer.compactFolders" = false;
             "explorer.confirmDragAndDrop" = false;
             "explorer.confirmDelete" = false;
@@ -126,31 +98,37 @@ in
               catppuccin.catppuccin-vsc
               vscode-icons-team.vscode-icons
 
-              # Basic Language Support
+              # LSP's
               redhat.vscode-yaml
 
-              # First Class Language Support
-              ms-python.python
-              ms-python.vscode-pylance
+              # Formatters
+              esbenp.prettier-vscode
               ms-python.black-formatter
 
-              # Nix
-              bbenoist.nix
-              jnoortheen.nix-ide
+              # Editor Helpers
+              eamodio.gitlens
+              mkhl.direnv
+              (buildVscodeMarketplaceExtension {
+                mktplcRef = {
+                  name = "opencode";
+                  publisher = "sst-dev";
+                  version = "0.0.9";
+                  sha256 = "sha256-1ORTcXX9OBPo2l3njXNhE6uUT2B3JbtFtjUe6IPywbE=";
+                };
+              })
 
-              # Remote Access
-              pkgsUnstable.vscode-extensions.ms-vscode-remote.remote-ssh
+              # Python General
+              ms-python.python
+              ms-python.vscode-pylance
 
-              # Data Science Related
+              # Data Science
               ms-toolsai.datawrangler
               ms-toolsai.jupyter
               ms-toolsai.jupyter-renderers
 
-              # Code ormatting
-              esbenp.prettier-vscode
-
-              # Version Control
-              eamodio.gitlens
+              # Nix
+              #bbenoist.nix
+              #jnoortheen.nix-ide
             ]
 
             # ----- Manually Specified Extensions ----- #
@@ -191,18 +169,18 @@ in
                 };
               })
 
-              (buildVscodeMarketplaceExtension {
-                mktplcRef = {
-                  name = "continue";
-                  publisher = "continue";
-                  version = "1.1.26";
-                  sha256 = "sha256-3WQ1dCOaU42a4loHTLlGsV3RPGJibqtC++yId1UMC3g=";
-                };
-                # nativeBuildInputs = [
-                #   pkgs.autoPatchelfHook
-                # ];
-                buildInputs = [ pkgs.stdenv.cc.cc.lib ];
-              })
+              # (buildVscodeMarketplaceExtension {
+              #   mktplcRef = {
+              #     name = "continue";
+              #     publisher = "continue";
+              #     version = "1.1.26";
+              #     sha256 = "sha256-3WQ1dCOaU42a4loHTLlGsV3RPGJibqtC++yId1UMC3g=";
+              #   };
+              #   # nativeBuildInputs = [
+              #   #   pkgs.autoPatchelfHook
+              #   # ];
+              #   buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+              # })
             ];
         };
 
