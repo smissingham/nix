@@ -10,7 +10,7 @@ vim.keymap.set({ "n", "v" }, "H", "^")
 vim.keymap.set({ "n", "v" }, "L", "$")
 
 -- Leader Keymaps
-vim.keymap.set("n", "<leader>rr", "<cmd>e!<CR>", { desc = "Reload current buffer" })
+vim.keymap.set("n", "<leader>ge", "<cmd>e!<CR>", { desc = "Reload current buffer" })
 
 -- Remap Ctrl Up/Down Keys
 --vim.keymap.set({ "n", "v" }, "<C-u>", "<C-d>", { noremap = true, desc = "" })

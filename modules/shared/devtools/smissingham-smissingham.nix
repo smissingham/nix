@@ -8,7 +8,7 @@
 let
   moduleSet = "mySharedModules";
   moduleCategory = "devtools";
-  moduleName = "nvim-smissingham";
+  moduleName = "smissingham-nvim";
 
   optionPath = [
     moduleSet
@@ -18,8 +18,8 @@ let
   fullModuleName = lib.concatStringsSep "." optionPath;
   enablePath = optionPath ++ [ "enable" ];
 
-  binaryName = "nvim-smissingham";
-  flakePath = "${config.environment.variables.NIX_CONFIG_HOME}/flakes/nvim-smissingham";
+  binaryName = "smissingham-nvim";
+  flakePath = "${config.environment.variables.NIX_CONFIG_HOME}/flakes/apps/smissingham-nvim";
   flake = builtins.getFlake "path:${flakePath}";
 
 in

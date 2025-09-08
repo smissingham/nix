@@ -10,7 +10,7 @@ This repository provides a template for declarative configuration of NixOS and m
 │   ├── auto/               # Configurations to be automatically linked into XDG_CONFIG_HOME
 │   └── modules/            # Dotfile setups that relate to toggleable nix modules (manually linked by module)
 ├── flakes/                 # Custom Nix flakes for things like editors or project templates
-│   ├── nvim-smissingham/   # Sean Missingham's Neovim, wrapped in a self contained nix flake
+│   ├── apps/               # Fully contained applications wrapped as a nix flake for use cross-platform 
 │   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes 
 │   └── templates/          # Flake templates, for quick devenv inits
 ├── hosts/                  # Host-specific configurations (one directory per machine)

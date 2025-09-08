@@ -5,7 +5,7 @@ let
   email = "sean@missingham.com";
   terminalApp = "ghostty";
   browserApp = "Floorp";
-  editorApp = "nvim-smissingham";
+  editorApp = "smissingham-nvim";
 
   sops = {
     getPath = getSopsPath;

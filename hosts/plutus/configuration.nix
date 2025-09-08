@@ -16,8 +16,8 @@
       floorp.enable = true;
     };
     devtools = {
-      vscode.enable = true;
-      nvim-smissingham.enable = true;
+      smissingham-nvim.enable = true;
+      smissingham-vscode.enable = true;
     };
     workflow = {
       sops.enable = true;
@@ -80,6 +80,7 @@
       "commander-one"
       "xquartz"
       "yubico-authenticator"
+      "parallels"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"

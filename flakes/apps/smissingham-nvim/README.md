@@ -1,4 +1,4 @@
-# nvim-smissingham
+# smissingham-nvim
 
 Sean Missingham's Neovim configuration optimized for development with AI assistance and LSP support.
 
@@ -13,17 +13,17 @@ is designed to be run temporarily or installed **as a Nix Flake**
 To run this flake directly off github in a temp shell
 
 ```
-nix run "github:smissingham/nix?dir=flakes/nvim-smissingham"
+nix run "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
 ```
 
 ### Nix System Flake Installation
 If you're using Nix like I am to manage your system configuration, you can import
-this flake and install the provided "nvim-smissingham" as a system package like any other
+this flake and install the provided "smissingham-nvim" as a system package like any other
 
 I got a little creative myself and wrapped it in a nix module which
 directly references this flake instead of declaring it as an input in my root flake
 
-[See Here for My Nix Module](../../modules/shared/devtools/nvim-smissingham.nix)
+[See Here for My Nix Module](../../modules/shared/devtools/smissingham-nvim.nix)
 
 ## Configuration Structure
 

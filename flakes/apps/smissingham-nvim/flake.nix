@@ -24,7 +24,7 @@
           overlays = [ overlay ];
         };
 
-        vimName = "nvim-smissingham";
+        vimName = "smissingham-nvim";
 
         nvimConfigured = pkgs.neovim.override {
           withNodeJs = true;

@@ -16,8 +16,10 @@
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow.sops.enable = true;
-    devtools.vscode.enable = true;
-    devtools.nvim-smissingham.enable = true;
+    devtools = {
+      smissingham-nvim.enable = true;
+      smissingham-vscode.enable = true;
+    };
   };
 
   myNixOSModules = {
