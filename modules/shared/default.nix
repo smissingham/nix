@@ -16,8 +16,15 @@
     NIX_CONFIG_HOME = mainUser.getNixConfPath { };
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix = {
+    optimise = {
+      automatic = true;
+    };
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
 }

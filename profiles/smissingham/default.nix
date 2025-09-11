@@ -41,6 +41,7 @@ let
     sec = "pushd ${getSopsPath { }}; sops ${sops.secretsFileName}; popd";
 
     # ----- Developer Stuff -----#
+    j = "just";
     oc = "opencode";
     cc = "claude-code";
   };

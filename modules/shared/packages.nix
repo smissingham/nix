@@ -31,6 +31,7 @@
     stow
     yazi
     tmux
+    just
 
     nixfmt-rfc-style # formatter
     nixd # lsp
