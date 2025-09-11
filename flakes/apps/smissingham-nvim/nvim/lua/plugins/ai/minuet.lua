@@ -8,9 +8,9 @@ return {
 			require("minuet").setup({
 				-- Model Provider Configuration --
 				provider = "openai_fim_compatible",
-				context_window = 16000, -- Increased for better context understanding
+				context_window = 8192, -- Increased for better context understanding
 				n_completions = 1, -- More options for better quality
-				request_timeout = 5, -- Longer timeout for better results
+				request_timeout = 60, -- Longer timeout for better results
 				throttle = 1000, -- Slightly longer to reduce API pressure
 				debounce = 400, -- Standard debounce
 				-- Better filtering for cleaner results
@@ -26,7 +26,7 @@ return {
 						optional = {
 							max_tokens = 256, -- Balanced for quality vs speed
 							top_p = 0.9, -- Better balance for creativity
-							temperature = 0.2, -- Slightly higher for more natural code
+							temperature = 0.5, -- Slightly higher for more natural code
 							-- Add repetition penalty to avoid repetitive completions
 							repetition_penalty = 1.1,
 							-- Add frequency penalty
@@ -40,9 +40,9 @@ return {
 					auto_trigger_ft = {},
 					keymap = {
 						-- accept whole completion
-						accept = "<Tab>",
+						accept = "<C-y>",
 						-- accept one line
-						accept_line = "<C-y>",
+						accept_line = "<C-u>",
 						-- accept n lines (prompts for number)
 						accept_n_lines = "<A-z>",
 						-- Cycle to prev completion item, or manually invoke completion

@@ -9,7 +9,7 @@ return {
 					bashsh = { "shfmt" },
 					nix = { "nixfmt" },
 					lua = { "stylua" },
-					python = { "isort", "black" },
+					--python = { "isort", "black" },
 					rust = { "rustfmt", lsp_format = "fallback" },
 					javascript = { "prettierd" },
 					javascriptreact = { "prettierd" },

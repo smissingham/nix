@@ -12,14 +12,28 @@ return {
 					repl_open_cmd = view.split.vertical.rightbelow("33%"),
 					repl_definition = {
 						python = {
-							command = { "ipython", "--no-autoindent" },
+							command = {
+								"ipython",
+								"--quiet",
+								"--no-autoindent",
+								"--PlainTextFormatter.pprint=True",
+								"--TerminalInteractiveShell.prompts_class=IPython.terminal.prompts.ClassicPrompts",
+								--"--TerminalInteractiveShell.show_rewritten_input=False",
+								--"--TerminalInteractiveShell.separate_in=",
+								--"--TerminalInteractiveShell.separate_out=",
+								--"--TerminalInteractiveShell.separate_out2=",
+								--"--TerminalInteractiveShell.ast_node_interactivity=last_expr_or_assign",
+							},
 							block_dividers = { "# %%", "#%%" },
 							format = function(lines, extras)
 								local result = common.bracketed_paste_python(lines, extras)
 
 								-- filter out comment lines
 								local filtered = vim.tbl_filter(function(line)
-									return not string.match(line, "^#") and not string.match(line, "^\\s*$")
+									return not string.match(line, "^#")
+										and not string.match(line, "^\\s*$")
+										and not string.match(line, "\\n")
+										and not string.match(line, "^\\.+")
 								end, result)
 
 								return filtered

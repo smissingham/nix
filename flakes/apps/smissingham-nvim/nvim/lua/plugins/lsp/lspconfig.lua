@@ -3,22 +3,53 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			servers = {
-				-- General Purpose, Commons, vscode-langservers-extracted --
+				-- #################### General Purpose #################### --
 				html = {}, -- HTML
 				cssls = {}, -- CSS
 				jsonls = {}, -- JSON
-				eslint = {
+				eslint = { -- JavaScript
 					settings = {
 						rulesCustomizations = {
 							{ rule = "tailwindcss/classnames-order", severity = "off" },
 						},
 					},
-				}, -- Javascript
+				},
 
-				-- System Configuration Related --
-				bashls = {},
+				-- #################### Software Development #################### --
+				rust_analyzer = {}, -- Rust
+				vtsls = {}, -- TypeScript
+				groovyls = { -- Groovy
+					filetypes = { "groovy" },
+					cmd = { "groovyls" },
+				},
+				-- pylsp = { -- Python
+				-- 	plugins = {
+				-- 		-- Super fast linting & formatting
+				-- 		ruff = { enabled = true },
+				--
+				-- 		-- Type checking
+				-- 		pylsp_mypy = { enabled = true },
+				--
+				-- 		-- Core completion/navigation
+				-- 		jedi_completion = { enabled = true },
+				-- 		jedi_hover = { enabled = true },
+				-- 		jedi_references = { enabled = true },
+				-- 		jedi_signature_help = { enabled = true },
+				-- 		jedi_symbols = { enabled = true },
+				--
+				-- 		-- Disable conflicting linters since ruff handles them
+				-- 		pycodestyle = { enabled = false },
+				-- 		pyflakes = { enabled = false },
+				-- 		mccabe = { enabled = false },
+				-- 		pylint = { enabled = false },
+				-- 	},
+				-- },
+
+				-- #################### Systems Configuration #################### --
+				bashls = {}, -- Bash/Sh
 				lua_ls = {}, -- Lua
-				nixd = {
+				taplo = {}, -- TOML
+				nixd = { -- Nix
 					settings = {
 						nixd = {
 							nixpkgs = {
@@ -37,34 +68,16 @@ return {
 							},
 						},
 					},
-				}, -- Nix
-				taplo = {}, -- TOML
-
-				-- Development Projects --
-				rust_analyzer = {}, -- Rust
-				--ts_ls = {},         -- Typescript
-				vtsls = {}, -- Better Typescript
-
-				-- jdtls = {
-				-- 	filetypes = { "java", "groovy" },
-				-- 	cmd = { "jdtls", "--jvm-arg=-Dfile.encoding=UTF-8" },
-				-- },
-
-				groovyls = {
-					filetypes = { "groovy" },
-					cmd = { "groovyls" },
 				},
 			},
 		},
 		config = function(_, opts)
 			local lspconfig = require("lspconfig")
 			for server, config in pairs(opts.servers) do
+				-- Provide blink.cmp with server capabilities
 				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
 
-				-- if server == "jdtls" then
-				-- 	config.root_dir = require("lspconfig.util").root_pattern("build.gradle", "pom.xml", ".git")
-				-- end
-
+				-- Special rules for groovy projects
 				if server == "groovyls" then
 					config.root_dir = lspconfig.util.root_pattern("build.gradle", "pom.xml", ".git")
 				end
