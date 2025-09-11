@@ -40,6 +40,8 @@ let
     saoudrizwan.claude-dev # Cline
     eamodio.gitlens
     mkhl.direnv
+    #asvetliakov.vscode-neovim
+    vscodevim.vim
     (buildVscodeMarketplaceExtension {
       mktplcRef = {
         name = "periscope";
