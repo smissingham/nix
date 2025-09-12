@@ -1,5 +1,3 @@
-vim.keymap.set("n", "<leader>la", ":LspInfo<cr>", { desc = "Lsp Info" })
-
 -- EXPERIMENTAL Type Checker & Full LSP
 vim.lsp.config("ty", {
 	settings = {

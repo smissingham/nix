@@ -16,7 +16,7 @@
       system:
       let
         overlay = final: prev: {
-          opencode = final.callPackage ./packages/opencode/package.nix { };
+          #opencode = final.callPackage ./packages/opencode/package.nix { };
         };
 
         pkgs = import nixpkgs {
@@ -34,6 +34,9 @@
         complementaryTools = with pkgs; [
           # ----- TUI Tools -----#
           lazygit
+
+          # ----- AI Helpers -----#
+          vectorcode
           opencode
           inputs.mcp-hub.packages."${system}".default
 
@@ -45,17 +48,17 @@
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
           emmet-language-server # html shortcode expansions
+          ruff
+          ty
 
           # ----- Formatters -----#
           shfmt
           prettierd
           rustfmt
           stylua
-          black
 
-          # ----- SDK's & Runtimes -----#
-          #nodejs_20
-          #uv
+          # ----- Package Managers -----#
+          uv
 
           # ----- CLI Utils -----#
           fd

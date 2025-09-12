@@ -109,7 +109,7 @@
     },
     "userDocuments": {
       "type": "local",
-      "enabled": true,
+      "enabled": false,
       "command": [
         "/bin/sh",
         "-c",

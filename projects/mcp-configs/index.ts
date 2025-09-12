@@ -121,7 +121,7 @@ function getMcpServers(category: McpCategory) {
             "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/",
           ],
           command: "/bin/sh",
-          disabled: false,
+          disabled: true,
         },
       };
     case McpCategory.Research:
