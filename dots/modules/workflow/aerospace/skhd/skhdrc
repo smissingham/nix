@@ -8,17 +8,13 @@
 # 0x37 = CMD (gui)
 ####################
 
-cmd - h : # empty command disables it
 
-# Set active window size to 1080p
-alt - 0x32: osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}'
+#################### Override Default Behaviours ####################
 
+# Disable CMD - H hide shortcut
+cmd - h : 
 
-# TERMINAL Launch Shortcut and behaviours
-cmd - 0x32 : open -na $TERMINAL
-
-# BROWSER Launch Shortcut and behaviours
-cmd + shift - 0x32 : open -na $BROWSER
+# Override CMD - Q, close all tabs of active window, not kill all instances
 cmd - q [
   "Floorp": skhd -k "cmd + shift - w"
   "Firefox": skhd -k "cmd + shift - w"
@@ -28,5 +24,29 @@ cmd - q [
 
 
 
-# HYPER SHORTCUTS
+#################### Application Launching ####################
+
+# HYPER - T: Launch Terminal
+cmd + ctrl + alt + shift - t : open -na $TERMINAL
+
+# HYPER - B: Launch Browser
+cmd + ctrl + alt + shift - b : open -na $BROWSER
+
+# HYPER - C: Launch Claude Desktop
 cmd + ctrl + alt + shift - c : open -a Claude
+
+
+
+#################### Window Control ####################
+
+# HYPER - Plus/Equal: Undock window and set center @ 1620p
+cmd + ctrl + alt + shift - 0x18 : \
+  aerospace layout floating; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {480, 0}'; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {2880, 1620}';
+
+# HYPER - Grave/Tilde: Undock window and set center @ 1080p
+cmd + ctrl + alt + shift - 0x32 : \
+  aerospace layout floating; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {960, 270}'; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}';

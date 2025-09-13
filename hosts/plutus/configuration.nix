@@ -62,6 +62,7 @@
       # ----- MEDIA ----- #
       "stremio"
       "vlc"
+      "obs"
 
       # ----- COMMUNICATIONS ----- #
       "signal"

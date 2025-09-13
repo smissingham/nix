@@ -62,7 +62,8 @@ rl_darwin() {
   build-and-reload-aerospace
   echo "Reloaded Aerospace"
 
-  # skhd
+  # skhd, kill the active pid and reload
+  pkill -f '/bin/skhd'
   skhd -r
   echo "Reloaded SKHD"
 
