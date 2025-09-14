@@ -6,6 +6,7 @@
 jk() {
   local PATTERNS=(
     "*.DS_Store"
+    "desktop.ini"
   )
   local TARGET_DIR="${1:-$HOME}"
 

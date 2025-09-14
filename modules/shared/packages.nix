@@ -1,8 +1,6 @@
 # ----- PACKAGES TO INSTALL ON ALL (DARWIN + NIXOS) SYSTEMS -----#
 {
   pkgs,
-  pkgsUnstable,
-  mainUser,
   ...
 }:
 {
@@ -15,25 +13,30 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
+
+    # System CLI Utils
     pciutils
-    pkgsUnstable.usbutils
+    usbutils
     findutils
 
-    btop
-    git
+    # Nix CLI Utils
+    nixfmt-rfc-style # formatter
+    nixd # lsp
+
+    # Dev Utils
+    dig
     gnupg
+    git
+    just
+    stow
+
+    # CLI Usability
+    bat
+    btop
+    fd
     eza
     fzf
     tldr
     xclip
-    dig
-    bat
-    stow
-    yazi
-    tmux
-    just
-
-    nixfmt-rfc-style # formatter
-    nixd # lsp
   ];
 }

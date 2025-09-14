@@ -1,0 +1,11 @@
+[default_session]
+startup_command = "$EDITOR -c ':lua Snacks.picker.smart()'"
+
+[[session]]
+name = "Nix ❄️"
+path = "~/Documents/Nix"
+
+[[session]]
+name = "Download 📥"
+path = "~/Downloads"
+startup_command = "yazi"

@@ -20,6 +20,7 @@
       smissingham-vscode.enable = true;
     };
     workflow = {
+      sesh.enable = true;
       sops.enable = true;
     };
   };
@@ -63,6 +64,7 @@
       "stremio"
       "vlc"
       "obs"
+      "obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #
       "signal"
@@ -95,7 +97,6 @@
 
     brews = [
       "duckdb"
-      # "opencode"
     ];
 
     # ----- MAC APP STORE APPS -----#
