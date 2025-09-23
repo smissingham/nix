@@ -9,3 +9,4 @@
 **/tmux/plugins*
 
 overlays/*/result
+dots/auto/opencode/command

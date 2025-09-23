@@ -13,11 +13,22 @@ return {
 					repl_definition = {
 						python = {
 							command = {
+								"uv",
+								"run",
+								"--with",
 								"ipython",
+								"python",
+								"-m",
+								"IPython",
+								--"ipython",
 								"--quiet",
+								"--no-banner", -- prevent opening banner
+								"--no-confirm-exit", -- don't prompt on exit, just exit
 								"--no-autoindent",
 								"--PlainTextFormatter.pprint=True",
 								"--TerminalInteractiveShell.prompts_class=IPython.terminal.prompts.ClassicPrompts",
+								--
+								--
 								--"--TerminalInteractiveShell.show_rewritten_input=False",
 								--"--TerminalInteractiveShell.separate_in=",
 								--"--TerminalInteractiveShell.separate_out=",

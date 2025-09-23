@@ -3,10 +3,7 @@
 font-size = 16
 background-opacity = 0.95
 
-#theme = catppuccin-macchiato
-#theme = catppuccin-mocha
-theme = tokyonight_night
-#theme = Github Dark
+theme = Atom One Dark 
 cursor-color = #ed8796
 
 keybind = shift+enter=text:\n

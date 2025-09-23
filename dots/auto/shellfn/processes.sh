@@ -46,7 +46,7 @@ psk() {
 
     if [[ "$confirmation" =~ ^[Yy]$ ]]; then
       echo "Killing processes..."
-      kill $pids
+      ps aux | grep "$search_term" | grep -v 'grep' | awk '{print $2}' | xargs kill -9
       echo "Done."
     else
       echo "Operation cancelled."

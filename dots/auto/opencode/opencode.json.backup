@@ -49,6 +49,24 @@
     "app_exit": "ctrl+c,<leader>q"
   },
   "mcp": {
+    "playwright": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-playwright"
+      ],
+    },
+    "travelDocuments": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/Obsidian/second-brain/Travel/"
+      ],
+    },
     "memory": {
       "type": "local",
       "enabled": true,
@@ -56,7 +74,7 @@
         "/bin/sh",
         "-c",
         "exec $(which npx) -y @modelcontextprotocol/server-memory"
-      ]
+      ],
     },
     "sequential-thinking": {
       "type": "local",
@@ -65,7 +83,7 @@
         "/bin/sh",
         "-c",
         "exec $(which npx) -y @modelcontextprotocol/server-sequential-thinking"
-      ]
+      ],
     },
     "time": {
       "type": "local",
@@ -74,21 +92,21 @@
         "uvx",
         "mcp-server-time",
         "--local-timezone=America/Chicago"
-      ]
+      ],
     },
     "prompt-lib": {
       "type": "local",
       "enabled": true,
-      "environment": {
-        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
-        "DEFAULT_PROMPTS": "true",
-        "SERVER_NAME": "Personal Prompt Library"
-      },
       "command": [
         "npx",
         "-y",
         "prompt-library-mcp@latest"
-      ]
+      ],
+      "environment": {
+        "LIBRARY_PATH": "/Users/smissingham/Documents/Obsidian/second-brain/@Public/GenAI/Prompts/",
+        "DEFAULT_PROMPTS": "true",
+        "SERVER_NAME": "Personal Prompt Library"
+      }
     },
     "git": {
       "type": "local",
@@ -96,7 +114,7 @@
       "command": [
         "uvx",
         "mcp-server-git"
-      ]
+      ],
     },
     "ripgrep": {
       "type": "local",
@@ -105,32 +123,41 @@
         "/bin/sh",
         "-c",
         "exec $(which npx) -y mcp-ripgrep@latest"
-      ]
+      ],
+    },
+    "userDocuments": {
+      "type": "local",
+      "enabled": false,
+      "command": [
+        "/bin/sh",
+        "-c",
+        "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/"
+      ],
     },
     "searxng": {
       "type": "local",
       "enabled": true,
-      "environment": {
-        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
-      },
       "command": [
         "/bin/sh",
         "-c",
         "exec $(which npx) -y mcp-searxng@latest"
-      ]
+      ],
+      "environment": {
+        "SEARXNG_URL": "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET"
+      }
     },
-    "pricefx_dev_local": {
+    "pricefx_dev": {
       "type": "local",
       "enabled": true,
-      "environment": {
-        "SERVER_LOG": "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/logs/server.log"
-      },
       "command": [
         "/run/current-system/sw/bin/bun",
         "--cwd",
-        "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp",
-        "dev:local"
-      ]
+        "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp",
+        "dev"
+      ],
+      "environment": {
+        "SERVER_LOG": "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/logs/server.log"
+      }
     }
   }
 }

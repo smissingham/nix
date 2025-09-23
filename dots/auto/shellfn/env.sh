@@ -45,6 +45,9 @@ rl() {
   popd || return
   echo "Rebuilt and distributed MCP Configs"
 
+  # copy central prompt lib to destinations
+  ln -s "$CONF/genai/prompts" "$CONF/opencode/command"
+
   # Host-specific configuration
   local HOSTNAME=$(hostname)
   case "$HOSTNAME" in
@@ -64,7 +67,7 @@ rl_darwin() {
   echo "Reloaded Aerospace"
 
   # skhd, kill the active pid and reload
-  pkill -f '/bin/skhd'
+  #pkill -f '/bin/skhd'
   skhd -r
   echo "Reloaded SKHD"
 

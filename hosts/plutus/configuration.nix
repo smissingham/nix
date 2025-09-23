@@ -45,6 +45,7 @@
     nodejs_22
     bun
     uv
+    podman
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#

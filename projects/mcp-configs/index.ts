@@ -1,7 +1,9 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import path from "path";
+import { server } from "typescript";
 
 enum McpCategory {
+  Assistants,
   GeneralPurpose,
   Coding,
   Research,
@@ -28,8 +30,9 @@ writeJsonFile(
   `${userHome}/Library/Application Support/Claude/claude_desktop_config.json`,
   {
     mcpServers: {
-      // ...getMcpServers(McpCategory.GeneralPurpose),
-      // ...getMcpServers(McpCategory.Research),
+      ...getMcpServers(McpCategory.GeneralPurpose),
+      ...getMcpServers(McpCategory.Research),
+      ...getMcpServers(McpCategory.Assistants),
       ...getMcpServers(McpCategory.McpDev),
     },
   },
@@ -41,17 +44,23 @@ writeJsonFile(
 const openCodeConfigPath = `${xdgConf}/opencode/opencode.json`;
 let openCodeConfig = JSON.parse(readFileSync(openCodeConfigPath, "utf8"));
 openCodeConfig.mcp = Object.entries({
+  ...getMcpServers(McpCategory.Assistants),
   ...getMcpServers(McpCategory.GeneralPurpose),
   ...getMcpServers(McpCategory.Coding),
   ...getMcpServers(McpCategory.Research),
   ...getMcpServers(McpCategory.McpDev),
 }).reduce((acc: Record<string, any>, [key, value]: [string, any]) => {
+  const serverType = value.type ?? "local";
   acc[key] = {
-    type: "local",
+    type: serverType,
     enabled: value.disabled ? false : true,
-    command: [value.command, ...value.args],
     environment: value.env,
   };
+  if (serverType === "local") {
+    acc[key].command = [value.command, ...(value.args || [])];
+  } else if (serverType === "remote") {
+    acc[key].url = value.url;
+  }
   return acc;
 }, {});
 writeJsonFile(openCodeConfigPath, openCodeConfig);
@@ -72,6 +81,32 @@ function isoString() {
 
 function getMcpServers(category: McpCategory) {
   switch (category) {
+    case McpCategory.Assistants:
+      return {
+        // playwright: {
+        //   args: [
+        //     "-c",
+        //     "exec $(which bunx) -y @modelcontextprotocol/server-playwright --install",
+        //   ],
+        //   command: "/bin/sh",
+        // },
+        // travelDocuments: {
+        //   args: [
+        //     "-c",
+        //     "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/Obsidian/second-brain/Travel/",
+        //   ],
+        //   command: "/bin/sh",
+        //   disabled: false,
+        // },
+        // travelRipgrep: {
+        //   args: ["-c", "exec $(which npx) -y mcp-ripgrep@latest"],
+        //   command: "/bin/sh",
+        //   disabled: false,
+        //   env: {
+        //     RIPGREP_PATH: "~/Documents/Obsidian/second-brain/Travel/",
+        //   },
+        // },
+      };
     case McpCategory.GeneralPurpose:
       return {
         memory: {
@@ -115,14 +150,14 @@ function getMcpServers(category: McpCategory) {
           command: "/bin/sh",
           disabled: false,
         },
-        userDocuments: {
-          args: [
-            "-c",
-            "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/",
-          ],
-          command: "/bin/sh",
-          disabled: true,
-        },
+        // userDocuments: {
+        //   args: [
+        //     "-c",
+        //     "exec $(which npx) -y @modelcontextprotocol/server-filesystem ~/Documents/",
+        //   ],
+        //   command: "/bin/sh",
+        //   disabled: true,
+        // },
       };
     case McpCategory.Research:
       return {
@@ -154,26 +189,32 @@ function getMcpServers(category: McpCategory) {
         //   },
         //   command: "bun",
         // },
-        pricefx_dev: {
+        pricefx_dev_local: {
           disabled: false,
+          type: "local",
           args: [
             "--cwd",
-            "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp",
-            "dev",
+            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp",
+            "dev:local",
           ],
           env: {
             SERVER_LOG:
-              "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/logs/server.log",
+              "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/logs/server.log",
           },
           command: "/run/current-system/sw/bin/bun",
         },
+        // pricefx_dev_remote: {
+        //   disabled: true,
+        //   type: "remote",
+        //   url: "http://localhost:3001/mcp",
+        // },
       };
     case McpCategory.McpTest:
       return {
         pricefx_dist: {
           disabled: false,
           args: [
-            "/Users/smissingham/Documents/Pricefx/01-tools/pricefx-mcp/dist/index.js",
+            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/dist/index.js",
           ],
           env: {
             PRICEFX_DOMAIN: "demo.pricefx.com",

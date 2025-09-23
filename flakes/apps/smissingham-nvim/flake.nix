@@ -63,6 +63,7 @@
           # ----- CLI Utils -----#
           fd
           ripgrep
+          ripgrep-all
           gcc
           gnumake
 
