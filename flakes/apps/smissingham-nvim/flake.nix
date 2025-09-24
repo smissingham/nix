@@ -36,7 +36,7 @@
           lazygit
 
           # ----- AI Helpers -----#
-          vectorcode
+          vectorcode # for minuet RAG context
           opencode
           inputs.mcp-hub.packages."${system}".default
 
