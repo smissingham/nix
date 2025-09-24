@@ -93,10 +93,7 @@
       in
       {
         packages = {
-          default = {
-            name = vimName;
-            paths = systemPackages;
-          };
+          default = vimWrapper;
           ${vimName} = vimWrapper;
           inherit systemPackages;
         };

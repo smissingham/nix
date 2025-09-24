@@ -22,7 +22,7 @@ To install it into your nix profile
 
 ```
 
-nix profile install --upgrade --extra-experimental-features "nix-command flakes" "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
+nix profile add --upgrade --extra-experimental-features "nix-command flakes" "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
 ```
 
 ### Nix System Flake Installation
