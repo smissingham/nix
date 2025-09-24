@@ -6,17 +6,27 @@ Sean Missingham's Neovim configuration optimized for development with AI assista
 [![Nix](https://img.shields.io/badge/Nix-reproducible-blue)](https://nixos.org/)
 
 ## Installation
+
 While you could copy the contents of the nvim config folder, this repo
 is designed to be run temporarily or installed **as a Nix Flake**
 
 ### Nix Flake Run Anywhere (No Install)
+
 To run this flake directly off github in a temp shell
 
 ```
-nix run "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
+nix run --extra-experimental-features "nix-command flakes" "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
+```
+
+To install it into your nix profile
+
+```
+
+nix profile install --upgrade --extra-experimental-features "nix-command flakes" "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
 ```
 
 ### Nix System Flake Installation
+
 If you're using Nix like I am to manage your system configuration, you can import
 this flake and install the provided "smissingham-nvim" as a system package like any other
 
@@ -53,5 +63,3 @@ Default key mappings (leader key is `\`):
 - **Git Integration**: Full Git integration with Gitsigns and Diffview
 - **Nix Packaging**: Reproducible environment with Nix flakes
 - **Beautiful Themes**: Multiple theme options including Catppuccin, Tokyo Night, and Kanagawa
-
-

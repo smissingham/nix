@@ -64,6 +64,7 @@
           fd
           ripgrep
           ripgrep-all
+          pandoc
           gcc
           gnumake
 
@@ -92,7 +93,10 @@
       in
       {
         packages = {
-          default = vimWrapper;
+          default = {
+            name = vimName;
+            paths = systemPackages;
+          };
           ${vimName} = vimWrapper;
           inherit systemPackages;
         };
