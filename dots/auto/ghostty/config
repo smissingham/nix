@@ -1,7 +1,7 @@
 # Reload Config: Cmd + Shift + ,
 
 font-size = 16
-background-opacity = 0.95
+background-opacity = 0.9
 
 theme = Atom One Dark 
 cursor-color = #ed8796

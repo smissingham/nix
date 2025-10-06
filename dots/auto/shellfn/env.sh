@@ -55,6 +55,9 @@ rl() {
     done
   fi
 
+  # TODO: Remove Hack Installed OpenCode CLI
+  export PATH=/Users/smissingham/.opencode/bin:$PATH
+
   # reload tmux
   tmux source "$CONF"/tmux/tmux.conf
 

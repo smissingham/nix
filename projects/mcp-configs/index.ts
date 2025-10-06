@@ -30,10 +30,11 @@ writeJsonFile(
   `${userHome}/Library/Application Support/Claude/claude_desktop_config.json`,
   {
     mcpServers: {
-      ...getMcpServers(McpCategory.GeneralPurpose),
-      ...getMcpServers(McpCategory.Research),
-      ...getMcpServers(McpCategory.Assistants),
+      // ...getMcpServers(McpCategory.GeneralPurpose),
+      // ...getMcpServers(McpCategory.Research),
+      // ...getMcpServers(McpCategory.Assistants),
       ...getMcpServers(McpCategory.McpDev),
+      // ...getMcpServers(McpCategory.McpTest),
     },
   },
 );
@@ -44,11 +45,11 @@ writeJsonFile(
 const openCodeConfigPath = `${xdgConf}/opencode/opencode.json`;
 let openCodeConfig = JSON.parse(readFileSync(openCodeConfigPath, "utf8"));
 openCodeConfig.mcp = Object.entries({
-  ...getMcpServers(McpCategory.Assistants),
-  ...getMcpServers(McpCategory.GeneralPurpose),
-  ...getMcpServers(McpCategory.Coding),
-  ...getMcpServers(McpCategory.Research),
-  ...getMcpServers(McpCategory.McpDev),
+  // ...getMcpServers(McpCategory.Assistants),
+  // ...getMcpServers(McpCategory.GeneralPurpose),
+  // ...getMcpServers(McpCategory.Coding),
+  // ...getMcpServers(McpCategory.Research),
+  //...getMcpServers(McpCategory.McpDev),
 }).reduce((acc: Record<string, any>, [key, value]: [string, any]) => {
   const serverType = value.type ?? "local";
   acc[key] = {
@@ -166,7 +167,7 @@ function getMcpServers(category: McpCategory) {
           command: "/bin/sh",
           disabled: false,
           env: {
-            SEARXNG_URL: "HTTPS://SEARXNG.COEUS.MISSINGHAM.NET",
+            SEARXNG_URL: "https://searxng.coeus.missingham.net",
           },
         },
       };
@@ -211,10 +212,23 @@ function getMcpServers(category: McpCategory) {
       };
     case McpCategory.McpTest:
       return {
-        pricefx_dist: {
+        pricefx_dist_npm: {
           disabled: false,
           args: [
-            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/dist/index.js",
+            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/dist/npm/local.js",
+          ],
+          env: {
+            PRICEFX_DOMAIN: "demo.pricefx.com",
+            PRICEFX_PARTITION: "demofx_smissingham",
+            PRICEFX_USERNAME: "sean+mcp",
+            PRICEFX_PASSWORD: "FZv3ZWydN9rXANALNyJK3O9Z",
+          },
+          command: "/run/current-system/sw/bin/node",
+        },
+        pricefx_dist_claude: {
+          disabled: false,
+          args: [
+            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/dist/claude_desktop/local.js",
           ],
           env: {
             PRICEFX_DOMAIN: "demo.pricefx.com",

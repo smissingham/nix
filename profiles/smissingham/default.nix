@@ -20,8 +20,10 @@ let
         LITELLM_API_KEY = { };
         LITELLM_API_URL = { };
         MORPH_API_KEY = { };
-        OPENROUTER_API_KEY = { };
+        OPENAI_API_URL = { };
+        OPENAI_API_KEY = { };
         OPENROUTER_API_URL = { };
+        OPENROUTER_API_KEY = { };
       };
 
       # Put secrets here that are needed in nix but not auto-exported to env
@@ -37,7 +39,7 @@ let
     gg = "lazygit";
     ll = "eza -l";
     la = "eza -la";
-    clip = "xclip -selection clipboard";
+    clip = if isDarwin { } then "pbcopy" else "xclip -selection clipboard";
     sec = "pushd ${getSopsPath { }}; sops ${sops.secretsFileName}; popd";
 
     # ----- Developer Stuff -----#
