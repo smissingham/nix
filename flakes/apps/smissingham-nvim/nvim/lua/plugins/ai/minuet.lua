@@ -25,6 +25,7 @@ local function create_fim_template_with_rag(rag_context_window_size)
 				.. vim.bo.filetype
 				.. "\n"
 				.. "# IMPORTANT: Only complete with English code/comments. No Chinese characters.\n"
+				.. "# IMPORTANT: Do not provide markdown block syntax or backticks. Only provide raw code output.\n"
 				.. "<|fim_prefix|>"
 				.. context_before_cursor
 				.. "<|fim_suffix|>"
@@ -36,6 +37,23 @@ local function create_fim_template_with_rag(rag_context_window_size)
 end
 
 local models = {
+	claude4_sonnet = {
+		provider = "openai_compatible",
+		provider_options = {
+			name = "Anthropic",
+			model = "claude-3-5-sonnet-20241022",
+			api_key = "ANTHROPIC_API_KEY",
+			end_point = "https://api.anthropic.com/v1/messages",
+			stream = true,
+			optional = {
+				max_tokens = 256,
+				top_p = 0.9,
+				temperature = 0.3,
+				repetition_penalty = 1.1,
+				frequency_penalty = 0.1,
+			},
+		},
+	},
 	qwen3_coder_small = {
 		provider = "openai_fim_compatible",
 		provider_options = {
@@ -109,7 +127,7 @@ return {
 			"Davidyz/VectorCode",
 		},
 		config = function()
-			local model = models.kimik2
+			local model = models.qwen3_coder_large
 
 			require("minuet").setup({
 				provider = model.provider,

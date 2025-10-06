@@ -9,19 +9,14 @@ return {
 					bashsh = { "shfmt" },
 					nix = { "nixfmt" },
 					lua = { "stylua" },
-					rust = { "rustfmt", lsp_format = "fallback" },
+					rust = { "rustfmt" },
+					python = { "ruff_fix", "black" },
 					toml = { "taplo" },
 
-					["_"] = { "prettierd", lsp_format = "fallback" },
-					-- javascript = { "prettierd" },
-					-- javascriptreact = { "prettierd" },
-					-- typescript = { "prettierd" },
-					-- typescriptreact = { "prettierd" },
-					-- css = { "prettierd" },
-					-- html = { "prettierd" },
+					["_"] = { lsp_format = "prefer", "prettierd" },
 				},
 				format_on_save = {
-					timeout_ms = 500,
+					timeout_ms = 1000,
 					lsp_format = "fallback",
 				},
 			})

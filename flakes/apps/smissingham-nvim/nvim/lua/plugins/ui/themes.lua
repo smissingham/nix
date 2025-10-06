@@ -6,7 +6,7 @@ return {
 		opts = {
 			flavour = "mocha",
 			term_colors = true,
-			transparent_background = true,
+			--transparent_background = true,
 		},
 	},
 	{
@@ -14,6 +14,9 @@ return {
 		lazy = false,
 		priority = 1000,
 		opts = {},
+		config = function()
+			--			vim.cmd.colorscheme("tokyonight")
+		end,
 	},
 	{
 		"rebelot/kanagawa.nvim",
@@ -34,14 +37,23 @@ return {
 				palette = {},
 				theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
 			},
-			overrides = function(colors)
-				return {}
-			end,
 			theme = "wave",
 			background = {
 				dark = "wave",
-				light = "lotus"
+				light = "lotus",
 			},
 		},
+	},
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000,
+		config = function()
+			require("onedark").setup({
+				style = "deep",
+				transparent = true,
+			})
+
+			vim.cmd.colorscheme("onedark")
+		end,
 	},
 }

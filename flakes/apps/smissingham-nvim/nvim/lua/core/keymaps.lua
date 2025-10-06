@@ -22,7 +22,7 @@ vim.keymap.set({ "n", "v" }, "<leader>bw", ":w!<cr>", { desc = "Write Buffer (Fo
 vim.keymap.set({ "n", "v" }, "<leader>be", ":e!<cr>", { desc = "Reset Buffer (Forced)" })
 
 -- LSP
-vim.keymap.set({ "n", "v" }, "<leader>lI", ":LspInfo<cr>", { desc = "Lsp Info" })
+vim.keymap.set({ "n", "v" }, "<leader>lI", ":checkhealth vim.lsp<cr>", { desc = "Lsp Info" })
 vim.keymap.set({ "n", "v" }, "<leader>lR", ":LspRestart<cr>", { desc = "Lsp Restart" })
 vim.keymap.set({ "n", "v" }, "<leader>lS", ":LspStop<cr>", { desc = "Lsp Stop" })
 
@@ -34,3 +34,6 @@ vim.keymap.set({ "n", "v" }, "<leader>gra", vim.lsp.buf.code_action, { desc = "C
 vim.keymap.set({ "n", "v" }, "<leader>gds", vim.lsp.buf.document_symbol, { desc = "Document Symbols" })
 vim.keymap.set({ "n", "v" }, "<leader>gdh", vim.lsp.buf.document_highlight, { desc = "Document Highlight" })
 vim.keymap.set({ "i" }, "<C-p>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+
+-- Exit terminal mode with ESC (single tap)
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })

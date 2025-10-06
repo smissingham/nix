@@ -7,3 +7,6 @@ vim.lsp.enable("lua_ls")
 
 vim.lsp.config("taplo", {})
 vim.lsp.enable("taplo")
+
+vim.lsp.config("yamlls", {})
+vim.lsp.enable("yamlls")

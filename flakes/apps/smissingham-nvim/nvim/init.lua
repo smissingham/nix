@@ -9,10 +9,8 @@ local function require_dir(dir)
 	end
 end
 
-require_dir("config/lsp")
-require("config.keymaps")
-require("config.options")
-require("config.commands")
-require("config.plugins")
-
-vim.cmd.colorscheme("tokyonight")
+require_dir("lsp")
+require("core.keymaps")
+require("core.options")
+require("core.commands")
+require("core.plugins")

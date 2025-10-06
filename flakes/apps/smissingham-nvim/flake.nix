@@ -1,7 +1,8 @@
 {
   description = "Portable NeoVim Configuration Flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     mcp-hub.url = "github:ravitemer/mcp-hub";
   };
@@ -9,6 +10,7 @@
     inputs@{
       self,
       nixpkgs,
+      nixpkgs-unstable,
       flake-utils,
       ...
     }:
@@ -24,6 +26,11 @@
           overlays = [ overlay ];
         };
 
+        pkgsUnstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
         vimName = "smissingham-nvim";
 
         nvimConfigured = pkgs.neovim.override {
@@ -36,8 +43,8 @@
           lazygit
 
           # ----- AI Helpers -----#
-          vectorcode # for minuet RAG context
-          opencode
+          pkgsUnstable.vectorcode # for minuet RAG context
+          pkgsUnstable.opencode
           inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
@@ -48,17 +55,20 @@
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
           emmet-language-server # html shortcode expansions
-          ruff
-          ty
+          yaml-language-server # YAML
+          pkgsUnstable.ruff # python lsp - linting & formatter
+          pkgsUnstable.pyrefly # python lsp - types & symbols
 
           # ----- Formatters -----#
           shfmt
+          nixfmt-rfc-style
           prettierd
           rustfmt
           stylua
+          black
 
           # ----- Package Managers -----#
-          uv
+          pkgsUnstable.uv
 
           # ----- CLI Utils -----#
           fd
@@ -67,6 +77,7 @@
           pandoc
           gcc
           gnumake
+          gh
 
           # ----- Plugin Deps -----#
           tree-sitter # tree-sitter
