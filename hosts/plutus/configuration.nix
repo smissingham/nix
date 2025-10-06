@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -32,6 +33,7 @@
     gitkraken
     bruno
     gimp
+    pkgsUnstable.claude-code
 
     mypkgs.filen-desktop
 
@@ -58,7 +60,6 @@
       # ----- WORKFLOW ----- #
       "raycast"
       "google-chrome"
-      "claude"
       "shottr"
 
       # ----- MEDIA ----- #
@@ -89,6 +90,7 @@
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
       "jetbrains-toolbox"
+      "claude"
 
       # ----- AI TOOLS ----- #
       "lm-studio"

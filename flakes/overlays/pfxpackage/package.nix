@@ -7,24 +7,26 @@
 }:
 let
   pname = "pfxpackage";
-  version = "3.36.1";
+  version = "3";
 in
 stdenv.mkDerivation {
   inherit pname version;
 
   src = fetchzip {
     url = "https://developer.pricefx.eu/pfxpackage/pricefx-pckg.zip";
-    sha256 = "sha256-zf7As3q37Lk7Bcm9JyjUg8a0YwAtpaEkdM9CsI2hyeI=";
+    sha256 = "sha256-ina7+pTMJHAdRQvhZ7NY2Rvk3Vbmke2M9MjvnZ6een4=";
     stripRoot = false;
   };
 
   nativeBuildInputs = [ unzip ];
-  buildInputs = with pkgs; [ jre17_minimal ];
+  buildInputs = with pkgs; [
+    jre17_minimal
+  ];
 
   installPhase = ''
     runHook preInstall
 
-    cd ./${pname}-${version}/
+    cd ./${pname}-*/
 
     cp -r . $out
     chmod +x $out/bin/pfxpackage
