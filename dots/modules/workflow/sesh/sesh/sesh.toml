@@ -1,5 +1,5 @@
 [default_session]
-startup_command = "$EDITOR -c ':lua Snacks.picker.smart()'"
+startup_command = "$EDITOR -c ':lua Snacks.picker.recent()'"
 
 [[session]]
 name = "Config 🔧"
