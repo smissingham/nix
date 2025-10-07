@@ -57,12 +57,6 @@ in
             '';
           };
         };
-        programs.tmux.extraConfig = ''
-          #--------- Session Hopping ---------#
-          bind-key "s" display-popup -E -w 40% "sesh connect \"$(
-           sesh list -i | gum filter --limit 1 --no-sort --fuzzy --placeholder 'Pick a sesh' --height 50 --prompt='⚡'
-          )\""
-        '';
       };
   };
 }
