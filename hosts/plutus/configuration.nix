@@ -91,6 +91,8 @@
       "intellij-idea-ce"
       "jetbrains-toolbox"
       "claude"
+      # "cursor"
+      # "visual-studio-code"
 
       # ----- AI TOOLS ----- #
       "lm-studio"

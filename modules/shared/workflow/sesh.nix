@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   mainUser,
   ...
 }:
@@ -15,7 +16,6 @@ let
     moduleCategory
     moduleName
   ];
-  fullModuleName = lib.concatStringsSep "." optionPath;
   enablePath = optionPath ++ [ "enable" ];
 in
 {
@@ -24,38 +24,49 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
+    mySharedModules.workflow.shell.stowPaths = [
+      "${moduleDots}"
+    ];
+    mySharedModules.workflow.shell.aliases = {
+      s = "sesh-browser";
+    };
+
     home-manager.users.${mainUser.username} =
       {
-        config,
-        lib,
         pkgs,
         ...
       }:
       let
-        # unused currently, leaving room for pre-stow build steps
-        buildScriptName = "build-${fullModuleName}";
-        buildScriptContent = pkgs.writeShellScriptBin "${buildScriptName}" '''';
+        seshBrowserScript = pkgs.writeShellScriptBin "sesh-browser" ''
+          sesh connect "$(
+            sesh list --icons | fzf-tmux -p 80%,70% \
+              --preview-window 'right:70%' \
+              --preview 'sesh preview {}' \
+              --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+              --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+              --bind 'tab:down,btab:up' \
+              --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+              --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+              --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+              --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+              --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+              --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+              --reverse
+          )"
+        '';
       in
       {
-        imports = [
-        ];
+        imports = [ ];
         home = {
           packages = with pkgs; [
             yazi
             tmux
             sesh
-            gum
+            fzf
+            eza
+            bat
+            seshBrowserScript
           ];
-          shellAliases = {
-            ts = "sesh connect \"$(sesh list -i | gum filter --limit 1 --placeholder 'Pick a sesh' --prompt='⚡')\"";
-          };
-          activation = {
-            ${fullModuleName} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${moduleDots}" -R .
-              echo "Stowed dots for module ${fullModuleName}"
-              ${buildScriptContent}/bin/${buildScriptName}
-            '';
-          };
         };
       };
   };

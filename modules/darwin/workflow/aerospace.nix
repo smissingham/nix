@@ -25,7 +25,9 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-
+    mySharedModules.workflow.shell.stowPaths = [
+      "${moduleDots}"
+    ];
     home-manager.users.${mainUser.username} =
       {
         config,
@@ -36,11 +38,12 @@ in
       let
         buildScriptName = "build-and-reload-aerospace";
         buildAerospaceScript = pkgs.writeShellScriptBin "${buildScriptName}" ''
-          pushd "${config.xdg.configHome}/aerospace";
+          pushd "${config.xdg.configHome}/aerospace" >/dev/null;
             cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
             ${pkgs.aerospace}/bin/aerospace reload-config
+            ${pkgs.skhd}/bin/skhd -r
             echo "Aerospace config file generated & reloaded"
-          popd;
+          popd >/dev/null;
         '';
       in
       {
@@ -52,13 +55,8 @@ in
             skhd
             buildAerospaceScript
           ];
-          shellAliases = {
-
-          };
           activation = {
             ${fullModuleName} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${moduleDots}" -R .
-              echo "Stowed dots for module ${fullModuleName}"
               ${buildAerospaceScript}/bin/${buildScriptName}
             '';
           };

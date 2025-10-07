@@ -10,8 +10,8 @@ This repository provides a template for declarative configuration of NixOS and m
 │   ├── auto/               # Configurations to be automatically linked into XDG_CONFIG_HOME
 │   └── modules/            # Dotfile setups that relate to toggleable nix modules (manually linked by module)
 ├── flakes/                 # Custom Nix flakes for things like editors or project templates
-│   ├── apps/               # Fully contained applications wrapped as a nix flake for use cross-platform 
-│   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes 
+│   ├── apps/               # Fully contained applications wrapped as a nix flake for use cross-platform
+│   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes
 │   └── templates/          # Flake templates, for quick devenv inits
 ├── hosts/                  # Host-specific configurations (one directory per machine)
 ├── modules/                # Reusable Nix modules for configuring systems and home environments
@@ -49,11 +49,11 @@ To have a configuration for a new application automatically linked:
 
 ## Automatic Shell Functions
 
-Any shell scripts (`.sh` files) placed in the `dots/auto/shellfn` directory will be automatically sourced when your shell starts up. This is also handled by a pre-configured module.
+Any shell scripts (`.sh` files) placed in the `dots/auto/shell` directory will be automatically sourced when your shell starts up. This is also handled by a pre-configured module.
 
 ### Adding New Shell Functions
 
-1.  Create a new `.sh` file in the `dots/auto/shellfn/` directory.
+1.  Create a new `.sh` file in the `dots/auto/shell/` directory.
 2.  Add your shell functions to this file.
 3.  Rebuild your system. The functions will be available in your new shell sessions.
 
@@ -62,6 +62,7 @@ Any shell scripts (`.sh` files) placed in the `dots/auto/shellfn` directory will
 ### Nix Darwin (macOS) Setup
 
 1.  Install Nix:
+
     ```bash
     sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
     ```
@@ -69,6 +70,7 @@ Any shell scripts (`.sh` files) placed in the `dots/auto/shellfn` directory will
 2.  Close and restart your shell.
 
 3.  Clone this repository:
+
     ```bash
     git clone <your-repository-url> MyNixConfig
     cd MyNixConfig

@@ -3,6 +3,13 @@ return {
 		"stevearc/conform.nvim",
 		opts = {},
 		config = function()
+			vim.filetype.add({
+				pattern = {
+					[".*%.justfile"] = "just",
+					["[Jj]ustfile"] = "just",
+				},
+			})
+
 			require("conform").setup({
 				formatters_by_ft = {
 					sh = { "shfmt" },
@@ -12,6 +19,7 @@ return {
 					rust = { "rustfmt" },
 					python = { "ruff_fix", "black" },
 					toml = { "taplo" },
+					just = { "just" },
 
 					["_"] = { lsp_format = "prefer", "prettierd" },
 				},

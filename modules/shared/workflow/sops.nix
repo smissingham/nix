@@ -7,6 +7,7 @@
   ...
 }:
 let
+  sysConfig = config;
   moduleSet = "mySharedModules";
   moduleCategory = "workflow";
   moduleName = "sops";
@@ -23,14 +24,25 @@ in
     enable = lib.mkEnableOption moduleName;
   };
 
-  config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-    home-manager.users.${mainUser.username} =
-      let
-        sopsPath = mainUser.sops.getPath { };
-        secretsFile = "${sopsPath}/${mainUser.sops.secretsFileName}";
-        ageKeyFile = "${sopsPath}/${mainUser.sops.ageKeyFileName}";
-      in
-      {
+  config = lib.mkIf (lib.getAttrFromPath enablePath config) (
+    let
+      sopsPath = mainUser.sops.getPath { };
+      secretsFile = "${sopsPath}/${mainUser.sops.secretsFileName}";
+      ageKeyFile = "${sopsPath}/${mainUser.sops.ageKeyFileName}";
+      exportKeys = builtins.attrNames mainUser.sops.secrets.autoExport;
+    in
+    {
+      mySharedModules.workflow.shell.initExtras = builtins.concatStringsSep "\n" (
+        builtins.attrValues (
+          builtins.mapAttrs (name: value: "export ${name}=\"$(cat ${value.path})\"") (
+            lib.filterAttrs (name: value: builtins.elem name exportKeys) (
+              sysConfig.home-manager.users.${mainUser.username}.sops.secrets or { }
+            )
+          )
+        )
+      );
+
+      home-manager.users.${mainUser.username} = {
         imports = [
           inputs.sops-nix.homeManagerModules.sops
         ];
@@ -50,8 +62,6 @@ in
           packages = with pkgs; [
             age
             sops
-
-            #TODO: Extract these as optional module setting
             age-plugin-yubikey
             yubico-piv-tool
             yubikey-manager
@@ -72,5 +82,6 @@ in
           };
         };
       };
-  };
+    }
+  );
 }

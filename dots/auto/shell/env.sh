@@ -21,6 +21,7 @@ yk() {
 }
 
 # Flatten copy prompts from nested structure to flat target
+# TODO: Merge this with mcp management project
 flatten_copy_prompts() {
   local source_dir="$XDG_CONFIG_HOME/genai/prompts"
   local target_dir="$XDG_CONFIG_HOME/opencode/command"
@@ -43,28 +44,15 @@ flatten_copy_prompts() {
 # Reloads shell functions, tmux config, and aerospace config
 # Usage: rl
 rl() {
-  # short var for config dir
-  CONF="$XDG_CONFIG_HOME"
 
-  # re-source shell functions
-  SHELL_FUNCS_DIR=$CONF/shellfn
-  if [ -d "$SHELL_FUNCS_DIR" ]; then
-    for file in "$SHELL_FUNCS_DIR"/*.sh; do
-      source "$file"
-      echo "Re-Sourced $file"
-    done
-  fi
-
-  # TODO: Remove Hack Installed OpenCode CLI
-  export PATH=/Users/smissingham/.opencode/bin:$PATH
-
-  # reload tmux
-  tmux source "$CONF"/tmux/tmux.conf
+  # run the source function defined in shell.nix helpers
+  nix_source
+  echo "Re-Sourced env files"
 
   # rebuild and rewrite MCP config files
-  pushd "$NIX_CONFIG_HOME/projects/mcp-configs" || return
+  pushd "$NIX_CONFIG_HOME/projects/mcp-configs" >/dev/null || return
   bun dist
-  popd || return
+  popd >/dev/null || return
   echo "Rebuilt and distributed MCP Configs"
 
   # copy central prompt lib to destinations
@@ -85,19 +73,16 @@ rl() {
 
 rl_darwin() {
   # reload aerospace from custom script defined in aerospace nix module
+  # TODO: move this into the aerospace nix module
   build-and-reload-aerospace
   echo "Reloaded Aerospace"
 
   # skhd, kill the active pid and reload
   #pkill -f '/bin/skhd'
-  skhd -r
-  echo "Reloaded SKHD"
+  #skhd -r
+  #echo "Reloaded SKHD"
 
-  # re-source jankyborders settings
-  sh "$CONF/borders/bordersrc"
-  echo "Reloaded Borders"
-}
-
-git_files_unstaged() {
-  git status --porcelain | grep '^.[M]' | cut -c4- | grep -E '\.(json|groovy)$'
+  # # re-source jankyborders settings
+  # sh "$CONF/borders/bordersrc"
+  # echo "Reloaded Borders"
 }

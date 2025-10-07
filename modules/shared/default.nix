@@ -27,4 +27,18 @@
       ];
     };
   };
+
+  #----- Fonts Available to System -----#
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.ubuntu
+    font-awesome
+  ];
+
+  #----- Applications in System Space -----#
+  environment.systemPackages = with pkgs; [
+    # Nix CLI Utils
+    nixfmt-rfc-style # formatter
+    nixd # lsp
+  ];
 }

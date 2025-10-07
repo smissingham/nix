@@ -68,7 +68,6 @@ writeJsonFile(openCodeConfigPath, openCodeConfig);
 
 function writeJsonFile(filePath: string, serversConfig: any) {
   const dirPath = path.dirname(filePath);
-  console.log("DirPath:" + dirPath);
   mkdirSync(dirPath, { recursive: true });
   writeFileSync(filePath, JSON.stringify(serversConfig, null, 2));
   console.log(`[${isoString()}]: Wrote ${filePath}`);
