@@ -1,0 +1,127 @@
+{
+  "$schema": "file:///Users/smissingham/Documents/Projects/akuna/target/docs/generated/config-schema.json",
+  "mcp_config": {
+    "clients": {
+      "claude-desktop": {
+        "client_type": "claudedesktop",
+        "tags": [
+          "general-purpose",
+          "thought-and-memory",
+          "coding",
+          "filesystem",
+          "documentation",
+          "pricefx"
+        ]
+      },
+      "opencode": {
+        "client_type": "opencode",
+        "tags": [
+          "general-purpose",
+          "thought-and-memory",
+          "coding",
+          "documentation"
+        ]
+      }
+    },
+    "servers": {
+      "searxng": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "mcp-searxng@latest"
+        ],
+        "env": {
+          "SEARXNG_URL": "https://searxng.coeus.missingham.net"
+        },
+        "tags": [
+          "general-purpose"
+        ]
+      },
+      "memory": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-memory"
+        ],
+        "tags": [
+          "thought-and-memory"
+        ]
+      },
+      "sequential-thinking": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-sequential-thinking"
+        ],
+        "tags": [
+          "thought-and-memory"
+        ]
+      },
+      "cognee": {
+        "enabled": false,
+        "command": "uvx",
+        "args": [
+          "--from",
+          "git+https://github.com/topoteretes/cognee",
+          "--with",
+          "cognee[codegraph,docs]",
+          "cognee-mcp"
+        ],
+        "env": {
+          "LLM_API_KEY": "${OPENROUTER_API_KEY}",
+          "LLM_ENDPOINT": "${OPENROUTER_API_URL}",
+          "LLM_PROVIDER": "openai",
+          "VECTOR_DB_PROVIDER": "chromadb",
+          "GRAPH_DATABASE_PROVIDER": "kuzu"
+        },
+        "tags": [
+          "thought-and-memory",
+          "coding"
+        ]
+      },
+      "git": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-git"
+        ],
+        "tags": [
+          "coding",
+          "filesystem"
+        ]
+      },
+      "ripgrep": {
+        "enabled": false,
+        "command": "bunx",
+        "args": [
+          "-y",
+          "mcp-ripgrep@latest"
+        ],
+        "tags": [
+          "coding",
+          "filesystem"
+        ]
+      },
+      "context7": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@upstash/context7-mcp"
+        ],
+        "env": {
+          "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        },
+        "tags": [
+          "coding",
+          "documentation"
+        ]
+      },
+      "pricefx": {
+        "type": "remote",
+        "url": "https://mcp.pricefx.com/mcp",
+        "tags": [
+          "pricefx"
+        ]
+      }
+    }
+  }
+}

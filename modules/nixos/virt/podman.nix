@@ -51,6 +51,8 @@ in
       5353
     ];
 
+    environment.variables.DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
+
     # Enable common container config files in /etc/containers
     virtualisation.containers.enable = true;
 

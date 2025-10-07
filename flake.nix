@@ -15,10 +15,6 @@
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -34,7 +30,6 @@
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
-
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -47,9 +42,13 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
-
     mypkgs = {
-      url = "path:./flakes/overlays";
+      url = "path:flakes/overlays";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
+    myapps = {
+      url = "path:flakes/apps";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
@@ -66,30 +65,35 @@
     }:
     let
       inherit (self) outputs;
-      overlays = [ inputs.mypkgs.overlays.default ];
+      overlays = [
+        inputs.mypkgs.overlays.default
+        inputs.myapps.overlays.default
+      ];
 
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
-      # Import all .nix files from a directory recursively and return as module imports
       importDir =
         dir:
-        let
-          entries = builtins.readDir dir;
-          processEntry =
-            name: type:
-            if type == "regular" && builtins.match ".*\\.nix" name != null then
-              [ (dir + "/${name}") ]
-            else if type == "directory" then
-              (importDir (dir + "/${name}")).imports
-            else
-              [ ];
-          moduleFiles = builtins.concatMap (name: processEntry name entries.${name}) (
-            builtins.attrNames entries
-          );
-        in
-        {
-          imports = moduleFiles;
-        };
+        if !builtins.pathExists dir then
+          { imports = [ ]; }
+        else
+          let
+            entries = builtins.readDir dir;
+            processEntry =
+              name: type:
+              if type == "regular" && builtins.match ".*\\.nix" name != null then
+                [ (dir + "/${name}") ]
+              else if type == "directory" then
+                (importDir (dir + "/${name}")).imports
+              else
+                [ ];
+            moduleFiles = builtins.concatMap (name: processEntry name entries.${name}) (
+              builtins.attrNames entries
+            );
+          in
+          {
+            imports = moduleFiles;
+          };
 
       mkSystem =
         {
@@ -98,24 +102,27 @@
           systemModules,
         }:
         let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
           pkgsUnstable = import nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
           };
+          serviceUtils = import ./lib/services.nix {
+            inherit (nixpkgs) lib;
+            inherit pkgs;
+          };
           builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+          privateModulesPath = mainUser.getPrivateModulesPath { };
           platformModules =
 
             # ----- Nix Darwin Modules ----- #
             if isDarwin system then
               [
                 (importDir ./modules/darwin)
-                inputs.mac-app-util.darwinModules.default
                 home-manager.darwinModules.home-manager
-                {
-                  home-manager.sharedModules = [
-                    inputs.mac-app-util.homeManagerModules.default
-                  ];
-                }
                 inputs.nix-homebrew.darwinModules.nix-homebrew
                 {
                   nix-homebrew = {
@@ -131,16 +138,20 @@
                   };
                 }
               ]
+              ++ [ (importDir (privateModulesPath + "/darwin")) ]
 
             # ----- NixOS Modules -----#
             else
               [
                 (importDir ./modules/nixos)
                 home-manager.nixosModules.default
-              ];
+              ]
+              ++ [ (importDir (privateModulesPath + "/nixos")) ];
 
-          # ------ Modules Shared Across All Systems -----#
-          sharedModules = [ (importDir ./modules/shared) ];
+          sharedModules = [
+            (importDir ./modules/shared)
+            (importDir (privateModulesPath + "/shared"))
+          ];
         in
         builder {
           inherit system;
@@ -150,8 +161,9 @@
               inputs
               outputs
               overlays
-              mainUser
               pkgsUnstable
+              mainUser
+              serviceUtils
               ;
           };
         };
@@ -163,12 +175,6 @@
           system = "aarch64-darwin";
           systemModules = [
             ./hosts/plutus/configuration.nix
-          ];
-        };
-        popmart = mkSystem {
-          system = "aarch64-darwin";
-          systemModules = [
-            ./hosts/popmart/configuration.nix
           ];
         };
       };

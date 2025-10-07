@@ -1,7 +1,6 @@
 # ----- DEFAULTS TO APPLY ONLY ON NIXOS SYSTEMS -----#
 {
   mainUser,
-  pkgs,
   lib,
   ...
 }:
@@ -22,7 +21,6 @@
   users.users.${mainUser.username} = {
     isNormalUser = true;
     description = mainUser.name;
-    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
       "networkmanager"

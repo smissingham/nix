@@ -1,34 +1,40 @@
 return {
-	{
-		"stevearc/conform.nvim",
-		opts = {},
-		config = function()
-			require("conform").setup({
-				formatters_by_ft = {
-					sh = { "shfmt" },
-					bashsh = { "shfmt" },
-					nix = { "nixfmt" },
-					lua = { "stylua" },
-					rust = { "rustfmt" },
-					python = { "ruff_fix", "black" },
-					toml = { "taplo" },
+  {
+    "stevearc/conform.nvim",
+    opts = {},
+    config = function()
+      vim.filetype.add({
+        pattern = {
+          [".*%.justfile"] = "just",
+          ["[Jj]ustfile"] = "just",
+        },
+      })
 
-					["_"] = { lsp_format = "prefer", "prettierd" },
-				},
-				format_on_save = {
-					timeout_ms = 1000,
-					lsp_format = "fallback",
-				},
-			})
+      require("conform").setup({
+        formatters_by_ft = {
+          sh = { "shfmt" },
+          bashsh = { "shfmt" },
+          nix = { "nixfmt" },
 
-			-- Keymap for formatting with conform
-			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-				require("conform").format({
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 1000,
-				})
-			end, { desc = "Code format" })
-		end,
-	},
+          ["_"] = {
+            lsp_format = "prefer",
+          },
+        },
+
+        format_on_save = {
+          timeout_ms = 1000,
+          lsp_format = "fallback",
+        },
+      })
+
+      -- Keymap for formatting with conform
+      vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+        require("conform").format({
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        })
+      end, { desc = "Code format" })
+    end,
+  },
 }

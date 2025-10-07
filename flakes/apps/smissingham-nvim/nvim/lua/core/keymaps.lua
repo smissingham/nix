@@ -4,6 +4,8 @@ vim.g.maplocalleader = " "
 -- General Globals
 vim.keymap.set("n", "<esc><esc>", ":noh<CR>", { noremap = true, silent = true })
 
+-- Text Processing
+
 -- Buffer Navigation
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
 vim.keymap.set("n", "<S-Tab>", "<cmd>bprev<CR>", {})
@@ -37,3 +39,11 @@ vim.keymap.set({ "i" }, "<C-p>", vim.lsp.buf.signature_help, { desc = "Signature
 
 -- Exit terminal mode with ESC (single tap)
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+
+-- Markdown Tasks
+-- vim.keymap.set("n", "<leader>[", "o- [ ] ", { desc = "New markdown task" })
+-- vim.keymap.set("n", "<leader>]", function()
+--   local line = vim.api.nvim_get_current_line()
+--   local new_line = line:gsub("- %[ %]", "- [x]", 1)
+--   vim.api.nvim_set_current_line(new_line)
+-- end, { desc = "Mark task done" })

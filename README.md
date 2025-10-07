@@ -10,8 +10,8 @@ This repository provides a template for declarative configuration of NixOS and m
 │   ├── auto/               # Configurations to be automatically linked into XDG_CONFIG_HOME
 │   └── modules/            # Dotfile setups that relate to toggleable nix modules (manually linked by module)
 ├── flakes/                 # Custom Nix flakes for things like editors or project templates
-│   ├── apps/               # Fully contained applications wrapped as a nix flake for use cross-platform 
-│   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes 
+│   ├── apps/               # Fully contained applications wrapped as a nix flake for use cross-platform
+│   └── overlays/           # Custom nix packages, bundled as a flake, usable as overlays to other flakes
 │   └── templates/          # Flake templates, for quick devenv inits
 ├── hosts/                  # Host-specific configurations (one directory per machine)
 ├── modules/                # Reusable Nix modules for configuring systems and home environments
@@ -47,21 +47,12 @@ To have a configuration for a new application automatically linked:
 
 3.  Rebuild your system. The modules included in this repository will handle the rest.
 
-## Automatic Shell Functions
-
-Any shell scripts (`.sh` files) placed in the `dots/auto/shellfn` directory will be automatically sourced when your shell starts up. This is also handled by a pre-configured module.
-
-### Adding New Shell Functions
-
-1.  Create a new `.sh` file in the `dots/auto/shellfn/` directory.
-2.  Add your shell functions to this file.
-3.  Rebuild your system. The functions will be available in your new shell sessions.
-
 ## Installation
 
 ### Nix Darwin (macOS) Setup
 
 1.  Install Nix:
+
     ```bash
     sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
     ```
@@ -71,13 +62,20 @@ Any shell scripts (`.sh` files) placed in the `dots/auto/shellfn` directory will
 3.  Clone this repository:
     ```bash
     git clone <your-repository-url> MyNixConfig
+    
     cd MyNixConfig
     ```
 
-4.  Install the system flake using `nix-darwin`:
+    If submodules are present in repo, pull them
     ```bash
-    nix build .#darwinConfigurations.<hostname>.system
-    ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
+    git submodule update --init --recursive
+    ```
+
+5.  Install the system flake using `nix-darwin`:
+    ```bash
+    nix build .#darwinConfigurations.<hostname>.system --extra-experimental-features 'nix-command flakes' --impure
+    
+    sudo ./result/sw/bin/darwin-rebuild switch --flake .#<hostname> --impure
     ```
     (Replace `<hostname>` with the name of your host configuration from the `hosts` directory).
 

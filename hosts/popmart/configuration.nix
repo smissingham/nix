@@ -1,8 +1,5 @@
 {
-  config,
-  nixpkgs,
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -13,6 +10,13 @@
   myDarwinModules = {
     #wm.sol.enable = true;
     wm.aerospace.enable = true;
+  };
+
+  mySharedModules = {
+    devtools = {
+      terminals.enable = true;
+      tmux.enable = true;
+    };
   };
 
   #----- Nixpkgs Applications in User Space -----#
@@ -31,9 +35,6 @@
       # Browsers
       "google-chrome"
       "orion"
-
-      # Terminal
-      "ghostty"
 
       # Workflow
       "raycast"

@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -8,46 +7,56 @@
   networking.hostName = "plutus";
   networking.computerName = "plutus";
 
+  myPrivateModules = {
+    productivity.backup.enable = true;
+    projects.pricefx-core.enable = true;
+  };
+
   myDarwinModules = {
     workflow.aerospace.enable = true;
+    virt.podman = {
+      enable = true;
+      withGuiTools = false;
+      withCliTools = true;
+    };
   };
 
   mySharedModules = {
     browsers = {
       floorp.enable = true;
+      brave.enable = true;
     };
     devtools = {
+      terminals.enable = true;
+      tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
+    productivity = {
+      thunderbird.enable = false;
+    };
     workflow = {
-      sesh.enable = true;
       sops.enable = true;
     };
   };
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    spotify
+    # GUI Productivity Apps
     obsidian
-    gitkraken
-    bruno
+    #gitkraken
+    #bruno
     gimp
-    pkgsUnstable.claude-code
+    #mypkgs.filen-desktop
 
-    mypkgs.filen-desktop
-
+    # CLI Stuff
     mypkgs.pfxpackage
-    fswatch
   ];
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-    # SDK Build Packages
-    nodejs_22
     bun
     uv
-    podman
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
@@ -59,18 +68,19 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
-      "google-chrome"
-      "shottr"
+      # "google-chrome"
+      # "shottr"
 
       # ----- MEDIA ----- #
       "stremio"
+      "spotify"
       "vlc"
-      "obs"
-      "obs-backgroundremoval"
+      #"obs"
+      #"obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #
       "signal"
-      "legcord"
+      #"legcord"
 
       # ----- WORK / PRODUCTIVITY ----- #
       "microsoft-teams"
@@ -78,32 +88,36 @@
       "microsoft-powerpoint"
       "microsoft-word"
       "onedrive"
+      "google-drive"
+      "macfuse"
 
       # ----- OS / SYSTEM ----- #
-      "ghostty"
-      "onyx"
-      "commander-one"
-      "xquartz"
-      "yubico-authenticator"
-      "parallels"
+      # "onyx"
+      # "commander-one"
+      # "xquartz"
+      # "yubico-authenticator"
+      #"parallels"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
-      "jetbrains-toolbox"
+      #"jetbrains-toolbox"
       "claude"
+      # "cursor"
+      # "visual-studio-code"
 
       # ----- AI TOOLS ----- #
-      "lm-studio"
+      #"lm-studio"
       #"anythingllm"
       #"comfyui"
     ];
 
     brews = [
-      "duckdb"
+      #"duckdb"
     ];
 
     # ----- MAC APP STORE APPS -----#
     masApps = {
+      "Xcode" = 497799835;
     };
   };
 

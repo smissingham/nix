@@ -1,0 +1,174 @@
+
+####################
+# Project Repo: https://github.com/koekeishiya/skhd
+# Reload SKHD: `skhd -r`
+# Test Keys: `skhd -o`
+#
+# Known Special Key Chars:
+# 0x18 = plus/equal
+# 0x1B = minus/underscore 
+# 0x24 = enter
+# 0x2B = comma
+# 0x2C = slash
+# 0x2F = period
+# 0x32 = grave (tilde)
+# 0x37 = CMD (gui)
+#
+# Shortcut Documentation:
+#
+# Application Control:
+#   HYPER - B         : Browser
+#   HYPER - C         : Claude
+#   HYPER - M         : Music (Spotify)
+#   HYPER - O         : Obsidian
+#   HYPER - P         : Spotify play/pause
+#   HYPER - S         : Signal
+#   HYPER - T         : Terminal
+#   HYPER - Space     : Launcher (Raycast)
+#
+# Window Sizing:
+#   CMD + ALT - +     : Resize larger
+#   CMD + ALT - -     : Resize smaller
+#   CMD + ALT - Enter : Balance equal sizes
+#
+# Window Layout:
+#   CMD + ALT - R     : Reset (flatten workspace tree)
+#   CMD + ALT - M     : Maximise (fullscreen)
+#   CMD + ALT - ,     : Preset floating 1620p
+#   CMD + ALT - .     : Preset floating 1080p
+#   CMD + ALT - /     : Tiling / toggle
+####################
+
+
+#################### Application Control ####################
+
+# Unbind annoying defaults
+ctrl + shift - h :
+
+# Rebind common CMD shortcuts to CTRL
+# ctrl - w [
+#   "WezTerm"       : skhd -k "ctrl - w"
+#   *               : skhd -k "cmd - w"
+# ]
+ctrl - o          : skhd -k "cmd - o"
+ctrl - p          : skhd -k "cmd - p"
+ctrl - t          : skhd -k "cmd - t"
+ctrl + shift - t  : skhd -k "cmd + shift - t"
+#ctrl - r          : skhd -k "cmd - r"
+ctrl + shift - r  : skhd -k "cmd + shift - r"
+ctrl - q [
+  "Floorp"        : skhd -k "cmd + shift - w"
+  "Firefox"       : skhd -k "cmd + shift - w"
+  "Brave Browser" : skhd -k "cmd + shift - w"
+  "Google Chrome" : skhd -k "cmd + shift - w"
+  *               : skhd -k "cmd - q"
+] 
+ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
+ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
+
+ctrl - a          : skhd -k "cmd - a"
+
+# Application Launching
+cmd + ctrl + alt + shift - b    : open -na $BROWSER
+cmd + ctrl + alt + shift - c    : open -a Claude
+cmd + ctrl + alt + shift - j    : open -a Raycast
+cmd + ctrl + alt + shift - m    : open -a Spotify
+cmd + ctrl + alt + shift - o    : open -a Obsidian
+cmd + ctrl + alt + shift - p    : osascript -e 'tell application "Spotify" to playpause'
+cmd + ctrl + alt + shift - s    : open -a Signal
+cmd + ctrl + alt + shift - t    : open -na $TERMINAL
+
+
+#################### Window Movement ####################
+
+# Focus Windows
+cmd - h : aerospace focus left
+cmd - j : aerospace focus down
+cmd - k : aerospace focus up
+cmd - l : aerospace focus right 
+
+# Move Windows
+cmd + shift - h : aerospace move left
+cmd + shift - j : aerospace move down
+cmd + shift - k : aerospace move up
+cmd + shift - l : aerospace move right 
+
+# Join Windows
+cmd + shift + ctrl - h : aerospace join-with left
+cmd + shift + ctrl - j : aerospace join-with down
+cmd + shift + ctrl - k : aerospace join-with up
+cmd + shift + ctrl - l : aerospace join-with right 
+
+# Cycle Window Focus
+cmd - tab : aerospace focus-back-and-forth
+
+#################### Window Layout & Sizing ####################
+
+# Window Sizing
+cmd + shift - 0x18 : aerospace resize smart +240
+cmd + shift - 0x1B : aerospace resize smart -240
+cmd + shift - 0x24 : aerospace balance-sizes
+
+# Layout Management
+cmd + shift - n    : aerospace flatten-workspace-tree
+cmd + shift - m    : aerospace fullscreen
+cmd + shift - 0x2C : aerospace layout floating tiling
+
+  # Comma = 1620p
+cmd + shift - 0x2B : \
+  aerospace layout floating; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {480, 0}'; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {2880, 1620}';
+
+  # Period = 1080p 
+cmd + shift - 0x2F : \
+  aerospace layout floating; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {960, 270}'; \
+  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}';
+
+
+#################### Workspaces ####################
+
+# Cycle through workspaces
+alt - tab: aerospace workspace --wrap-around next 
+
+# Cycle through monitors
+alt + cmd - tab : aerospace focus-monitor --wrap-around next
+
+# Go to Workspace
+alt - 1: aerospace workspace 1
+alt - 2: aerospace workspace 2
+alt - 3: aerospace workspace 3
+alt - 4: aerospace workspace 4
+alt - 5: aerospace workspace 5
+
+alt - q: aerospace workspace q
+alt - w: aerospace workspace w
+alt - e: aerospace workspace e
+alt - r: aerospace workspace r
+alt - t: aerospace workspace t
+
+alt - a: aerospace workspace a
+alt - s: aerospace workspace s
+alt - d: aerospace workspace d
+alt - f: aerospace workspace f
+alt - g: aerospace workspace g
+
+# Move to Workspace
+alt + shift - 1: aerospace move-node-to-workspace 1
+alt + shift - 2: aerospace move-node-to-workspace 2
+alt + shift - 3: aerospace move-node-to-workspace 3
+alt + shift - 4: aerospace move-node-to-workspace 4
+alt + shift - 5: aerospace move-node-to-workspace 5
+
+alt + shift - q: aerospace move-node-to-workspace q
+alt + shift - w: aerospace move-node-to-workspace w
+alt + shift - e: aerospace move-node-to-workspace e
+alt + shift - r: aerospace move-node-to-workspace r
+alt + shift - t: aerospace move-node-to-workspace t
+
+alt + shift - a: aerospace move-node-to-workspace a
+alt + shift - s: aerospace move-node-to-workspace s
+alt + shift - d: aerospace move-node-to-workspace d
+alt + shift - f: aerospace move-node-to-workspace f
+alt + shift - g: aerospace move-node-to-workspace g

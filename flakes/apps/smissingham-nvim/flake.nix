@@ -7,7 +7,7 @@
     mcp-hub.url = "github:ravitemer/mcp-hub";
   };
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       nixpkgs-unstable,
@@ -17,13 +17,9 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        overlay = final: prev: {
-          #opencode = final.callPackage ./packages/opencode/package.nix { };
-        };
-
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ overlay ];
+          config.allowUnfree = true;
         };
 
         pkgsUnstable = import nixpkgs-unstable {
@@ -45,19 +41,23 @@
           # ----- AI Helpers -----#
           pkgsUnstable.vectorcode # for minuet RAG context
           pkgsUnstable.opencode
-          inputs.mcp-hub.packages."${system}".default
+          pkgsUnstable.claude-code
+          #inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
           bash-language-server # sh / bash
           lua-language-server # lua
-          nil # Nix
+          nixd # Nix
           taplo # Toml
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
           emmet-language-server # html shortcode expansions
+          svelte-language-server # svelte, obviously
           yaml-language-server # YAML
+          rust-analyzer
+          jdt-language-server # (jdtls) java all-in-one LS
           pkgsUnstable.ruff # python lsp - linting & formatter
-          pkgsUnstable.pyrefly # python lsp - types & symbols
+          basedpyright # python type checker
 
           # ----- Formatters -----#
           shfmt
@@ -65,23 +65,39 @@
           prettierd
           rustfmt
           stylua
-          black
 
           # ----- Package Managers -----#
           pkgsUnstable.uv
+          pkgsUnstable.bun
+          poetry
 
           # ----- CLI Utils -----#
+          bat
+          btop
+          dig
+          eza
           fd
+          fzf
+          git
+          just
+          lazygit
+          pandoc
           ripgrep
           ripgrep-all
-          pandoc
+          tldr
+          xclip
           gcc
           gnumake
           gh
+          watchexec
 
           # ----- Plugin Deps -----#
           tree-sitter # tree-sitter
-          dwt1-shell-color-scripts # snacks.nvim
+
+          # Extras for fun dashboard
+          fastfetch
+          cowsay
+          fortune
         ];
 
         vimWrapper = pkgs.writeShellScriptBin vimName ''

@@ -1,15 +1,25 @@
--- Groovy LSP Server for Java projects
-vim.lsp.config("groovyls", {
-	filetypes = { "groovy" },
-	cmd = { "groovyls" },
-	root_markers = {
-		"pom.xml",
-		"build.gradle",
-		".git",
-	},
-	-- root_dir = function()
-	-- 	return vim.fs.root(0, { "build.gradle", "pom.xml", ".git" })
-	-- end,
+vim.lsp.config("jdtls", {
+  filetypes = { "java" },
+  cmd = { "jdtls" },
+  root_markers = {
+    "pom.xml",
+    "build.gradle",
+    ".git",
+  },
+  settings = {
+    java = {
+      autobuild = {
+        enabled = false
+      },
+      import = {
+        maven = {
+          enabled = false
+        }
+      },
+      configuration = {
+        updateBuildConfiguration = "automatic"
+      }
+    }
+  }
 })
-vim.lsp.enable("groovyls")
-
+vim.lsp.enable("jdtls")

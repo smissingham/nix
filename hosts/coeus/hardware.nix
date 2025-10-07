@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   mainUser,
   ...
@@ -122,7 +121,8 @@ in
   services.xserver.videoDrivers = [ "nvidia" ]; # Nvidia graphics driver
   hardware.nvidia-container-toolkit.enable = true; # Nvidia CDI support for docker/podman
   hardware.nvidia = {
-    nvidiaPersistenced = true;
+    # TODO: This has broken recently, but was needed for the login screen to return after idle...
+    nvidiaPersistenced = false;
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;

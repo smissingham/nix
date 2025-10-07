@@ -1,0 +1,20 @@
+[default_session]
+#startup_command = "$EDITOR -c ':lua Snacks.picker.recent()'"
+preview_command = "eza --all --git --icons --color=always --tree --level=2 {}"
+
+[[session]]
+name = "Nix ❄️"
+path = "~/Documents/Nix"
+
+[[session]]
+name = "Second Brain 🧠"
+path = "~/Documents/Obsidian/second-brain"
+
+[[session]]
+name = "Employer 👔"
+path = "~/Documents/Employer"
+
+[[session]]
+name = "Download 📥"
+path = "~/Downloads"
+startup_command = "yazi"

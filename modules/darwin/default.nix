@@ -1,5 +1,5 @@
 # ----- DEFAULTS TO APPLY ONLY ON DARWIN SYSTEMS -----#
-{ mainUser, pkgs, ... }:
+{ mainUser, ... }:
 {
   system = {
     primaryUser = mainUser.username;

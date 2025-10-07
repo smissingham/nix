@@ -9,7 +9,7 @@ let
   moduleSet = "myDarwinModules";
   moduleCategory = "workflow";
   moduleName = "aerospace";
-  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/dots/modules/${moduleCategory}/aerospace";
+  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/darwin/${moduleCategory}/dots/${moduleName}";
 
   optionPath = [
     moduleSet
@@ -18,6 +18,13 @@ let
   ];
   fullModuleName = lib.concatStringsSep "." optionPath;
   enablePath = optionPath ++ [ "enable" ];
+
+  bordersConfig = [
+    "style=round"
+    "hidpi=on"
+    "active_color=0xff00FFDE"
+    "width=5.0"
+  ];
 in
 {
   options = lib.setAttrByPath optionPath {
@@ -25,10 +32,11 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-
+    mySharedModules.home.stows = [
+      "${moduleDots}"
+    ];
     home-manager.users.${mainUser.username} =
       {
-        config,
         lib,
         pkgs,
         ...
@@ -36,11 +44,23 @@ in
       let
         buildScriptName = "build-and-reload-aerospace";
         buildAerospaceScript = pkgs.writeShellScriptBin "${buildScriptName}" ''
-          pushd "${config.xdg.configHome}/aerospace";
+          pushd "${moduleDots}/aerospace" >/dev/null;
             cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
-            ${pkgs.aerospace}/bin/aerospace reload-config
+            
+            if /usr/bin/pgrep -x AeroSpace > /dev/null; then
+              ${pkgs.aerospace}/bin/aerospace reload-config
+            else
+              /usr/bin/open -a ${pkgs.aerospace}/Applications/AeroSpace.app
+            fi
+            
+            /usr/bin/pkill -x skhd 2>/dev/null
+            ${pkgs.skhd}/bin/skhd &
+            
+            /usr/bin/pkill -x borders 2>/dev/null
+            ${pkgs.jankyborders}/bin/borders ${lib.concatStringsSep " " bordersConfig} &
+            
             echo "Aerospace config file generated & reloaded"
-          popd;
+          popd >/dev/null;
         '';
       in
       {
@@ -52,13 +72,8 @@ in
             skhd
             buildAerospaceScript
           ];
-          shellAliases = {
-
-          };
           activation = {
             ${fullModuleName} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              ${pkgs.stow}/bin/stow -t "${config.xdg.configHome}" -d "${moduleDots}" -R .
-              echo "Stowed dots for module ${fullModuleName}"
               ${buildAerospaceScript}/bin/${buildScriptName}
             '';
           };
@@ -72,6 +87,14 @@ in
           RunAtLoad = true;
           StandardOutPath = "/tmp/skhd.log";
           StandardErrorPath = "/tmp/skhd.log";
+        };
+      };
+      borders = {
+        serviceConfig = {
+          ProgramArguments = [ "${pkgs.jankyborders}/bin/borders" ] ++ bordersConfig;
+          RunAtLoad = true;
+          StandardOutPath = "/tmp/borders.log";
+          StandardErrorPath = "/tmp/borders.log";
         };
       };
     };

@@ -1,12 +1,13 @@
 {
+  description = "Nix flake templates";
+
   outputs =
-    { self }:
     let
       # Read all directories in the current directory
       templateDirs = builtins.readDir ./.;
 
       # Filter to only include directories (not files like flake.nix)
-      isTemplate = name: type: type == "directory";
+      isTemplate = _name: type: type == "directory";
 
       # Build templates attribute set from discovered directories
       buildTemplate = name: {

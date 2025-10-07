@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -13,19 +12,25 @@
   networking.hostName = "coeus";
   time.timeZone = "America/Chicago";
 
+  myPrivateModules = {
+    productivity.backup.enable = true;
+  };
+
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow.sops.enable = true;
     devtools = {
+      terminals.enable = true;
+      tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
   };
 
   myNixOSModules = {
-    wm.plasma6.enable = true;
+    #wm.plasma6.enable = true;
     #wm.gnome-xserver.enable = true;
-    #wm.hyprland.enable = true;
+    wm.hyprland.enable = true;
 
     entertainment.gaming.enable = true;
 
@@ -55,8 +60,7 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    pkgsUnstable.ghostty
-    mypkgs.filen-desktop
+    #mypkgs.filen-desktop
 
     # Work
     teams-for-linux
