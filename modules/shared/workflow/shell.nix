@@ -24,18 +24,6 @@ let
   initExtrasOptionAttr = lib.getAttrFromPath (optionPath ++ [ "initExtras" ]) config;
 
   hostRebuildCli = (if pkgs.stdenv.isDarwin then "sudo darwin-rebuild" else "sudo nixos-rebuild");
-
-  shellAliases = lib.mkMerge [
-    mainUser.shellAliases
-    aliasesOptionAttr
-    {
-      # GENERAL
-      t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
-
-      # TMUX
-      tm = "tmux new-session -A -s";
-    }
-  ];
 in
 {
   options = lib.setAttrByPath optionPath {
@@ -108,6 +96,7 @@ in
 
           nxgcBin = pkgs.writeShellScriptBin "nxgc" ''
             nix-collect-garbage --delete-old
+            nix-store --optimise
           '';
 
           shReloadBin = pkgs.writeShellScriptBin "sh_reload" ''
@@ -130,25 +119,35 @@ in
           '';
 
           defaultSourcePath = "${usrConfigHome}/shell";
-          shSourceBin = pkgs.writeShellScriptBin "sh_source" ''
-            for path in ${lib.escapeShellArgs (sourcePathsOptionAttr ++ [ defaultSourcePath ])}; do
-              if [ -d "$path" ]; then
-                while IFS= read -r file; do
-                  if [ -r "$file" ]; then
-                    source "$file"
-                  else
-                    echo "Skipped (not readable): $file" >&2
-                  fi
-                done < <(${pkgs.fd}/bin/fd --type file --extension sh . "$path")
-              else
-                echo "Skipped (not a directory): $path" >&2
-              fi
-            done
+          # Script (not binary) so it can be sourced to persist functions/vars in current shell
+          shSourceScript = pkgs.writeText "sh_source.sh" ''
+            while IFS= read -r file; do 
+              echo "Sourced: $file"
+              source "$file"
+            done < <(${pkgs.fd}/bin/fd --type file --extension sh . ${
+              lib.escapeShellArgs (sourcePathsOptionAttr ++ [ defaultSourcePath ])
+            })
           '';
 
+          shellAliases = lib.mkMerge [
+            mainUser.shellAliases
+            aliasesOptionAttr
+            {
+              # GENERAL
+              t = "${if pkgs.stdenv.isDarwin then "open -a" else ""} ${mainUser.terminalApp}";
+
+              # TMUX
+              tm = "tmux new-session -A -s";
+
+              # SHELL
+              sh_source = "source ${shSourceScript}";
+            }
+          ];
+
           shellInitScript = ''
-            ${shSourceBin}/bin/sh_source
             ${initExtrasOptionAttr}
+            source ${shSourceScript}
+            clear
           '';
 
           # Convert shell aliases to executable binaries for non-interactive shell usage
@@ -169,13 +168,13 @@ in
             };
             activation = {
               nixHomeSetupActivate = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                ${initExtrasOptionAttr}
+                source ${shSourceScript}
                 ${shStowBin}/bin/sh_stow
-                ${shellInitScript}
               '';
             };
             packages = [
               shStowBin
-              shSourceBin
               shReloadBin
               nxfmtBin
               nxrBin
@@ -189,7 +188,9 @@ in
             enable = true;
             shellAliases = shellAliases;
             enableCompletion = true;
-            initExtra = shellInitScript;
+            initExtra = ''
+              ${shellInitScript}
+            '';
           };
 
           programs.zsh = {
@@ -198,9 +199,9 @@ in
             enableCompletion = true;
             syntaxHighlighting.enable = true;
             initContent = ''
-              ${shellInitScript}
               bindkey -r '^L'
               source ~/.p10k.zsh
+              ${shellInitScript}
             '';
 
             history = {
@@ -233,7 +234,6 @@ in
               enable = true;
               options = {
                 navigate = true;
-                side-by-side = true;
                 line-numbers = true;
                 dark = true;
               };
