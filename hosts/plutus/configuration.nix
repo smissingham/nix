@@ -10,6 +10,7 @@
 
   myDarwinModules = {
     workflow.aerospace.enable = true;
+    virt.podman.enable = true;
   };
 
   mySharedModules = {
@@ -47,7 +48,6 @@
     nodejs_22
     bun
     uv
-    podman
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
