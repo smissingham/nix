@@ -1,7 +1,19 @@
+local obsidian_root = vim.fn.expand("~") .. "/Docuuments/Obsidian"
+
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		if vim.fn.getcwd():match("^" .. vim.fn.expand("~") .. "/Documents/Obsidian/") then
+		if vim.fn.getcwd():match("^" .. obsidian_root) then
 			require("lazy").load({ plugins = { "obsidian.nvim" } })
+		end
+	end,
+})
+
+-- TODO: Get this working
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+	pattern = obsidian_root .. "/*",
+	callback = function()
+		if vim.bo.modified then
+			vim.cmd("silent! write")
 		end
 	end,
 })
@@ -28,11 +40,11 @@ return {
 			workspaces = {
 				{
 					name = "second-brain",
-					path = "~/Documents/Obsidian/second-brain/",
+					path = obsidian_root .. "/second-brain/",
 				},
 				{
 					name = "family",
-					path = "~/Documents/Obsidian/family/",
+					path = obsidian_root .. "/family/",
 				},
 			},
 			notes_subdir = "Slipbox",

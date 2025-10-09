@@ -78,6 +78,7 @@
           gcc
           gnumake
           gh
+          watchexec
 
           # ----- Plugin Deps -----#
           tree-sitter # tree-sitter

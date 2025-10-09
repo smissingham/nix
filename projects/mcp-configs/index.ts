@@ -194,12 +194,12 @@ function getMcpServers(category: McpCategory) {
           type: "local",
           args: [
             "--cwd",
-            "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp",
+            "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp",
             "dev:local",
           ],
           env: {
             SERVER_LOG:
-              "/Users/smissingham/Documents/Employer/01-tools/llm-tools/pricefx-mcp/logs/server.log",
+              "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp/logs/server.log",
           },
           command: "/run/current-system/sw/bin/bun",
         },
