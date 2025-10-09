@@ -46,7 +46,7 @@ flatten_copy_prompts() {
 rl() {
 
   # run the source function defined in shell.nix helpers
-  nix_source
+  sh_source
   echo "Re-Sourced env files"
 
   # rebuild and rewrite MCP config files

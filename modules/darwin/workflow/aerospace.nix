@@ -18,6 +18,13 @@ let
   ];
   fullModuleName = lib.concatStringsSep "." optionPath;
   enablePath = optionPath ++ [ "enable" ];
+
+  bordersConfig = [
+    "style=round"
+    "hidpi=on"
+    "active_color=0xff00FFDE"
+    "width=5.0"
+  ];
 in
 {
   options = lib.setAttrByPath optionPath {
@@ -40,8 +47,19 @@ in
         buildAerospaceScript = pkgs.writeShellScriptBin "${buildScriptName}" ''
           pushd "${config.xdg.configHome}/aerospace" >/dev/null;
             cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
-            ${pkgs.aerospace}/bin/aerospace reload-config
-            ${pkgs.skhd}/bin/skhd -r
+            
+            if /usr/bin/pgrep -x aerospace > /dev/null; then
+              ${pkgs.aerospace}/bin/aerospace reload-config
+            else
+              /usr/bin/open -a ${pkgs.aerospace}/Applications/AeroSpace.app
+            fi
+            
+            /usr/bin/pkill -x skhd 2>/dev/null
+            ${pkgs.skhd}/bin/skhd &
+            
+            /usr/bin/pkill -x borders 2>/dev/null
+            ${pkgs.jankyborders}/bin/borders ${lib.concatStringsSep " " bordersConfig} &
+            
             echo "Aerospace config file generated & reloaded"
           popd >/dev/null;
         '';
@@ -70,6 +88,14 @@ in
           RunAtLoad = true;
           StandardOutPath = "/tmp/skhd.log";
           StandardErrorPath = "/tmp/skhd.log";
+        };
+      };
+      borders = {
+        serviceConfig = {
+          ProgramArguments = [ "${pkgs.jankyborders}/bin/borders" ] ++ bordersConfig;
+          RunAtLoad = true;
+          StandardOutPath = "/tmp/borders.log";
+          StandardErrorPath = "/tmp/borders.log";
         };
       };
     };
