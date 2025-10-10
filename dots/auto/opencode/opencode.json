@@ -37,7 +37,7 @@
     "input_clear": "ctrl+c",
     "input_paste": "ctrl+v",
     "input_submit": "enter",
-    "input_newline": "shift+enter,ctrl+j",
+    "input_newline": "shift+enter",
     "messages_page_up": "pgup",
     "messages_page_down": "pgdown",
     "messages_half_page_up": "ctrl+alt+u",
@@ -47,5 +47,11 @@
     "messages_copy": "<leader>y",
     "app_exit": "ctrl+c,<leader>q"
   },
-  "mcp": {}
+  "mcp": {},
+  "formatter": {
+    "nix": {
+      "command": ["nxfmt", "$FILE"],
+      "extensions": [".nix"]
+    }
+  }
 }

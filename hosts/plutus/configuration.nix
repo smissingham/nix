@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -16,6 +15,7 @@
   mySharedModules = {
     browsers = {
       floorp.enable = true;
+      brave.enable = true;
     };
     devtools = {
       smissingham-nvim.enable = true;
@@ -29,25 +29,22 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+
+    # GUI Productivity Apps
     spotify
     obsidian
     gitkraken
     bruno
     gimp
-    pkgsUnstable.claude-code
-
     mypkgs.filen-desktop
 
+    # Terminal & CLI Stuff
+    wezterm
     mypkgs.pfxpackage
-    fswatch
   ];
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-    # SDK Build Packages
-    nodejs_22
-    bun
-    uv
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#

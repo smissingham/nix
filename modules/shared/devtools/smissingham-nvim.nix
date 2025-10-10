@@ -20,7 +20,6 @@ let
 
   binaryName = "smissingham-nvim";
   flakePath = "${config.environment.variables.NIX_CONFIG_HOME}/flakes/apps/smissingham-nvim";
-  flake = builtins.getFlake "path:${flakePath}";
 
 in
 {
@@ -64,7 +63,7 @@ in
 
           # ----- Always Install -----#
           {
-            packages = flake.packages.${pkgs.system}.systemPackages;
+            packages = pkgs.myapps.smissingham-nvim.systemPackages;
           }
 
           # ----- Optional: Favourite Aliases -----#
@@ -75,7 +74,7 @@ in
               svf = "nix develop ${flakePath}#default -c ${binaryName}"; # --- Launch Nix Flake In Place
 
               # ----- Config & State Resetting -----#
-              svda = "svdPerms && svdConfig && svdShare && svdState && svdLink";
+              svda = "svdPerms; svdConfig; svdShare; svdState; svdLink";
               svdLink = "echo \"Config Linked to Nix Store\"";
               svdPerms = "chmod -R 755 ${tgtConfigDir}";
               svdConfig = "rm -rf ${tgtConfigDir}";
@@ -100,7 +99,7 @@ in
               '';
             };
             shellAliases = {
-              svdLink = lib.mkForce "${tgtConfLiveSymlink} && echo \"Config Linked to Live Folder\"";
+              svdLink = lib.mkForce "${tgtConfLiveSymlink}; echo \"Config Linked to Live Folder\"";
             };
           })
         ];

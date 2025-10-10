@@ -18,8 +18,6 @@ let
   enablePath = optionPath ++ [ "enable" ];
 
   binaryName = "codium";
-  flakePath = "${config.environment.variables.NIX_CONFIG_HOME}/flakes/apps/smissingham-vscode";
-  flake = builtins.getFlake "path:${flakePath}";
 
 in
 {
@@ -38,15 +36,11 @@ in
         systemConfig = config;
       in
       {
-        config,
-        ...
-      }:
-      {
         home = lib.mkMerge [
 
           # ----- Always Install -----#
           {
-            packages = flake.packages.${pkgs.system}.systemPackages;
+            packages = pkgs.myapps.smissingham-vscode.systemPackages;
           }
 
           # ----- Optional: Favourite Aliases -----#

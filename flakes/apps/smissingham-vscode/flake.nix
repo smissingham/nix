@@ -5,7 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       flake-utils,

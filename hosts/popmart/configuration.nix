@@ -1,8 +1,5 @@
 {
-  config,
-  nixpkgs,
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:

@@ -1,4 +1,3 @@
-# ----- HOME CONFIGURATION ONLY ON NIXOS SYSTEMS -----#
 {
   pkgs,
   mainUser,
@@ -6,5 +5,8 @@
 }:
 {
   home-manager.users.${mainUser.username} = {
+    home.packages = [
+      pkgs.nix-search-tv
+    ];
   };
 }

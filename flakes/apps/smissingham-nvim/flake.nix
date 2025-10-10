@@ -17,13 +17,9 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        overlay = final: prev: {
-          #opencode = final.callPackage ./packages/opencode/package.nix { };
-        };
-
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ overlay ];
+          config.allowUnfree = true;
         };
 
         pkgsUnstable = import nixpkgs-unstable {
@@ -45,12 +41,13 @@
           # ----- AI Helpers -----#
           pkgsUnstable.vectorcode # for minuet RAG context
           pkgsUnstable.opencode
+          pkgsUnstable.claude-code
           inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
           bash-language-server # sh / bash
           lua-language-server # lua
-          nil # Nix
+          nixd # Nix
           taplo # Toml
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
@@ -58,6 +55,7 @@
           yaml-language-server # YAML
           pkgsUnstable.ruff # python lsp - linting & formatter
           pkgsUnstable.pyrefly # python lsp - types & symbols
+          mypy # python type checker
 
           # ----- Formatters -----#
           shfmt
@@ -69,12 +67,24 @@
 
           # ----- Package Managers -----#
           pkgsUnstable.uv
+          pkgsUnstable.bun
+          poetry
 
           # ----- CLI Utils -----#
+          bat
+          btop
+          dig
+          eza
           fd
+          fzf
+          git
+          just
+          lazygit
+          pandoc
           ripgrep
           ripgrep-all
-          pandoc
+          tldr
+          xclip
           gcc
           gnumake
           gh

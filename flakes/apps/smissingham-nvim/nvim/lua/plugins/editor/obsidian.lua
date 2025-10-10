@@ -1,4 +1,4 @@
-local obsidian_root = vim.fn.expand("~") .. "/Docuuments/Obsidian"
+local obsidian_root = vim.fn.expand("~") .. "/Documents/Obsidian"
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()

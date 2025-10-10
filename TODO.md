@@ -1,0 +1,6 @@
+- [ ] nix-search-tv improvements
+- [ ] consolidate refactor of shells and terminals in /shared/home
+- [ ] nushell, get it working properly and defaulted on new term
+  - [ ] ensure no symlink hackery to get the config path working
+- [ ] tmux into its own workfow nix file?
+- [ ] shell.nix helpers, define better standards

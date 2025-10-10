@@ -23,9 +23,9 @@
   };
 
   myNixOSModules = {
-    wm.plasma6.enable = true;
+    #wm.plasma6.enable = true;
     #wm.gnome-xserver.enable = true;
-    #wm.hyprland.enable = true;
+    wm.hyprland.enable = true;
 
     entertainment.gaming.enable = true;
 
@@ -56,7 +56,7 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     pkgsUnstable.ghostty
-    mypkgs.filen-desktop
+    #mypkgs.filen-desktop
 
     # Work
     teams-for-linux

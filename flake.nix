@@ -15,10 +15,6 @@
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # mac-app-util = {
-    #   url = "github:hraban/mac-app-util";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -47,7 +43,12 @@
       flake = false;
     };
     mypkgs = {
-      url = "path:./flakes/overlays";
+      url = "path:flakes/overlays";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
+    myapps = {
+      url = "path:flakes/apps";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
@@ -64,7 +65,10 @@
     }:
     let
       inherit (self) outputs;
-      overlays = [ inputs.mypkgs.overlays.default ];
+      overlays = [
+        inputs.mypkgs.overlays.default
+        inputs.myapps.overlays.default
+      ];
 
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
@@ -107,13 +111,7 @@
             if isDarwin system then
               [
                 (importDir ./modules/darwin)
-                # inputs.mac-app-util.darwinModules.default
                 home-manager.darwinModules.home-manager
-                {
-                  # home-manager.sharedModules = [
-                  #   inputs.mac-app-util.homeManagerModules.default
-                  # ];
-                }
                 inputs.nix-homebrew.darwinModules.nix-homebrew
                 {
                   nix-homebrew = {

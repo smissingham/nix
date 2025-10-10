@@ -44,10 +44,8 @@ flatten_copy_prompts() {
 # Reloads shell functions, tmux config, and aerospace config
 # Usage: rl
 rl() {
-
-  # run the source function defined in shell.nix helpers
+  sh_reload
   sh_source
-  echo "Re-Sourced env files"
 
   # rebuild and rewrite MCP config files
   pushd "$NIX_CONFIG_HOME/projects/mcp-configs" >/dev/null || return
