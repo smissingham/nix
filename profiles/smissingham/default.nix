@@ -49,7 +49,7 @@ let
   };
 
   # ----- Helper Functions -----#
-  isDarwin = { }: builtins.match ".*-darwin" builtins.currentSystem != null;
+  isDarwin = { }: builtins.pathExists /Users;
   getHome = { }: "${(if isDarwin { } then "/Users" else "/home")}/${username}";
   getNixConfPath = { }: "${(getHome { })}/Documents/Nix";
   getProfilePath = { }: "${(getNixConfPath { })}/profiles/${username}";

@@ -5,7 +5,8 @@
 
 # TASK
 
-- You must update the last git commit to best explain its contents
+- You must update the user specified git commit to best explain its contents
+  - If no commit specified, assume the most recent
 - The main commit message must be very concise, and summarise the essence of the commit contents
 - The commit body should be a highly organised dotlist
 - Each item in the commit body must be as concise as possible
@@ -22,3 +23,5 @@
 # RESPONSE
 
 - Just tell me its done, dont summarise for me. I'll read it myself
+
+# EXTRA CONTEXT:

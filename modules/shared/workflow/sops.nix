@@ -62,6 +62,7 @@ in
           packages = with pkgs; [
             age
             sops
+            ssh-to-age
             age-plugin-yubikey
             yubico-piv-tool
             yubikey-manager
@@ -75,8 +76,13 @@ in
                 mkdir -p ${sopsPath}
               fi
 
+              # Make an age ID at given path if none there, prefer to use SSH key if present
               if [ ! -f ${ageKeyFile} ]; then
-                ${pkgs.age}/bin/age-keygen -o ${ageKeyFile}
+                if [ -f ~/.ssh/id_ed25519 ]; then
+                  ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ${ageKeyFile}
+                else
+                  ${pkgs.age}/bin/age-keygen -o ${ageKeyFile}
+                fi
               fi
             '';
           };
