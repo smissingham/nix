@@ -3,9 +3,10 @@ let
   username = "smissingham";
   name = "Sean Missingham";
   email = "sean@missingham.com";
-  terminalApp = "ghostty";
-  browserApp = "Floorp";
-  editorApp = "smissingham-nvim";
+  shell = "nushell";
+  editor = "smissingham-nvim";
+  terminal = "wezterm";
+  browser = "Floorp";
 
   sops = {
     getPath = getSopsPath;
@@ -60,9 +61,10 @@ in
     username
     name
     email
-    terminalApp
-    editorApp
-    browserApp
+    shell
+    editor
+    terminal
+    browser
     sops
     shellAliases
     getHome

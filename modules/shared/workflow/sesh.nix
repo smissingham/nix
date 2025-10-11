@@ -23,10 +23,10 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-    mySharedModules.workflow.shell.stowPaths = [
+    mySharedModules.workflow.shellenv.stowPaths = [
       "${moduleDots}"
     ];
-    mySharedModules.workflow.shell.aliases = {
+    mySharedModules.workflow.shellenv.aliases = {
       s = "sesh-browser";
     };
 

@@ -18,6 +18,7 @@
       brave.enable = true;
     };
     devtools = {
+      terminals.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
@@ -38,8 +39,7 @@
     gimp
     mypkgs.filen-desktop
 
-    # Terminal & CLI Stuff
-    wezterm
+    # CLI Stuff
     mypkgs.pfxpackage
   ];
 
@@ -77,7 +77,6 @@
       "onedrive"
 
       # ----- OS / SYSTEM ----- #
-      "ghostty"
       "onyx"
       "commander-one"
       "xquartz"

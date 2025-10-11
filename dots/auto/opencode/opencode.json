@@ -50,8 +50,13 @@
   "mcp": {},
   "formatter": {
     "nix": {
-      "command": ["nxfmt", "$FILE"],
-      "extensions": [".nix"]
+      "command": [
+        "nxfmt",
+        "$FILE"
+      ],
+      "extensions": [
+        ".nix"
+      ]
     }
   }
 }

@@ -53,6 +53,7 @@
         };
       };
 
+      # Automatic environment loading for project directories
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
@@ -60,13 +61,23 @@
         enableZshIntegration = true;
       };
 
+      # Smart directory navigation that learns your habits
       programs.zoxide = {
         enable = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
       };
 
+      # Customizable cross-shell prompt
       programs.starship = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        enableNushellIntegration = true;
+      };
+
+      # Sync and search shell history across shells and machines
+      programs.atuin = {
         enable = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
@@ -77,6 +88,9 @@
         enable = true;
         shellAliases = shellHelpers.shellAliases;
         extraConfig = ''
+          $env.config = {
+            show_banner: false
+          }
           ${shellHelpers.shellInitScript}
         '';
       };

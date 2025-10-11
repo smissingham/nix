@@ -30,7 +30,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    mySharedModules.workflow.shell.aliases = lib.mkMerge [
+    mySharedModules.workflow.shellenv.aliases = lib.mkMerge [
       (lib.mkIf cfg.dockerCompat {
         docker = "podman";
       })

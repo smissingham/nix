@@ -10,7 +10,7 @@ let
 
   moduleSet = "mySharedModules";
   moduleCategory = "workflow";
-  moduleName = "shell";
+  moduleName = "shellenv";
 
   optionPath = [
     moduleSet

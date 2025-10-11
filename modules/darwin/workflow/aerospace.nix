@@ -32,7 +32,7 @@ in
   };
 
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
-    mySharedModules.workflow.shell.stowPaths = [
+    mySharedModules.workflow.shellenv.stowPaths = [
       "${moduleDots}"
     ];
     home-manager.users.${mainUser.username} =

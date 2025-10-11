@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   mainUser,
   ...
 }:
@@ -17,6 +16,7 @@
     browsers.floorp.enable = true;
     workflow.sops.enable = true;
     devtools = {
+      terminals.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
@@ -55,7 +55,6 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    pkgsUnstable.ghostty
     #mypkgs.filen-desktop
 
     # Work

@@ -12,6 +12,10 @@
     wm.aerospace.enable = true;
   };
 
+  mySharedModules = {
+    devtools.terminals.enable = true;
+  };
+
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     spotify
@@ -28,9 +32,6 @@
       # Browsers
       "google-chrome"
       "orion"
-
-      # Terminal
-      "ghostty"
 
       # Workflow
       "raycast"
