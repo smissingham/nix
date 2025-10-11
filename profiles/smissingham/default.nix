@@ -3,7 +3,6 @@ let
   username = "smissingham";
   name = "Sean Missingham";
   email = "sean@missingham.com";
-  shell = "nushell";
   editor = "smissingham-nvim";
   terminal = "wezterm";
   browser = "Floorp";
@@ -61,7 +60,6 @@ in
     username
     name
     email
-    shell
     editor
     terminal
     browser

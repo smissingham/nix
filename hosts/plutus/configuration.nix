@@ -19,11 +19,11 @@
     };
     devtools = {
       terminals.enable = true;
+      tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
     workflow = {
-      sesh.enable = true;
       sops.enable = true;
     };
   };

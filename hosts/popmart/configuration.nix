@@ -13,7 +13,10 @@
   };
 
   mySharedModules = {
-    devtools.terminals.enable = true;
+    devtools = {
+      terminals.enable = true;
+      tmux.enable = true;
+    };
   };
 
   #----- Nixpkgs Applications in User Space -----#

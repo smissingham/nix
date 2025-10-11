@@ -17,6 +17,7 @@
     workflow.sops.enable = true;
     devtools = {
       terminals.enable = true;
+      tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
