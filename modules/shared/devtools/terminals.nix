@@ -7,6 +7,9 @@
   ...
 }:
 let
+  moduleCategory = "devtools";
+  terminalsDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/shared/${moduleCategory}/dots/terminals";
+
   cfg = config.mySharedModules.devtools.terminals;
   isDarwin = pkgs.stdenv.isDarwin;
 in
@@ -37,6 +40,10 @@ in
           (lib.optionals cfg.wezterm [ pkgsUnstable.wezterm ])
           ++ (lib.optionals cfg.alacritty [ pkgsUnstable.alacritty ]);
       }
+
+      (lib.mkIf cfg.wezterm {
+        mySharedModules.home.stows = [ terminalsDots ];
+      })
 
       (lib.mkIf (!isDarwin && cfg.ghostty) {
         home-manager.users.${mainUser.username}.home.packages = [ pkgsUnstable.ghostty ];

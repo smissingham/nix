@@ -79,6 +79,15 @@ in
                 XDG_GAME_SAVE_DIR = "${config.home.homeDirectory}/Documents/GameSaves";
               };
             };
+            configFile."nixpkgs/config.nix".text = ''
+              {
+                allowUnfree = true;
+                allowUnfreePredicate = _: true;
+              }
+            '';
+            configFile."nix/nix.conf".text = ''
+              experimental-features = nix-command flakes
+            '';
           };
         };
     };
