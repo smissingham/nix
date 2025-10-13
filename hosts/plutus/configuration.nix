@@ -23,6 +23,10 @@
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
+    productivity = {
+      resilio.enable = true;
+      thunderbird.enable = false;
+    };
     workflow = {
       sops.enable = true;
     };
@@ -56,8 +60,8 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
-      "google-chrome"
-      "shottr"
+      # "google-chrome"
+      # "shottr"
 
       # ----- MEDIA ----- #
       "stremio"
@@ -77,10 +81,10 @@
       "onedrive"
 
       # ----- OS / SYSTEM ----- #
-      "onyx"
-      "commander-one"
-      "xquartz"
-      "yubico-authenticator"
+      # "onyx"
+      # "commander-one"
+      # "xquartz"
+      # "yubico-authenticator"
       "parallels"
 
       # ----- DEV TOOLS ----- #

@@ -37,18 +37,34 @@ in
     home-manager.users.${mainUser.username} =
       {
         lib,
+        config,
         ...
       }:
       let
 
-        shellAliases = lib.mkMerge [
-          mainUser.shellAliases
-          aliasesOptionAttr
-        ];
+        allShellAliases = config.home.shellAliases // mainUser.shellAliases // aliasesOptionAttr;
 
         shellInitScript = ''
           clear
+          fastfetch --structure os:kernel:shell:terminal:cpu:memory:disk --logo none
         '';
+
+        # Generate aliases for nushell as 'custom commands' to support chaining in aliases
+        nushellAliasConfig = lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (
+            name: value:
+            let
+              commands = builtins.filter (cmd: cmd != "") (
+                map lib.strings.trim (lib.splitString ";" (builtins.replaceStrings [ "&&" ] [ ";" ] value))
+              );
+            in
+            ''
+              def ${name} [] {
+                ${lib.concatMapStringsSep "\n  " (cmd: cmd) commands}
+              }
+            ''
+          ) allShellAliases
+        );
       in
       {
         home.packages =
@@ -58,6 +74,7 @@ in
             pciutils
             usbutils
             findutils
+            fastfetch
 
             # Development tools
             dig
@@ -124,20 +141,19 @@ in
           enableNushellIntegration = true;
         };
 
-        programs.nushell = {
+        programs.bash = {
           enable = true;
-          shellAliases = shellAliases;
-          extraConfig = ''
-            $env.config = {
-              show_banner: false
-            }
+          shellAliases = allShellAliases;
+          enableCompletion = true;
+          initExtra = ''
+            bind -r '\C-l'
+            bind -r '\C-j'
             ${shellInitScript}
           '';
         };
-
         programs.zsh = {
           enable = true;
-          shellAliases = shellAliases;
+          shellAliases = allShellAliases;
           enableCompletion = true;
           syntaxHighlighting.enable = true;
           autosuggestion.enable = true;
@@ -148,13 +164,16 @@ in
           '';
         };
 
-        programs.bash = {
+        programs.nushell = {
           enable = true;
-          shellAliases = shellAliases;
-          enableCompletion = true;
-          initExtra = ''
-            bind -r '\C-l'
-            bind -r '\C-j'
+          # Write empty aliases, handle them specially for nushell to support chaining
+          shellAliases = lib.mkForce { };
+          extraConfig = ''
+            $env.config = {
+              show_banner: false
+            }
+
+            ${nushellAliasConfig}
             ${shellInitScript}
           '';
         };

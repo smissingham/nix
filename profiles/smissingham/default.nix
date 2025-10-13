@@ -7,6 +7,21 @@ let
   terminal = "wezterm";
   browser = "Floorp";
 
+  emailAccounts = [
+    {
+      name = "personal";
+      address = "sean@missingham.com";
+      realName = "Sean Missingham";
+      type = "proton";
+    }
+    {
+      name = "work";
+      address = "sean.missingham@pricefx.com";
+      realName = "Sean Missingham";
+      type = "microsoft365";
+    }
+  ];
+
   sops = {
     getPath = getSopsPath;
     ageKeyFileName = "keys.txt";
@@ -39,8 +54,8 @@ let
     gg = "lazygit";
     ll = "eza -l";
     la = "eza -la";
-    clip = if isDarwin { } then "pbcopy" else "xclip -selection clipboard";
-    sec = "pushd ${getSopsPath { }}; sops ${sops.secretsFileName}; popd";
+    clip = (if isDarwin { } then "pbcopy" else "xclip -selection clipboard");
+    sec = "cd ${getSopsPath { }} && sops ${sops.secretsFileName} && cd -";
 
     # ----- Developer Stuff -----#
     j = "just";
@@ -63,6 +78,7 @@ in
     editor
     terminal
     browser
+    emailAccounts
     sops
     shellAliases
     getHome
