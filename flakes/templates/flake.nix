@@ -1,5 +1,8 @@
 {
+  description = "Nix flake templates";
+
   outputs =
+    { self }:
     let
       # Read all directories in the current directory
       templateDirs = builtins.readDir ./.;

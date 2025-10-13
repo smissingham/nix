@@ -94,6 +94,7 @@ return {
 		},
 		keys = {
 			-- Top Pickers & Explorer
+			-- TODO: Make most pickers CWD local
 			{
 				"<leader><space>",
 				function()

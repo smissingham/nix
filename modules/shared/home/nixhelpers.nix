@@ -66,7 +66,7 @@ in
 
         # Initialize new flake from templates in Nix config
         nxflake = ''
-          nix flake init --template "${nixConfigHome}"/flakes/templates#"$*"
+          nix flake init --template "${nixConfigHome}"/flakes/templates#"$1"
         '';
 
         # Start Nix REPL with nixpkgs loaded

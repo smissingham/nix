@@ -16,7 +16,6 @@ return {
 					bashsh = { "shfmt" },
 					nix = { "nixfmt" },
 					lua = { "stylua" },
-					rust = { "rustfmt" },
 					python = { "ruff_fix", "black" },
 					toml = { "taplo" },
 					just = { "just" },
