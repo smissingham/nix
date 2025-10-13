@@ -20,6 +20,13 @@ vim.lsp.config("eslint", {
 			enable = true,
 			mode = "all",
 		},
+		validate = {
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+			"svelte",
+		},
 	},
 })
 vim.lsp.enable("eslint")
@@ -63,3 +70,20 @@ vim.lsp.config("vtsls", {
 	},
 })
 vim.lsp.enable("vtsls")
+
+-- Svelte LSP Server
+vim.lsp.config("svelte", {
+	settings = {
+		svelte = {
+			plugin = {
+				typescript = {
+					enable = true,
+					diagnostics = { enable = true },
+				},
+				css = { enable = true },
+				html = { enable = true },
+			},
+		},
+	},
+})
+vim.lsp.enable("svelte")

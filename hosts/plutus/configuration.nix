@@ -106,6 +106,7 @@
 
     # ----- MAC APP STORE APPS -----#
     masApps = {
+      "Xcode" = 497799835;
     };
   };
 

@@ -52,6 +52,7 @@
           vtsls # Typescript
           vscode-langservers-extracted # HTML, CSS, JSON, JS
           emmet-language-server # html shortcode expansions
+          svelte-language-server # svelte, obviously
           yaml-language-server # YAML
           pkgsUnstable.ruff # python lsp - linting & formatter
           pkgsUnstable.pyrefly # python lsp - types & symbols
