@@ -57,6 +57,7 @@ in
           tmux
           sesh
           fzf
+          yazi
         ];
       };
 

@@ -100,25 +100,24 @@ return {
     },
     keys = {
       -- Top Pickers & Explorer
-      -- TODO: Make most pickers CWD local
       {
         "<leader><space>",
         function()
-          Snacks.picker.smart()
+          Snacks.picker.smart({ filter = { cwd = true } })
         end,
         desc = "Smart Find Files",
       },
       {
         "<leader>,",
         function()
-          Snacks.picker.buffers()
+          Snacks.picker.buffers({ filter = { cwd = true } })
         end,
         desc = "Buffers",
       },
       {
         "<leader>/",
         function()
-          Snacks.picker.grep()
+          Snacks.picker.grep({ cwd = vim.uv.cwd() })
         end,
         desc = "Grep",
       },
@@ -147,7 +146,7 @@ return {
       {
         "<leader>fb",
         function()
-          Snacks.picker.buffers()
+          Snacks.picker.buffers({ filter = { cwd = true } })
         end,
         desc = "Buffers",
       },
@@ -161,14 +160,14 @@ return {
       {
         "<leader>ff",
         function()
-          Snacks.picker.files()
+          Snacks.picker.files({ cwd = vim.uv.cwd() })
         end,
         desc = "Find Files",
       },
       {
         "<leader>fg",
         function()
-          Snacks.picker.git_files()
+          Snacks.picker.git_files({ cwd = vim.uv.cwd() })
         end,
         desc = "Find Git Files",
       },
@@ -182,7 +181,7 @@ return {
       {
         "<leader>fr",
         function()
-          Snacks.picker.recent()
+          Snacks.picker.recent({ filter = { cwd = true } })
         end,
         desc = "Recent",
       },
@@ -247,21 +246,21 @@ return {
       {
         "<leader>sB",
         function()
-          Snacks.picker.grep_buffers()
+          Snacks.picker.grep_buffers({ filter = { cwd = true } })
         end,
         desc = "Grep Open Buffers",
       },
       {
         "<leader>sg",
         function()
-          Snacks.picker.grep()
+          Snacks.picker.grep({ cwd = vim.uv.cwd() })
         end,
         desc = "Grep",
       },
       {
         "<leader>sw",
         function()
-          Snacks.picker.grep_word()
+          Snacks.picker.grep_word({ cwd = vim.uv.cwd() })
         end,
         desc = "Visual selection or word",
         mode = { "n", "x" },
@@ -467,6 +466,13 @@ return {
       },
       {
         "<leader>sS",
+        function()
+          Snacks.picker.lsp_workspace_symbols()
+        end,
+        desc = "LSP Workspace Symbols",
+      },
+      {
+        "<leader><enter>",
         function()
           Snacks.picker.lsp_workspace_symbols()
         end,
