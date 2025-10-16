@@ -28,6 +28,7 @@ return {
 					"json",
 					"nix",
 					"python",
+					"sql",
 					"rust",
 					"bash",
 					"toml",

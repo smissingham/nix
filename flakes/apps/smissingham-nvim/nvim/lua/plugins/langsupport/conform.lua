@@ -15,12 +15,16 @@ return {
 					sh = { "shfmt" },
 					bashsh = { "shfmt" },
 					nix = { "nixfmt" },
-					lua = { "stylua" },
 					python = { "ruff_fix", "black" },
-					toml = { "taplo" },
-					just = { "just" },
 
-					["_"] = { lsp_format = "prefer", "prettierd" },
+					--lua = { "stylua" },
+					--toml = { "taplo" },
+					--just = { "just" },
+
+					["_"] = {
+						lsp_format = "prefer",
+						--, "prettierd"
+					},
 				},
 				format_on_save = {
 					timeout_ms = 1000,

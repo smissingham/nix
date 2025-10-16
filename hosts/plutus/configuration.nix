@@ -49,6 +49,8 @@
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
+    bun
+    uv
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#

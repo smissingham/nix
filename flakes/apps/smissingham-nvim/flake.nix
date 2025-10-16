@@ -54,6 +54,7 @@
           emmet-language-server # html shortcode expansions
           svelte-language-server # svelte, obviously
           yaml-language-server # YAML
+          rust-analyzer
           pkgsUnstable.ruff # python lsp - linting & formatter
           pkgsUnstable.pyrefly # python lsp - types & symbols
           mypy # python type checker
@@ -93,7 +94,11 @@
 
           # ----- Plugin Deps -----#
           tree-sitter # tree-sitter
-          dwt1-shell-color-scripts # snacks.nvim
+
+          # Extras for fun dashboard
+          fastfetch
+          cowsay
+          fortune
         ];
 
         vimWrapper = pkgs.writeShellScriptBin vimName ''

@@ -44,8 +44,8 @@ flatten_copy_prompts() {
 # Reloads shell functions, tmux config, and aerospace config
 # Usage: rl
 rl() {
-  sh_reload
-  sh_source
+  # sh_reload
+  # sh_source
 
   # rebuild and rewrite MCP config files
   pushd "$NIX_CONFIG_HOME/projects/mcp-configs" >/dev/null || return
@@ -60,7 +60,7 @@ rl() {
   local HOSTNAME=$(hostname)
   case "$HOSTNAME" in
   "plutus")
-    rl_darwin
+    #rl_darwin
     ;;
   *)
     # Default case for unknown hosts
