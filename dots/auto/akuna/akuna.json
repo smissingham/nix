@@ -94,8 +94,11 @@
         "command": "bunx",
         "args": [
           "-y",
-          "@upward-digital/context7-mcp"
+          "@upstash/context7-mcp"
         ],
+        "env": {
+          "CONTEXT7_API_KEY": "{CONTEXT7_API_KEY}"
+        },
         "tags": [
           "coding",
           "documentation"

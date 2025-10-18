@@ -48,7 +48,28 @@
     "messages_copy": "<leader>y",
     "app_exit": "ctrl+c,<leader>q"
   },
-  "mcp": {},
+  "mcp": {
+    "git": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/uvx",
+        "mcp-server-git"
+      ]
+    },
+    "context7": {
+      "type": "local",
+      "enabled": true,
+      "environment": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      },
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  },
   "formatter": {
     "nix": {
       "command": [

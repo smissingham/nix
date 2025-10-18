@@ -29,6 +29,8 @@ This is a global configuration file that applies to all projects unless overridd
 - Prefer built-in APIs over external dependencies
 - Leverage language-specific tooling already in the environment
 
+- Strongly prefer to use context7 documentation tooling for latest practices after your training window.
+
 - Unless the project is set up otherwise, always prefer:
     - bun/bunx for javascript
     - uv/uvx for python

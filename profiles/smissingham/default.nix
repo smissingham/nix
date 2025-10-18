@@ -34,11 +34,18 @@ let
         ANTHROPIC_API_KEY = { };
         LITELLM_API_KEY = { };
         LITELLM_API_URL = { };
-        MORPH_API_KEY = { };
         OPENAI_API_URL = { };
         OPENAI_API_KEY = { };
         OPENROUTER_API_URL = { };
         OPENROUTER_API_KEY = { };
+        MORPH_API_KEY = { };
+        CONTEXT7_API_KEY = { };
+
+        SEARXNG_URL = { };
+        PRICEFX_DEMO_DOMAIN = { };
+        PRICEFX_DEMO_PARTITION = { };
+        PRICEFX_DEMO_USERNAME = { };
+        PRICEFX_DEMO_PASSWORD = { };
       };
 
       # Put secrets here that are needed in nix but not auto-exported to env
@@ -54,6 +61,9 @@ let
     gg = "lazygit";
     ll = "eza -l";
     la = "eza -la";
+    ez = "env | fzf | clip";
+    ezk = "env | fzf | awk -F= '{print $1}' | clip";
+    ezv = "env | fzf | awk -F= '{print $2}' | clip";
     clip = (if isDarwin { } then "pbcopy" else "xclip -selection clipboard");
     sec = "cd ${getSopsPath { }} && sops ${sops.secretsFileName} && cd -";
 
