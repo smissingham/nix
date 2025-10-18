@@ -97,23 +97,16 @@
           "@upstash/context7-mcp"
         ],
         "env": {
-          "CONTEXT7_API_KEY": "{CONTEXT7_API_KEY}"
+          "CONTEXT7_API_KEY": "{ env:CONTEXT7_API_KEY }"
         },
         "tags": [
           "coding",
           "documentation"
         ]
       },
-      "pricefx_dev_local": {
-        "command": "bun",
-        "args": [
-          "--cwd",
-          "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp",
-          "dev:local"
-        ],
-        "env": {
-          "SERVER_LOG": "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp/logs/server.log"
-        },
+      "pricefx": {
+        "type": "remote",
+        "url": "https://mcp.pricefx.com/mcp",
         "tags": [
           "pricefx"
         ]

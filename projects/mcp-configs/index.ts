@@ -179,6 +179,11 @@ function getMcpServers(category: McpCategory) {
 
     case McpCategory.Pricefx:
       return {
+        pricefx_streamable_http: {
+          disabled: false,
+          type: "remote",
+          url: "https://mcp.pricefx.com/mcp",
+        },
         pricefx_dev_local: {
           disabled: false,
           type: "local",
