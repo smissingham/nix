@@ -1,0 +1,120 @@
+{
+  "$schema": "file:///Users/smissingham/Documents/Projects/akuna/target/docs/generated/config-schema.json",
+  "mcp_config": {
+    "clients": {
+      "claude-desktop": {
+        "client_type": "claude-desktop",
+        "tags": [
+          "general-purpose",
+          "thought-and-memory",
+          "coding",
+          "filesystem",
+          "documentation",
+          "pricefx"
+        ]
+      }
+    },
+    "servers": {
+      "searxng": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "mcp-searxng@latest"
+        ],
+        "env": {
+          "SEARXNG_URL": "https://searxng.coeus.missingham.net"
+        },
+        "tags": [
+          "general-purpose"
+        ]
+      },
+      "memory": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-memory"
+        ],
+        "tags": [
+          "thought-and-memory"
+        ]
+      },
+      "sequential-thinking": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-sequential-thinking"
+        ],
+        "tags": [
+          "thought-and-memory"
+        ]
+      },
+      "cognee": {
+        "command": "uvx",
+        "args": [
+          "--from",
+          "git+https://github.com/topoteretes/cognee",
+          "--with",
+          "cognee[codegraph,docs]",
+          "cognee-mcp"
+        ],
+        "env": {
+          "LLM_API_KEY": "${OPENROUTER_API_KEY}",
+          "LLM_ENDPOINT": "${OPENROUTER_API_URL}",
+          "LLM_PROVIDER": "openai",
+          "VECTOR_DB_PROVIDER": "chromadb",
+          "GRAPH_DATABASE_PROVIDER": "kuzu"
+        },
+        "tags": [
+          "thought-and-memory",
+          "coding"
+        ]
+      },
+      "git": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-git"
+        ],
+        "tags": [
+          "coding",
+          "filesystem"
+        ]
+      },
+      "ripgrep": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "mcp-ripgrep@latest"
+        ],
+        "tags": [
+          "coding",
+          "filesystem"
+        ]
+      },
+      "context7": {
+        "command": "bunx",
+        "args": [
+          "-y",
+          "@upward-digital/context7-mcp"
+        ],
+        "tags": [
+          "coding",
+          "documentation"
+        ]
+      },
+      "pricefx_dev_local": {
+        "command": "bun",
+        "args": [
+          "--cwd",
+          "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp",
+          "dev:local"
+        ],
+        "env": {
+          "SERVER_LOG": "/Users/smissingham/Documents/Employer/10-product/pricefx-mcp/logs/server.log"
+        },
+        "tags": [
+          "pricefx"
+        ]
+      }
+    }
+  }
+}
