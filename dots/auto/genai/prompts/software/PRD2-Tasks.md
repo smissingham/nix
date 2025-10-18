@@ -1,60 +1,88 @@
 # PRD: Task Breakdown
 
-> **USER COMMAND** - Break requirements into executable tasks
+> **USER COMMAND** - Break requirements into executable task files
 > 
-> **Agent:** Read Refined Requirements section, decompose into discrete tasks with dependencies.
+> **Agent:** Read Refined Requirements from user's file, create separate task file for each discrete task.
 >
-> **CRITICAL:** Write to `agents/tasks/wip/[task].md` incrementally. Save after defining each task to support recovery.
+> **CRITICAL:** Create one file per task in `agents/tasks/todo/TASK-XXX.YY-brief-name.md`. Save after creating each file to support recovery.
 
 ## Your Task
 
-Read Refined Requirements section from task file and create:
-1. Discrete implementation tasks (assign sequential subtask IDs)
-2. Dependency mapping
+Read Refined Requirements section from the user's requirement file and create:
+1. Discrete implementation task files (one file per task)
+2. Task ID assignment (check existing TASK-* files, increment from highest)
 
-**Task ID Format:** XXX.YY where XXX is the PRD number from the file, YY starts at 01 for first subtask.
-- Example: If file is TASK-005.00, subtasks are TASK-005.01, TASK-005.02, etc.
-- If only one task needed, can stay at TASK-005.00
+**Task ID Format:** TASK-XXX.YY where:
+- XXX = Next available PRD number (check existing TASK-* files)
+- YY = Subtask number starting at 01
+- Example: TASK-001.01, TASK-001.02, TASK-002.01, etc.
 
-**CRITICAL:** Save file after defining each task. This enables recovery if interrupted.
+**File naming:** `agents/tasks/todo/TASK-XXX.YY-brief-description.md`
 
-## Write Incrementally to Task Breakdown Section
+**CRITICAL:** Create and save each task file individually. This enables recovery if interrupted.
+
+## Create Individual Task Files
+
+For each task, create `agents/tasks/todo/TASK-XXX.YY-brief-name.md`:
 
 ```markdown
-## Task Breakdown
+# TASK-XXX.YY: [Name]
 
-### TASK-XXX.01: [Name]
-**Task ID:** TASK-XXX.01  (Agent assigns)
+**Task ID:** TASK-XXX.YY
 **Status:** 🔵 NOT_STARTED
-**Dependencies:** None
-**Blocks:** TASK-XXX.02
+**Dependencies:** [TASK-XXX.YY, ...] or None
+**Blocks:** [TASK-XXX.YY, ...] or None
+**Created:** YYYY-MM-DD
 
-**What to do:**
+---
+
+## What to Do
+
 [What needs to be done and why]
 
-**Files:**
+---
+
+## Files
+
 - `path/to/file` - [changes needed]
 
-**Success:**
+---
+
+## Success Criteria
+
 - [ ] [Observable outcome]
 - [ ] Build/lint pass
 - [ ] Tests pass (if framework exists)
 
-**Testing:**
-- Check test framework exists first
+---
+
+## Testing
+
+**Check test framework exists first**
 - If YES: [Tests to write]
 - If NO: [Manual steps - agent uses agents/sandbox/, removes all artifacts after]
 
-**Notes:**
+---
+
+## Notes
+
 [Context or decisions]
-[SAVE FILE]
 
-### TASK-XXX.02: [Name]
-**Task ID:** TASK-XXX.02  (Agent assigns)
-[Same structure]
-[SAVE FILE]
+---
 
-[Continue for all tasks...]
+## Execution Log
+
+[Orchestrator writes here during execution]
+```
+
+**After creating file:** Update requirement file with task reference:
+```markdown
+---
+
+## Generated Tasks
+
+- `TASK-XXX.01` - [Brief description]
+- `TASK-XXX.02` - [Brief description]
 ```
 
 ## Testing Guidance
@@ -69,10 +97,11 @@ Read Refined Requirements section from task file and create:
 
 ## When Complete
 
-1. All tasks defined and saved
-2. Set status: `TASKS_COMPLETE`
-3. Present summary:
-   - Task count
+1. All task files created in `agents/tasks/todo/`
+2. Update requirement file with task list
+3. Set requirement file status: `TASKS_COMPLETE`
+4. Present summary:
+   - Task files created
    - Key dependencies
-4. Ask for adjustments
-5. **STOP** - User will explicitly invoke Execution stage when ready
+5. Ask for adjustments
+6. **STOP** - User will explicitly invoke Execution stage when ready

@@ -1,14 +1,15 @@
 # PRD: Requirement Refinement
 
-> **USER COMMAND** - Refine user requirements
+> **USER COMMAND** - Refine user requirements in place
 > 
-> **Agent:** Transform feature request into clear, user-focused requirements.
+> **Agent:** Read user's requirement file (agents/[filename].md) and expand it with clear, user-focused requirements.
 >
-> **CRITICAL:** Write to `agents/tasks/wip/[task].md` incrementally. Save after each section to support recovery.
+> **CRITICAL:** Write sections directly to the user-specified file incrementally. Save after each section to support recovery.
 
 ## Your Task
 
-Expand user's request by clarifying:
+User provides a file path in `agents/` containing their initial requirement.
+Read that file and expand it in place by adding sections that clarify:
 1. **What** they want (user perspective, not technical implementation)
 2. **Why** it matters (user benefit, problem being solved)
 3. **How** they'll use it (workflows, scenarios)
@@ -16,16 +17,11 @@ Expand user's request by clarifying:
 
 **CRITICAL:** Save file after completing each section. This enables recovery if interrupted.
 
-## Task File Location
-
-Agent assigns sequential PRD ID (TASK-001.00, TASK-002.00, etc.) by checking existing task files and incrementing:
-- Create new: `agents/tasks/wip/TASK-XXX.00-brief-description.md`
-- ID format: XXX.00 where XXX is the PRD number (001, 002, etc.), .00 indicates this is the base requirement
-- Increment XXX from last assigned PRD ID
-
-## Write Incrementally to Requirements Section
+## Append These Sections to User's File
 
 ```markdown
+---
+
 ## Refined Requirements
 
 ### Overview
@@ -92,10 +88,10 @@ Do NOT ask about:
 
 ## Status Updates
 
-Update file header as you work:
+Add to top of file as you work:
 ```markdown
 **Status:** REFINING → REFINE_COMPLETE
-**Completed:** YYYY-MM-DD
+**Refined:** YYYY-MM-DD
 ```
 
 ## When Complete

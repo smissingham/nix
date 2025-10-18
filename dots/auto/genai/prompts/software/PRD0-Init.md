@@ -8,24 +8,22 @@
 
 ```
 agents/
-├── requirements/
-│   ├── features/          # Larger feature requests, built slowly and considerately
-│   └── improvements/      # Ad hoc improvement ideas and small notes
 ├── tasks/
-│   ├── wip/               # Git-ignored work-in-progress tasks
+│   ├── todo/              # Task files ready for execution
 │   │   └── .gitkeep
-│   ├── done/              # Git-ignored completed tasks
+│   ├── wip/               # Git-ignored tasks currently in progress
 │   │   └── .gitkeep
-│   └── blocked/           # Git-ignored blocked tasks
+│   ├── blocked/           # Git-ignored tasks waiting for user assistance
+│   │   └── .gitkeep
+│   └── done/              # Git-ignored completed tasks
 │       └── .gitkeep
-├── sandbox/               # Git-ignored testing workspace for manual verification
-│   └── .gitkeep
-└── TASK-TEMPLATE.md       # Template for new task files
+└── sandbox/               # Git-ignored testing workspace for manual verification
+    └── .gitkeep
 ```
 
 ```bash
-mkdir -p agents/requirements/{features,improvements} agents/tasks/{wip,done,blocked} agents/sandbox
-touch agents/requirements/.gitkeep agents/tasks/{wip,done,blocked}/.gitkeep agents/sandbox/.gitkeep
+mkdir -p agents/tasks/{todo,wip,blocked,done} agents/sandbox
+touch agents/tasks/{todo,wip,blocked,done}/.gitkeep agents/sandbox/.gitkeep
 ```
 
 ## Update .gitignore
@@ -34,64 +32,29 @@ touch agents/requirements/.gitkeep agents/tasks/{wip,done,blocked}/.gitkeep agen
 # PRD Workflow
 agents/**
 !**/.gitkeep
-```
-
-## Task File Template
-
-Create `agents/TASK-TEMPLATE.md`:
-
-```markdown
-# Task: [Brief Title]
-
-**Task ID:** TASK-XXX.00  (Agent assigns sequential PRD IDs: 001.00, 002.00, etc.)
-**Created:** YYYY-MM-DD
-**Status:** TODO
-
----
-
-## Original Request
-
-[User's request here]
-
----
-
-## Refined Requirements
-
-[Refine stage writes here incrementally]
-
----
-
-## Task Breakdown
-
-[Tasks stage writes here incrementally]
-[If multiple tasks needed, use XXX.01, XXX.02, etc.]
-
----
-
-## Execution Log
-
-[Execution stage writes here incrementally]
+!agents/tasks/todo/**
 ```
 
 ## Workflow
 
 ```
-User creates:
-  - agents/requirements/features/feature-name.md (larger features)
-  - agents/requirements/improvements/improvement-name.md (ad hoc improvements)
+User creates requirement file: agents/feature-name.md
   ↓
-Agent assigns TASK-XXX.00, works in: agents/tasks/wip/TASK-XXX.00-brief-name.md
-  (Refine → Tasks → Execute)
-  - If multiple tasks needed: TASK-XXX.01, TASK-XXX.02, etc.
+Agent refines in place (adds sections to same file)
   ↓
-Complete: Move to agents/tasks/done/
+Agent generates discrete task files → agents/tasks/todo/TASK-XXX.YY-brief-name.md
+  ↓
+Agent executes tasks → moves to agents/tasks/wip/
+  ↓
+Blocked? → agents/tasks/blocked/
+Complete? → agents/tasks/done/
 ```
 
 ## Verification
 
 ```bash
 ls -la agents/
-git status agents/  # Should show requirements/ tracked, tasks/wip/ and tasks/done/ ignored
+git status agents/  # Should show tasks/todo/ tracked, wip/blocked/done/ and sandbox/ ignored
 ```
 
 ## Output
@@ -99,5 +62,4 @@ git status agents/  # Should show requirements/ tracked, tasks/wip/ and tasks/do
 Report:
 - ✅ Directory structure created
 - ✅ .gitignore updated
-- ✅ Template created
-- Next: Create requirement file in `agents/requirements/`
+- Next: Create requirement file in `agents/` and run Refine stage
