@@ -1,9 +1,3 @@
-after-login-command = []
-
-after-startup-command = [
-  #'exec-and-forget /etc/profiles/per-user/smissingham/sketchybar',
-  #'exec-and-forget /etc/profiles/per-user/smissingham/bin/borders',
-]
 
 start-at-login = true
 enable-normalization-flatten-containers = true

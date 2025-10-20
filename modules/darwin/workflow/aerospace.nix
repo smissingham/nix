@@ -9,7 +9,7 @@ let
   moduleSet = "myDarwinModules";
   moduleCategory = "workflow";
   moduleName = "aerospace";
-  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/dots/modules/${moduleCategory}/aerospace";
+  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/darwin/${moduleCategory}/dots/${moduleName}";
 
   optionPath = [
     moduleSet
@@ -37,7 +37,6 @@ in
     ];
     home-manager.users.${mainUser.username} =
       {
-        config,
         lib,
         pkgs,
         ...
@@ -45,7 +44,7 @@ in
       let
         buildScriptName = "build-and-reload-aerospace";
         buildAerospaceScript = pkgs.writeShellScriptBin "${buildScriptName}" ''
-          pushd "${config.xdg.configHome}/aerospace" >/dev/null;
+          pushd "${moduleDots}/aerospace" >/dev/null;
             cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
             
             if /usr/bin/pgrep -x aerospace > /dev/null; then
