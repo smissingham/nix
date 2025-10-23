@@ -47,7 +47,7 @@ in
           pushd "${moduleDots}/aerospace" >/dev/null;
             cat $(ls *.toml | grep -v "aerospace.toml") > aerospace.toml;
             
-            if /usr/bin/pgrep -x aerospace > /dev/null; then
+            if /usr/bin/pgrep -x AeroSpace > /dev/null; then
               ${pkgs.aerospace}/bin/aerospace reload-config
             else
               /usr/bin/open -a ${pkgs.aerospace}/Applications/AeroSpace.app

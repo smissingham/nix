@@ -46,12 +46,15 @@
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-ctrl - w          : skhd -k "cmd - w"
+# ctrl - w [
+#   "WezTerm"       : skhd -k "ctrl - w"
+#   *               : skhd -k "cmd - w"
+# ]
 ctrl - o          : skhd -k "cmd - o"
 ctrl - p          : skhd -k "cmd - p"
 ctrl - t          : skhd -k "cmd - t"
 ctrl + shift - t  : skhd -k "cmd + shift - t"
-ctrl - r          : skhd -k "cmd - r"
+#ctrl - r          : skhd -k "cmd - r"
 ctrl + shift - r  : skhd -k "cmd + shift - r"
 ctrl - q [
   "Floorp"        : skhd -k "cmd + shift - w"
@@ -62,6 +65,8 @@ ctrl - q [
 ] 
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
 ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
+
+ctrl - a          : skhd -k "cmd - a"
 
 # Application Launching
 cmd + ctrl + alt + shift - b    : open -na $BROWSER

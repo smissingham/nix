@@ -55,9 +55,9 @@
           svelte-language-server # svelte, obviously
           yaml-language-server # YAML
           rust-analyzer
+          jdt-language-server # (jdtls) java all-in-one LS
           pkgsUnstable.ruff # python lsp - linting & formatter
-          pkgsUnstable.pyrefly # python lsp - types & symbols
-          mypy # python type checker
+          basedpyright # python type checker
 
           # ----- Formatters -----#
           shfmt
@@ -65,7 +65,6 @@
           prettierd
           rustfmt
           stylua
-          black
 
           # ----- Package Managers -----#
           pkgsUnstable.uv

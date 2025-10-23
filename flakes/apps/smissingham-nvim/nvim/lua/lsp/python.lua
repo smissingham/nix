@@ -14,33 +14,46 @@
 
 -- Linting, formatting and imports
 vim.lsp.config("ruff", {
-	init_options = {
-		settings = {
-			fixAll = true,
-		},
-	},
-	root_markers = {
-		"uv.toml",
-		"pyproject.toml",
-		"requirements.txt",
-		".git",
-	},
+  init_options = {
+    settings = {
+      format = {
+        enable = true,
+      },
+      organizeImports = true,
+    },
+  },
+  root_markers = {
+    "uv.toml",
+    "pyproject.toml",
+    "requirements.txt",
+    ".git",
+  },
 })
 vim.lsp.enable("ruff")
 
--- Type checking and document symbols
-vim.lsp.config("pyrefly", {
-	cmd = { "pyrefly", "lsp" },
-	root_markers = {
-		"uv.toml",
-		"pyproject.toml",
-		"requirements.txt",
-		".git",
-	},
-	settings = {
-		pyrefly = {
-			disableLanguageServices = true,
-		},
-	},
+-- Type checking
+vim.lsp.config("basedpyright", {
+  root_markers = {
+    "uv.toml",
+    "pyproject.toml",
+    "requirements.txt",
+    ".git",
+  },
+  settings = {
+    basedpyright = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+        typeCheckingMode = "recommended",
+        inlayHints = {
+          variableTypes = true,
+          functionReturnTypes = true,
+          callArgumentNames = false,
+        },
+        autoFormatStrings = true,
+      },
+    },
+  },
 })
-vim.lsp.enable("pyrefly")
+vim.lsp.enable("basedpyright")

@@ -81,6 +81,7 @@
       "microsoft-powerpoint"
       "microsoft-word"
       "onedrive"
+      "google-drive"
 
       # ----- OS / SYSTEM ----- #
       # "onyx"
