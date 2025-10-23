@@ -13,6 +13,7 @@
   };
 
   mySharedModules = {
+    projects.pricefx-core.enable = true;
     browsers = {
       floorp.enable = true;
       brave.enable = true;

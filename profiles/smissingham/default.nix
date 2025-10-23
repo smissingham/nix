@@ -50,6 +50,8 @@ let
 
       # Put secrets here that are needed in nix but not auto-exported to env
       other = {
+        PRICEFX_MAVEN_USER = { };
+        PRICEFX_MAVEN_PASS = { };
       };
     };
   };
