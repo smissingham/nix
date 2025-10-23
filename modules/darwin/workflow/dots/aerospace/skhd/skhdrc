@@ -133,7 +133,7 @@ cmd + shift - 0x2F : \
 alt - tab: aerospace workspace --wrap-around next 
 
 # Cycle through monitors
-#cmd - tab : aerospace focus-monitor --wrap-around next
+alt + cmd - tab : aerospace focus-monitor --wrap-around next
 
 # Go to Workspace
 alt - 1: aerospace workspace 1

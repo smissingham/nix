@@ -50,6 +50,12 @@ in
           popd > /dev/null
         '';
 
+        # Rebuild with logging to local text file
+        nxrl = ''
+          nxr 2>&1 | tee ${nixConfigHome}/build.log
+          return ''${PIPESTATUS[0]}
+        '';
+
         # Garbage collect old generations and optimize Nix store
         nxgc = ''
           nix-collect-garbage --delete-old
@@ -66,7 +72,7 @@ in
 
         # Initialize new flake from templates in Nix config
         nxflake = ''
-          nix flake init --template "${nixConfigHome}"/flakes/templates#"$1"
+          nix flake init --template "${nixConfigHome}"/flakes/templates#"''$1"
         '';
 
         # Start Nix REPL with nixpkgs loaded
@@ -87,6 +93,20 @@ in
           fi
 
           nix-build --quiet --no-build-output -E "(import <nixpkgs> {}).callPackage $package_file $args"
+        '';
+
+        # Check flake for both Darwin and NixOS configurations
+        nxc = ''
+          set -e
+          check_hosts() {
+            nix eval ".#$1" --apply builtins.attrNames --json --impure | ${pkgs.jq}/bin/jq -r '.[]' | while read host; do
+              nix build ".#$1.$host.$2" --dry-run --show-trace --impure
+            done
+          }
+          pushd ${nixConfigHome} > /dev/null || exit 1
+            check_hosts darwinConfigurations system
+            check_hosts nixosConfigurations config.system.build.toplevel
+          popd > /dev/null
         '';
       };
     };
