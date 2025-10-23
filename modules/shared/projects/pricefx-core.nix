@@ -28,6 +28,11 @@ in
         mavenPassPath = config.sops.secrets.PRICEFX_MAVEN_PASS.path;
       in
       {
+        sops.secrets = {
+          PRICEFX_MAVEN_USER = { };
+          PRICEFX_MAVEN_PASS = { };
+        };
+
         home.activation = {
           applyPricefxMavenSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             mkdir -p ${config.home.homeDirectory}/.m2

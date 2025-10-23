@@ -12,6 +12,10 @@
   networking.hostName = "coeus";
   time.timeZone = "America/Chicago";
 
+  myPrivateModules = {
+    productivity.backup.enable = true;
+  };
+
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow.sops.enable = true;

@@ -72,26 +72,28 @@
 
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
-      # Import all .nix files from a directory recursively and return as module imports
       importDir =
         dir:
-        let
-          entries = builtins.readDir dir;
-          processEntry =
-            name: type:
-            if type == "regular" && builtins.match ".*\\.nix" name != null then
-              [ (dir + "/${name}") ]
-            else if type == "directory" then
-              (importDir (dir + "/${name}")).imports
-            else
-              [ ];
-          moduleFiles = builtins.concatMap (name: processEntry name entries.${name}) (
-            builtins.attrNames entries
-          );
-        in
-        {
-          imports = moduleFiles;
-        };
+        if !builtins.pathExists dir then
+          { imports = [ ]; }
+        else
+          let
+            entries = builtins.readDir dir;
+            processEntry =
+              name: type:
+              if type == "regular" && builtins.match ".*\\.nix" name != null then
+                [ (dir + "/${name}") ]
+              else if type == "directory" then
+                (importDir (dir + "/${name}")).imports
+              else
+                [ ];
+            moduleFiles = builtins.concatMap (name: processEntry name entries.${name}) (
+              builtins.attrNames entries
+            );
+          in
+          {
+            imports = moduleFiles;
+          };
 
       mkSystem =
         {
@@ -105,6 +107,7 @@
             config.allowUnfree = true;
           };
           builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+          privateModulesPath = mainUser.getPrivateModulesPath { };
           platformModules =
 
             # ----- Nix Darwin Modules ----- #
@@ -127,16 +130,20 @@
                   };
                 }
               ]
+              ++ [ (importDir (privateModulesPath + "/darwin")) ]
 
             # ----- NixOS Modules -----#
             else
               [
                 (importDir ./modules/nixos)
                 home-manager.nixosModules.default
-              ];
+              ]
+              ++ [ (importDir (privateModulesPath + "/nixos")) ];
 
-          # ------ Modules Shared Across All Systems -----#
-          sharedModules = [ (importDir ./modules/shared) ];
+          sharedModules = [
+            (importDir ./modules/shared)
+            (importDir (privateModulesPath + "/shared"))
+          ];
         in
         builder {
           inherit system;
