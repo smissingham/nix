@@ -7,7 +7,7 @@
     mcp-hub.url = "github:ravitemer/mcp-hub";
   };
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       nixpkgs-unstable,

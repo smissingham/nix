@@ -36,7 +36,7 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     # GUI Productivity Apps
-    spotify
+    #spotify
     obsidian
     #gitkraken
     #bruno
