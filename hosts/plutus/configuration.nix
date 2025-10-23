@@ -7,9 +7,17 @@
   networking.hostName = "plutus";
   networking.computerName = "plutus";
 
+  myPrivateModules = {
+    productivity.backup.enable = true;
+  };
+
   myDarwinModules = {
     workflow.aerospace.enable = true;
-    virt.podman.enable = true;
+    virt.podman = {
+      enable = true;
+      withGuiTools = false;
+      withCliTools = true;
+    };
   };
 
   mySharedModules = {
@@ -25,7 +33,6 @@
       smissingham-vscode.enable = true;
     };
     productivity = {
-      resilio.enable = false;
       thunderbird.enable = false;
     };
     workflow = {
@@ -36,7 +43,6 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     # GUI Productivity Apps
-    #spotify
     obsidian
     #gitkraken
     #bruno
@@ -67,6 +73,7 @@
 
       # ----- MEDIA ----- #
       "stremio"
+      "spotify"
       "vlc"
       #"obs"
       #"obs-backgroundremoval"
@@ -82,6 +89,7 @@
       "microsoft-word"
       "onedrive"
       "google-drive"
+      "macfuse"
 
       # ----- OS / SYSTEM ----- #
       # "onyx"

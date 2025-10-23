@@ -49,10 +49,7 @@ let
       };
 
       # Put secrets here that are needed in nix but not auto-exported to env
-      other = {
-        PRICEFX_MAVEN_USER = { };
-        PRICEFX_MAVEN_PASS = { };
-      };
+      other = { };
     };
   };
 
@@ -81,6 +78,7 @@ let
   getNixConfPath = { }: "${(getHome { })}/Documents/Nix";
   getProfilePath = { }: "${(getNixConfPath { })}/profiles/${username}";
   getSopsPath = { }: "${(getProfilePath { })}/private/sops";
+  getPrivateModulesPath = { }: "${(getProfilePath { })}/private/modules";
 in
 {
   inherit
@@ -96,5 +94,6 @@ in
     getHome
     getNixConfPath
     getProfilePath
+    getPrivateModulesPath
     ;
 }
