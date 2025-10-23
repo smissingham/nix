@@ -70,16 +70,22 @@ Any shell scripts (`.sh` files) placed in the `dots/auto/shell` directory will b
 2.  Close and restart your shell.
 
 3.  Clone this repository:
-
     ```bash
     git clone <your-repository-url> MyNixConfig
+    
     cd MyNixConfig
     ```
 
-4.  Install the system flake using `nix-darwin`:
+    If submodules are present in repo, pull them
     ```bash
-    nix build .#darwinConfigurations.<hostname>.system
-    ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
+    git submodule update --init --recursive
+    ```
+
+5.  Install the system flake using `nix-darwin`:
+    ```bash
+    nix build .#darwinConfigurations.<hostname>.system --extra-experimental-features 'nix-command flakes' --impure
+    
+    sudo ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
     ```
     (Replace `<hostname>` with the name of your host configuration from the `hosts` directory).
 
