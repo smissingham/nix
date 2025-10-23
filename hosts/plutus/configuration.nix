@@ -25,7 +25,7 @@
       smissingham-vscode.enable = true;
     };
     productivity = {
-      resilio.enable = true;
+      resilio.enable = false;
       thunderbird.enable = false;
     };
     workflow = {
@@ -38,10 +38,10 @@
     # GUI Productivity Apps
     spotify
     obsidian
-    gitkraken
-    bruno
+    #gitkraken
+    #bruno
     gimp
-    mypkgs.filen-desktop
+    #mypkgs.filen-desktop
 
     # CLI Stuff
     mypkgs.pfxpackage
@@ -68,12 +68,12 @@
       # ----- MEDIA ----- #
       "stremio"
       "vlc"
-      "obs"
-      "obs-backgroundremoval"
+      #"obs"
+      #"obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #
       "signal"
-      "legcord"
+      #"legcord"
 
       # ----- WORK / PRODUCTIVITY ----- #
       "microsoft-teams"
@@ -88,23 +88,23 @@
       # "commander-one"
       # "xquartz"
       # "yubico-authenticator"
-      "parallels"
+      #"parallels"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
-      "jetbrains-toolbox"
+      #"jetbrains-toolbox"
       "claude"
       # "cursor"
       # "visual-studio-code"
 
       # ----- AI TOOLS ----- #
-      "lm-studio"
+      #"lm-studio"
       #"anythingllm"
       #"comfyui"
     ];
 
     brews = [
-      "duckdb"
+      #"duckdb"
     ];
 
     # ----- MAC APP STORE APPS -----#

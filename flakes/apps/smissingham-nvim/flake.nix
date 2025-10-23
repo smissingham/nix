@@ -42,7 +42,7 @@
           pkgsUnstable.vectorcode # for minuet RAG context
           pkgsUnstable.opencode
           pkgsUnstable.claude-code
-          inputs.mcp-hub.packages."${system}".default
+          #inputs.mcp-hub.packages."${system}".default
 
           # ----- Language Servers -----#
           bash-language-server # sh / bash
