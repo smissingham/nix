@@ -47,16 +47,6 @@ To have a configuration for a new application automatically linked:
 
 3.  Rebuild your system. The modules included in this repository will handle the rest.
 
-## Automatic Shell Functions
-
-Any shell scripts (`.sh` files) placed in the `dots/auto/shell` directory will be automatically sourced when your shell starts up. This is also handled by a pre-configured module.
-
-### Adding New Shell Functions
-
-1.  Create a new `.sh` file in the `dots/auto/shell/` directory.
-2.  Add your shell functions to this file.
-3.  Rebuild your system. The functions will be available in your new shell sessions.
-
 ## Installation
 
 ### Nix Darwin (macOS) Setup
@@ -85,7 +75,7 @@ Any shell scripts (`.sh` files) placed in the `dots/auto/shell` directory will b
     ```bash
     nix build .#darwinConfigurations.<hostname>.system --extra-experimental-features 'nix-command flakes' --impure
     
-    sudo ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
+    sudo ./result/sw/bin/darwin-rebuild switch --flake .#<hostname> --impure
     ```
     (Replace `<hostname>` with the name of your host configuration from the `hosts` directory).
 
