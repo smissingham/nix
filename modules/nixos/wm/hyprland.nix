@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -10,21 +11,49 @@ let
   moduleCategory = "wm";
   moduleName = "hyprland";
 
-  cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
+  moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/nixos/${moduleCategory}/dots/${moduleName}";
+
+  optionPath = [
+    moduleSet
+    moduleCategory
+    moduleName
+  ];
+  enablePath = optionPath ++ [ "enable" ];
 in
 {
 
-  options.${moduleSet}.${moduleCategory}.${moduleName} = with lib; {
-    enable = mkEnableOption moduleName;
+  options = lib.setAttrByPath optionPath {
+    enable = lib.mkEnableOption moduleName;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (lib.getAttrFromPath enablePath config) {
+
+    mySharedModules.home.stows = [
+      "${moduleDots}"
+    ];
+
+    # hardware.graphics = {
+    #   enable = true;
+    #   enable32Bit = true;
+    #   extraPackages = [
+    #     pkgs.mesa.drivers
+    #   ];
+    # };
+
+    # hardware.opengl = {
+    #   enable = true;
+    #   #driSupport = true;
+    #   #driSupport32Bit = true;
+    # };
+
     programs.hyprland = {
       enable = true;
+      package = pkgsUnstable.hyprland;
       withUWSM = true;
     };
 
     environment.systemPackages = with pkgs; [
+      kitty # default hypr terminal, just in case
       hyprlock
       hyprpaper
       waybar

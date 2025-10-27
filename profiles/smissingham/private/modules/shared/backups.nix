@@ -23,9 +23,9 @@ in
       fswatch
     ];
 
-    homebrew.casks = lib.optionalAttrs pkgs.stdenv.isDarwin [
-      "macfuse"
-    ];
+    # homebrew.casks = lib.optionalAttrs pkgs.stdenv.isDarwin [
+    #   "macfuse"
+    # ];
 
     home-manager.users.${mainUser.username} =
       {

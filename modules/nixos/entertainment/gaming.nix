@@ -19,7 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      lutris
+      #lutris
       protonup-ng
       #xboxdrv #-- Replaced by in-tree kernel driver, removed from nixos at 25.05
       gamescope

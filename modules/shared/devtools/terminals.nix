@@ -14,15 +14,20 @@ in
 {
   options.mySharedModules.devtools.terminals = {
     enable = lib.mkEnableOption "terminal emulators";
-    wezterm = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Install WezTerm terminal emulator";
-    };
     alacritty = lib.mkOption {
       type = lib.types.bool;
       default = false;
       description = "Install Alacritty terminal emulator";
+    };
+    ghostty = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install Ghostty terminal emulator";
+    };
+    wezterm = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Install WezTerm terminal emulator";
     };
   };
 
@@ -30,8 +35,9 @@ in
     lib.mkMerge [
       {
         home-manager.users.${mainUser.username}.home.packages =
-          (lib.optionals cfg.wezterm [ pkgsUnstable.wezterm ])
-          ++ (lib.optionals cfg.alacritty [ pkgsUnstable.alacritty ]);
+          (lib.optionals cfg.alacritty [ pkgsUnstable.alacritty ])
+          ++ (lib.optionals cfg.ghostty [ pkgsUnstable.ghostty ])
+          ++ (lib.optionals cfg.wezterm [ pkgsUnstable.wezterm ]);
       }
 
       (lib.mkIf cfg.wezterm {
