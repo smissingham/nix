@@ -9,7 +9,6 @@
 
   myPrivateModules = {
     productivity.backup.enable = true;
-    projects.pricefx-core.enable = true;
   };
 
   myDarwinModules = {

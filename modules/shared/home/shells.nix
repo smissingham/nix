@@ -34,6 +34,10 @@ in
   };
 
   config = {
+    programs.zsh.enable = true;
+    users.users.${mainUser.username} = {
+      shell = pkgs.zsh;
+    };
     home-manager.users.${mainUser.username} =
       {
         lib,

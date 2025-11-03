@@ -67,6 +67,7 @@
 
     # Office
     libreoffice
+    spotify
   ];
 
   #----- Applications in System Space -----#

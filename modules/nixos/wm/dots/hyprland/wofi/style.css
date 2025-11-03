@@ -1,0 +1,85 @@
+* {
+  font-family: 'CaskaydiaMono Nerd Font', monospace;
+  font-size: 16px;
+}
+
+window {
+  margin: 0px;
+  padding: 20px;
+  background-color: #1e1e2e;
+  opacity: 0.95;
+  border-radius: 10px;
+}
+
+#inner-box {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: #1e1e2e;
+}
+
+#outer-box {
+  margin: 0;
+  padding: 20px;
+  border: none;
+  background-color: #1e1e2e;
+  border: 2px solid #45475a;
+  border-radius: 10px;
+}
+
+#scroll {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: #1e1e2e;
+}
+
+#input {
+  margin: 0 0 10px 0;
+  padding: 12px;
+  border: none;
+  background-color: #313244;
+  color: #cdd6f4;
+  border-radius: 8px;
+}
+
+#input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: #45475a;
+}
+
+#text {
+  margin: 8px;
+  border: none;
+  color: #cdd6f4;
+}
+
+#entry {
+  background-color: #1e1e2e;
+  padding: 8px;
+  margin: 4px 0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+#entry:hover {
+  background-color: #313244;
+}
+
+#entry:selected {
+  outline: none;
+  border: none;
+  background-color: #45475a;
+}
+
+#entry:selected #text {
+  color: #89b4fa;
+  font-weight: bold;
+}
+
+#entry image {
+  margin-right: 8px;
+  -gtk-icon-transform: scale(0.8);
+}

@@ -11,7 +11,7 @@ return {
         sections = {
           {
             section = "terminal",
-            cmd = "fastfetch --logo small --structure Title:Separator:OS:Kernel:CPU:Memory",
+            cmd = "fastfetch --logo small --structure Title:Separator:OS:Kernel:CPU:Memory --pipe false | sed 's/CPU\\([^:]*\\): .*Intel(R) Core(TM) /CPU\\1: /'",
             height = 8,
             padding = 1,
           },
@@ -41,11 +41,22 @@ return {
           },
           {
             pane = 2,
+            icon = "🌤️",
+            title = "Weather",
+            section = "terminal",
+            cmd = "curl -s 'wttr.in/?format=%l:+%c+%t+%w&m'",
+            height = 2,
+            padding = 1,
+            indent = 2,
+            ttl = 30 * 60,
+          },
+          {
+            pane = 2,
             icon = "🦉",
             title = "Wisdom",
             section = "terminal",
-            cmd = "fortune -l wisdom",
-            height = 8,
+            cmd = "fortune -s wisdom | fmt -w 60",
+            height = 5,
             padding = 1,
             indent = 2,
           },

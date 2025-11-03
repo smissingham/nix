@@ -26,6 +26,7 @@ in
   config = lib.mkIf (lib.getAttrFromPath enablePath config) {
     mySharedModules.home.stows = [
       "${moduleDots}"
+      "${config.environment.variables.NIX_CONFIG_HOME}/modules/nixos/${moduleCategory}/dots/wofi"
     ];
     programs.hyprland = {
       enable = true;
@@ -41,8 +42,16 @@ in
       wl-clipboard
       clipman
       xfce.thunar
+      pamixer
+      pavucontrol
+      playerctl
+      catppuccin-cursors.mochaDark
     ];
 
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
+      XCURSOR_SIZE = "32";
+    };
   };
 }

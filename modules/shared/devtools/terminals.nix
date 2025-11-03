@@ -16,7 +16,7 @@ in
     enable = lib.mkEnableOption "terminal emulators";
     alacritty = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = "Install Alacritty terminal emulator";
     };
     ghostty = lib.mkOption {
