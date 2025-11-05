@@ -19,11 +19,26 @@
           "general-purpose",
           "thought-and-memory",
           "coding",
-          "documentation"
+          "documentation",
+          "pricefx"
         ]
       }
     },
     "servers": {
+      "knowledgefx": {
+        "tags": [
+          "pricefx"
+        ],
+        "command": "uv",
+        "args": [
+          "--directory",
+          "/Users/smissingham/Documents/Employer/workspace-product/knowledgefx",
+          "run",
+          "python",
+          "-m",
+          "builds.mcpserver"
+        ]
+      },
       "searxng": {
         "command": "bunx",
         "args": [

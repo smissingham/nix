@@ -14,6 +14,15 @@ config.hide_tab_bar_if_only_one_tab = true
 
 config.max_fps = 120
 
+config.window_padding = {
+  left = 5,
+  right = 5,
+  top = 5,
+  bottom = 0
+}
+config.enable_scroll_bar = false
+--config.enable_tab_bar = false
+
 --config.default_prog = { "/usr/bin/env", "nu" }
 
 -- Finally, return the configuration to wezterm:
