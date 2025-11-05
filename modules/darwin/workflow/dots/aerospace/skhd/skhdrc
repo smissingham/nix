@@ -46,27 +46,87 @@
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-# ctrl - w [
-#   "WezTerm"       : skhd -k "ctrl - w"
-#   *               : skhd -k "cmd - w"
-# ]
 ctrl - o          : skhd -k "cmd - o"
 ctrl - p          : skhd -k "cmd - p"
-ctrl - t          : skhd -k "cmd - t"
-ctrl + shift - t  : skhd -k "cmd + shift - t"
-#ctrl - r          : skhd -k "cmd - r"
-ctrl + shift - r  : skhd -k "cmd + shift - r"
-ctrl - q [
-  "Floorp"        : skhd -k "cmd + shift - w"
-  "Firefox"       : skhd -k "cmd + shift - w"
-  "Brave Browser" : skhd -k "cmd + shift - w"
-  "Google Chrome" : skhd -k "cmd + shift - w"
-  *               : skhd -k "cmd - q"
-] 
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
 ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
 
-ctrl - a          : skhd -k "cmd - a"
+ctrl - 1 [
+  "Obsidian"      : skhd -k "cmd - 1"
+  "Floorp"        : skhd -k "cmd - 1"
+  "Brave Browser" : skhd -k "cmd - 1"
+]
+ctrl - 2 [
+  "Obsidian"      : skhd -k "cmd - 2"
+  "Floorp"        : skhd -k "cmd - 2"
+  "Brave Browser" : skhd -k "cmd - 2"
+]
+ctrl - 3 [
+  "Obsidian"      : skhd -k "cmd - 3"
+  "Floorp"        : skhd -k "cmd - 3"
+  "Brave Browser" : skhd -k "cmd - 3"
+]
+ctrl - 4 [
+  "Obsidian"      : skhd -k "cmd - 4"
+  "Floorp"        : skhd -k "cmd - 4"
+  "Brave Browser" : skhd -k "cmd - 4"
+]
+ctrl - 5 [
+  "Obsidian"      : skhd -k "cmd - 5"
+  "Floorp"        : skhd -k "cmd - 5"
+  "Brave Browser" : skhd -k "cmd - 5"
+]
+ctrl - 6 [
+  "Obsidian"      : skhd -k "cmd - 6"
+  "Floorp"        : skhd -k "cmd - 6"
+  "Brave Browser" : skhd -k "cmd - 6"
+]
+ctrl - 7 [
+  "Obsidian"      : skhd -k "cmd - 7"
+  "Floorp"        : skhd -k "cmd - 7"
+  "Brave Browser" : skhd -k "cmd - 7"
+]
+ctrl - 8 [
+  "Obsidian"      : skhd -k "cmd - 8"
+  "Floorp"        : skhd -k "cmd - 8"
+  "Brave Browser" : skhd -k "cmd - 8"
+]
+ctrl - 9 [
+  "Obsidian"      : skhd -k "cmd - 9"
+  "Floorp"        : skhd -k "cmd - 9"
+  "Brave Browser" : skhd -k "cmd - 9"
+]
+ctrl - 0 [
+  "Obsidian"      : skhd -k "cmd - 0"
+  "Floorp"        : skhd -k "cmd - 0"
+  "Brave Browser" : skhd -k "cmd - 0"
+]
+
+ctrl - q [
+  "Obsidian"      : skhd -k "cmd + shift - w"
+  "Floorp"        : skhd -k "cmd + shift - w"
+  "Brave Browser" : skhd -k "cmd + shift - w"
+] 
+ctrl - t [
+  "Obsidian"      : skhd -k "cmd - t"
+  "Floorp"        : skhd -k "cmd - t"
+  "Brave Browser" : skhd -k "cmd - t"
+] 
+ctrl + shift - t [
+  "Obsidian"      : skhd -k "cmd + shift - t"
+  "Floorp"        : skhd -k "cmd + shift - t"
+  "Brave Browser" : skhd -k "cmd + shift - t"
+] 
+ctrl - r [
+  "Obsidian"      : skhd -k "cmd - r"
+  "Floorp"        : skhd -k "cmd - r"
+  "Brave Browser" : skhd -k "cmd - r"
+] 
+ctrl - w [
+  "Obsidian"      : skhd -k "cmd - w"
+  "Floorp"        : skhd -k "cmd - w"
+  "Brave Browser" : skhd -k "cmd - w"
+] 
 
 # Application Launching
 cmd + ctrl + alt + shift - b    : open -na $BROWSER

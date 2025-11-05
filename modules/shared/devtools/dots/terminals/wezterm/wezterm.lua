@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 --config.color_scheme = "Tokyo Night"
 --config.font = wezterm.font("JetBrains Mono")
 config.max_fps = 120
-config.color_scheme = "Catppuccin Macchiato"
+config.color_scheme = "Tokyo Night"
 config.font_size = 16
 
 ----- # General Window Settings # -----

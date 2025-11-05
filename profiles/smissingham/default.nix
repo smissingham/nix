@@ -70,6 +70,8 @@ let
     j = "just";
     oc = "opencode";
     cc = "claude-code";
+    pd = "podman";
+    pdc = "podman-compose";
   };
 
   # ----- Helper Functions -----#

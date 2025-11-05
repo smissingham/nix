@@ -42,7 +42,7 @@
   "mcp": {
     "context7": {
       "command": [
-        "bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "@upstash/context7-mcp"
       ],
@@ -54,24 +54,42 @@
     },
     "git": {
       "command": [
-        "uvx",
+        "/etc/profiles/per-user/smissingham/bin/uvx",
         "mcp-server-git"
+      ],
+      "enabled": true,
+      "type": "local"
+    },
+    "knowledgefx": {
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/uv",
+        "--directory",
+        "/Users/smissingham/Documents/Employer/workspace-product/knowledgefx",
+        "run",
+        "python",
+        "-m",
+        "builds.mcpserver"
       ],
       "enabled": true,
       "type": "local"
     },
     "memory": {
       "command": [
-        "bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "@modelcontextprotocol/server-memory"
       ],
       "enabled": true,
       "type": "local"
     },
+    "pricefx": {
+      "enabled": true,
+      "type": "remote",
+      "url": "https://mcp.pricefx.com/mcp"
+    },
     "searxng": {
       "command": [
-        "bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "mcp-searxng@latest"
       ],
@@ -83,7 +101,7 @@
     },
     "sequential-thinking": {
       "command": [
-        "bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],

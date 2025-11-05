@@ -31,7 +31,7 @@ in
 
   config =
     let
-      runtimePath = "${config.users.users.${mainUser.username}.home}/.local/share/podman";
+      runtimePath = "${config.users.users.${mainUser.username}.home}/.local/share";
       initScriptName = "podman-init";
       initScriptBin = pkgs.writeShellScriptBin initScriptName ''
         ${pkgs.podman}/bin/podman machine inspect podman-machine-default >/dev/null 2>&1 || \

@@ -43,9 +43,9 @@
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     # GUI Productivity Apps
     obsidian
+    gimp
     #gitkraken
     #bruno
-    gimp
     #mypkgs.filen-desktop
 
     # CLI Stuff
