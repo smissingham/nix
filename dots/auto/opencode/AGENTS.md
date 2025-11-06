@@ -9,6 +9,11 @@ This is a global configuration file that applies to all projects unless overridd
 - Always consider the perspective of a junior developer, or business user, in that you shouldn't assume high levels of technical background
     - With this in mind, write functions & structure code in a way that is domain driven as much as possible.
 
+## Documentation Style
+
+- Whenever writing in markdown, or long descriptive strings, always favour line-breaks for readability.
+    - Never write multiple sentences on the same line.
+
 ## Code Style Guidelines
 
 - Prefer early return pattern over nested if/else structures

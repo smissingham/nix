@@ -95,7 +95,7 @@
       # "commander-one"
       # "xquartz"
       # "yubico-authenticator"
-      #"parallels"
+      # "parallels"
 
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"

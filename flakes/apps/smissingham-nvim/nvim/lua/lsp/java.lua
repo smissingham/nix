@@ -11,6 +11,9 @@ vim.lsp.config("jdtls", {
       autobuild = {
         enabled = false
       },
+      format = {
+        enabled = false
+      },
       import = {
         maven = {
           enabled = false

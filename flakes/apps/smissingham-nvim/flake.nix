@@ -37,6 +37,7 @@
         complementaryTools = with pkgs; [
           # ----- TUI Tools -----#
           lazygit
+          lazydocker
 
           # ----- AI Helpers -----#
           pkgsUnstable.vectorcode # for minuet RAG context

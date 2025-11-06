@@ -1,6 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
+  "theme": "tokyonight",
   "formatter": {
     "nix": {
       "command": [
@@ -14,7 +15,6 @@
   },
   "keybinds": {
     "app_exit": "ctrl+c,<leader>q",
-    "app_help": "<leader>h",
     "editor_open": "<leader>e",
     "input_clear": "ctrl+c",
     "input_newline": "shift+enter",
@@ -29,7 +29,6 @@
     "messages_page_down": "pgdown",
     "messages_page_up": "pgup",
     "model_list": "<leader>m",
-    "project_init": "<leader>i",
     "session_compact": "<leader>c",
     "session_interrupt": "esc",
     "session_list": "<leader>l",
@@ -37,7 +36,6 @@
     "session_share": "<leader>s",
     "session_unshare": "<leader>u",
     "theme_list": "<leader>t",
-    "tool_details": "<leader>d"
   },
   "mcp": {
     "context7": {
@@ -128,5 +126,4 @@
       }
     }
   },
-  "theme": "system"
 }

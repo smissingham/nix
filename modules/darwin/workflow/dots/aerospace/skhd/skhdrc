@@ -201,18 +201,11 @@ alt - 2: aerospace workspace 2
 alt - 3: aerospace workspace 3
 alt - 4: aerospace workspace 4
 alt - 5: aerospace workspace 5
-
-alt - q: aerospace workspace q
-alt - w: aerospace workspace w
-alt - e: aerospace workspace e
-alt - r: aerospace workspace r
-alt - t: aerospace workspace t
-
-alt - a: aerospace workspace a
-alt - s: aerospace workspace s
-alt - d: aerospace workspace d
-alt - f: aerospace workspace f
-alt - g: aerospace workspace g
+alt - 6: aerospace workspace 6
+alt - 7: aerospace workspace 7
+alt - 8: aerospace workspace 8
+alt - 9: aerospace workspace 9
+alt - 0: aerospace workspace 10
 
 # Move to Workspace
 alt + shift - 1: aerospace move-node-to-workspace 1
@@ -220,15 +213,8 @@ alt + shift - 2: aerospace move-node-to-workspace 2
 alt + shift - 3: aerospace move-node-to-workspace 3
 alt + shift - 4: aerospace move-node-to-workspace 4
 alt + shift - 5: aerospace move-node-to-workspace 5
-
-alt + shift - q: aerospace move-node-to-workspace q
-alt + shift - w: aerospace move-node-to-workspace w
-alt + shift - e: aerospace move-node-to-workspace e
-alt + shift - r: aerospace move-node-to-workspace r
-alt + shift - t: aerospace move-node-to-workspace t
-
-alt + shift - a: aerospace move-node-to-workspace a
-alt + shift - s: aerospace move-node-to-workspace s
-alt + shift - d: aerospace move-node-to-workspace d
-alt + shift - f: aerospace move-node-to-workspace f
-alt + shift - g: aerospace move-node-to-workspace g
+alt + shift - 6: aerospace move-node-to-workspace 6
+alt + shift - 7: aerospace move-node-to-workspace 7
+alt + shift - 8: aerospace move-node-to-workspace 8
+alt + shift - 9: aerospace move-node-to-workspace 9
+alt + shift - 0: aerospace move-node-to-workspace 10
