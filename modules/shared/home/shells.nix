@@ -92,6 +92,7 @@ in
             lazygit
 
             # CLI productivity
+            _7zz
             bat
             fd
             ripgrep

@@ -33,6 +33,7 @@
     };
     productivity = {
       thunderbird.enable = false;
+      nextcloud.enable = false;
     };
     workflow = {
       sops.enable = true;

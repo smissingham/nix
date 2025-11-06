@@ -19,6 +19,7 @@
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow.sops.enable = true;
+    productivity.nextcloud.enable = false;
     devtools = {
       terminals.enable = true;
       tmux.enable = true;
@@ -63,10 +64,11 @@
     #mypkgs.filen-desktop
 
     # Work
-    teams-for-linux
+    #teams-for-linux
 
     # Office
-    libreoffice
+    #libreoffice
+    onlyoffice-bin
     spotify
   ];
 

@@ -69,7 +69,7 @@ let
     # ----- Developer Stuff -----#
     j = "just";
     oc = "opencode";
-    cc = "claude-code";
+    cc = "claude";
     pd = "podman";
     pdc = "podman-compose";
   };
