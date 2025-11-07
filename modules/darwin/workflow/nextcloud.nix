@@ -11,6 +11,13 @@ let
   moduleName = "nextcloud";
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
 
+  ncFolders = {
+    # RemotePath <=> LocalPath
+    "/Documents" = "/Documents";
+    "/Downloads" = "/Downloads";
+    "/Pictures" = "/Pictures";
+    "/Videos" = "/Videos";
+  };
 in
 {
   options.${moduleSet}.${moduleCategory}.${moduleName} = with lib; {
@@ -32,12 +39,17 @@ in
         ncConfigDir = "${config.home.homeDirectory}/Library/Preferences/Nextcloud";
         ncMountDir = "${config.home.homeDirectory}/Nextcloud";
         ncConfigPath = "${ncConfigDir}/nextcloud.cfg";
+        ncIgnorePath = "${ncConfigDir}/sync-exclude.lst";
 
-        ncInitScript = pkgs.writeShellScript "nextcloud-init" ''
-          mkdir -p ${ncMountDir}
-          mkdir -p ${ncConfigDir}
+        # Generate folder configurations from ncFolders attrset
+        folderEntries = lib.strings.concatStringsSep "\n" (
+          lib.imap1 (idx: entry: ''
+            0\Folders\${toString idx}\localPath=${config.home.homeDirectory}${entry.localPath}
+            0\Folders\${toString idx}\targetPath=${entry.remotePath}
+          '') (lib.mapAttrsToList (remotePath: localPath: { inherit remotePath localPath; }) ncFolders)
+        );
 
-          cat > "${ncConfigPath}" <<EOF
+        ncConfig = ''
           [General]
           isVfsEnabled=false
           launchOnSystemStartup=true
@@ -48,8 +60,48 @@ in
           0\displayName=$(cat ${config.sops.secrets.NEXTCLOUD_USERNAME.path})
           0\webflow_user=$(cat ${config.sops.secrets.NEXTCLOUD_USERNAME.path})
 
-          0\Folders\1\localPath=${ncMountDir}
-          0\Folders\1\targetPath=/
+          ${folderEntries}
+        '';
+
+        ncIgnore = ''
+          *~
+          ~$*
+          .~lock.*
+          ~*.tmp
+          ]*.~*
+          ].DS_Store
+          ].Trash-*
+          .fseventd
+          .apdisk
+          .Spotlight-V100
+          .directory
+          *.part
+          *.filepart
+          ].venv
+          ]__pycache__
+          ]node_modules
+          ].dist
+        '';
+
+        # Generate mkdir commands for each local folder
+        mkdirCommands = lib.strings.concatStringsSep "\n" (
+          lib.mapAttrsToList (
+            _remotePath: localPath: "mkdir -p ${config.home.homeDirectory}${localPath}"
+          ) ncFolders
+        );
+
+        ncInitScript = pkgs.writeShellScript "nextcloud-init" ''
+          mkdir -p ${ncMountDir}
+          mkdir -p ${ncConfigDir}
+
+          ${mkdirCommands}
+
+          cat > "${ncConfigPath}" <<EOF
+          ${ncConfig}
+          EOF
+
+          cat > "${ncIgnorePath}" <<EOF
+          ${ncIgnore}
           EOF
         '';
       in
