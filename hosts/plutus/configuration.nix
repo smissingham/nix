@@ -8,11 +8,14 @@
   networking.computerName = "plutus";
 
   myPrivateModules = {
-    productivity.backup.enable = true;
+    productivity.backup.enable = false;
   };
 
   myDarwinModules = {
-    workflow.aerospace.enable = true;
+    workflow = {
+      nextcloud.enable = true;
+      aerospace.enable = true;
+    };
     virt.podman = {
       enable = true;
       withGuiTools = false;
@@ -33,7 +36,6 @@
     };
     productivity = {
       thunderbird.enable = false;
-      nextcloud.enable = false;
     };
     workflow = {
       sops.enable = true;

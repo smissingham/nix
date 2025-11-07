@@ -19,7 +19,6 @@
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow.sops.enable = true;
-    productivity.nextcloud.enable = false;
     devtools = {
       terminals.enable = true;
       tmux.enable = true;
