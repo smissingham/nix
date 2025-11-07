@@ -18,7 +18,10 @@
 
   mySharedModules = {
     browsers.floorp.enable = true;
-    workflow.sops.enable = true;
+    workflow = {
+      sops.enable = true;
+      nextcloud.enable = true;
+    };
     devtools = {
       terminals.enable = true;
       tmux.enable = true;
@@ -61,6 +64,7 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #mypkgs.filen-desktop
+    nextcloud-client
 
     # Work
     #teams-for-linux

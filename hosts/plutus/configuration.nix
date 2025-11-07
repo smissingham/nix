@@ -13,7 +13,6 @@
 
   myDarwinModules = {
     workflow = {
-      nextcloud.enable = true;
       aerospace.enable = true;
     };
     virt.podman = {
@@ -39,6 +38,7 @@
     };
     workflow = {
       sops.enable = true;
+      nextcloud.enable = true;
     };
   };
 
@@ -70,6 +70,7 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
+      "nextcloud"
       # "google-chrome"
       # "shottr"
 

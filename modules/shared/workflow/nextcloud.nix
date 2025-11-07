@@ -6,7 +6,7 @@
   ...
 }:
 let
-  moduleSet = "myDarwinModules";
+  moduleSet = "mySharedModules";
   moduleCategory = "workflow";
   moduleName = "nextcloud";
   cfg = config.${moduleSet}.${moduleCategory}.${moduleName};
@@ -24,10 +24,8 @@ in
     enable = mkEnableOption moduleName;
   };
 
+  # !!!!!NOTE!!!!!: This only sets the config. The platform-specific client must be installed manually
   config = lib.mkIf cfg.enable {
-
-    homebrew.casks = [ "nextcloud" ];
-
     home-manager.users.${mainUser.username} =
       {
         config,
@@ -35,8 +33,11 @@ in
         ...
       }:
       let
-
-        ncConfigDir = "${config.home.homeDirectory}/Library/Preferences/Nextcloud";
+        ncConfigDir =
+          if pkgs.stdenv.isDarwin then
+            "${config.home.homeDirectory}/Library/Preferences/Nextcloud"
+          else
+            "${config.home.homeDirectory}/.config/Nextcloud";
         ncMountDir = "${config.home.homeDirectory}/Nextcloud";
         ncConfigPath = "${ncConfigDir}/nextcloud.cfg";
         ncIgnorePath = "${ncConfigDir}/sync-exclude.lst";
