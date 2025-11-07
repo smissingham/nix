@@ -65,23 +65,95 @@ in
         '';
 
         ncIgnore = ''
+          # General - Temporary & Lock Files
           *~
           ~$*
           .~lock.*
           ~*.tmp
           ]*.~*
+          .directory
+          *.part
+          *.filepart
+
+          # macOS - System Files
           ].DS_Store
           ].Trash-*
           .fseventd
           .apdisk
           .Spotlight-V100
+          ].TemporaryItems
+          ].DocumentRevisions-V100
+          ].fseventsd
+          ].VolumeIcon.icns
+          .AppleDouble
+          .LSOverride
+
+          # Linux - System Files
+          ].Trash-*
           .directory
-          *.part
-          *.filepart
-          ].venv
+          ].nfs*
+
+          # Python
           ]__pycache__
+          ].pytest_cache
+          ].mypy_cache
+          ].ruff_cache
+          ].pyright_cache
+          ].venv
+          ]venv
+          *.pyc
+          *.pyo
+          *.pyd
+          .Python
+          ]pip-log.txt
+          ]pip-delete-this-directory.txt
+          ].tox
+          ].coverage
+          ].hypothesis
+          ]*.egg-info
+          ]dist
+          ]build
+          ].eggs
+          ].uv
+          ].poetry
+
+          # Node/Bun
           ]node_modules
-          ].dist
+          ].npm
+          ].yarn
+          ].pnp
+          .pnp.js
+          ].next
+          ].nuxt
+          ].cache
+          ].parcel-cache
+          ].vite
+          ].turbo
+          ].vercel
+
+          # Rust
+          ]target
+          ]Cargo.lock
+          **/*.rs.bk
+          *.pdb
+
+          # Nix
+          ].direnv
+          ]result
+          ]result-*
+
+          # Java
+          ].gradle
+          ].m2
+          *.class
+          *.jar
+
+          # IDE/Editor
+          ].idea
+          ].vscode
+          *.swp
+          *.swo
+          *.swn
         '';
 
         # Generate mkdir commands for each local folder
