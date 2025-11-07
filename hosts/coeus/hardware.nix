@@ -62,7 +62,7 @@ in
   };
 
   # mount persisted encrypted data volume
-  fileSystems."/home/${mainUser.username}/Documents" = {
+  fileSystems."/home/${mainUser.username}" = {
     device = "/dev/vg0/data";
     fsType = "ext4";
   };
