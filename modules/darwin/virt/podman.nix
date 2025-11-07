@@ -31,17 +31,17 @@ in
 
   config =
     let
-      runtimePath = "${config.users.users.${mainUser.username}.home}/.local/share";
+      runtimeLinkPath = "${config.users.users.${mainUser.username}.home}/.local/share/podman";
       initScriptName = "podman-init";
       initScriptBin = pkgs.writeShellScriptBin initScriptName ''
         ${pkgs.podman}/bin/podman machine inspect podman-machine-default >/dev/null 2>&1 || \
           ${pkgs.podman}/bin/podman machine init
         ${pkgs.podman}/bin/podman machine start
 
-        mkdir -p ${runtimePath}
+        rm -rf ${runtimeLinkPath}
 
         RUNTIME_PATH=$(${pkgs.fd}/bin/fd "podman.*\.sock" /var/folders -x dirname | head -n1)
-        ln -s $RUNTIME_PATH ${runtimePath}
+        ln -s $RUNTIME_PATH ${runtimeLinkPath}
       '';
     in
     lib.mkIf cfg.enable {
@@ -51,8 +51,8 @@ in
         })
       ];
 
-      environment.variables.DOCKER_HOST = "unix://${runtimePath}/podman-machine-default-api.sock";
-      environment.variables.DOCKER_SOCKET = "${runtimePath}/podman-machine-default-api.sock";
+      environment.variables.DOCKER_HOST = "unix://${runtimeLinkPath}/podman-machine-default-api.sock";
+      environment.variables.DOCKER_SOCKET = "${runtimeLinkPath}/podman-machine-default-api.sock";
 
       environment.systemPackages =
         with pkgs;
