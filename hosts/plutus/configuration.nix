@@ -8,7 +8,7 @@
   networking.computerName = "plutus";
 
   myPrivateModules = {
-    productivity.backup.enable = false;
+    backup.syncthing.enable = true;
   };
 
   myDarwinModules = {
@@ -38,7 +38,6 @@
     };
     workflow = {
       sops.enable = true;
-      nextcloud.enable = true;
     };
   };
 
@@ -70,7 +69,6 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
-      "nextcloud"
       # "google-chrome"
       # "shottr"
 

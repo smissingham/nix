@@ -58,6 +58,7 @@ in
             yubikey-manager
           ];
           sessionVariables = {
+            SOPS_CONFIG = "${sopsPath}/.sops.yaml";
             SOPS_AGE_KEY_FILE = "${ageKeyFile}";
           }
           // builtins.mapAttrs (_name: value: "$(cat ${value.path})") (

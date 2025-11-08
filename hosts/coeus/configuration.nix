@@ -13,14 +13,13 @@
   time.timeZone = "America/Chicago";
 
   myPrivateModules = {
-    productivity.backup.enable = true;
+    backup.syncthing.enable = true;
   };
 
   mySharedModules = {
     browsers.floorp.enable = true;
     workflow = {
       sops.enable = true;
-      nextcloud.enable = true;
     };
     devtools = {
       terminals.enable = true;
@@ -64,7 +63,7 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #mypkgs.filen-desktop
-    nextcloud-client
+    #nextcloud-client
 
     # Work
     #teams-for-linux

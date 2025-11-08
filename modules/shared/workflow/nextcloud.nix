@@ -14,7 +14,7 @@ let
   ncFolders = {
     # RemotePath <=> LocalPath
     "/Documents" = "/Documents";
-    "/Downloads" = "/Downloads";
+    #"/Downloads" = "/Downloads";
     "/Pictures" = "/Pictures";
     "/Videos" = "/Videos";
   };
@@ -54,6 +54,7 @@ in
           [General]
           isVfsEnabled=false
           launchOnSystemStartup=true
+          sslverify = false
 
           [Accounts]
           0\url=$(cat ${config.sops.secrets.NEXTCLOUD_URL.path})
@@ -74,6 +75,9 @@ in
           .directory
           *.part
           *.filepart
+
+          # Neovim
+          lazy-lock.json
 
           # macOS - System Files
           ].DS_Store
