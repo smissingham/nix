@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  mainUser,
   ...
 }:
 let
@@ -33,6 +34,9 @@ in
       withUWSM = true;
     };
 
+    programs.nm-applet.enable = true;
+    programs.thunar.enable = true;
+
     environment.systemPackages = with pkgs; [
       kitty # backup / default terminal for hyprland
       hyprlock
@@ -41,17 +45,48 @@ in
       wofi
       wl-clipboard
       clipman
-      xfce.thunar
       pamixer
       pavucontrol
       playerctl
       catppuccin-cursors.mochaDark
+      catppuccin-gtk
+      papirus-icon-theme
     ];
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
       XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
       XCURSOR_SIZE = "32";
+      GTK_THEME = "Catppuccin-Mocha-Standard-Mauve-Dark";
+    };
+
+    home-manager.users.${mainUser.username} = {
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Catppuccin-Mocha-Standard-Mauve-Dark";
+          package = pkgs.catppuccin-gtk.override {
+            accents = [ "mauve" ];
+            size = "standard";
+            variant = "mocha";
+          };
+        };
+        iconTheme = {
+          name = "Papirus-Dark";
+          package = pkgs.papirus-icon-theme;
+        };
+        cursorTheme = {
+          name = "catppuccin-mocha-dark-cursors";
+          package = pkgs.catppuccin-cursors.mochaDark;
+          size = 32;
+        };
+        gtk3.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+        gtk4.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+      };
     };
   };
 }
