@@ -29,17 +29,17 @@ in
         enable = true;
         remotePlay.openFirewall = true;
         extest.enable = true;
-        gamescopeSession.enable = true;
+        #gamescopeSession.enable = true;
         extraCompatPackages = with pkgs; [ proton-ge-bin ];
       };
       gamemode.enable = true;
       corectrl = {
-        enable = true;
+        #enable = true;
       };
     };
 
     environment.sessionVariables = {
-      STEAM_FORCE_DESKTOPUI_SCALING = "1.33";
+      #STEAM_FORCE_DESKTOPUI_SCALING = "1.33";
     };
   };
 }

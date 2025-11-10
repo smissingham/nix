@@ -42,12 +42,19 @@ in
       hyprlock
       hyprpaper
       waybar
-      wofi
-      wl-clipboard
-      clipman
+
+      # Launcher & Clipboard
+      # wofi
+      # wl-clipboard
+      # clipman
+      walker
+
+      # System Utils
       pamixer
       pavucontrol
       playerctl
+
+      # Theming
       catppuccin-cursors.mochaDark
       catppuccin-gtk
       papirus-icon-theme
