@@ -13,100 +13,6 @@
       ]
     }
   },
-  "keybinds": {
-    "app_exit": "ctrl+c,<leader>q",
-    "editor_open": "<leader>e",
-    "input_clear": "ctrl+c",
-    "input_newline": "shift+enter",
-    "input_paste": "ctrl+v",
-    "input_submit": "enter",
-    "leader": "ctrl+o",
-    "messages_copy": "<leader>y",
-    "messages_first": "ctrl+g",
-    "messages_half_page_down": "ctrl+alt+d",
-    "messages_half_page_up": "ctrl+alt+u",
-    "messages_last": "ctrl+alt+g",
-    "messages_page_down": "pgdown",
-    "messages_page_up": "pgup",
-    "model_list": "<leader>m",
-    "session_compact": "<leader>c",
-    "session_interrupt": "esc",
-    "session_list": "<leader>l",
-    "session_new": "<leader>n",
-    "session_share": "<leader>s",
-    "session_unshare": "<leader>u",
-    "theme_list": "<leader>t",
-  },
-  "mcp": {
-    "context7": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "enabled": true,
-      "environment": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
-      },
-      "type": "local"
-    },
-    "git": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/uvx",
-        "mcp-server-git"
-      ],
-      "enabled": true,
-      "type": "local"
-    },
-    "knowledgefx": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/uv",
-        "--directory",
-        "/Users/smissingham/Documents/Employer/workspace-product/knowledgefx",
-        "run",
-        "python",
-        "-m",
-        "builds.mcpserver"
-      ],
-      "enabled": true,
-      "type": "local"
-    },
-    "memory": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
-      "enabled": true,
-      "type": "local"
-    },
-    "pricefx": {
-      "enabled": true,
-      "type": "remote",
-      "url": "https://mcp.pricefx.com/mcp"
-    },
-    "searxng": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
-        "-y",
-        "mcp-searxng@latest"
-      ],
-      "enabled": true,
-      "environment": {
-        "SEARXNG_URL": "https://searxng.coeus.missingham.net"
-      },
-      "type": "local"
-    },
-    "sequential-thinking": {
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "enabled": true,
-      "type": "local"
-    }
-  },
   "provider": {
     "lmstudio": {
       "models": {
@@ -126,4 +32,83 @@
       }
     }
   },
+  "mcp": {
+    "searxng": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "-y",
+        "mcp-searxng@latest"
+      ],
+      "environment": {
+        "SEARXNG_URL": "https://searxng.coeus.missingham.net"
+      }
+    },
+    "memory": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "sequential-thinking": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "context7": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "environment": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
+    "git": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/uvx",
+        "mcp-server-git"
+      ]
+    },
+    "knowledgefx": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/uv",
+        "--directory",
+        "/home/smissingham/Employer/workspace-product/knowledgefx",
+        "run",
+        "python",
+        "-m",
+        "builds.mcpserver"
+      ]
+    },
+    "copilotfx": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "mcp-remote",
+        "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
+        "3334",
+        "--host",
+        "localhost",
+        "--static-oauth-client-info",
+        "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
+      ]
+    }
+  }
 }

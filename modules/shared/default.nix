@@ -35,6 +35,9 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
+    # General CLI Utils
+    lsof
+
     # Nix CLI Utils
     nixfmt-rfc-style # formatter
     nixd # lsp

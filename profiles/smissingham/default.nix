@@ -5,7 +5,7 @@ let
   email = "sean@missingham.com";
   editor = "smissingham-nvim";
   terminal = "wezterm";
-  browser = "Floorp";
+  browser = "floorp";
 
   emailAccounts = [
     {

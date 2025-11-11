@@ -58,6 +58,7 @@
   environment.systemPackages = with pkgs; [
     bun
     uv
+    nodejs_24 # required for: kilo-code IJ extension
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#

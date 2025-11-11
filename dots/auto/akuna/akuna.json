@@ -2,6 +2,13 @@
   "$schema": "file:///Users/smissingham/Documents/Projects/akuna/target/docs/generated/config-schema.json",
   "mcp_config": {
     "clients": {
+      "cline": {
+        "client_type": "cline",
+        "tags": [
+          "coding",
+          "pricefx"
+        ]
+      },
       "claude-desktop": {
         "client_type": "claudedesktop",
         "tags": [
@@ -25,6 +32,21 @@
       }
     },
     "servers": {
+      "copilotfx": {
+        "tags": [
+          "pricefx"
+        ],
+        "command": "bunx",
+        "args": [
+          "mcp-remote",
+          "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
+          "3334",
+          "--host",
+          "localhost",
+          "--static-oauth-client-info",
+          "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
+        ]
+      },
       "knowledgefx": {
         "tags": [
           "pricefx"
@@ -32,7 +54,7 @@
         "command": "uv",
         "args": [
           "--directory",
-          "/Users/smissingham/Documents/Employer/workspace-product/knowledgefx",
+          "/home/smissingham/Employer/workspace-product/knowledgefx",
           "run",
           "python",
           "-m",
@@ -131,6 +153,7 @@
         ]
       },
       "pricefx": {
+        "enabled": false,
         "type": "remote",
         "url": "https://mcp.pricefx.com/mcp",
         "tags": [

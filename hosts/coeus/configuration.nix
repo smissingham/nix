@@ -63,7 +63,6 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #mypkgs.filen-desktop
-    #nextcloud-client
 
     # Work
     #teams-for-linux
@@ -72,7 +71,19 @@
     #libreoffice
     onlyoffice-bin
     spotify
+
+    # Dev
+    jetbrains.idea-community
   ];
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      uv
+      bun
+      nodejs_24
+    ];
+  };
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
