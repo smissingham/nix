@@ -32,6 +32,21 @@
       }
     },
     "servers": {
+      "copilotfx-dev": {
+        "tags": [
+          "pricefx"
+        ],
+        "command": "bunx",
+        "args": [
+          "mcp-remote",
+          "http://localhost:8082/mcp/demofx-staging.pricefx.com/copilotfx",
+          "3334",
+          "--host",
+          "localhost",
+          "--static-oauth-client-info",
+          "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
+        ]
+      },
       "copilotfx": {
         "tags": [
           "pricefx"

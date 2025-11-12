@@ -37,7 +37,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
         "-y",
         "mcp-searxng@latest"
       ],
@@ -49,7 +49,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
         "-y",
         "@modelcontextprotocol/server-memory"
       ]
@@ -58,7 +58,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ]
@@ -67,7 +67,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
         "-y",
         "@upstash/context7-mcp"
       ],
@@ -81,6 +81,20 @@
       "command": [
         "/etc/profiles/per-user/smissingham/bin/uvx",
         "mcp-server-git"
+      ]
+    },
+    "copilotfx-dev": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "mcp-remote",
+        "http://localhost:8082/mcp/demofx-staging.pricefx.com/copilotfx",
+        "3334",
+        "--host",
+        "localhost",
+        "--static-oauth-client-info",
+        "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
       ]
     },
     "knowledgefx": {
@@ -100,7 +114,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/dccx7km0mm6shf1zizx760drifjbg1yr-bun-1.3.0/bin/bunx",
+        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
         "mcp-remote",
         "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
         "3334",
