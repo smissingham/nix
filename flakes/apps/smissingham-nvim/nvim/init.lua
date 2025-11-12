@@ -14,3 +14,19 @@ require("core.keymaps")
 require("core.options")
 require("core.commands")
 require("core.plugins")
+
+-- Load project-specific .nvim.lua if available
+local function load_project_config()
+  local config_file = vim.fn.getcwd() .. "/.nvim.lua"
+  if vim.fn.filereadable(config_file) == 1 then
+    dofile(config_file)
+  end
+end
+
+-- Auto-load project config on directory change
+vim.api.nvim_create_autocmd({ "DirChanged", "VimEnter" }, {
+  callback = load_project_config,
+})
+
+-- Load immediately
+load_project_config()
