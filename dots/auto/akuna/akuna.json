@@ -69,7 +69,7 @@
         "command": "uv",
         "args": [
           "--directory",
-          "/home/smissingham/Employer/workspace-product/knowledgefx",
+          "/home/smissingham/Employer/workspace-product/tools/knowledgefx",
           "run",
           "python",
           "-m",
