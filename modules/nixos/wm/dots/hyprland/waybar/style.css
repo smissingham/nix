@@ -8,8 +8,7 @@
 }
 
 window#waybar {
-    background: transparent;
-    background-color: @bg;
+    background-color: #11111b;
     color: @fg;
     transition-property: background-color;
     transition-duration: 0.1s;
@@ -71,7 +70,8 @@ button:hover {
 #scratchpad,
 #custom-network,
 #custom-network-ip,
-#custom-network-bandwidth {
+#custom-network-bandwidth,
+#custom-playerctl {
   margin-top: 2px;
   margin-bottom: 2px;
   margin-left: 4px;
@@ -147,6 +147,11 @@ button:hover {
 #custom-network-bandwidth {
     color: @green;
     border-bottom: 2px solid @green;
+}
+
+#custom-playerctl {
+    color: @purple;
+    border-bottom: 2px solid @purple;
 }
 
 #custom-vpn {

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   pkgsUnstable,
   mainUser,
   ...
@@ -21,7 +22,7 @@ in
     };
     ghostty = lib.mkOption {
       type = lib.types.bool;
-      default = false;
+      default = true;
       description = "Install Ghostty terminal emulator";
     };
     wezterm = lib.mkOption {
@@ -36,7 +37,7 @@ in
       {
         home-manager.users.${mainUser.username}.home.packages =
           (lib.optionals cfg.alacritty [ pkgsUnstable.alacritty ])
-          ++ (lib.optionals cfg.ghostty [ pkgsUnstable.ghostty ])
+          ++ (lib.optionals (cfg.ghostty && !pkgs.stdenv.isDarwin) [ pkgsUnstable.ghostty ])
           ++ (lib.optionals cfg.wezterm [ pkgsUnstable.wezterm ]);
       }
 

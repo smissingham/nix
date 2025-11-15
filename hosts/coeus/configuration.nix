@@ -33,6 +33,7 @@
     #wm.plasma6.enable = true;
     #wm.gnome-xserver.enable = true;
     wm.hyprland.enable = true;
+    stylix.enable = true;
 
     entertainment.gaming.enable = true;
 
@@ -63,6 +64,8 @@
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     #mypkgs.filen-desktop
+
+    signal-desktop
 
     # Work
     #teams-for-linux

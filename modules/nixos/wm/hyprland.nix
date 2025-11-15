@@ -67,11 +67,6 @@ in
         grim # Screenshot utility for Wayland
         slurp # Select a region in Wayland
         swappy # Screenshot editor
-
-        # Theming
-        catppuccin-cursors.mochaDark
-        catppuccin-gtk
-        papirus-icon-theme
       ])
       ++ [
         # From flakes
@@ -81,10 +76,11 @@ in
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
-      XCURSOR_SIZE = "32";
-      GTK_THEME = "Catppuccin-Mocha-Standard-Mauve-Dark";
+      GTK_THEME = "adw-gtk3-dark";
     };
+
+    # Enable dconf for gsettings to work properly
+    programs.dconf.enable = true;
 
     home-manager.users.${mainUser.username} =
       {
@@ -92,33 +88,29 @@ in
         config,
         ...
       }:
+      let
+        wallpaperPath = config.stylix.image;
+      in
       {
-        gtk = {
-          enable = true;
-          theme = {
-            name = "Catppuccin-Mocha-Standard-Mauve-Dark";
-            package = pkgs.catppuccin-gtk.override {
-              accents = [ "mauve" ];
-              size = "standard";
-              variant = "mocha";
-            };
-          };
-          iconTheme = {
-            name = "Papirus-Dark";
-            package = pkgs.papirus-icon-theme;
-          };
-          cursorTheme = {
-            name = "catppuccin-mocha-dark-cursors";
-            package = pkgs.catppuccin-cursors.mochaDark;
-            size = 32;
-          };
-          gtk3.extraConfig = {
-            gtk-application-prefer-dark-theme = true;
-          };
-          gtk4.extraConfig = {
-            gtk-application-prefer-dark-theme = true;
+        # Stylix handles GTK theming automatically
+
+        # But we need to configure xfconf for Thunar/XFCE apps
+        xfconf.settings = {
+          xsettings = {
+            "Net/ThemeName" = "adw-gtk3-dark";
+            "Net/IconThemeName" = "Papirus-Dark";
+            "Gtk/CursorThemeName" = "catppuccin-mocha-dark-cursors";
+            "Gtk/CursorThemeSize" = 32;
+            "Net/EnableEventSounds" = false;
+            "Net/EnableInputFeedbackSounds" = false;
           };
         };
+
+        # Generate hyprpaper config with Stylix wallpaper
+        xdg.configFile."hypr/hyprpaper.conf".text = ''
+          preload = ${wallpaperPath}
+          wallpaper = , ${wallpaperPath}
+        '';
 
         home.activation.linkElephantProviders = lib.hm.dag.entryAfter [ "stowDotfiles" ] ''
           $DRY_RUN_CMD rm -rf ${config.xdg.configHome}/elephant/providers

@@ -5,7 +5,9 @@
   "spacing": 0,
   "height": 34,
   "modules-left": [
-    "clock"
+    "clock",
+    "custom/playerctl",
+    "tray"
   ],
   "modules-center": [
     "hyprland/workspaces"
@@ -120,9 +122,19 @@
     "format": "{}",
     "return-type": ""
   },
+  "custom/playerctl": {
+    "exec": "~/.config/waybar/scripts/playerctl.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-scroll-up": "playerctl volume 0.05+",
+    "on-scroll-down": "playerctl volume 0.05-"
+  },
   "tray": {
-    "icon-size": 12,
-    "spacing": 17
+    "icon-size": 16,
+    "spacing": 10
   },
   "tray#right": {
     "icon-size": 16,
