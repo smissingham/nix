@@ -12,6 +12,13 @@ let
 
   moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/nixos/${moduleCategory}/dots/${moduleName}";
 
+  # Fetch elephant and walker from flakes
+  elephantFlake = builtins.getFlake "github:abenz1267/elephant";
+  elephant = elephantFlake.packages.${pkgs.system}.default;
+
+  walkerFlake = builtins.getFlake "github:abenz1267/walker";
+  walker = walkerFlake.packages.${pkgs.system}.default;
+
   optionPath = [
     moduleSet
     moduleCategory
@@ -37,28 +44,38 @@ in
     programs.nm-applet.enable = true;
     programs.thunar.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      kitty # backup / default terminal for hyprland
-      hyprlock
-      hyprpaper
-      waybar
+    environment.systemPackages =
+      (with pkgs; [
+        kitty # backup / default terminal for hyprland
 
-      # Launcher & Clipboard
-      # wofi
-      # wl-clipboard
-      # clipman
-      walker
+        # Base UI Addons
+        hyprlock
+        hyprpaper
+        waybar
 
-      # System Utils
-      pamixer
-      pavucontrol
-      playerctl
+        # Launcher & Clipboard
+        wl-clipboard
 
-      # Theming
-      catppuccin-cursors.mochaDark
-      catppuccin-gtk
-      papirus-icon-theme
-    ];
+        # System Utils
+        pamixer
+        pavucontrol
+        playerctl
+
+        # Screenshot tools
+        grim # Screenshot utility for Wayland
+        slurp # Select a region in Wayland
+        swappy # Screenshot editor
+
+        # Theming
+        catppuccin-cursors.mochaDark
+        catppuccin-gtk
+        papirus-icon-theme
+      ])
+      ++ [
+        # From flakes
+        elephant
+        walker
+      ];
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -67,33 +84,44 @@ in
       GTK_THEME = "Catppuccin-Mocha-Standard-Mauve-Dark";
     };
 
-    home-manager.users.${mainUser.username} = {
-      gtk = {
-        enable = true;
-        theme = {
-          name = "Catppuccin-Mocha-Standard-Mauve-Dark";
-          package = pkgs.catppuccin-gtk.override {
-            accents = [ "mauve" ];
-            size = "standard";
-            variant = "mocha";
+    home-manager.users.${mainUser.username} =
+      {
+        lib,
+        config,
+        ...
+      }:
+      {
+        gtk = {
+          enable = true;
+          theme = {
+            name = "Catppuccin-Mocha-Standard-Mauve-Dark";
+            package = pkgs.catppuccin-gtk.override {
+              accents = [ "mauve" ];
+              size = "standard";
+              variant = "mocha";
+            };
+          };
+          iconTheme = {
+            name = "Papirus-Dark";
+            package = pkgs.papirus-icon-theme;
+          };
+          cursorTheme = {
+            name = "catppuccin-mocha-dark-cursors";
+            package = pkgs.catppuccin-cursors.mochaDark;
+            size = 32;
+          };
+          gtk3.extraConfig = {
+            gtk-application-prefer-dark-theme = true;
+          };
+          gtk4.extraConfig = {
+            gtk-application-prefer-dark-theme = true;
           };
         };
-        iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.papirus-icon-theme;
-        };
-        cursorTheme = {
-          name = "catppuccin-mocha-dark-cursors";
-          package = pkgs.catppuccin-cursors.mochaDark;
-          size = 32;
-        };
-        gtk3.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
-        };
-        gtk4.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
-        };
+
+        home.activation.linkElephantProviders = lib.hm.dag.entryAfter [ "stowDotfiles" ] ''
+          $DRY_RUN_CMD rm -rf ${config.xdg.configHome}/elephant/providers
+          $DRY_RUN_CMD ln -sf ${elephant}/lib/elephant/providers ${config.xdg.configHome}/elephant/providers
+        '';
       };
-    };
   };
 }

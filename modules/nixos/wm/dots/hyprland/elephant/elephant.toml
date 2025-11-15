@@ -1,0 +1,14 @@
+# Elephant configuration
+# See: https://github.com/abenz1267/elephant
+
+# Auto-detect launch prefix (uwsm, app2unit, systemd-run)
+auto_detect_launch_prefix = true
+
+# Overload local environment variables
+overload_local_env = false
+
+# Git repositories on-demand loading
+git_on_demand = true
+
+# Ignored providers (leave empty to enable all)
+ignored_providers = []

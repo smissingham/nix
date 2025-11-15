@@ -1,0 +1,10 @@
+# Desktop Applications provider configuration
+
+# Show action menu for applications
+show_actions = true
+
+# Search in title only (not description/keywords)
+only_search_title = false
+
+# Enable application launch history
+history = true
