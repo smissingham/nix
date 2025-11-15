@@ -18,8 +18,8 @@ window#waybar {
 
 #window {
     margin: 8px;
-    padding-left: 8;
-    padding-right: 8;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 button {
@@ -36,6 +36,7 @@ button:hover {
 
 #workspaces button {
     padding: 0 4px;
+    color: rgba(97, 175, 239, 0.6);
 }
 
 #workspaces button.focused {
@@ -65,8 +66,12 @@ button:hover {
 #wireplumber,
 #tray,
 #network,
+#bluetooth,
 #mode,
-#scratchpad {
+#scratchpad,
+#custom-network,
+#custom-network-ip,
+#custom-network-bandwidth {
   margin-top: 2px;
   margin-bottom: 2px;
   margin-left: 4px;
@@ -109,6 +114,21 @@ button:hover {
     border-bottom: 2px solid @green;
 }
 
+#cpu {
+    color: @red;
+    border-bottom: 2px solid @red;
+}
+
+#memory {
+    color: @orange;
+    border-bottom: 2px solid @orange;
+}
+
+#bluetooth {
+    color: @cyan;
+    border-bottom: 2px solid @cyan;
+}
+
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
     margin-left: 0;
@@ -117,6 +137,16 @@ button:hover {
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {
     margin-right: 0;
+}
+
+#custom-network-ip {
+    color: @purple;
+    border-bottom: 2px solid @purple;
+}
+
+#custom-network-bandwidth {
+    color: @green;
+    border-bottom: 2px solid @green;
 }
 
 #custom-vpn {

@@ -1,0 +1,131 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 34,
+  "modules-left": [
+    "clock"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "pulseaudio#right",
+    "bluetooth",
+    "custom/network-ip",
+    "custom/network-bandwidth"
+  ],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{name}",
+    "all-outputs": true,
+    "active-only": false,
+    "persistent-workspaces": {
+      "*": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "󰍛 {usage}%",
+    "on-click": "$TERMINAL -e btop"
+  },
+  "memory": {
+    "interval": 5,
+    "format": "󰘚 {percentage}%",
+    "tooltip-format": "{used:0.1f}G / {total:0.1f}G used",
+    "on-click": "$TERMINAL -e btop"
+  },
+  "clock": {
+    "format": "{:L%A %I:%M %p}",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip": false
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1
+  },
+  "bluetooth": {
+    "format": "󰂯 {status}",
+    "format-disabled": "󰂲 OFF",
+    "format-on": "󰂯 ON",
+    "format-connected": "󰂯 {num_connections}",
+    "format-connected-battery": "󰂯 {num_connections}",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueberry"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "pulseaudio#right": {
+    "format": "󰕾 {volume}%",
+    "on-click": "pamixer -t",
+    "on-click-right": "pavucontrol",
+    "on-click-middle": "pavucontrol",
+    "tooltip-format": "{desc}\nLeft-click: mute/unmute\nRight-click: volume control\nScroll: adjust volume",
+    "scroll-step": 5,
+    "format-muted": "󰖁 {volume}%"
+  },
+  "custom/network-ip": {
+    "exec": "~/.config/waybar/scripts/network-ip.sh",
+    "interval": 5,
+    "format": "{}",
+    "return-type": ""
+  },
+  "custom/network-bandwidth": {
+    "exec": "~/.config/waybar/scripts/network-bandwidth.sh",
+    "interval": 3,
+    "format": "{}",
+    "return-type": ""
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 17
+  },
+  "tray#right": {
+    "icon-size": 16,
+    "spacing": 10
+  }
+}

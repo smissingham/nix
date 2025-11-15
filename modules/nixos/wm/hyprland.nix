@@ -57,6 +57,8 @@ in
         wl-clipboard
 
         # System Utils
+        bc
+        blueberry
         pamixer
         pavucontrol
         playerctl
