@@ -1,0 +1,23 @@
+general_settings:
+  store_model_in_db: true
+  store_prompts_in_spend_logs: true
+
+model_list:
+  # OpenRouter Models
+  - model_name: qwen3-coder
+    litellm_params:
+      model: openrouter/qwen/qwen3-coder
+
+  - model_name: claude-haiku-4.5
+    litellm_params:
+      model: openrouter/anthropic/claude-haiku-4.5
+
+  - model_name: kimi-k2-thinking
+    litellm_params:
+      model: openrouter/moonshotai/kimi-k2-thinking
+
+  # Ollama Local Models
+  - model_name: qwen3-8b
+    litellm_params:
+      model: ollama/qwen3:8b
+      api_base: http://ollama:11434

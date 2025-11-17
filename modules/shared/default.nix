@@ -1,5 +1,6 @@
 # ----- DEFAULTS TO APPLY ON ALL (DARWIN + NIXOS) SYSTEMS -----#
 {
+  config,
   mainUser,
   pkgs,
   ...
@@ -12,6 +13,7 @@
 
   environment.variables = {
     NIX_CONFIG_HOME = mainUser.getNixConfPath { };
+    HOSTNAME = config.networking.hostName;
   };
 
   nix = {
@@ -37,6 +39,7 @@
   environment.systemPackages = with pkgs; [
     # General CLI Utils
     lsof
+    jq
 
     # Nix CLI Utils
     nixfmt-rfc-style # formatter

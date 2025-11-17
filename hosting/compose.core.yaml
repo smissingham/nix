@@ -1,0 +1,50 @@
+name: core
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.11
+    restart: always
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      CF_DNS_API_TOKEN: ${HOSTING_CF_API_TOKEN}
+      # prevent cloudflare trying to resolve cname pointed at private tailnet
+      LEGO_DISABLE_CNAME_SUPPORT: true
+    ports:
+      #- "80:80"
+      - "443:443"
+      - "8081:8080" # traefik dashboard
+    volumes:
+      - ${APPDATA_PATH}/core/traefik/letsencrypt:/letsencrypt
+      #- /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
+    command:
+      - --log.level=ERROR
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.resolver.acme.dnschallenge=true
+      - --certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1
+      - --certificatesresolvers.resolver.acme.email=${HOSTING_ADMIN_EMAIL}
+      - --certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json
+
+  searxng:
+    container_name: searxng
+    image: searxng/searxng
+    restart: always
+    environment:
+      INSTANCE_NAME: ${HOSTNAME}
+      BASE_URL: "https://searxng.${HOSTNAME}.${HOSTING_ROOT}"
+    volumes:
+      - ${APPDATA_PATH}/core/searxng:/etc/searxng
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.searxng.rule=Host(`searxng.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.searxng.tls=true
+      - traefik.http.routers.searxng.entrypoints=websecure
+      - traefik.http.routers.searxng.tls.certresolver=resolver
+      - traefik.http.services.searxng.loadbalancer.server.port=8080

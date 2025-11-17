@@ -154,6 +154,7 @@
               ++ [ (importDir (privateModulesPath + "/nixos")) ];
 
           sharedModules = [
+            (importDir ./hosting)
             (importDir ./modules/shared)
             (importDir (privateModulesPath + "/shared"))
           ];

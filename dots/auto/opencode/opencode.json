@@ -5,7 +5,7 @@
   "formatter": {
     "nix": {
       "command": [
-        "nixfmt-rfc-style",
+        "nixfmt",
         "$FILE"
       ],
       "extensions": [
