@@ -15,6 +15,8 @@ return {
           sh = { "shfmt" },
           bashsh = { "shfmt" },
           nix = { "nixfmt" },
+          black = {"black"},
+          prettierd = {"prettierd"},
 
           ["_"] = {
             lsp_format = "prefer",

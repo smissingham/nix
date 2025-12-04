@@ -49,6 +49,7 @@
     #gitkraken
     #bruno
     #mypkgs.filen-desktop
+    postman
 
     # CLI Stuff
     mypkgs.pfxpackage

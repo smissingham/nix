@@ -66,6 +66,7 @@
           prettierd
           rustfmt
           stylua
+          black
 
           # ----- Package Managers -----#
           pkgsUnstable.uv

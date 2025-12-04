@@ -14,7 +14,7 @@ stdenv.mkDerivation {
 
   src = fetchzip {
     url = "https://developer.pricefx.eu/pfxpackage/pricefx-pckg.zip";
-    sha256 = "sha256-Z/ffwwOhmfRMzznLV49tZRC6gIfDPOndC83JSQV2AvU=";
+    sha256 = "sha256-gB6IASJEqhHuwkO1HlpOpdLAVLBB95FXcqzaWKspgsg=";
     stripRoot = false;
   };
 

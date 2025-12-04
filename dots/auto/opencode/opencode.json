@@ -11,6 +11,16 @@
       "extensions": [
         ".nix"
       ]
+    },
+    "prettierd": {
+      "command": [
+        "prettierd",
+        "--stdin-filepath",
+        "$FILE"
+      ],
+      "extensions": [
+        ".md"
+      ]
     }
   },
   "lsp": {
@@ -60,7 +70,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "mcp-searxng@latest"
       ],
@@ -68,22 +78,22 @@
         "SEARXNG_URL": "https://searxng.coeus.missingham.net"
       }
     },
-    "memory": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
-    },
     "sequential-thinking": {
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "memory": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
       ]
     },
     "git": {
@@ -98,7 +108,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "-y",
         "@upstash/context7-mcp"
       ],
@@ -110,7 +120,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "mcp-remote",
         "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
         "3334",
@@ -124,7 +134,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/nix/store/xcl91nw8b1zihm32cwxrqdvaakdnip75-bun-1.3.0/bin/bunx",
+        "/etc/profiles/per-user/smissingham/bin/bunx",
         "mcp-remote",
         "http://localhost:8082/mcp/demofx-staging.pricefx.com/copilotfx",
         "3334",

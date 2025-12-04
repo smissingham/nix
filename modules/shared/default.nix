@@ -39,6 +39,9 @@
   environment.systemPackages = with pkgs; [
     # General CLI Utils
     lsof
+    zip
+    unzip
+    _7zz
     jq
 
     # Nix CLI Utils

@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   mainUser,
   ...
 }:
@@ -10,6 +11,9 @@
   ];
 
   networking.hostName = "coeus";
+  networking.extraHosts = ''
+    127.0.0.1 db padb redis yugabyte
+  '';
   time.timeZone = "America/Chicago";
 
   myPrivateModules = {
@@ -74,23 +78,28 @@
     #libreoffice
     onlyoffice-bin
     spotify
+    obsidian
+    chromium
 
     # Dev
     jetbrains.idea-community
   ];
-
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
       uv
       bun
       nodejs_24
+      cudaPackages.cudnn
+      cudaPackages.cuda_cudart
+      libGLU
     ];
   };
+  environment.sessionVariables.NIX_LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/share/nix-ld/lib:/run/opengl-driver/lib";
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-    cudaPackages.cudnn
+    #cudaPackages.cudnn
   ];
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
