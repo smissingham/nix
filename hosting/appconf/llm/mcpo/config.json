@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "pricefx-dev": {
+      "type": "streamable-http",
+      "url": "https://dev.mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
+      "oauth": {
+        "server_url": "https://demofx-staging.pricefx.com/pricefx/copilotfx",
+        "storage_type": "file",
+        "use_loopback": true,
+        "callback_port": 3030,
+        "client_metadata": {
+          "client_id": "openwebui-smissingham",
+          "client_name": "MCPO Client",
+          "redirect_uris": ["https://mcpo.coeus.missingham.net/callback"],
+          "grant_types": ["authorization_code", "refresh_token"],
+          "response_types": ["code"],
+          "token_endpoint_auth_method": "none"
+        }
+      }
+    }
+  }
+}

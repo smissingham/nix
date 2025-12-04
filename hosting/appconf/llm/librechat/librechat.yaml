@@ -7,11 +7,27 @@ interface:
 # AI Endpoints
 endpoints:
   custom:
-    # Private LLM Endpoint (via LiteLLM)
-    - name: "PrivateModels"
+    - name: "OpenRouter"
+      apiKey: "${OPENROUTER_KEY}"
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        default:
+          - "minimax/minimax-m2"
+          - "qwen/qwen3-coder"
+          - "openai/gpt-oss-120b"
+          - "anthropic/claude-haiku-4.5"
+          - "anthropic/claude-sonnet-4.5"
+          - "moonshotai/kimi-k2-thinking"
+      fetch: false
+      titleModel: "qwen/qwen3-coder"
+      summarize: true
+      summaryModel: "minimax/minimax-m2"
+
+      # Private LLM Endpoint (via LiteLLM)
+    - name: "LiteLLM"
       apiKey: "${LITELLM_MASTER_KEY}"
       baseURL: "http://litellm:4000"
-      modelDisplayLabel: "PrivateLLM"
+      #modelDisplayLabel: "PrivateLLM"
       models:
         default:
           - "claude-haiku-4.5"
@@ -23,27 +39,22 @@ endpoints:
       summarize: true
       summaryModel: "kimi-k2-thinking"
 
-    # OpenRouter Endpoint
-    - name: "OpenRouter"
-      apiKey: "${OPENROUTER_API_KEY}"
-      baseURL: "https://openrouter.ai/api/v1"
-      modelDisplayLabel: "OpenRouter"
-      models:
-        default:
-          - "anthropic/claude-haiku-4.5"
-          - "moonshotai/kimi-k2-thinking"
-        fetch: true
-      titleModel: "anthropic/claude-haiku-4.5"
-      summarize: true
-      summaryModel: "moonshotai/kimi-k2-thinking"
-
 # MCP Servers
 mcpServers:
-  pricefx-dev:
+  copilotfx:
+    type: streamable-http
+    url: https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx
+    oauth:
+      authorization_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/authorize
+      token_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/token
+      redirect_uri: https://librechat.coeus.missingham.net/api/mcp/copilotfx/oauth/callback
+      client_id: smissingham-librechat-copilotfx
+
+  copilotfx-local:
     type: streamable-http
     url: http://host.docker.internal:8082/mcp/demofx-staging.pricefx.com/copilotfx
     oauth:
-      client_id: librechat-dev
       authorization_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/authorize
       token_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/token
-      redirect_uri: https://librechat.coeus.missingham.net/api/mcp/pricefx-dev/oauth/callback
+      redirect_uri: https://librechat.coeus.missingham.net/api/mcp/copilotfx-local/oauth/callback
+      client_id: smissingham-librechat-copilotfx-local

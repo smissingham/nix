@@ -1,0 +1,71 @@
+name: automation
+services:
+  activepieces:
+    container_name: activepieces
+    image: activepieces/activepieces:latest
+    volumes:
+      - ${APPDATA_PATH}/automation/activepieces:/home/activepieces/.activepieces:U
+    environment:
+      - AP_FRONTEND_URL=https://activepieces.${HOSTNAME}.${HOSTING_ROOT}
+      - AP_DB_TYPE=SQLITE3
+      - AP_REDIS_TYPE=MEMORY
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.activepieces.rule=Host(`activepieces.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.activepieces.tls=true
+      - traefik.http.routers.activepieces.entrypoints=websecure
+      - traefik.http.routers.activepieces.tls.certresolver=resolver
+      - traefik.http.services.activepieces.loadbalancer.server.port=80
+#   kestra:
+#     container_name: kestra
+#     image: kestra/kestra:latest
+#     restart: always
+#     command: server local
+#     volumes:
+#       - ${APP_DATA}/workflow/kestra/data:/app/data:U
+#       - ${APP_DATA}/workflow/kestra/storage:/app/storage:U
+#       - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
+#       - /tmp:/tmp
+#     environment:
+#       KESTRA_SERVER_BASIC_AUTH_USERNAME: ${KESTRA_SERVER_BASIC_AUTH_USERNAME}
+#       KESTRA_SERVER_BASIC_AUTH_PASSWORD: ${KESTRA_SERVER_BASIC_AUTH_PASSWORD}
+#       KESTRA_CONFIGURATION: |
+#         kestra:
+#           repository:
+#             type: h2
+#           storage:
+#             type: local
+#             local:
+#               base-path: "/app/storage"
+#           datasources:
+#             h2:
+#               url: jdbc:h2:file:/app/data/database;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#               username: sa
+#               password: ""
+#               driver-class-name: org.h2.Driver
+#     labels:
+#       - traefik.enable=true
+#       - traefik.http.routers.kestra.rule=Host(`kestra.${ROOT_DOMAIN}`)
+#       - traefik.http.routers.kestra.tls=true
+#       - traefik.http.routers.kestra.entrypoints=websecure
+#       - traefik.http.routers.kestra.tls.certresolver=resolver
+#       - traefik.http.services.kestra.loadbalancer.server.port=8080
+#
+#
+# vikunja:
+#   container_name: vikunja
+#   image: vikunja/vikunja:latest
+#   restart: always
+#   volumes:
+#     - ${APP_DATA}/workflow/vikunja/files:/app/vikunja/files:U
+#     - ${APP_DATA}/workflow/vikunja/db:/db:U
+#   environment:
+#     - VIKUNJA_SERVICE_JWTSECRET=${VIKUNJA_SERVICE_JWTSECRET}
+#     - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.${ROOT_DOMAIN}
+#   labels:
+#     - traefik.enable=true
+#     - traefik.http.routers.vikunja.rule=Host(`vikunja.${ROOT_DOMAIN}`)
+#     - traefik.http.routers.vikunja.tls=true
+#     - traefik.http.routers.vikunja.entrypoints=websecure
+#     - traefik.http.routers.vikunja.tls.certresolver=resolver
+#     - traefik.http.services.vikunja.loadbalancer.server.port=3456
