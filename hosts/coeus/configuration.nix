@@ -70,6 +70,7 @@
     #mypkgs.filen-desktop
 
     signal-desktop
+    vesktop
 
     # Work
     #teams-for-linux

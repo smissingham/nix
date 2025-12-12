@@ -71,6 +71,7 @@
 
       # ----- WORKFLOW ----- #
       "raycast"
+      "ghostty"
       # "google-chrome"
       # "shottr"
 

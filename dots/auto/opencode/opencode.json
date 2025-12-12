@@ -96,14 +96,6 @@
         "@modelcontextprotocol/server-memory"
       ]
     },
-    "git": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/uvx",
-        "mcp-server-git"
-      ]
-    },
     "context7": {
       "enabled": true,
       "type": "local",
@@ -115,6 +107,14 @@
       "environment": {
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
+    },
+    "git": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "/etc/profiles/per-user/smissingham/bin/uvx",
+        "mcp-server-git"
+      ]
     },
     "copilotfx": {
       "enabled": true,
@@ -128,33 +128,6 @@
         "localhost",
         "--static-oauth-client-info",
         "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
-      ]
-    },
-    "copilotfx-dev": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
-        "mcp-remote",
-        "http://localhost:8082/mcp/demofx-staging.pricefx.com/copilotfx",
-        "3334",
-        "--host",
-        "localhost",
-        "--static-oauth-client-info",
-        "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
-      ]
-    },
-    "knowledgefx": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "/etc/profiles/per-user/smissingham/bin/uv",
-        "--directory",
-        "/home/smissingham/Employer/workspace-product/tools/knowledgefx",
-        "run",
-        "python",
-        "-m",
-        "builds.mcpserver"
       ]
     }
   }

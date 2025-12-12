@@ -20,6 +20,11 @@
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          overlays = [
+            (final: _prev: {
+              groovyls = final.callPackage ./packages/groovyls/package.nix { };
+            })
+          ];
         };
 
         pkgsUnstable = import nixpkgs-unstable {
@@ -57,6 +62,7 @@
           yaml-language-server # YAML
           rust-analyzer
           jdt-language-server # (jdtls) java all-in-one LS
+          groovyls # Groovy language server
           pkgsUnstable.ruff # python lsp - linting & formatter
           basedpyright # python type checker
 
@@ -72,6 +78,8 @@
           pkgsUnstable.uv
           pkgsUnstable.bun
           poetry
+          gradle
+          maven
 
           # ----- CLI Utils -----#
           bat
@@ -83,7 +91,9 @@
           git
           just
           lazygit
+          lsof # Required for opencode.nvim process discovery
           pandoc
+          procps # Provides pgrep, required for opencode.nvim process discovery
           ripgrep
           ripgrep-all
           tldr
