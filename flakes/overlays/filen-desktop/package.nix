@@ -68,40 +68,39 @@ buildNpmPackage {
   env.PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
 
   postPatch = ''
-        # Use nixpkgs electron instead of downloading
-        substituteInPlace package.json \
-          --replace-fail '"electron": "^34.1.1"' '"electron": "*"'
-        
-        # Fix app name and userData paths inside filen-desktop app source
-        substituteInPlace src/index.ts \
-          --replace-fail 'const options = await this.options.get()' \
-            'app.setName("${desktopName}")
-    		app.setPath("userData", pathModule.join(app.getPath("appData"), "@filen", "desktop"))
-    		
-    		const options = await this.options.get()'
-        
-        # Disable code signing (not needed for Nix)
-        substituteInPlace package.json \
-          --replace-fail '"afterSign": "build/notarize.js",' ""
+    # Use nixpkgs electron instead of downloading
+    substituteInPlace package.json \
+      --replace-fail '"electron": "^34.1.1"' '"electron": "*"'
+
+    # Disable code signing (not needed for Nix)
+    substituteInPlace package.json \
+      --replace-fail '"afterSign": "build/notarize.js",' ""
+
+    # Fix app name and userData paths inside filen-desktop app source
+    substituteInPlace src/index.ts \
+      --replace-fail 'const options = await this.options.get()' \ '
+      app.setName("${desktopName}")
+      app.setPath("userData", pathModule.join(app.getPath("appData"), "@filen", "desktop"))
+      const options = await this.options.get()
+    '
   '';
 
   buildPhase = ''
     runHook preBuild
 
-    # Build TypeScript
+    # Compile TypeScript
     npm run build
 
-    # Build electron distributable bundle on darwin
-    ${lib.optionalString stdenv.hostPlatform.isDarwin ''
-      cp -r ${electron.dist} electron-dist
-      chmod -R u+w electron-dist
+    # Prepare nixpkgs electron for electron-builder
+    cp -r ${electron.dist} electron-dist
+    chmod -R u+w electron-dist
 
-      npx electron-builder \
-        --dir \
-        --mac \
-        -c.electronDist=electron-dist \
-        -c.electronVersion="${electron.version}"
-    ''}
+    # Build platform bundle
+    npx electron-builder \
+      --dir \
+      --${if stdenv.hostPlatform.isDarwin then "mac" else "linux"} \
+      -c.electronDist=electron-dist \
+      -c.electronVersion="${electron.version}"
 
     runHook postBuild
   '';
@@ -116,22 +115,23 @@ buildNpmPackage {
           mkdir -p $out/Applications
           cp -r prod/mac*/${appName}.app $out/Applications/
 
-          # Create wrapper in bin
+          # Create bin symlink
           mkdir -p $out/bin
           makeWrapper "$out/Applications/${appName}.app/Contents/MacOS/${appName}" $out/bin/${packageName}
         ''
       else
         ''
-          # Install Linux version
+          # Copy built resources
           mkdir -p $out/share/${packageName}
           cp -r prod/*-unpacked/{locales,resources{,.pak}} $out/share/${packageName}
 
-          # Create desktop icons
+          # Create desktop icon
           mkdir -p $out/share/icons/hicolor/256x256/apps
           magick assets/icons/app/linux.png -resize 256x256 $out/share/icons/hicolor/256x256/apps/${packageName}.png
 
-          # Create wrapper
+          # Create launcher with electron
           makeWrapper ${lib.getExe electron} $out/bin/${packageName} \
+            --set ELECTRON_IS_DEV 0 \
             --add-flags $out/share/${packageName}/resources/app.asar \
             --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
             --inherit-argv0

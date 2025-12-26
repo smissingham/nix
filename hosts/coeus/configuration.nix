@@ -67,7 +67,7 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    #mypkgs.filen-desktop
+    mypkgs.filen-desktop
 
     signal-desktop
     vesktop
@@ -80,7 +80,7 @@
     onlyoffice-bin
     spotify
     obsidian
-    chromium
+    #chromium
 
     # Dev
     jetbrains.idea-community

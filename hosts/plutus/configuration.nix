@@ -50,6 +50,7 @@
     #bruno
     #mypkgs.filen-desktop
     postman
+    moonlight-qt
 
     # CLI Stuff
     mypkgs.pfxpackage

@@ -1,6 +1,6 @@
 # Reload Config: Cmd + Shift + ,
 
-font-size = 21
+font-size = 18
 background-opacity = 0.9
 
 theme = Atom One Dark 

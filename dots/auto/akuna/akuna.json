@@ -1,5 +1,5 @@
 {
-  "$schema": "file:///Users/smissingham/Documents/Projects/akuna/target/docs/generated/config-schema.json",
+  "$schema": "file:///Users/smissingham/Projects/akuna/target/docs/generated/config-schema.json",
   "mcp_config": {
     "clients": {
       "cline": {

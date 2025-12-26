@@ -1,21 +1,21 @@
 name: automation
 services:
-  activepieces:
-    container_name: activepieces
-    image: activepieces/activepieces:latest
-    volumes:
-      - ${APPDATA_PATH}/automation/activepieces:/home/activepieces/.activepieces:U
-    environment:
-      - AP_FRONTEND_URL=https://activepieces.${HOSTNAME}.${HOSTING_ROOT}
-      - AP_DB_TYPE=SQLITE3
-      - AP_REDIS_TYPE=MEMORY
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.activepieces.rule=Host(`activepieces.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.activepieces.tls=true
-      - traefik.http.routers.activepieces.entrypoints=websecure
-      - traefik.http.routers.activepieces.tls.certresolver=resolver
-      - traefik.http.services.activepieces.loadbalancer.server.port=80
+  # activepieces:
+  #   container_name: activepieces
+  #   image: activepieces/activepieces:latest
+  #   volumes:
+  #     - ${APPDATA_PATH}/automation/activepieces:/home/activepieces/.activepieces:U
+  #   environment:
+  #     - AP_FRONTEND_URL=https://activepieces.${HOSTNAME}.${HOSTING_ROOT}
+  #     - AP_DB_TYPE=SQLITE3
+  #     - AP_REDIS_TYPE=MEMORY
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.activepieces.rule=Host(`activepieces.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.activepieces.tls=true
+  #     - traefik.http.routers.activepieces.entrypoints=websecure
+  #     - traefik.http.routers.activepieces.tls.certresolver=resolver
+  #     - traefik.http.services.activepieces.loadbalancer.server.port=80
 #   kestra:
 #     container_name: kestra
 #     image: kestra/kestra:latest

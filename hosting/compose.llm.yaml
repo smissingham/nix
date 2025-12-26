@@ -1,63 +1,63 @@
 name: llm
 services:
-  ollama:
-    container_name: ollama
-    image: ollama/ollama:latest
-    restart: always
-    hostname: ollama
-    user: "${UID:-1000}:${GID:-100}"
-    environment:
-      TZ: ${HOSTING_TZ}
-      OLLAMA_KEEP_ALIVE: 24h
-      HOME: /home/ollama
-    volumes:
-      - ${APPDATA_PATH}/llm/ollama:/home/ollama/.ollama:U
-    devices:
-      - nvidia.com/gpu=all
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.ollama.tls=true
-      - traefik.http.routers.ollama.entrypoints=websecure
-      - traefik.http.routers.ollama.tls.certresolver=resolver
-      - traefik.http.services.ollama.loadbalancer.server.port=11434
+  # ollama:
+  #   container_name: ollama
+  #   image: ollama/ollama:latest
+  #   restart: always
+  #   hostname: ollama
+  #   user: "${UID:-1000}:${GID:-100}"
+  #   environment:
+  #     TZ: ${HOSTING_TZ}
+  #     OLLAMA_KEEP_ALIVE: 24h
+  #     HOME: /home/ollama
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/ollama:/home/ollama/.ollama:U
+  #   devices:
+  #     - nvidia.com/gpu=all
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.ollama.tls=true
+  #     - traefik.http.routers.ollama.entrypoints=websecure
+  #     - traefik.http.routers.ollama.tls.certresolver=resolver
+  #     - traefik.http.services.ollama.loadbalancer.server.port=11434
 
-  litellm-postgres:
-    container_name: litellm-postgres
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
-      POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      POSTGRES_DB: litellm
-    volumes:
-      - ${APPDATA_PATH}/llm/litellm-postgres:/var/lib/postgresql/data:U
-
-  litellm:
-    container_name: litellm
-    restart: always
-    image: ghcr.io/berriai/litellm:main-latest
-    depends_on:
-      - litellm-postgres
-    environment:
-      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      OPENROUTER_API_KEY: ${HOSTING_OPENROUTER_API_KEY}
-      UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
-      UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
-      LITELLM_LOG: ERROR
-      JSON_LOGS: "True"
-    volumes:
-      - ${APPCONF_PATH}/llm/litellm/config:/config:U
-    command:
-      - --config=/config/config.yaml
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.litellm.tls=true
-      - traefik.http.routers.litellm.entrypoints=websecure
-      - traefik.http.routers.litellm.tls.certresolver=resolver
-      - traefik.http.services.litellm.loadbalancer.server.port=4000
+  # litellm-postgres:
+  #   container_name: litellm-postgres
+  #   image: postgres:15-alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
+  #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     POSTGRES_DB: litellm
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/litellm-postgres:/var/lib/postgresql/data:U
+  #
+  # litellm:
+  #   container_name: litellm
+  #   restart: always
+  #   image: ghcr.io/berriai/litellm:main-latest
+  #   depends_on:
+  #     - litellm-postgres
+  #   environment:
+  #     LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     OPENROUTER_API_KEY: ${HOSTING_OPENROUTER_API_KEY}
+  #     UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
+  #     UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
+  #     LITELLM_LOG: ERROR
+  #     JSON_LOGS: "True"
+  #   volumes:
+  #     - ${APPCONF_PATH}/llm/litellm/config:/config:U
+  #   command:
+  #     - --config=/config/config.yaml
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.litellm.tls=true
+  #     - traefik.http.routers.litellm.entrypoints=websecure
+  #     - traefik.http.routers.litellm.tls.certresolver=resolver
+  #     - traefik.http.services.litellm.loadbalancer.server.port=4000
 
   librechat-api:
     container_name: librechat-api
@@ -204,219 +204,219 @@ services:
   #     - traefik.http.routers.mcpo-oauth.priority=100
   #     - traefik.http.services.mcpo-oauth.loadbalancer.server.port=3030
 
-  dify-postgres:
-    container_name: dify-postgres
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
-      POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      POSTGRES_DB: dify
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/postgres:/var/lib/postgresql/data:U
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${HOSTING_ADMIN_USERNAME}"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
-
-  dify-redis:
-    container_name: dify-redis
-    image: redis:6-alpine
-    restart: always
-    command: redis-server --requirepass ${HOSTING_ADMIN_PASSWORD}
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/redis:/data:U
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
-
-  dify-weaviate:
-    container_name: dify-weaviate
-    image: semitechnologies/weaviate:1.27.4
-    restart: always
-    environment:
-      QUERY_DEFAULTS_LIMIT: 25
-      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "false"
-      AUTHENTICATION_APIKEY_ENABLED: "true"
-      AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${HOSTING_COMMON_MASTER_KEY}
-      AUTHENTICATION_APIKEY_USERS: ${HOSTING_ADMIN_EMAIL}
-      AUTHORIZATION_ADMINLIST_ENABLED: "true"
-      AUTHORIZATION_ADMINLIST_USERS: ${HOSTING_ADMIN_EMAIL}
-      PERSISTENCE_DATA_PATH: /var/lib/weaviate
-      DEFAULT_VECTORIZER_MODULE: none
-      CLUSTER_HOSTNAME: node1
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/weaviate:/var/lib/weaviate:U
-
-  dify-sandbox:
-    container_name: dify-sandbox
-    image: langgenius/dify-sandbox:0.2.10
-    restart: always
-    environment:
-      GIN_MODE: release
-      WORKER_TIMEOUT: 15
-      ENABLE_NETWORK: "true"
-      HTTP_PROXY: http://dify-ssrf-proxy:3128
-      HTTPS_PROXY: http://dify-ssrf-proxy:3128
-      SANDBOX_PORT: 8194
-    cap_add:
-      - SYS_ADMIN
-
-  dify-ssrf-proxy:
-    container_name: dify-ssrf-proxy
-    image: ubuntu/squid:latest
-    restart: always
-    volumes:
-      - ${APPCONF_PATH}/llm/dify/ssrf-proxy:/docker-entrypoint.d:ro
-      - ${APPDATA_PATH}/llm/dify/ssrf-proxy:/var/spool/squid:U
-
-  dify-worker:
-    container_name: dify-worker
-    image: langgenius/dify-api:latest
-    restart: always
-    depends_on:
-      dify-postgres:
-        condition: service_healthy
-      dify-redis:
-        condition: service_healthy
-    environment:
-      MODE: worker
-      LOG_LEVEL: INFO
-      SECRET_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
-      DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      DB_HOST: dify-postgres
-      DB_PORT: 5432
-      DB_DATABASE: dify
-      REDIS_HOST: dify-redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      REDIS_USE_SSL: "false"
-      REDIS_DB: 0
-      CELERY_BROKER_URL: redis://:${HOSTING_ADMIN_PASSWORD}@dify-redis:6379/1
-      BROKER_USE_SSL: "false"
-      STORAGE_TYPE: opendal
-      OPENDAL_SCHEME: fs
-      OPENDAL_FS_ROOT: storage
-      VECTOR_STORE: weaviate
-      WEAVIATE_ENDPOINT: http://dify-weaviate:8080
-      WEAVIATE_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      CODE_EXECUTION_ENDPOINT: http://dify-sandbox:8194
-      CODE_EXECUTION_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
-      SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/worker/storage:/app/api/storage:U
-
-  dify-web:
-    container_name: dify-web
-    image: langgenius/dify-web:latest
-    restart: always
-    environment:
-      CONSOLE_API_URL: ""
-      APP_API_URL: ""
-      NEXT_PUBLIC_COOKIE_DOMAIN: .${HOSTNAME}.${HOSTING_ROOT}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.dify-web.rule=Host(`dify.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.dify-web.tls=true
-      - traefik.http.routers.dify-web.entrypoints=websecure
-      - traefik.http.routers.dify-web.tls.certresolver=resolver
-      - traefik.http.routers.dify-web.priority=1
-      - traefik.http.services.dify-web.loadbalancer.server.port=3000
-
-  dify-api:
-    container_name: dify-api
-    image: langgenius/dify-api:latest
-    restart: always
-    depends_on:
-      dify-postgres:
-        condition: service_healthy
-      dify-redis:
-        condition: service_healthy
-    environment:
-      MODE: api
-      LOG_LEVEL: INFO
-      SECRET_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      CONSOLE_WEB_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      CONSOLE_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      SERVICE_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      APP_WEB_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      APP_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      FILES_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      TRIGGER_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
-      DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
-      DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      DB_HOST: dify-postgres
-      DB_PORT: 5432
-      DB_DATABASE: dify
-      REDIS_HOST: dify-redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      REDIS_USE_SSL: "false"
-      REDIS_DB: 0
-      CELERY_BROKER_URL: redis://:${HOSTING_ADMIN_PASSWORD}@dify-redis:6379/1
-      BROKER_USE_SSL: "false"
-      WEB_API_CORS_ALLOW_ORIGINS: "*"
-      CONSOLE_CORS_ALLOW_ORIGINS: "*"
-      COOKIE_DOMAIN: .${HOSTNAME}.${HOSTING_ROOT}
-      STORAGE_TYPE: opendal
-      OPENDAL_SCHEME: fs
-      OPENDAL_FS_ROOT: storage
-      VECTOR_STORE: weaviate
-      WEAVIATE_ENDPOINT: http://dify-weaviate:8080
-      WEAVIATE_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      CODE_EXECUTION_ENDPOINT: http://dify-sandbox:8194
-      CODE_EXECUTION_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
-      SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
-      PLUGIN_DAEMON_URL: http://dify-plugin-daemon:5002
-      PLUGIN_DAEMON_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      MIGRATION_ENABLED: "true"
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/api/storage:/app/api/storage:U
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.dify-api.rule=Host(`dify.${HOSTNAME}.${HOSTING_ROOT}`) && (PathPrefix(`/api`) || PathPrefix(`/console/api`) || PathPrefix(`/v1`) || PathPrefix(`/files`))
-      - traefik.http.routers.dify-api.tls=true
-      - traefik.http.routers.dify-api.entrypoints=websecure
-      - traefik.http.routers.dify-api.tls.certresolver=resolver
-      - traefik.http.routers.dify-api.priority=10
-      - traefik.http.services.dify-api.loadbalancer.server.port=5001
-
-  dify-plugin-daemon:
-    container_name: dify-plugin-daemon
-    image: langgenius/dify-plugin-daemon:0.4.1-local
-    restart: always
-    depends_on:
-      dify-postgres:
-        condition: service_healthy
-      dify-redis:
-        condition: service_healthy
-    environment:
-      DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
-      DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      DB_HOST: dify-postgres
-      DB_PORT: 5432
-      DB_DATABASE: dify_plugin
-      REDIS_HOST: dify-redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      REDIS_USE_SSL: "false"
-      REDIS_DB: 0
-      SERVER_PORT: 5002
-      SERVER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      DIFY_INNER_API_URL: http://dify-api:5001
-      DIFY_INNER_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      PLUGIN_REMOTE_INSTALLING_HOST: 0.0.0.0
-      PLUGIN_REMOTE_INSTALLING_PORT: 5003
-      PLUGIN_STORAGE_TYPE: local
-      PLUGIN_STORAGE_LOCAL_ROOT: /app/storage
-      PLUGIN_WORKING_PATH: /app/storage/cwd
-      FORCE_VERIFYING_SIGNATURE: "false"
-    volumes:
-      - ${APPDATA_PATH}/llm/dify/plugin_daemon:/app/storage:U
+  # dify-postgres:
+  #   container_name: dify-postgres
+  #   image: postgres:15-alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
+  #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     POSTGRES_DB: dify
+  #     PGDATA: /var/lib/postgresql/data/pgdata
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/postgres:/var/lib/postgresql/data:U
+  #   healthcheck:
+  #     test: ["CMD", "pg_isready", "-U", "${HOSTING_ADMIN_USERNAME}"]
+  #     interval: 1s
+  #     timeout: 3s
+  #     retries: 30
+  #
+  # dify-redis:
+  #   container_name: dify-redis
+  #   image: redis:6-alpine
+  #   restart: always
+  #   command: redis-server --requirepass ${HOSTING_ADMIN_PASSWORD}
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/redis:/data:U
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 1s
+  #     timeout: 3s
+  #     retries: 30
+  #
+  # dify-weaviate:
+  #   container_name: dify-weaviate
+  #   image: semitechnologies/weaviate:1.27.4
+  #   restart: always
+  #   environment:
+  #     QUERY_DEFAULTS_LIMIT: 25
+  #     AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "false"
+  #     AUTHENTICATION_APIKEY_ENABLED: "true"
+  #     AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${HOSTING_COMMON_MASTER_KEY}
+  #     AUTHENTICATION_APIKEY_USERS: ${HOSTING_ADMIN_EMAIL}
+  #     AUTHORIZATION_ADMINLIST_ENABLED: "true"
+  #     AUTHORIZATION_ADMINLIST_USERS: ${HOSTING_ADMIN_EMAIL}
+  #     PERSISTENCE_DATA_PATH: /var/lib/weaviate
+  #     DEFAULT_VECTORIZER_MODULE: none
+  #     CLUSTER_HOSTNAME: node1
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/weaviate:/var/lib/weaviate:U
+  #
+  # dify-sandbox:
+  #   container_name: dify-sandbox
+  #   image: langgenius/dify-sandbox:0.2.10
+  #   restart: always
+  #   environment:
+  #     GIN_MODE: release
+  #     WORKER_TIMEOUT: 15
+  #     ENABLE_NETWORK: "true"
+  #     HTTP_PROXY: http://dify-ssrf-proxy:3128
+  #     HTTPS_PROXY: http://dify-ssrf-proxy:3128
+  #     SANDBOX_PORT: 8194
+  #   cap_add:
+  #     - SYS_ADMIN
+  #
+  # dify-ssrf-proxy:
+  #   container_name: dify-ssrf-proxy
+  #   image: ubuntu/squid:latest
+  #   restart: always
+  #   volumes:
+  #     - ${APPCONF_PATH}/llm/dify/ssrf-proxy:/docker-entrypoint.d:ro
+  #     - ${APPDATA_PATH}/llm/dify/ssrf-proxy:/var/spool/squid:U
+  #
+  # dify-worker:
+  #   container_name: dify-worker
+  #   image: langgenius/dify-api:latest
+  #   restart: always
+  #   depends_on:
+  #     dify-postgres:
+  #       condition: service_healthy
+  #     dify-redis:
+  #       condition: service_healthy
+  #   environment:
+  #     MODE: worker
+  #     LOG_LEVEL: INFO
+  #     SECRET_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
+  #     DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     DB_HOST: dify-postgres
+  #     DB_PORT: 5432
+  #     DB_DATABASE: dify
+  #     REDIS_HOST: dify-redis
+  #     REDIS_PORT: 6379
+  #     REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     REDIS_USE_SSL: "false"
+  #     REDIS_DB: 0
+  #     CELERY_BROKER_URL: redis://:${HOSTING_ADMIN_PASSWORD}@dify-redis:6379/1
+  #     BROKER_USE_SSL: "false"
+  #     STORAGE_TYPE: opendal
+  #     OPENDAL_SCHEME: fs
+  #     OPENDAL_FS_ROOT: storage
+  #     VECTOR_STORE: weaviate
+  #     WEAVIATE_ENDPOINT: http://dify-weaviate:8080
+  #     WEAVIATE_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     CODE_EXECUTION_ENDPOINT: http://dify-sandbox:8194
+  #     CODE_EXECUTION_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
+  #     SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/worker/storage:/app/api/storage:U
+  #
+  # dify-web:
+  #   container_name: dify-web
+  #   image: langgenius/dify-web:latest
+  #   restart: always
+  #   environment:
+  #     CONSOLE_API_URL: ""
+  #     APP_API_URL: ""
+  #     NEXT_PUBLIC_COOKIE_DOMAIN: .${HOSTNAME}.${HOSTING_ROOT}
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.dify-web.rule=Host(`dify.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.dify-web.tls=true
+  #     - traefik.http.routers.dify-web.entrypoints=websecure
+  #     - traefik.http.routers.dify-web.tls.certresolver=resolver
+  #     - traefik.http.routers.dify-web.priority=1
+  #     - traefik.http.services.dify-web.loadbalancer.server.port=3000
+  #
+  # dify-api:
+  #   container_name: dify-api
+  #   image: langgenius/dify-api:latest
+  #   restart: always
+  #   depends_on:
+  #     dify-postgres:
+  #       condition: service_healthy
+  #     dify-redis:
+  #       condition: service_healthy
+  #   environment:
+  #     MODE: api
+  #     LOG_LEVEL: INFO
+  #     SECRET_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     CONSOLE_WEB_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     CONSOLE_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     SERVICE_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     APP_WEB_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     APP_API_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     FILES_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     TRIGGER_URL: https://dify.${HOSTNAME}.${HOSTING_ROOT}
+  #     DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
+  #     DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     DB_HOST: dify-postgres
+  #     DB_PORT: 5432
+  #     DB_DATABASE: dify
+  #     REDIS_HOST: dify-redis
+  #     REDIS_PORT: 6379
+  #     REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     REDIS_USE_SSL: "false"
+  #     REDIS_DB: 0
+  #     CELERY_BROKER_URL: redis://:${HOSTING_ADMIN_PASSWORD}@dify-redis:6379/1
+  #     BROKER_USE_SSL: "false"
+  #     WEB_API_CORS_ALLOW_ORIGINS: "*"
+  #     CONSOLE_CORS_ALLOW_ORIGINS: "*"
+  #     COOKIE_DOMAIN: .${HOSTNAME}.${HOSTING_ROOT}
+  #     STORAGE_TYPE: opendal
+  #     OPENDAL_SCHEME: fs
+  #     OPENDAL_FS_ROOT: storage
+  #     VECTOR_STORE: weaviate
+  #     WEAVIATE_ENDPOINT: http://dify-weaviate:8080
+  #     WEAVIATE_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     CODE_EXECUTION_ENDPOINT: http://dify-sandbox:8194
+  #     CODE_EXECUTION_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
+  #     SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
+  #     PLUGIN_DAEMON_URL: http://dify-plugin-daemon:5002
+  #     PLUGIN_DAEMON_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     MIGRATION_ENABLED: "true"
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/api/storage:/app/api/storage:U
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.dify-api.rule=Host(`dify.${HOSTNAME}.${HOSTING_ROOT}`) && (PathPrefix(`/api`) || PathPrefix(`/console/api`) || PathPrefix(`/v1`) || PathPrefix(`/files`))
+  #     - traefik.http.routers.dify-api.tls=true
+  #     - traefik.http.routers.dify-api.entrypoints=websecure
+  #     - traefik.http.routers.dify-api.tls.certresolver=resolver
+  #     - traefik.http.routers.dify-api.priority=10
+  #     - traefik.http.services.dify-api.loadbalancer.server.port=5001
+  #
+  # dify-plugin-daemon:
+  #   container_name: dify-plugin-daemon
+  #   image: langgenius/dify-plugin-daemon:0.4.1-local
+  #   restart: always
+  #   depends_on:
+  #     dify-postgres:
+  #       condition: service_healthy
+  #     dify-redis:
+  #       condition: service_healthy
+  #   environment:
+  #     DB_USERNAME: ${HOSTING_ADMIN_USERNAME}
+  #     DB_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     DB_HOST: dify-postgres
+  #     DB_PORT: 5432
+  #     DB_DATABASE: dify_plugin
+  #     REDIS_HOST: dify-redis
+  #     REDIS_PORT: 6379
+  #     REDIS_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     REDIS_USE_SSL: "false"
+  #     REDIS_DB: 0
+  #     SERVER_PORT: 5002
+  #     SERVER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     DIFY_INNER_API_URL: http://dify-api:5001
+  #     DIFY_INNER_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     PLUGIN_REMOTE_INSTALLING_HOST: 0.0.0.0
+  #     PLUGIN_REMOTE_INSTALLING_PORT: 5003
+  #     PLUGIN_STORAGE_TYPE: local
+  #     PLUGIN_STORAGE_LOCAL_ROOT: /app/storage
+  #     PLUGIN_WORKING_PATH: /app/storage/cwd
+  #     FORCE_VERIFYING_SIGNATURE: "false"
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/dify/plugin_daemon:/app/storage:U

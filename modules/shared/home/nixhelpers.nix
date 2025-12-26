@@ -65,8 +65,8 @@ in
         # Interactive fuzzy search for Nix packages
         nxs = builtins.readFile (
           pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/3timeslazy/nix-search-tv/main/nixpkgs.sh";
-            sha256 = "1z5jgi27yrisy3rwrba01kj2chpq68zdr5g5aalh5y5xd0rv0j3c";
+            url = "https://raw.githubusercontent.com/3timeslazy/nix-search-tv/c7919f34fde2e87de3fe70c74bf18c7e0091f19b/nixpkgs.sh";
+            sha256 = "sha256-XkBL7EdPIETdi8B5k0ww3d66xB7QnW+mFEK2RUihWcY=";
           }
         );
 

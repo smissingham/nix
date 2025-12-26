@@ -117,7 +117,7 @@
       ]
     },
     "copilotfx": {
-      "enabled": true,
+      "enabled": false,
       "type": "local",
       "command": [
         "/etc/profiles/per-user/smissingham/bin/bunx",
