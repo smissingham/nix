@@ -1,0 +1,22 @@
+name: games
+
+services:
+  factorio:
+    image: factoriotools/factorio:latest
+    container_name: factorio
+    restart: always
+    ports:
+      - "34197:34197/udp"
+      - "27015:27015/tcp"
+    volumes:
+      - ${APPDATA_PATH}/games/factorio:/factorio
+    environment:
+      - TZ=${TZ}
+      - SAVE_NAME=plentiful
+      - LOAD_LATEST_SAVE=false
+      - UPDATE_MODS_ON_START=true # needed for space-age DLC
+      - USERNAME=${FACTORIO_USERNAME}
+      - TOKEN=${FACTORIO_TOKEN}
+#      - PORT=34198
+#      - PRESET=deathworld
+#      - ADDR=::1

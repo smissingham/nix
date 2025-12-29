@@ -51,6 +51,7 @@
     #mypkgs.filen-desktop
     postman
     moonlight-qt
+    mypkgs.filen-desktop
 
     # CLI Stuff
     mypkgs.pfxpackage

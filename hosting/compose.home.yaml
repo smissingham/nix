@@ -1,9 +1,49 @@
 name: home
 
 services:
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ${APPDATA_PATH}/home/mosquitto/config:/mosquitto/config:U
+      - ${APPDATA_PATH}/home/mosquitto/data:/mosquitto/data:U
+      - ${APPDATA_PATH}/home/mosquitto/log:/mosquitto/log:U
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mqtt.rule=Host(`mqtt.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.mqtt.tls=true
+      - traefik.http.routers.mqtt.entrypoints=websecure
+      - traefik.http.routers.mqtt.tls.certresolver=resolver
+      - traefik.http.services.mqtt.loadbalancer.server.port=9001
+
+  owntracks:
+    container_name: owntracks
+    image: owntracks/recorder
+    restart: always
+    environment:
+      - OTR_HOST=mqtt
+    ports:
+      - 8083:8083
+    volumes:
+      - ${APPDATA_PATH}/home/owntracks/store:/store:U
+      - ${APPDATA_PATH}/home/owntracks/config:/config:U
+    depends_on:
+      - mqtt
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.owntracks.rule=Host(`owntracks.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.owntracks.tls=true
+      - traefik.http.routers.owntracks.entrypoints=websecure
+      - traefik.http.routers.owntracks.tls.certresolver=resolver
+      - traefik.http.services.owntracks.loadbalancer.server.port=8083
+
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-server:v2.4.1
     environment:
       REDIS_HOSTNAME: immich_redis
       DB_HOSTNAME: immich_db
@@ -16,6 +56,8 @@ services:
     depends_on:
       - immich_redis
       - immich_db
+    ports:
+      - 2283:2283
     restart: always
     labels:
       - traefik.enable=true
@@ -27,7 +69,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:v2.4.1
     volumes:
       - model-cache:/cache
     env_file:
