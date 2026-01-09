@@ -1,5 +1,13 @@
 return {
   {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    opts = {},
+    config = function()
+      vim.cmd.colorscheme("gruvbox")
+    end
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
@@ -53,7 +61,7 @@ return {
         --transparent = true,
       })
 
-      vim.cmd.colorscheme("onedark")
+      --vim.cmd.colorscheme("onedark")
     end,
   },
 }

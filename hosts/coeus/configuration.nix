@@ -100,7 +100,6 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-    #cudaPackages.cudnn
   ];
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
@@ -122,5 +121,10 @@
     AllowHibernation=no
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
+  '';
+
+  # Shokz OpenComm2 USB dongle fix - prevents triggering standby/sleep
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="3511", ATTRS{idProduct}=="2f06", DRIVER=="usbhid", ATTR{authorized}="0" 
   '';
 }
