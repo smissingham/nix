@@ -55,7 +55,7 @@ local function create_standard_template_with_rag(rag_context_window_size)
 
       return "You are a code completion assistant. Complete the code at the cursor position.\n"
           .. "Language: " .. vim.bo.filetype .. "\n"
-          .. "IMPORTANT: Only provide the completion text, no explanations or markdown.\n"
+          .. "IMPORTANT: Only provide the completion LITERAL text, no explanations or markdown, and no wrapping backticks.\n"
           .. table.concat(common_instructions)
           .. (rag_context ~= "" and "Relevant code context:\n" .. rag_context .. "\n" or "")
           .. "Code before cursor:\n" .. context_before_cursor .. "\n\n"
@@ -67,6 +67,22 @@ local function create_standard_template_with_rag(rag_context_window_size)
 end
 
 local models = {
+  cerebras_glm_47 = {
+    provider = "openai_compatible",
+    context_window = 8192,
+    provider_options = {
+      name = "LiteLLM",
+      model = "cerebras-glm-4.7",
+      api_key = "HOSTING_COMMON_MASTER_KEY",
+      end_point = vim.env.LITELLM_API_URL .. "/chat/completions",
+      stream = true,
+      optional = {
+        --max_tokens = 256,
+        top_p = 0.9,
+        temperature = 0.3,
+      },
+    },
+  },
   claude4_sonnet = {
     provider = "openai_compatible",
     context_window = 8192,
@@ -180,7 +196,7 @@ return {
       "Davidyz/VectorCode",
     },
     config = function()
-      local model = models.haiku45
+      local model = models.cerebras_glm_47
 
       require("minuet").setup({
         provider = model.provider,

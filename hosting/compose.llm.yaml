@@ -22,42 +22,43 @@ services:
   #     - traefik.http.routers.ollama.tls.certresolver=resolver
   #     - traefik.http.services.ollama.loadbalancer.server.port=11434
 
-  # litellm-postgres:
-  #   container_name: litellm-postgres
-  #   image: postgres:15-alpine
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
-  #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-  #     POSTGRES_DB: litellm
-  #   volumes:
-  #     - ${APPDATA_PATH}/llm/litellm-postgres:/var/lib/postgresql/data:U
-  #
-  # litellm:
-  #   container_name: litellm
-  #   restart: always
-  #   image: ghcr.io/berriai/litellm:main-latest
-  #   depends_on:
-  #     - litellm-postgres
-  #   environment:
-  #     LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-  #     OPENROUTER_API_KEY: ${HOSTING_OPENROUTER_API_KEY}
-  #     UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
-  #     UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-  #     DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
-  #     LITELLM_LOG: ERROR
-  #     JSON_LOGS: "True"
-  #   volumes:
-  #     - ${APPCONF_PATH}/llm/litellm/config:/config:U
-  #   command:
-  #     - --config=/config/config.yaml
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)
-  #     - traefik.http.routers.litellm.tls=true
-  #     - traefik.http.routers.litellm.entrypoints=websecure
-  #     - traefik.http.routers.litellm.tls.certresolver=resolver
-  #     - traefik.http.services.litellm.loadbalancer.server.port=4000
+  litellm-postgres:
+    container_name: litellm-postgres
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
+      POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+      POSTGRES_DB: litellm
+    volumes:
+      - ${APPDATA_PATH}/llm/litellm-postgres:/var/lib/postgresql/data:U
+
+  litellm:
+    container_name: litellm
+    restart: always
+    image: ghcr.io/berriai/litellm:main-latest
+    depends_on:
+      - litellm-postgres
+    environment:
+      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+      OPENROUTER_API_KEY: ${HOSTING_OPENROUTER_API_KEY}
+      CEREBRAS_API_KEY: ${HOSTING_CEREBRAS_API_KEY}
+      UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
+      UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+      DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
+      LITELLM_LOG: ERROR
+      JSON_LOGS: "True"
+    volumes:
+      - ${APPCONF_PATH}/llm/litellm/config:/config:U
+    command:
+      - --config=/config/config.yaml
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.litellm.tls=true
+      - traefik.http.routers.litellm.entrypoints=websecure
+      - traefik.http.routers.litellm.tls.certresolver=resolver
+      - traefik.http.services.litellm.loadbalancer.server.port=4000
 
   librechat-api:
     container_name: librechat-api

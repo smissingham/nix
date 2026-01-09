@@ -54,6 +54,18 @@
     }
   },
   "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "models": {
+        "cerebras-glm-4.7": {
+          "name": "Cerebras GLM 4.7"
+        }
+      },
+      "options": {
+        "baseURL": "{env:LITELLM_API_URL}",
+        "apiKey": "{env:HOSTING_COMMON_MASTER_KEY}"
+      }
+    },
     "lmstudio": {
       "models": {
         "qwen/qwen3-30b-a3b-2507": {

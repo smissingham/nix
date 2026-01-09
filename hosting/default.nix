@@ -17,6 +17,7 @@
           "HOSTING_LIBRECHAT_JWT_SECRET"
           "HOSTING_LIBRECHAT_JWT_REFRESH_SECRET"
           "HOSTING_OPENROUTER_API_KEY"
+          "HOSTING_CEREBRAS_API_KEY"
           # ----- Games ----- #
           "FACTORIO_USERNAME"
           "FACTORIO_TOKEN"

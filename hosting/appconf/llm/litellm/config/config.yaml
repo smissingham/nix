@@ -3,6 +3,11 @@ general_settings:
   store_prompts_in_spend_logs: true
 
 model_list:
+  # Cerebras
+  - model_name: cerebras-glm-4.7
+    litellm_params:
+      model: cerebras/zai-glm-4.7
+
   # OpenRouter Models
   - model_name: qwen3-coder
     litellm_params:
