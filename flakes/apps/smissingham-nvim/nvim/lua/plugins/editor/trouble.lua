@@ -1,5 +1,19 @@
 return {
   {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "]t",         function() require("todo-comments").jump_next() end,             desc = "Next todo comment" },
+      { "[t",         function() require("todo-comments").jump_prev() end,             desc = "Previous todo comment" },
+      { "<leader>ft", function() require("snacks").picker.todo_comments() end,         desc = "Search ToDo's" },
+      { "<leader>lt", "<cmd>Trouble close<cr><cmd>Trouble todo toggle focus=true<cr>", desc = "Todo & Warn List (Trouble)" },
+      { "<leader>lT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",                  desc = "Todo/Fix/Fixme (Trouble)" },
+    }
+  },
+  {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
     opts = {

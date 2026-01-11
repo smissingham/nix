@@ -4,7 +4,7 @@ let
   name = "Sean Missingham";
   email = "sean@missingham.com";
   editor = "smissingham-nvim";
-  terminal = "wezterm";
+  terminal = "ghostty";
   browser = "floorp";
 
   emailAccounts = [
