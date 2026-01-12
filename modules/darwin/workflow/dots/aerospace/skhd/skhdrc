@@ -41,15 +41,14 @@
 ####################
 
 #################### Application Launch Shortcuts ####################
-
-rcmd - b    : open -na $BROWSER
-rcmd - c    : open -a Claude
-rcmd - j    : open -a Raycast
-rcmd - m    : open -a Spotify
-rcmd - o    : open -a Obsidian
-rcmd - p    : osascript -e 'tell application "Spotify" to playpause'
-rcmd - s    : open -a Signal
-rcmd - t    : open -na $TERMINAL
+cmd + ctrl + alt + shift - b    : open -na $BROWSER
+cmd + ctrl + alt + shift - c    : open -a Claude
+cmd + ctrl + alt + shift - j    : open -a Raycast
+cmd + ctrl + alt + shift - m    : open -a Spotify
+cmd + ctrl + alt + shift - o    : open -a Obsidian
+cmd + ctrl + alt + shift - p    : osascript -e 'tell application "Spotify" to playpause'
+cmd + ctrl + alt + shift - s    : open -a Signal
+cmd + ctrl + alt + shift - t    : open -na $TERMINAL
 
 #################### Application Control ####################
 
