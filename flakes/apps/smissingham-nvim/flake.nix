@@ -50,36 +50,46 @@
           pkgsUnstable.claude-code
           #inputs.mcp-hub.packages."${system}".default
 
-          # ----- Language Servers -----#
+          # ----- General Language Support -----#
           bash-language-server # sh / bash
-          lua-language-server # lua
-          nixd # Nix
-          taplo # Toml
-          vtsls # Typescript
+          shfmt # general scripting formatter
+          taplo # Toml lsp
+          yaml-language-server # YAML lsp
+
+          # ----- Lua Support -----#
+          lua-language-server # lsp
+          stylua # formatter
+
+          # ----- Nix Support -----#
+          nixd # lsp
+          nixfmt-rfc-style # formatter
+
+          # ----- WebDev Support -----#
+          pkgsUnstable.bun # package manager
           vscode-langservers-extracted # HTML, CSS, JSON, JS
+          vtsls # Typescript lsp
           emmet-language-server # html shortcode expansions
           svelte-language-server # svelte, obviously
-          yaml-language-server # YAML
-          rust-analyzer
+          astro-language-server # astro
+          tailwindcss-language-server # tailwind
+          prettierd # formatter
+
+          # ----- Rust Support -----#
+          rust-analyzer # lsp
+          rustfmt # formatter
+
+          # ----- Java Support -----#
+          gradle # package manager
+          maven # package manager
           jdt-language-server # (jdtls) java all-in-one LS
           groovyls # Groovy language server
-          pkgsUnstable.ruff # python lsp - linting & formatter
-          basedpyright # python type checker
 
-          # ----- Formatters -----#
-          shfmt
-          nixfmt-rfc-style
-          prettierd
-          rustfmt
-          stylua
-          black
-
-          # ----- Package Managers -----#
-          pkgsUnstable.uv
-          pkgsUnstable.bun
-          poetry
-          gradle
-          maven
+          # ----- Python Support -----#
+          pkgsUnstable.uv # package manager
+          poetry # package manager
+          black # formatter
+          pkgsUnstable.ruff # lsp, lint, format
+          basedpyright # type checker
 
           # ----- CLI Utils -----#
           bat

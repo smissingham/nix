@@ -52,9 +52,9 @@
 
     virt = {
       kvm = {
-        enable = false;
-        withCliTools = false;
-        withGuiTools = false;
+        enable = true;
+        withCliTools = true;
+        withGuiTools = true;
       };
       podman = {
         enable = true;

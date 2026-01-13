@@ -19,6 +19,10 @@ in
       };
 
       scripts = {
+
+        # Shorthand for nix devshell activation
+        nd = ''nix develop'';
+
         # Format all Nix files in current directory (remove dead code and format)
         nxfmt = ''
           find . -name '*.nix' -exec ${pkgs.deadnix}/bin/deadnix -e -f {} \;
