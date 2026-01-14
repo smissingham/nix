@@ -63,7 +63,7 @@ in
 
           # ----- Always Install -----#
           {
-            packages = pkgs.myapps.smissingham-nvim.systemPackages;
+            packages = pkgs.myapps.smissingham-nvim.systemPackages ++ pkgs.myapps.containix.systemPackages;
           }
 
           # ----- Optional: Favourite Aliases -----#
@@ -72,6 +72,7 @@ in
               # ---- Launch Shortcuts -----#
               sv = "${binaryName}"; # --- Launch Main Binary
               svf = "nix develop ${flakePath}#default -c ${binaryName}"; # --- Launch Nix Flake In Place
+              cn = "containix";
 
               # ----- Config & State Resetting -----#
               svda = "svdPerms && svdConfig && svdShare && svdState && svdLink";

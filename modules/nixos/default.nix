@@ -9,8 +9,8 @@
 
   networking = {
     useDHCP = lib.mkDefault true;
-    firewall.enable = true;
-    networkmanager.enable = true;
+    firewall.enable = lib.mkDefault true;
+    networkmanager.enable = lib.mkDefault true;
   };
 
   programs = {

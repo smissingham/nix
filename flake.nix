@@ -11,6 +11,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -74,6 +78,14 @@
         inputs.myapps.overlays.default
       ];
 
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      linuxSystemFor = system: if system == "aarch64-darwin" then "aarch64-linux" else system;
+
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
       importDir =
@@ -99,12 +111,8 @@
             imports = moduleFiles;
           };
 
-      mkSystem =
-        {
-          mainUser,
-          system,
-          systemModules,
-        }:
+      mkBase =
+        { mainUser, system }:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -118,11 +126,50 @@
             inherit (nixpkgs) lib;
             inherit pkgs;
           };
-          builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
           privateModulesPath = mainUser.getPrivateModulesPath { };
-          platformModules =
+        in
+        {
+          inherit
+            pkgs
+            pkgsUnstable
+            serviceUtils
+            privateModulesPath
+            ;
 
-            # ----- Nix Darwin Modules ----- #
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              overlays
+              pkgsUnstable
+              mainUser
+              serviceUtils
+              ;
+          };
+
+          sharedModules = [
+            (importDir ./modules/shared)
+            (importDir (privateModulesPath + "/shared"))
+            { nixpkgs.overlays = overlays; }
+          ];
+
+          nixosModules = [
+            (importDir ./modules/nixos)
+            home-manager.nixosModules.default
+            inputs.stylix.nixosModules.stylix
+            (importDir (privateModulesPath + "/nixos"))
+          ];
+        };
+
+      mkSystem =
+        {
+          mainUser,
+          system,
+          systemModules,
+        }:
+        let
+          base = mkBase { inherit mainUser system; };
+          platformModules =
             if isDarwin system then
               [
                 (importDir ./modules/darwin)
@@ -141,37 +188,38 @@
                     mutableTaps = false;
                   };
                 }
+                (importDir (base.privateModulesPath + "/darwin"))
               ]
-              ++ [ (importDir (privateModulesPath + "/darwin")) ]
-
-            # ----- NixOS Modules -----#
             else
-              [
-                (importDir ./modules/nixos)
-                home-manager.nixosModules.default
-                inputs.stylix.nixosModules.stylix
-              ]
-              ++ [ (importDir (privateModulesPath + "/nixos")) ];
-
-          sharedModules = [
-            (importDir ./hosting)
-            (importDir ./modules/shared)
-            (importDir (privateModulesPath + "/shared"))
-          ];
+              base.nixosModules;
+          builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
         in
         builder {
           inherit system;
-          modules = systemModules ++ sharedModules ++ platformModules ++ [ { nixpkgs.overlays = overlays; } ];
-          specialArgs = {
-            inherit
-              inputs
-              outputs
-              overlays
-              pkgsUnstable
-              mainUser
-              serviceUtils
-              ;
-          };
+          inherit (base) specialArgs;
+          modules = systemModules ++ base.sharedModules ++ platformModules;
+        };
+
+      mkContainer =
+        {
+          mainUser,
+          system,
+          systemModules ? [ ],
+          format ? "docker",
+        }:
+        let
+          base = mkBase { inherit mainUser system; };
+        in
+        inputs.nixos-generators.nixosGenerate {
+          inherit system format;
+          inherit (base) specialArgs;
+          modules =
+            systemModules
+            ++ base.sharedModules
+            ++ base.nixosModules
+            ++ [
+              { boot.isContainer = true; }
+            ];
         };
     in
     {
@@ -191,8 +239,20 @@
           system = "x86_64-linux";
           systemModules = [
             ./hosts/coeus/configuration.nix
+            ./hosting/default.nix
           ];
         };
       };
+
+      packages = forAllSystems (system: {
+        thalos = mkContainer {
+          #inherit system;
+          system = linuxSystemFor system;
+          mainUser = import ./profiles/smissingham/default.nix;
+          systemModules = [
+            ./hosts/containix/configuration.nix
+          ];
+        };
+      });
     };
 }
