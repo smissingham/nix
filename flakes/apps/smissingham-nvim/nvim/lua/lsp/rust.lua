@@ -1,11 +1,15 @@
 -- Rust LSP Server
 vim.lsp.config("rust_analyzer", {
-	settings = {
-		["rust-analyzer"] = {
-			check = {
-				command = "clippy",
-			},
-		},
-	},
+  root_markers = {
+    "Cargo.toml"
+  },
+  settings = {
+    ["rust-analyzer"] = {
+      check = {
+        command = "clippy",
+      },
+    },
+  },
 })
 vim.lsp.enable("rust_analyzer")
+

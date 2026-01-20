@@ -15,8 +15,19 @@ return {
           sh = { "shfmt" },
           bashsh = { "shfmt" },
           nix = { "nixfmt" },
-          black = {"black"},
-          prettierd = {"prettierd"},
+          black = { "black" },
+
+
+          --prettierd = {"prettierd"},
+          html = { "prettierd" },
+          css = { "prettierd" },
+          javascript = { "prettierd" },
+          javascriptreact = { "prettierd" },
+          typescript = { "prettierd" },
+          typescriptreact = { "prettierd" },
+          svelte = { "prettierd" },
+          astro = { "prettierd" },
+
 
           ["_"] = {
             lsp_format = "prefer",

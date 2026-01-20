@@ -129,17 +129,17 @@ services:
     volumes:
       - ${APPDATA_PATH}/llm/librechat/pgdata:/var/lib/postgresql/data:U
 
-  librechat-rag-api:
-    container_name: librechat-rag-api
-    image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
-    restart: always
-    depends_on:
-      - librechat-vectordb
-    environment:
-      DB_HOST: librechat-vectordb
-      RAG_PORT: 8000
-      EMBEDDINGS_PROVIDER: huggingface
-      EMBEDDINGS_MODEL: sentence-transformers/all-MiniLM-L6-v2
+  # librechat-rag-api:
+  #   container_name: librechat-rag-api
+  #   image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
+  #   restart: always
+  #   depends_on:
+  #     - librechat-vectordb
+  #   environment:
+  #     DB_HOST: librechat-vectordb
+  #     RAG_PORT: 8000
+  #     EMBEDDINGS_PROVIDER: huggingface
+  #     EMBEDDINGS_MODEL: sentence-transformers/all-MiniLM-L6-v2
 
   # open-webui:
   #   container_name: open-webui

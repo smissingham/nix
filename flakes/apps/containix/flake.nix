@@ -51,6 +51,7 @@
         pVersion = "0.1";
         containerId = "${pName}:${pVersion}";
 
+        # TODO: connect to socket instead of assuming cli
         dockerAlias = "podman";
         dockerArch = if pkgs.stdenv.isAarch64 then "aarch64" else "x86_64";
 
@@ -85,29 +86,34 @@
           # run the docker container, persist the root user home and bind pwd to /data
           ${dockerAlias} run --rm \
             -v containix-root:${containerUserHomeDir} \
+            -v containix-nix:/nix \
+            -p 4096:4096 \
             -v $(pwd):${containerWorkingDir} \
             -w ${containerWorkingDir} \
             -it ${containerId} 
         '';
 
-        containerPackages =
-          with linuxPkgs;
-          [
-            nix
-            zsh
-            yazi
-            fzf
-            eza
-            coreutils
-            findutils
-            gnugrep
-            gnused
-            gawk
-            less
-            ncurses # for terminf
-            fastfetch
-          ]
-          ++ smissingham-nvim.packages.${system}.systemPackages;
+        containerPackages = with linuxPkgs; [
+          nix
+          git
+
+          # critical cli utils
+          coreutils
+          findutils
+          gnugrep
+          gnused
+          gawk
+          less
+          curl
+
+          # nice-to-have's
+          #zsh
+          yazi
+          fzf
+          eza
+          fastfetch
+        ];
+        #++ smissingham-nvim.packages.${linuxSystem}.systemPackages;
 
         systemPackages = [ pWrapper ];
 
@@ -147,13 +153,13 @@
           maxLayers = 125;
 
           fromImage = pkgs.dockerTools.pullImage {
+            os = "linux";
+            arch = dockerArch;
             imageName = baseImageName;
             finalImageName = baseImageName;
             finalImageTag = baseImageVersion;
             imageDigest = imageManifests.${dockerArch}.digest;
             sha256 = imageManifests.${dockerArch}.sha256;
-            os = "linux";
-            arch = dockerArch;
           };
 
           extraCommands = "";
@@ -162,7 +168,7 @@
             Cmd = [
               "sh"
               "-c"
-              "fastfetch && exec ${linuxPkgs.zsh}/bin/zsh -l"
+              "cd /data && fastfetch"
             ];
             Env = [
               "TERM=xterm-256color"
@@ -173,7 +179,18 @@
             ];
           };
 
-          contents = containerPackages ++ smissingham-nvim.packages.${system}.systemPackages;
+          contents =
+            containerPackages
+            ++ smissingham-nvim.packages.${system}.systemPackages
+            ++ [
+              # TODO: A nicer attrset to house these and parse to bins
+              (pkgs.writeShellScriptBin "q" ''exit'')
+              (pkgs.writeShellScriptBin "cl" ''clear'')
+              (pkgs.writeShellScriptBin "oc" ''opencode'')
+              (pkgs.writeShellScriptBin "sv" ''smissingham-nvim'')
+              # TODO: put a nix config file in so the features are enabled by default
+              (pkgs.writeShellScriptBin "nd" ''nix develop --extra-experimental-features "nix-command flakes"'')
+            ];
         };
 
         # Expose the runAlias as an installable binary for nix systems

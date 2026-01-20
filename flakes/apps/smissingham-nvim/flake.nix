@@ -96,7 +96,7 @@
             rustfmt # formatter
 
             # ----- Java Support -----#
-            gradle # package manager
+            #gradle # package manager
             maven # package manager
             jdt-language-server # (jdtls) java all-in-one LS
             groovyls # Groovy language server

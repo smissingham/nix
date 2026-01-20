@@ -5,6 +5,7 @@ This is a global configuration file that applies to all projects unless overridd
 
 ## General Guidelines
 
+- NEVER edit/commit/push etc. to git unless explicitly instructed to do so. You may only READ from it unless instructed otherwise in chat.
 - Avoid verbosity in all places. Be concise, but descriptive toward purpose/intent.
 - Always consider the perspective of a junior developer, or business user, in that you shouldn't assume high levels of technical background
     - With this in mind, write functions & structure code in a way that is domain driven as much as possible.

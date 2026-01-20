@@ -23,6 +23,11 @@ in
         # Shorthand for nix devshell activation
         nd = ''nix develop'';
 
+        # Build a local package.nix file for nixpkgs
+        nxpkg = ''
+          nix-build -E "with import <nixpkgs> {}; callPackage ./package.nix {}"
+        '';
+
         # Format all Nix files in current directory (remove dead code and format)
         nxfmt = ''
           find . -name '*.nix' -exec ${pkgs.deadnix}/bin/deadnix -e -f {} \;
