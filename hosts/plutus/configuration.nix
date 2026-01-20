@@ -43,15 +43,16 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    # GUI Productivity Apps
+    # General productivity & workflow
     obsidian
     gimp
-    #gitkraken
-    #bruno
-    #mypkgs.filen-desktop
-    postman
-    moonlight-qt
     mypkgs.filen-desktop
+    moonlight-qt # rdp client for sunlight backend
+
+    # Dev tools
+    mypkgs.surrealist
+    #postman
+    #bruno
 
     # CLI Stuff
     mypkgs.pfxpackage
@@ -81,7 +82,7 @@
       "stremio"
       "spotify"
       "vlc"
-      #"obs"
+      "obs"
       #"obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #
@@ -107,7 +108,7 @@
       # ----- DEV TOOLS ----- #
       "intellij-idea-ce"
       #"jetbrains-toolbox"
-      "claude"
+      #"claude"
       # "cursor"
       # "visual-studio-code"
 

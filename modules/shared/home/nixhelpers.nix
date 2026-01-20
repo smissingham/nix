@@ -25,7 +25,8 @@ in
 
         # Build a local package.nix file for nixpkgs
         nxpkg = ''
-          nix-build -E "with import <nixpkgs> {}; callPackage ./package.nix {}"
+          local sys="''${1:-$(nix eval --raw --impure --expr builtins.currentSystem)}"
+          nix-build -E "(import <nixpkgs> { system = \"$sys\"; }).callPackage ./package.nix {}"
         '';
 
         # Format all Nix files in current directory (remove dead code and format)

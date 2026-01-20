@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -65,25 +66,28 @@
     };
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    mypkgs.filen-desktop
 
+    # Personal Workflow
+    mypkgs.filen-desktop
+    spotify
+    obsidian
+    chromium
+
+    # comms
     signal-desktop
     vesktop
 
-    # Work
-    #teams-for-linux
-
-    # Office
+    # Productivity
     #libreoffice
     onlyoffice-bin
-    spotify
-    obsidian
-    #chromium
 
     # Dev
-    jetbrains.idea-community
+    pkgsUnstable.jetbrains.idea-oss
+    mypkgs.surrealist
   ];
   programs.nix-ld = {
     enable = true;
