@@ -2,10 +2,11 @@
 {
   mainUser,
   lib,
+  stateVersion,
   ...
 }:
 {
-  system.stateVersion = "25.05"; # Did you read the docs?
+  system.stateVersion = stateVersion;
 
   networking = {
     useDHCP = lib.mkDefault true;

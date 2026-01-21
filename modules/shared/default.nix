@@ -43,6 +43,8 @@
     unzip
     _7zz
     jq
+    moreutils
+    dust
 
     # Nix CLI Utils
     nixfmt-rfc-style # formatter

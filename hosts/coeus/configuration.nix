@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -72,7 +71,7 @@
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
 
     # Personal Workflow
-    mypkgs.filen-desktop
+    mynixpkgs.filen-desktop
     spotify
     obsidian
     chromium
@@ -86,8 +85,8 @@
     onlyoffice-bin
 
     # Dev
-    pkgsUnstable.jetbrains.idea-oss
-    mypkgs.surrealist
+    #jetbrains.idea-oss
+    mynixpkgs.surrealist
   ];
   programs.nix-ld = {
     enable = true;

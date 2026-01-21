@@ -21,7 +21,9 @@
         };
         # Automatically discover packages from subdirectories
         packageDirs = builtins.attrNames (
-          nixpkgs.lib.filterAttrs (_name: type: type == "directory") (builtins.readDir ./.)
+          nixpkgs.lib.filterAttrs (_name: type: type == "directory" || type == "symlink") (
+            builtins.readDir ./.
+          )
         );
         # Build packages from each directory that contains a package*.nix file
         buildPackage =
@@ -57,7 +59,7 @@
     // {
       # Overlays are system-independent
       overlays.customPackages = final: _prev: {
-        mypkgs = self.packages.${final.system};
+        myoverlays = self.packages.${final.system};
       };
       overlays.default = self.overlays.customPackages;
     };

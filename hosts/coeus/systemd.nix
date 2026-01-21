@@ -10,7 +10,7 @@
   #   startLimitBurst = 5;
   #   startLimitIntervalSec = 500;
   #   serviceConfig = {
-  #     ExecStart = "${pkgs.mypkgs.filen-desktop}/bin/filen-desktop";
+  #     ExecStart = "${pkgs.myoverlays.filen-desktop}/bin/filen-desktop";
   #     Restart = "on-failure";
   #     RestartSec = "5s";
   #   };

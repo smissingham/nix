@@ -1,8 +1,3 @@
 [submodule "profiles/smissingham/private"]
   path = profiles/smissingham/private
   url = git@github.com:smissingham/nix-private
-
-[submodule "projects/prompt-library-mcp"]
-  path = projects/prompt-library-mcp
-  url = git@github.com:smissingham/prompt-library-mcp
-

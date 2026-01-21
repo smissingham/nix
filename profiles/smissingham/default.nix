@@ -31,21 +31,18 @@ let
       # SECURITY NOTE: These are auto-sourced into user shell env.
       # Add nothing here that you might not want stolen by a malicious CLI app
       autoExport = {
-        ANTHROPIC_API_KEY = { };
-        LITELLM_API_KEY = { };
+        # home hosted
+        SEARXNG_URL = { };
+        LITELLM_URL = { };
         LITELLM_API_URL = { };
+        LITELLM_API_KEY = { };
+
+        # api keys & such
         OPENAI_API_URL = { };
         OPENAI_API_KEY = { };
-        OPENROUTER_API_URL = { };
-        OPENROUTER_API_KEY = { };
-        MORPH_API_KEY = { };
-        CONTEXT7_API_KEY = { };
 
-        SEARXNG_URL = { };
-        PRICEFX_DEMO_DOMAIN = { };
-        PRICEFX_DEMO_PARTITION = { };
-        PRICEFX_DEMO_USERNAME = { };
-        PRICEFX_DEMO_PASSWORD = { };
+        JINA_API_KEY = { };
+        CONTEXT7_API_KEY = { };
       };
 
       # Put secrets here that are needed in nix but not auto-exported to env
@@ -72,6 +69,8 @@ let
     cc = "claude";
     pd = "podman";
     pdc = "podman-compose";
+
+    ralph = "bunx --bun @th0rgal/ralph-wiggum";
   };
 
   # ----- Helper Functions -----#

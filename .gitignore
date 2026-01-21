@@ -8,7 +8,8 @@
 **/private/*
 **/tmux/plugins*
 
-overlays/*/result
+overlays/*/result*
+
 dots/auto/opencode/command
 modules/nixos/wm/dots/hyprland/walker/themes
 modules/nixos/wm/dots/hyprland/elephant/providers

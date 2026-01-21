@@ -1,3 +1,5 @@
+export TZ="America/Chicago"
+
 export DOCKER_ALIAS="podman"
 export COMPOSE_ALIAS="podman-compose"
 

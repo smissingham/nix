@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -62,6 +63,7 @@ in
         pamixer
         pavucontrol
         playerctl
+        pkgsUnstable.wiremix # TUI audio control
 
         # Screenshot tools
         grim # Screenshot utility for Wayland

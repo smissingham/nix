@@ -46,16 +46,16 @@
     # General productivity & workflow
     obsidian
     gimp
-    mypkgs.filen-desktop
+    mynixpkgs.filen-desktop
     moonlight-qt # rdp client for sunlight backend
 
     # Dev tools
-    mypkgs.surrealist
+    mynixpkgs.surrealist
     #postman
     #bruno
 
     # CLI Stuff
-    mypkgs.pfxpackage
+    myoverlays.pfxpackage
   ];
 
   #----- Nixpkgs Applications in System Space -----#

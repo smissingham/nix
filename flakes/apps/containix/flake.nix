@@ -118,7 +118,7 @@
         systemPackages = [ pWrapper ];
 
         baseImageName = "nixos/nix";
-        baseImageVersion = "25.05";
+        baseImageVersion = nixpkgs.lib.trivial.release;
         imageManifests = {
           "x86_64" = {
             digest = "sha256:d078d7153763895fce17c5fbbdeb86fcfcac414ca0ba875d413c1df57be19931";

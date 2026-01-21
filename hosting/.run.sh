@@ -67,17 +67,16 @@ up() {
 rl() {
   stack_name="$1"
   [ -z "$stack_name" ] && echo "Usage: rl <stack_name>" && return 1
-  
+
   compose_file="compose.${stack_name}.yaml"
   [ ! -f "$compose_file" ] && echo "Stack $stack_name not found" && return 1
-  
+
   "$COMPOSE_ALIAS" -f "$compose_file" down 2>/dev/null
   "$COMPOSE_ALIAS" -f "$compose_file" up -d 2>/dev/null
 }
 
-# load .env file
-if [ -f .env ]; then
-  . ./.env
+if [ -f .setenv.sh ]; then
+  . ./.setenv.sh
 fi
 
 "$@"

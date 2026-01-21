@@ -57,13 +57,30 @@
     "litellm": {
       "npm": "@ai-sdk/openai-compatible",
       "models": {
-        "cerebras-glm-4.7": {
-          "name": "Cerebras GLM 4.7"
+        "glm-4.7": {
+          "name": "GLM 4.7"
+        },
+        "glm-4.7-flash": {
+          "name": "GLM 4.7 Flash"
+        },
+        "glm-flash": {
+          "name": "GLM Flash Local"
         }
       },
       "options": {
         "baseURL": "{env:LITELLM_API_URL}",
         "apiKey": "{env:HOSTING_COMMON_MASTER_KEY}"
+      }
+    },
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "models": {
+        "glm-4.7-flash": {
+          "name": "GLM Flash Local"
+        }
+      },
+      "options": {
+        "baseURL": "{env:HOSTING_OLLAMA_API_URL}",
       }
     },
     "lmstudio": {
@@ -78,11 +95,19 @@
     }
   },
   "mcp": {
+    "jina": {
+      "enabled": true,
+      "type": "remote",
+      "url": "{env:LITELLM_URL}/jina/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:HOSTING_COMMON_MASTER_KEY}"
+      }
+    },
     "searxng": {
       "enabled": true,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "bunx",
         "-y",
         "mcp-searxng@latest"
       ],
@@ -94,7 +119,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "bunx",
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ]
@@ -103,7 +128,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "bunx",
         "-y",
         "@modelcontextprotocol/server-memory"
       ]
@@ -112,7 +137,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "bunx",
         "-y",
         "@upstash/context7-mcp"
       ],
@@ -124,7 +149,7 @@
       "enabled": true,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/uvx",
+        "uvx",
         "mcp-server-git"
       ]
     },
@@ -132,7 +157,7 @@
       "enabled": false,
       "type": "local",
       "command": [
-        "/etc/profiles/per-user/smissingham/bin/bunx",
+        "bunx",
         "mcp-remote",
         "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
         "3334",

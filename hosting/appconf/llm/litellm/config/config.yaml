@@ -1,28 +1,57 @@
+# Docs:
+# https://docs.litellm.ai/docs/proxy/config_settings
+
 general_settings:
   store_model_in_db: true
   store_prompts_in_spend_logs: true
+  user_mcp_management_mode: view_all
+  enable_mcp_registry: true
 
 model_list:
-  # Cerebras
-  - model_name: cerebras-glm-4.7
+  # Z.ai
+  - model_name: glm-4.7
     litellm_params:
-      model: cerebras/zai-glm-4.7
+      model: zai/glm-4.7
+      api_base: https://api.z.ai/api/coding/paas/v4
 
-  # OpenRouter Models
-  - model_name: qwen3-coder
+  - model_name: glm-4.7-flash
     litellm_params:
-      model: openrouter/qwen/qwen3-coder
+      model: zai/glm-4.7-flash
+      api_base: https://api.z.ai/api/coding/paas/v4
 
-  - model_name: claude-haiku-4.5
-    litellm_params:
-      model: openrouter/anthropic/claude-haiku-4.5
+  # # Cerebras
+  # - model_name: cerebras-glm-4.7
+  #   litellm_params:
+  #     model: cerebras/zai-glm-4.7
 
-  - model_name: kimi-k2-thinking
-    litellm_params:
-      model: openrouter/moonshotai/kimi-k2-thinking
-
+  # # OpenRouter Models
+  # - model_name: qwen3-coder
+  #   litellm_params:
+  #     model: openrouter/qwen/qwen3-coder
+  #
+  # - model_name: claude-haiku-4.5
+  #   litellm_params:
+  #     model: openrouter/anthropic/claude-haiku-4.5
+  #
+  # - model_name: kimi-k2-thinking
+  #   litellm_params:
+  #     model: openrouter/moonshotai/kimi-k2-thinking
+  #
   # Ollama Local Models
   - model_name: qwen3-8b
     litellm_params:
       model: ollama/qwen3:8b
       api_base: http://ollama:11434
+
+  - model_name: glm-flash
+    litellm_params:
+      model: ollama/glm-4.7-flash
+      api_base: http://ollama:11434
+
+mcp_servers:
+  jina:
+    allow_all_keys: true
+    url: "https://mcp.jina.ai/v1"
+    transport: "http"
+    auth_type: "bearer_token"
+    auth_value: os.environ/JINA_API_KEY

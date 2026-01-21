@@ -94,6 +94,7 @@
             # ----- Rust Support -----#
             rust-analyzer # lsp
             rustfmt # formatter
+            vscode-extensions.vadimcn.vscode-lldb # debug adapter
 
             # ----- Java Support -----#
             #gradle # package manager

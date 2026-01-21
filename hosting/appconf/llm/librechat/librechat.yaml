@@ -43,20 +43,8 @@ endpoints:
 
 # MCP Servers
 mcpServers:
-  copilotfx:
+  litellm:
     type: streamable-http
-    url: https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx
-    oauth:
-      authorization_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/authorize
-      token_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/token
-      redirect_uri: https://librechat.coeus.missingham.net/api/mcp/copilotfx/oauth/callback
-      client_id: smissingham-librechat-copilotfx
-
-  copilotfx-local:
-    type: streamable-http
-    url: http://host.docker.internal:8082/mcp/demofx-staging.pricefx.com/copilotfx
-    oauth:
-      authorization_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/authorize
-      token_url: https://demofx-staging.pricefx.com/pricefx/copilotfx/oauth/token
-      redirect_uri: https://librechat.coeus.missingham.net/api/mcp/copilotfx-local/oauth/callback
-      client_id: smissingham-librechat-copilotfx-local
+    url: http://litellm:4000/mcp
+    headers:
+      x-litellm-api-key: "Bearer ${LITELLM_MASTER_KEY}"

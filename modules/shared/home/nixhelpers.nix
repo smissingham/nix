@@ -31,8 +31,8 @@ in
 
         # Format all Nix files in current directory (remove dead code and format)
         nxfmt = ''
-          find . -name '*.nix' -exec ${pkgs.deadnix}/bin/deadnix -e -f {} \;
-          find . -name '*.nix' -exec ${pkgs.nixfmt-rfc-style}/bin/nixfmt {} \;
+          find . -name '*.nix' -not -path './nixpkgs/*' -exec ${pkgs.deadnix}/bin/deadnix -e -f {} \;
+          find . -name '*.nix' -not -path './nixpkgs/*' -exec ${pkgs.nixfmt-rfc-style}/bin/nixfmt {} \;
         '';
 
         # Update all flake locks in Nix config directory

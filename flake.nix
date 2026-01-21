@@ -50,7 +50,11 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
-    mypkgs = {
+    mynixpkgs = {
+      url = "github:smissingham/nixpkgs/develop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    myoverlays = {
       url = "path:flakes/overlays";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
@@ -72,10 +76,17 @@
       ...
     }:
     let
+      stateVersion = nixpkgs.lib.trivial.release;
       inherit (self) outputs;
       overlays = [
-        inputs.mypkgs.overlays.default
+        inputs.myoverlays.overlays.default
         inputs.myapps.overlays.default
+        (_final: prev: {
+          mynixpkgs = import inputs.mynixpkgs {
+            inherit (prev) system;
+            config = prev.config;
+          };
+        })
       ];
 
       supportedSystems = [
@@ -141,6 +152,7 @@
               inputs
               outputs
               overlays
+              stateVersion
               pkgsUnstable
               mainUser
               serviceUtils

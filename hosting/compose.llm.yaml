@@ -1,26 +1,24 @@
 name: llm
 services:
-  # ollama:
-  #   container_name: ollama
-  #   image: ollama/ollama:latest
-  #   restart: always
-  #   hostname: ollama
-  #   user: "${UID:-1000}:${GID:-100}"
-  #   environment:
-  #     TZ: ${HOSTING_TZ}
-  #     OLLAMA_KEEP_ALIVE: 24h
-  #     HOME: /home/ollama
-  #   volumes:
-  #     - ${APPDATA_PATH}/llm/ollama:/home/ollama/.ollama:U
-  #   devices:
-  #     - nvidia.com/gpu=all
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
-  #     - traefik.http.routers.ollama.tls=true
-  #     - traefik.http.routers.ollama.entrypoints=websecure
-  #     - traefik.http.routers.ollama.tls.certresolver=resolver
-  #     - traefik.http.services.ollama.loadbalancer.server.port=11434
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    restart: always
+    hostname: ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
+      HOME: /home/ollama
+    volumes:
+      - ${APPDATA_PATH}/llm/ollama:/home/ollama/.ollama:U
+    devices:
+      - nvidia.com/gpu=all
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.ollama.tls=true
+      - traefik.http.routers.ollama.entrypoints=websecure
+      - traefik.http.routers.ollama.tls.certresolver=resolver
+      - traefik.http.services.ollama.loadbalancer.server.port=11434
 
   litellm-postgres:
     container_name: litellm-postgres
@@ -38,96 +36,151 @@ services:
     restart: always
     image: ghcr.io/berriai/litellm:main-latest
     depends_on:
+      - ollama
       - litellm-postgres
     environment:
-      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      OPENROUTER_API_KEY: ${HOSTING_OPENROUTER_API_KEY}
-      CEREBRAS_API_KEY: ${HOSTING_CEREBRAS_API_KEY}
       UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
       UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
       DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
       LITELLM_LOG: ERROR
       JSON_LOGS: "True"
+
+      # Providers
+      ZAI_API_KEY: ${HOSTING_ZAI_API_KEY}
+      JINA_API_KEY: ${JINA_API_KEY}
+
     volumes:
       - ${APPCONF_PATH}/llm/litellm/config:/config:U
     command:
       - --config=/config/config.yaml
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.litellm.tls=true
-      - traefik.http.routers.litellm.entrypoints=websecure
-      - traefik.http.routers.litellm.tls.certresolver=resolver
-      - traefik.http.services.litellm.loadbalancer.server.port=4000
+      - "traefik.enable=true"
+      - "traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)"
+      - "traefik.http.routers.litellm.tls=true"
+      - "traefik.http.routers.litellm.entrypoints=websecure"
+      - "traefik.http.routers.litellm.tls.certresolver=resolver"
+      - "traefik.http.services.litellm.loadbalancer.server.port=4000"
 
-  librechat-api:
-    container_name: librechat-api
-    image: ghcr.io/danny-avila/librechat:latest
+  opencode:
+    container_name: opencode
+    image: ghcr.io/anomalyco/opencode
     restart: always
-    depends_on:
-      - librechat-mongodb
-      - librechat-rag-api
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    command: ["web", "--port", "9090", "--hostname", "0.0.0.0"]
+    working_dir: /projects
     environment:
-      ENDPOINTS: custom,agents
-      JWT_SECRET: ${HOSTING_LIBRECHAT_JWT_SECRET}
-      JWT_REFRESH_SECRET: ${HOSTING_LIBRECHAT_JWT_REFRESH_SECRET}
-      MEILI_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      OPENROUTER_KEY: ${HOSTING_OPENROUTER_API_KEY}
-      CREDS_KEY: ${HOSTING_LIBRECHAT_CREDS_KEY}
-      CREDS_IV: ${HOSTING_LIBRECHAT_CREDS_IV}
-      DOMAIN_CLIENT: https://librechat.${HOSTNAME}.${HOSTING_ROOT}
-      DOMAIN_SERVER: https://librechat.${HOSTNAME}.${HOSTING_ROOT}
-      MONGO_URI: mongodb://librechat-mongodb:27017/LibreChat
-      MEILI_HOST: http://librechat-meilisearch:7700
-      EMBEDDINGS_PROVIDER: huggingface
-      EMBEDDINGS_MODEL: sentence-transformers/all-MiniLM-L6-v2
-      RAG_API_URL: http://librechat-rag-api:8000
-      ALLOW_REGISTRATION: true
+      LITELLM_URL: http://litellm:4000
+      LITELLM_API_URL: http://litellm:4000/v1
+      HOSTING_COMMON_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+      OPENCODE_CONFIG: /root/.config/opencode/opencode.json
     volumes:
-      - ${APPCONF_PATH}/llm/librechat/librechat.yaml:/app/librechat.yaml
-      - ${APPDATA_PATH}/llm/librechat/images:/app/client/public/images:U
-      - ${APPDATA_PATH}/llm/librechat/uploads:/app/uploads:U
-      - ${APPDATA_PATH}/llm/librechat/logs:/app/logs:U
+      - ${XDG_CONFIG_HOME}/opencode:/root/.config/opencode:U
+      - ${HOME}/Projects:/projects:U
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.librechat.rule=Host(`librechat.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.librechat.tls=true
-      - traefik.http.routers.librechat.entrypoints=websecure
-      - traefik.http.routers.librechat.tls.certresolver=resolver
-      - traefik.http.services.librechat.loadbalancer.server.port=3080
+      - "traefik.enable=true"
+      - "traefik.http.routers.opencode.rule=Host(`opencode.${HOSTNAME}.${HOSTING_ROOT}`)"
+      - "traefik.http.routers.opencode.tls=true"
+      - "traefik.http.routers.opencode.entrypoints=websecure"
+      - "traefik.http.routers.opencode.tls.certresolver=resolver"
+      - "traefik.http.services.opencode.loadbalancer.server.port=9090"
 
-  librechat-mongodb:
-    container_name: librechat-mongodb
-    image: mongo
-    restart: always
-    volumes:
-      - ${APPDATA_PATH}/llm/librechat/data-node:/data/db:U
-    command: mongod --noauth
-
-  librechat-meilisearch:
-    container_name: librechat-meilisearch
-    image: getmeili/meilisearch:v1.12.3
-    restart: always
-    environment:
-      MEILI_HOST: http://librechat-meilisearch:7700
-      MEILI_NO_ANALYTICS: "true"
-      MEILI_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-    volumes:
-      - ${APPDATA_PATH}/llm/librechat/meili_data_v1.12:/meili_data:U
-
-  librechat-vectordb:
-    container_name: librechat-vectordb
-    image: pgvector/pgvector:0.8.0-pg15-trixie
-    restart: always
-    environment:
-      POSTGRES_DB: librechatpostgresdb
-      POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
-      POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-    volumes:
-      - ${APPDATA_PATH}/llm/librechat/pgdata:/var/lib/postgresql/data:U
+  # openwebui:
+  #   image: ghcr.io/open-webui/open-webui:main
+  #   depends_on:
+  #     - litellm
+  #   environment:
+  #     # Docs: https://docs.openwebui.com/getting-started/env-configuration
+  #     TZ: ${TZ}
+  #     WEBUI_URL: https://chat.${HOSTNAME}.${HOSTING_ROOT}
+  #     WEBUI_ADMIN_EMAIL: ${HOSTING_ADMIN_EMAIL}
+  #     WEBUI_ADMIN_NAME: ${HOSTING_ADMIN_USERNAME}
+  #     WEBUI_ADMIN_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     ENABLE_PERSISTENT_CONFIG: "False"
+  #     ENABLE_DIRECT_CONNECTIONS: "True"
+  #     ENABLE_SIGNUP: "False"
+  #     USE_CUDA_DOCKER: "True"
+  #     OPENAI_API_BASE_URL: http://litellm:4000/v1
+  #     OPENAI_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     TOOL_SERVER_CONNECTIONS: ${OWUI_TOOL_SERVERS}
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/openwebui:/app/backend/data:U
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.openwebui.rule=Host(`chat.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.openwebui.tls=true
+  #     - traefik.http.routers.openwebui.entrypoints=websecure
+  #     - traefik.http.routers.openwebui.tls.certresolver=resolver
+  #     - traefik.http.services.openwebui.loadbalancer.server.port=8080
+  #
+  # librechat-api:
+  #   container_name: librechat-api
+  #   image: ghcr.io/danny-avila/librechat:latest
+  #   restart: always
+  #   depends_on:
+  #     - litellm
+  #     - librechat-mongodb
+  #     - librechat-rag-api
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   environment:
+  #     ENDPOINTS: custom,agents
+  #     JWT_SECRET: ${HOSTING_LIBRECHAT_JWT_SECRET}
+  #     JWT_REFRESH_SECRET: ${HOSTING_LIBRECHAT_JWT_REFRESH_SECRET}
+  #     MEILI_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     OPENROUTER_KEY: ${HOSTING_OPENROUTER_API_KEY}
+  #     CREDS_KEY: ${HOSTING_LIBRECHAT_CREDS_KEY}
+  #     CREDS_IV: ${HOSTING_LIBRECHAT_CREDS_IV}
+  #     DOMAIN_CLIENT: https://librechat.${HOSTNAME}.${HOSTING_ROOT}
+  #     DOMAIN_SERVER: https://librechat.${HOSTNAME}.${HOSTING_ROOT}
+  #     MONGO_URI: mongodb://librechat-mongodb:27017/LibreChat
+  #     MEILI_HOST: http://librechat-meilisearch:7700
+  #     EMBEDDINGS_PROVIDER: huggingface
+  #     EMBEDDINGS_MODEL: sentence-transformers/all-MiniLM-L6-v2
+  #     RAG_API_URL: http://librechat-rag-api:8000
+  #     ALLOW_REGISTRATION: true
+  #   volumes:
+  #     - ${APPCONF_PATH}/llm/librechat/librechat.yaml:/app/librechat.yaml
+  #     - ${APPDATA_PATH}/llm/librechat/images:/app/client/public/images:U
+  #     - ${APPDATA_PATH}/llm/librechat/uploads:/app/uploads:U
+  #     - ${APPDATA_PATH}/llm/librechat/logs:/app/logs:U
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.librechat.rule=Host(`librechat.${HOSTNAME}.${HOSTING_ROOT}`)
+  #     - traefik.http.routers.librechat.tls=true
+  #     - traefik.http.routers.librechat.entrypoints=websecure
+  #     - traefik.http.routers.librechat.tls.certresolver=resolver
+  #     - traefik.http.services.librechat.loadbalancer.server.port=3080
+  #
+  # librechat-mongodb:
+  #   container_name: librechat-mongodb
+  #   image: mongo
+  #   restart: always
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/librechat/data-node:/data/db:U
+  #   command: mongod --noauth
+  #
+  # librechat-meilisearch:
+  #   container_name: librechat-meilisearch
+  #   image: getmeili/meilisearch:v1.12.3
+  #   restart: always
+  #   environment:
+  #     MEILI_HOST: http://librechat-meilisearch:7700
+  #     MEILI_NO_ANALYTICS: "true"
+  #     MEILI_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/librechat/meili_data_v1.12:/meili_data:U
+  #
+  # librechat-vectordb:
+  #   container_name: librechat-vectordb
+  #   image: pgvector/pgvector:0.8.0-pg15-trixie
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: librechatpostgresdb
+  #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
+  #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm/librechat/pgdata:/var/lib/postgresql/data:U
 
   # librechat-rag-api:
   #   container_name: librechat-rag-api
@@ -421,3 +474,4 @@ services:
   #     FORCE_VERIFYING_SIGNATURE: "false"
   #   volumes:
   #     - ${APPDATA_PATH}/llm/dify/plugin_daemon:/app/storage:U
+  #
