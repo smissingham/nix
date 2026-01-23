@@ -46,15 +46,6 @@ in
           runAsRoot = true;
           swtpm.enable = true;
           vhostUserPackages = [ pkgs.virtiofsd ]; # causing freezing/lagging issues?
-          ovmf = {
-            enable = true;
-            packages = [
-              (pkgs.OVMF.override {
-                secureBoot = true;
-                tpmSupport = true;
-              }).fd
-            ];
-          };
           verbatimConfig = ''
             <video>
               <model type='virtio' vram='16384' heads='1'/>

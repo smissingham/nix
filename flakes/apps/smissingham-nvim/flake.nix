@@ -1,7 +1,7 @@
 {
   description = "Portable NeoVim Configuration Flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     #mcp-hub.url = "github:ravitemer/mcp-hub";
@@ -15,10 +15,10 @@
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
-      system:
+      _system:
       let
         pkgs = import nixpkgs {
-          inherit system;
+          #inherit system;
           config.allowUnfree = true;
           overlays = [
             (final: _prev: {
@@ -28,7 +28,7 @@
         };
 
         pkgsUnstable = import nixpkgs-unstable {
-          inherit system;
+          #inherit system;
           config.allowUnfree = true;
         };
 

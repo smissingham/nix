@@ -59,7 +59,7 @@
       podman = {
         enable = true;
         dockerCompat = true;
-        withCliTools = false;
+        withCliTools = true;
         withGuiTools = true;
       };
     };
@@ -82,7 +82,7 @@
 
     # Productivity
     #libreoffice
-    onlyoffice-bin
+    onlyoffice-desktopeditors
 
     # Dev
     #jetbrains.idea-oss

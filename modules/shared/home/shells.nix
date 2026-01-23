@@ -102,20 +102,25 @@ in
             tldr
             xclip
           ]
-          # Convert script definitions from other modules into executable bins
+          # Convert script definitions and aliases from other modules into executable bins
+          ++ (lib.mapAttrsToList (name: alias: pkgs.writeShellScriptBin name alias) aliasesOptionAttr)
           ++ (lib.mapAttrsToList (name: script: pkgs.writeShellScriptBin name script) scriptsOptionAttr);
 
         programs.git = {
           enable = true;
-          userName = mainUser.name;
-          userEmail = mainUser.email;
-          delta = {
-            enable = true;
-            options = {
-              navigate = true;
-              line-numbers = true;
-              dark = true;
-            };
+          settings.user = {
+            name = mainUser.name;
+            email = mainUser.email;
+          };
+        };
+
+        programs.delta = {
+          enable = true;
+          enableGitIntegration = true;
+          options = {
+            navigate = true;
+            line-numbers = true;
+            dark = true;
           };
         };
 

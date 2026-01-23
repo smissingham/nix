@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-25.11";
     };
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -16,15 +16,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -52,7 +52,6 @@
     };
     mynixpkgs = {
       url = "github:smissingham/nixpkgs/develop";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     myoverlays = {
       url = "path:flakes/overlays";
@@ -83,19 +82,11 @@
         inputs.myapps.overlays.default
         (_final: prev: {
           mynixpkgs = import inputs.mynixpkgs {
-            inherit (prev) system;
+            #inherit (prev) system;
             config = prev.config;
           };
         })
       ];
-
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      linuxSystemFor = system: if system == "aarch64-darwin" then "aarch64-linux" else system;
 
       isDarwin = system: builtins.match ".*-darwin" system != null;
 
@@ -123,14 +114,14 @@
           };
 
       mkBase =
-        { mainUser, system }:
+        { mainUser }:
         let
           pkgs = import nixpkgs {
-            inherit system;
+            #inherit system;
             config.allowUnfree = true;
           };
           pkgsUnstable = import nixpkgs-unstable {
-            inherit system;
+            #inherit system;
             config.allowUnfree = true;
           };
           serviceUtils = import ./lib/services.nix {
@@ -180,7 +171,7 @@
           systemModules,
         }:
         let
-          base = mkBase { inherit mainUser system; };
+          base = mkBase { inherit mainUser; };
           platformModules =
             if isDarwin system then
               [
@@ -207,32 +198,38 @@
           builder = if isDarwin system then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
         in
         builder {
-          inherit system;
-          inherit (base) specialArgs;
-          modules = systemModules ++ base.sharedModules ++ platformModules;
-        };
-
-      mkContainer =
-        {
-          mainUser,
-          system,
-          systemModules ? [ ],
-          format ? "docker",
-        }:
-        let
-          base = mkBase { inherit mainUser system; };
-        in
-        inputs.nixos-generators.nixosGenerate {
-          inherit system format;
+          #inherit system;
           inherit (base) specialArgs;
           modules =
             systemModules
             ++ base.sharedModules
-            ++ base.nixosModules
+            ++ platformModules
             ++ [
-              { boot.isContainer = true; }
+              { nixpkgs.hostPlatform = system; }
             ];
         };
+
+      # mkContainer =
+      #   {
+      #     mainUser,
+      #     system,
+      #     systemModules ? [ ],
+      #     format ? "docker",
+      #   }:
+      #   let
+      #     base = mkBase { inherit mainUser system; };
+      #   in
+      #   inputs.nixos-generators.nixosGenerate {
+      #     inherit system format;
+      #     inherit (base) specialArgs;
+      #     modules =
+      #       systemModules
+      #       ++ base.sharedModules
+      #       ++ base.nixosModules
+      #       ++ [
+      #         { boot.isContainer = true; }
+      #       ];
+      #   };
     in
     {
       darwinConfigurations = {
@@ -247,8 +244,8 @@
 
       nixosConfigurations = {
         coeus = mkSystem {
-          mainUser = import ./profiles/smissingham/default.nix;
           system = "x86_64-linux";
+          mainUser = import ./profiles/smissingham/default.nix;
           systemModules = [
             ./hosts/coeus/configuration.nix
             ./hosting/default.nix
@@ -256,15 +253,15 @@
         };
       };
 
-      packages = forAllSystems (system: {
-        thalos = mkContainer {
-          #inherit system;
-          system = linuxSystemFor system;
-          mainUser = import ./profiles/smissingham/default.nix;
-          systemModules = [
-            ./hosts/containix/configuration.nix
-          ];
-        };
-      });
+      # packages = forAllSystems (system: {
+      #   thalos = mkContainer {
+      #     #inherit system;
+      #     system = linuxSystemFor system;
+      #     mainUser = import ./profiles/smissingham/default.nix;
+      #     systemModules = [
+      #       ./hosts/containix/configuration.nix
+      #     ];
+      #   };
+      # });
     };
 }

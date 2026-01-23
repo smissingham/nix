@@ -38,11 +38,11 @@
     };
   };
 
-  nix.linux-builder = {
-    enable = true;
-    systems = [ "aarch64-linux" ];
-  };
-  nix.settings.extra-platforms = [ "aarch64-linux" ];
-  nix.distributedBuilds = true;
+  # nix.linux-builder = {
+  #   enable = true;
+  #   systems = [ "aarch64-linux" ];
+  # };
+  # nix.settings.extra-platforms = [ "aarch64-linux" ];
+  # nix.distributedBuilds = true;
 
 }

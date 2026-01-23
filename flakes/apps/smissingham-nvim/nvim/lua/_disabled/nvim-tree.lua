@@ -1,5 +1,5 @@
 return {
-	{
+  {
     "nvim-tree/nvim-tree.lua",
     version = "*",
     --lazy = false,
@@ -7,22 +7,25 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("nvim-tree").setup{
-	  actions = {
-	      open_file = {
-		  --quit_on_open = true,
-	      },
-	  },
-	  git = {
-	      enable = false,
-	  },
-	  update_focused_file = {
-	      enable = true,
-	      update_cwd = true
-	  },
-	  view = {
-	      width = 40
-	  },
+      require("nvim-tree").setup {
+        hijack_directories = {
+          enable = false -- dont auto-open if launched on a path
+        },
+        actions = {
+          open_file = {
+            --quit_on_open = true,
+          },
+        },
+        git = {
+          enable = false,
+        },
+        update_focused_file = {
+          enable = true,
+          update_cwd = true
+        },
+        view = {
+          width = 40
+        },
       }
       --vim.g.loaded_netrw = 1
       --vim.g.loadednetrwPlugin = 1

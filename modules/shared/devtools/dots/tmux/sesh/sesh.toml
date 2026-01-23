@@ -7,8 +7,9 @@ name = "Nix ❄️"
 path = "~/Documents/Nix"
 
 [[session]]
-name = "Second Brain 🧠"
+name = "Notes"
 path = "~/Documents/Obsidian/second-brain"
+startup_command = "sv"
 
 [[session]]
 name = "Employer 👔"

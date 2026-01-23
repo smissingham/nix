@@ -3,6 +3,7 @@
   mainUser,
   config,
   lib,
+  stateVersion,
   ...
 }:
 let
@@ -43,7 +44,7 @@ in
         }:
         {
           home = {
-            stateVersion = "25.05";
+            stateVersion = stateVersion;
             username = mainUser.username;
             homeDirectory = mainUserHome;
             sessionVariables = {

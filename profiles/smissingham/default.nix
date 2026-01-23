@@ -31,6 +31,8 @@ let
       # SECURITY NOTE: These are auto-sourced into user shell env.
       # Add nothing here that you might not want stolen by a malicious CLI app
       autoExport = {
+        HOME_NOTES = { };
+
         # home hosted
         SEARXNG_URL = { };
         LITELLM_URL = { };
@@ -61,7 +63,9 @@ let
     ezk = "env | fzf | awk -F= '{print $1}' | clip";
     ezv = "env | fzf | awk -F= '{print $2}' | clip";
     clip = (if isDarwin { } then "pbcopy" else "xclip -selection clipboard");
-    sec = "cd ${getSopsPath { }} && sops ${sops.secretsFileName} && cd -";
+    sec = "pushd ${getSopsPath { }} && sops ${sops.secretsFileName} && popd";
+
+    notes = "cd \"$HOME/$HOME_NOTES\" && smissingham-nvim";
 
     # ----- Developer Stuff -----#
     j = "just";

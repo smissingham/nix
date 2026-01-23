@@ -1,7 +1,7 @@
 {
   description = "Expose all package*.nix files in subdirectories as overlays";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -13,10 +13,10 @@
       ...
     }:
     (flake-utils.lib.eachDefaultSystem (
-      system:
+      _system:
       let
         pkgs = import nixpkgs {
-          inherit system;
+          #inherit system;
           config.allowUnfree = true;
         };
         # Automatically discover packages from subdirectories

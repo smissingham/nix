@@ -11,7 +11,8 @@ return {
         sections = {
           {
             section = "terminal",
-            cmd = "fastfetch --logo small --structure Title:Separator:OS:Kernel:CPU:Memory --pipe false | sed 's/CPU\\([^:]*\\): .*Intel(R) Core(TM) /CPU\\1: /'",
+            cmd =
+            "fastfetch --logo small --structure Title:Separator:OS:Kernel:CPU:Memory --pipe false | sed 's/CPU\\([^:]*\\): .*Intel(R) Core(TM) /CPU\\1: /'",
             height = 8,
             padding = 1,
           },
@@ -120,7 +121,7 @@ return {
                 title = "{title} {live} {flags}",
                 title_pos = "center",
               },
-              { win = "list", border = "none" },
+              { win = "list",    border = "none" },
               { win = "preview", title = "{preview}", height = 0.4, border = "top" },
             },
           },

@@ -45,7 +45,6 @@
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     # General productivity & workflow
     obsidian
-    gimp
     mynixpkgs.filen-desktop
     moonlight-qt # rdp client for sunlight backend
 

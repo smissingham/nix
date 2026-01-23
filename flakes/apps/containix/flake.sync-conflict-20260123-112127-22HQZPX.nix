@@ -27,16 +27,16 @@
         # Nix packages and toolchain
         overlays = [ ];
         pkgs = import nixpkgs {
-          inherit system overlays;
+          #inherit system overlays;
+          inherit overlays;
         };
         pkgsUnstable = import nixpkgs-unstable {
-          inherit system;
+          #inherit system;
         };
 
         # Packages for Linux container (cross-compiled if needed)
-        linuxSystem = "${dockerArch}-linux";
         linuxPkgs = import nixpkgs {
-          system = linuxSystem;
+          #system = linuxSystem;
           inherit overlays;
         };
 

@@ -21,7 +21,7 @@ in
       scripts = {
 
         # Shorthand for nix devshell activation
-        nd = ''nix develop'';
+        nd = "nix develop";
 
         # Build a local package.nix file for nixpkgs
         nxpkg = ''
