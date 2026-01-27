@@ -72,6 +72,7 @@ in
         gtk.enable = true;
         gnome.enable = false;
         console.enable = true;
+        chromium.enable = false;
       };
     };
 

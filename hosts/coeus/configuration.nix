@@ -17,11 +17,14 @@
   time.timeZone = "America/Chicago";
 
   myPrivateModules = {
-    backup.syncthing.enable = true;
+    backup = {
+      syncthing.enable = true;
+      restic.enable = true;
+    };
   };
 
   mySharedModules = {
-    browsers.floorp.enable = true;
+    #browsers.floorp.enable = true;
     workflow = {
       sops.enable = true;
     };
@@ -69,12 +72,14 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+    nixpkgs-review
 
     # Personal Workflow
     mynixpkgs.filen-desktop
     spotify
     obsidian
-    chromium
+    #chromium
+    brave
 
     # comms
     signal-desktop
@@ -85,7 +90,7 @@
     onlyoffice-desktopeditors
 
     # Dev
-    #jetbrains.idea-oss
+    jetbrains.idea-oss
     mynixpkgs.surrealist
   ];
   programs.nix-ld = {
@@ -96,6 +101,7 @@
       nodejs_24
       cudaPackages.cudnn
       cudaPackages.cuda_cudart
+      cudaPackages.cuda_nvcc
       libGLU
     ];
   };

@@ -90,6 +90,15 @@ in
           nix repl --expr 'import <nixpkgs>{}'
         '';
 
+        # Nixpkgs review cli shorthand
+        nxreview-local = ''
+          nixpkgs-review rev HEAD --print-result --systems $(uname | tr '[:upper:]' '[:lower:]')
+        '';
+
+        nxreview-pr = ''
+          nixpkgs-review pr --post-result --systems $(uname | tr '[:upper:]' '[:lower:]') "$@"
+        '';
+
         # Build a package.nix file with optional args
         nxbuild = ''
           local package_file="''${1:-./package.nix}"

@@ -43,6 +43,8 @@
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+    nixpkgs-review
+
     # General productivity & workflow
     obsidian
     mynixpkgs.filen-desktop
@@ -50,6 +52,8 @@
 
     # Dev tools
     mynixpkgs.surrealist
+    jetbrains-toolbox
+    #jetbrains.idea-oss
     #postman
     #bruno
 
@@ -61,7 +65,7 @@
   environment.systemPackages = with pkgs; [
     bun
     uv
-    nodejs_24 # required for: kilo-code IJ extension
+    #nodejs_24 # required for: kilo-code IJ extension
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
@@ -95,7 +99,7 @@
       "microsoft-word"
       "onedrive"
       "google-drive"
-      "macfuse"
+      #"macfuse"
 
       # ----- OS / SYSTEM ----- #
       # "onyx"
@@ -105,7 +109,7 @@
       # "parallels"
 
       # ----- DEV TOOLS ----- #
-      "intellij-idea-ce"
+      #"intellij-idea-ce"
       #"jetbrains-toolbox"
       #"claude"
       # "cursor"
@@ -123,7 +127,7 @@
 
     # ----- MAC APP STORE APPS -----#
     masApps = {
-      "Xcode" = 497799835;
+      #"Xcode" = 497799835;
     };
   };
 

@@ -49,7 +49,7 @@ in
             homeDirectory = mainUserHome;
             sessionVariables = {
               TERMINAL = lib.mkDefault mainUser.terminal;
-              BROWSER = lib.mkDefault mainUser.browser;
+              BROWSER = lib.mkDefault (mainUser.browser);
               EDITOR = lib.mkDefault mainUser.editor;
             };
 

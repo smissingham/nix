@@ -17,16 +17,6 @@
 #
 # Shortcut Documentation:
 #
-# Application Control:
-#   HYPER - B         : Browser
-#   HYPER - C         : Claude
-#   HYPER - M         : Music (Spotify)
-#   HYPER - O         : Obsidian
-#   HYPER - P         : Spotify play/pause
-#   HYPER - S         : Signal
-#   HYPER - T         : Terminal
-#   HYPER - Space     : Launcher (Raycast)
-#
 # Window Sizing:
 #   CMD + ALT - +     : Resize larger
 #   CMD + ALT - -     : Resize smaller
@@ -41,14 +31,25 @@
 ####################
 
 #################### Application Launch Shortcuts ####################
-cmd + ctrl + alt + shift - b    : open -na $BROWSER
-cmd + ctrl + alt + shift - c    : open -a Claude
-cmd + ctrl + alt + shift - j    : open -a Raycast
-cmd + ctrl + alt + shift - m    : open -a Spotify
-cmd + ctrl + alt + shift - o    : open -a Obsidian
-cmd + ctrl + alt + shift - p    : osascript -e 'tell application "Spotify" to playpause'
-cmd + ctrl + alt + shift - s    : open -a Signal
+# PWA's
+cmd + ctrl + alt + shift - m    : $BROWSER --app=https://mail.proton.me && aerospace-pop
+cmd + ctrl + alt + shift - p    : $BROWSER --app=https://pass.proton.me && aerospace-pop
+cmd + ctrl + alt + shift - a    : $BROWSER --app=https://lumo.proton.me && aerospace-pop
+
+# Native Apps
+cmd + ctrl + alt + shift - w    : $BROWSER
 cmd + ctrl + alt + shift - t    : open -na $TERMINAL
+cmd + ctrl + alt + shift - s    : open -a Signal
+#cmd + ctrl + alt + shift - m    : open -a Spotify
+#cmd + ctrl + alt + shift - o    : open -a Obsidian
+
+# TUI's
+cmd + ctrl + alt + shift - o    : open -na $TERMINAL --args -e opencode && aerospace-pop
+cmd + ctrl + alt + shift - r    : open -na $TERMINAL --args -e btop && aerospace-pop
+cmd + ctrl + alt + shift - e    : open -na $TERMINAL --args -e yazi && aerospace-pop
+cmd + ctrl + alt + shift - p    : open -na $TERMINAL --args -e podman-tui && aerospace-pop
+cmd + ctrl + alt + shift - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
+
 
 #################### Application Control ####################
 
@@ -56,89 +57,14 @@ cmd + ctrl + alt + shift - t    : open -na $TERMINAL
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-ctrl - o          : skhd -k "cmd - o"
-ctrl - p          : skhd -k "cmd - p"
+#ctrl - o          : skhd -k "cmd - o"
+#ctrl - p          : skhd -k "cmd - p"
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
 ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
 
-ctrl - 1 [
-  "Obsidian"      : skhd -k "cmd - 1"
-  "Floorp"        : skhd -k "cmd - 1"
-  "Brave Browser" : skhd -k "cmd - 1"
-]
-ctrl - 2 [
-  "Obsidian"      : skhd -k "cmd - 2"
-  "Floorp"        : skhd -k "cmd - 2"
-  "Brave Browser" : skhd -k "cmd - 2"
-]
-ctrl - 3 [
-  "Obsidian"      : skhd -k "cmd - 3"
-  "Floorp"        : skhd -k "cmd - 3"
-  "Brave Browser" : skhd -k "cmd - 3"
-]
-ctrl - 4 [
-  "Obsidian"      : skhd -k "cmd - 4"
-  "Floorp"        : skhd -k "cmd - 4"
-  "Brave Browser" : skhd -k "cmd - 4"
-]
-ctrl - 5 [
-  "Obsidian"      : skhd -k "cmd - 5"
-  "Floorp"        : skhd -k "cmd - 5"
-  "Brave Browser" : skhd -k "cmd - 5"
-]
-ctrl - 6 [
-  "Obsidian"      : skhd -k "cmd - 6"
-  "Floorp"        : skhd -k "cmd - 6"
-  "Brave Browser" : skhd -k "cmd - 6"
-]
-ctrl - 7 [
-  "Obsidian"      : skhd -k "cmd - 7"
-  "Floorp"        : skhd -k "cmd - 7"
-  "Brave Browser" : skhd -k "cmd - 7"
-]
-ctrl - 8 [
-  "Obsidian"      : skhd -k "cmd - 8"
-  "Floorp"        : skhd -k "cmd - 8"
-  "Brave Browser" : skhd -k "cmd - 8"
-]
-ctrl - 9 [
-  "Obsidian"      : skhd -k "cmd - 9"
-  "Floorp"        : skhd -k "cmd - 9"
-  "Brave Browser" : skhd -k "cmd - 9"
-]
-ctrl - 0 [
-  "Obsidian"      : skhd -k "cmd - 0"
-  "Floorp"        : skhd -k "cmd - 0"
-  "Brave Browser" : skhd -k "cmd - 0"
-]
-
-ctrl - q [
-  "Obsidian"      : skhd -k "cmd + shift - w"
-  "Floorp"        : skhd -k "cmd + shift - w"
-  "Brave Browser" : skhd -k "cmd + shift - w"
-] 
-ctrl - t [
-  "Obsidian"      : skhd -k "cmd - t"
-  "Floorp"        : skhd -k "cmd - t"
-  "Brave Browser" : skhd -k "cmd - t"
-] 
-ctrl + shift - t [
-  "Obsidian"      : skhd -k "cmd + shift - t"
-  "Floorp"        : skhd -k "cmd + shift - t"
-  "Brave Browser" : skhd -k "cmd + shift - t"
-] 
-ctrl - r [
-  "Obsidian"      : skhd -k "cmd - r"
-  "Floorp"        : skhd -k "cmd - r"
-  "Brave Browser" : skhd -k "cmd - r"
-] 
-ctrl - w [
-  "Obsidian"      : skhd -k "cmd - w"
-  "Floorp"        : skhd -k "cmd - w"
-  "Brave Browser" : skhd -k "cmd - w"
-] 
-
-
+# Common global SUPER mappings
+cmd - q : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Window" of menu "File" of menu bar 1'
+cmd - t : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "New Tab" of menu "File" of menu bar 1'
 
 #################### Window Movement ####################
 
@@ -175,18 +101,8 @@ cmd + shift - n    : aerospace flatten-workspace-tree
 cmd + shift - m    : aerospace fullscreen
 cmd + shift - 0x2C : aerospace layout floating tiling
 
-  # Comma = 1620p
-cmd + shift - 0x2B : \
-  aerospace layout floating; \
-  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {480, 0}'; \
-  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {2880, 1620}';
-
-  # Period = 1080p 
-cmd + shift - 0x2F : \
-  aerospace layout floating; \
-  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set position of first window to {960, 270}'; \
-  osascript -e 'tell application "System Events" to tell (first process whose frontmost is true) to set size of first window to {1920, 1080}';
-
+# Popup float
+cmd + shift - 0x2F : aerospace-pop
 
 #################### Workspaces ####################
 
