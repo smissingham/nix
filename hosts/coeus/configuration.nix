@@ -33,9 +33,15 @@
     #browsers.floorp.enable = true;
     workflow = {
       sops.enable = true;
+      builders = {
+        enable = true;
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+        ];
+      };
     };
     devtools = {
-      terminals.enable = true;
       tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
@@ -78,12 +84,12 @@
 
   #----- Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    nixpkgs-review
 
     # Personal Workflow
     mynixpkgs.filen-desktop
     spotify
     obsidian
+    ghostty
     #chromium
     brave
 

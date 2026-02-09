@@ -14,7 +14,6 @@
 
   mySharedModules = {
     devtools = {
-      terminals.enable = true;
       tmux.enable = true;
     };
   };

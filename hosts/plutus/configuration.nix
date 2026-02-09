@@ -28,7 +28,6 @@
       brave.enable = true;
     };
     devtools = {
-      terminals.enable = true;
       tmux.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
@@ -38,12 +37,18 @@
     };
     workflow = {
       sops.enable = true;
+      builders = {
+        enable = true;
+        systems = [
+          "aarch64-darwin"
+          "x86_64-darwin"
+        ];
+      };
     };
   };
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
-    nixpkgs-review
 
     # General productivity & workflow
     obsidian
