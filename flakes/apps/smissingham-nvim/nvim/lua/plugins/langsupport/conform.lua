@@ -16,6 +16,7 @@ return {
           bashsh = { "shfmt" },
           nix = { "nixfmt" },
           black = { "black" },
+          markdown = { "prettierd" },
 
 
           --prettierd = {"prettierd"},

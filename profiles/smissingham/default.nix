@@ -42,6 +42,8 @@ let
         # api keys & such
         OPENAI_API_URL = { };
         OPENAI_API_KEY = { };
+        HF_IE_API_URL = { };
+        HF_IE_API_KEY = { };
 
         JINA_API_KEY = { };
         CONTEXT7_API_KEY = { };

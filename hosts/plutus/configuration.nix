@@ -78,6 +78,7 @@
       # ----- WORKFLOW ----- #
       "raycast"
       "ghostty"
+      "protonvpn"
       # "google-chrome"
       # "shottr"
 
@@ -98,7 +99,7 @@
       "microsoft-powerpoint"
       "microsoft-word"
       "onedrive"
-      "google-drive"
+      #"google-drive"
       #"macfuse"
 
       # ----- OS / SYSTEM ----- #

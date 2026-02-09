@@ -1,25 +1,5 @@
 name: llm
 services:
-  ollama:
-    container_name: ollama
-    image: ollama/ollama:latest
-    restart: always
-    hostname: ollama
-    environment:
-      OLLAMA_KEEP_ALIVE: 24h
-      HOME: /home/ollama
-    volumes:
-      - ${APPDATA_PATH}/llm/ollama:/home/ollama/.ollama:U
-    devices:
-      - nvidia.com/gpu=all
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
-      - traefik.http.routers.ollama.tls=true
-      - traefik.http.routers.ollama.entrypoints=websecure
-      - traefik.http.routers.ollama.tls.certresolver=resolver
-      - traefik.http.services.ollama.loadbalancer.server.port=11434
-
   litellm-postgres:
     container_name: litellm-postgres
     image: postgres:15-alpine
@@ -29,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
       POSTGRES_DB: litellm
     volumes:
-      - ${APPDATA_PATH}/llm/litellm-postgres:/var/lib/postgresql/data:U
+      - ${APPDATA_PATH}/llm-services/litellm-postgres/data:/var/lib/postgresql/data:U
 
   litellm:
     container_name: litellm
@@ -52,6 +32,7 @@ services:
 
     volumes:
       - ${APPCONF_PATH}/llm/litellm/config:/config:U
+      - ${APPDATA_PATH}/llm-services/litellm/data:/data:U
     command:
       - --config=/config/config.yaml
     labels:
@@ -103,7 +84,7 @@ services:
   #     OPENAI_API_KEY: ${HOSTING_COMMON_MASTER_KEY}
   #     TOOL_SERVER_CONNECTIONS: ${OWUI_TOOL_SERVERS}
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/openwebui:/app/backend/data:U
+  #     - ${APPDATA_PATH}/llm-services/openwebui/data:/app/backend/data:U
   #   labels:
   #     - traefik.enable=true
   #     - traefik.http.routers.openwebui.rule=Host(`chat.${HOSTNAME}.${HOSTING_ROOT}`)
@@ -141,9 +122,9 @@ services:
   #     ALLOW_REGISTRATION: true
   #   volumes:
   #     - ${APPCONF_PATH}/llm/librechat/librechat.yaml:/app/librechat.yaml
-  #     - ${APPDATA_PATH}/llm/librechat/images:/app/client/public/images:U
-  #     - ${APPDATA_PATH}/llm/librechat/uploads:/app/uploads:U
-  #     - ${APPDATA_PATH}/llm/librechat/logs:/app/logs:U
+  #     - ${APPDATA_PATH}/llm-services/librechat/images:/app/client/public/images:U
+  #     - ${APPDATA_PATH}/llm-services/librechat/uploads:/app/uploads:U
+  #     - ${APPDATA_PATH}/llm-services/librechat/logs:/app/logs:U
   #   labels:
   #     - traefik.enable=true
   #     - traefik.http.routers.librechat.rule=Host(`librechat.${HOSTNAME}.${HOSTING_ROOT}`)
@@ -157,7 +138,7 @@ services:
   #   image: mongo
   #   restart: always
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/librechat/data-node:/data/db:U
+  #     - ${APPDATA_PATH}/llm-services/librechat-mongodb/data-node:/data/db:U
   #   command: mongod --noauth
   #
   # librechat-meilisearch:
@@ -169,7 +150,7 @@ services:
   #     MEILI_NO_ANALYTICS: "true"
   #     MEILI_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/librechat/meili_data_v1.12:/meili_data:U
+  #     - ${APPDATA_PATH}/llm-services/librechat-meilisearch/meili_data_v1.12:/meili_data:U
   #
   # librechat-vectordb:
   #   container_name: librechat-vectordb
@@ -180,8 +161,8 @@ services:
   #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
   #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/librechat/pgdata:/var/lib/postgresql/data:U
-
+  #     - ${APPDATA_PATH}/llm-services/librechat-vectordb/pgdata:/var/lib/postgresql/data:U
+  #
   # librechat-rag-api:
   #   container_name: librechat-rag-api
   #   image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
@@ -193,7 +174,7 @@ services:
   #     RAG_PORT: 8000
   #     EMBEDDINGS_PROVIDER: huggingface
   #     EMBEDDINGS_MODEL: sentence-transformers/all-MiniLM-L6-v2
-
+  #
   # open-webui:
   #   container_name: open-webui
   #   image: ghcr.io/open-webui/open-webui:main
@@ -217,7 +198,7 @@ services:
   #     PDF_EXTRACT_IMAGES: "True"
   #     USE_CUDA_DOCKER: "True"
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/open-webui:/app/backend/data:U
+  #     - ${APPDATA_PATH}/llm-services/open-webui/data:/app/backend/data:U
   #   labels:
   #     - traefik.enable=true
   #     - traefik.http.routers.openwebui.rule=Host(`openwebui.${HOSTNAME}.${HOSTING_ROOT}`)
@@ -234,9 +215,9 @@ services:
   #     - "host.docker.internal:host-gateway"
   #   #env_file: ".env"
   #   volumes:
-  #     - ${APPCONF_PATH}/llm/mcpo:/app/config
-  #     - ${APPDATA_PATH}/llm/mcpo:/app/data
-  #     - ${APPDATA_PATH}/llm/mcpo/tokens:/root/.mcpo/tokens:U
+  #     - ${APPDATA_PATH}/llm-services/mcpo/data:/app/data
+  #     - ${APPDATA_PATH}/llm-services/mcpo/tokens:/root/.mcpo/tokens:U
+
   #   command:
   #     - "--config"
   #     - "/app/config/config.json"
@@ -268,7 +249,7 @@ services:
   #     POSTGRES_DB: dify
   #     PGDATA: /var/lib/postgresql/data/pgdata
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/postgres:/var/lib/postgresql/data:U
+  #     - ${APPDATA_PATH}/llm-services/dify-postgres/postgres:/var/lib/postgresql/data:U
   #   healthcheck:
   #     test: ["CMD", "pg_isready", "-U", "${HOSTING_ADMIN_USERNAME}"]
   #     interval: 1s
@@ -281,7 +262,7 @@ services:
   #   restart: always
   #   command: redis-server --requirepass ${HOSTING_ADMIN_PASSWORD}
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/redis:/data:U
+  #     - ${APPDATA_PATH}/llm-services/dify-redis/data:/data:U
   #   healthcheck:
   #     test: ["CMD", "redis-cli", "ping"]
   #     interval: 1s
@@ -304,7 +285,7 @@ services:
   #     DEFAULT_VECTORIZER_MODULE: none
   #     CLUSTER_HOSTNAME: node1
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/weaviate:/var/lib/weaviate:U
+  #     - ${APPDATA_PATH}/llm-services/dify-weaviate/data:/var/lib/weaviate:U
   #
   # dify-sandbox:
   #   container_name: dify-sandbox
@@ -326,7 +307,7 @@ services:
   #   restart: always
   #   volumes:
   #     - ${APPCONF_PATH}/llm/dify/ssrf-proxy:/docker-entrypoint.d:ro
-  #     - ${APPDATA_PATH}/llm/dify/ssrf-proxy:/var/spool/squid:U
+  #     - ${APPDATA_PATH}/llm-services/dify-ssrf-proxy/spool:/var/spool/squid:U
   #
   # dify-worker:
   #   container_name: dify-worker
@@ -364,7 +345,7 @@ services:
   #     SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
   #     SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/worker/storage:/app/api/storage:U
+  #     - ${APPDATA_PATH}/llm-services/dify-worker/storage:/app/api/storage:U
   #
   # dify-web:
   #   container_name: dify-web
@@ -432,7 +413,7 @@ services:
   #     PLUGIN_DAEMON_KEY: ${HOSTING_COMMON_MASTER_KEY}
   #     MIGRATION_ENABLED: "true"
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/api/storage:/app/api/storage:U
+  #     - ${APPDATA_PATH}/llm-services/dify-api/storage:/app/api/storage:U
   #   labels:
   #     - traefik.enable=true
   #     - traefik.http.routers.dify-api.rule=Host(`dify.${HOSTNAME}.${HOSTING_ROOT}`) && (PathPrefix(`/api`) || PathPrefix(`/console/api`) || PathPrefix(`/v1`) || PathPrefix(`/files`))
@@ -473,5 +454,4 @@ services:
   #     PLUGIN_WORKING_PATH: /app/storage/cwd
   #     FORCE_VERIFYING_SIGNATURE: "false"
   #   volumes:
-  #     - ${APPDATA_PATH}/llm/dify/plugin_daemon:/app/storage:U
-  #
+  #     - ${APPDATA_PATH}/llm-services/dify-plugin-daemon/storage:/app/storage:U

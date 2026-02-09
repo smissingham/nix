@@ -104,6 +104,8 @@ in
             tell (first process whose frontmost is true) to \
             set size of first window to {$popup_width, $popup_height}"
         '';
+
+        # Quit window of app only, not all windows of app
       in
       {
         home = {

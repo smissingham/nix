@@ -405,11 +405,11 @@
     },
     "mynixpkgs": {
       "locked": {
-        "lastModified": 1769292344,
-        "narHash": "sha256-76pnNIGF+PlNFIMt4HYSujcs8JQEyseG4JujsqkXSMg=",
+        "lastModified": 1770130078,
+        "narHash": "sha256-uhQzYmthgyqRX2ws87wPEgJcLN9il//7a4odRibj5VQ=",
         "owner": "smissingham",
         "repo": "nixpkgs",
-        "rev": "56c676d6f6a39bfeb7c055ccbc2dd4216dbc4a69",
+        "rev": "00a266ad51813e5f7d65b4882fd38989a917649a",
         "type": "github"
       },
       "original": {

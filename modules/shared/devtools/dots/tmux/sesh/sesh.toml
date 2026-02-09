@@ -8,7 +8,7 @@ path = "~/Documents/Nix"
 
 [[session]]
 name = "Notes"
-path = "~/Documents/Obsidian/second-brain"
+path = "~/Documents/Notes/second-brain"
 startup_command = "sv"
 
 [[session]]

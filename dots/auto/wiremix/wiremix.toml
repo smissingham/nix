@@ -1,0 +1,7 @@
+tab = "output"
+
+keybindings = [
+  { key = { Char = "]" }, action = "TabRight" },
+  { key = { Char = "[" }, action = "TabLeft" },
+  { key = "Enter", action = "SetDefault" },
+]

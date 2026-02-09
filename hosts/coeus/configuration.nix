@@ -10,6 +10,12 @@
     ./systemd.nix
   ];
 
+  # Akuna dev ports
+  networking.firewall.allowedTCPPorts = [
+    9876
+    9877
+    9878
+  ];
   networking.hostName = "coeus";
   networking.extraHosts = ''
     127.0.0.1 db padb redis yugabyte
@@ -88,6 +94,7 @@
     # Productivity
     #libreoffice
     onlyoffice-desktopeditors
+    winboat
 
     # Dev
     jetbrains.idea-oss

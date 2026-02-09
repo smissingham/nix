@@ -32,23 +32,23 @@
 
 #################### Application Launch Shortcuts ####################
 # PWA's
-cmd + ctrl + alt + shift - m    : $BROWSER --app=https://mail.proton.me && aerospace-pop
-cmd + ctrl + alt + shift - p    : $BROWSER --app=https://pass.proton.me && aerospace-pop
-cmd + ctrl + alt + shift - a    : $BROWSER --app=https://lumo.proton.me && aerospace-pop
+hyper - m    : $BROWSER --app=https://mail.proton.me && aerospace-pop
+hyper - p    : $BROWSER --app=https://pass.proton.me && aerospace-pop
+hyper - a    : $BROWSER --app=https://lumo.proton.me && aerospace-pop
 
 # Native Apps
-cmd + ctrl + alt + shift - w    : $BROWSER
-cmd + ctrl + alt + shift - t    : open -na $TERMINAL
-cmd + ctrl + alt + shift - s    : open -a Signal
-#cmd + ctrl + alt + shift - m    : open -a Spotify
-#cmd + ctrl + alt + shift - o    : open -a Obsidian
+hyper - w    : $BROWSER
+hyper - t    : open -na $TERMINAL
+hyper - s    : open -a Signal
+#hyper - m    : open -a Spotify
+#hyper - o    : open -a Obsidian
 
 # TUI's
-cmd + ctrl + alt + shift - o    : open -na $TERMINAL --args -e opencode && aerospace-pop
-cmd + ctrl + alt + shift - r    : open -na $TERMINAL --args -e btop && aerospace-pop
-cmd + ctrl + alt + shift - e    : open -na $TERMINAL --args -e yazi && aerospace-pop
-cmd + ctrl + alt + shift - p    : open -na $TERMINAL --args -e podman-tui && aerospace-pop
-cmd + ctrl + alt + shift - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
+hyper - o    : open -na $TERMINAL --args -e opencode && aerospace-pop
+hyper - r    : open -na $TERMINAL --args -e btop && aerospace-pop
+hyper - e    : open -na $TERMINAL --args -e yazi && aerospace-pop
+hyper - p    : open -na $TERMINAL --args -e podman-tui && aerospace-pop
+hyper - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
 
 
 #################### Application Control ####################
@@ -57,15 +57,31 @@ cmd + ctrl + alt + shift - n    : open -na $TERMINAL --args -e sesh connect Note
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-#ctrl - o          : skhd -k "cmd - o"
-#ctrl - p          : skhd -k "cmd - p"
+ctrl - o          : skhd -k "cmd - o" # conflicts with a lot of terminal bindings
+ctrl - p          : skhd -k "cmd - p"
+ctrl - f          : skhd -k "cmd - f"
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
 ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
 
 # Common global SUPER mappings
-cmd - q : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Window" of menu "File" of menu bar 1'
-cmd - t : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "New Tab" of menu "File" of menu bar 1'
+cmd - q [
+  "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Window" of menu "File" of menu bar 1'
+]
+cmd - t [
+  "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "New Tab" of menu "File" of menu bar 1'
+]
 
+# Tab switching with control
+ctrl - 1 : skhd -k "cmd - 1"
+ctrl - 2 : skhd -k "cmd - 2"
+ctrl - 3 : skhd -k "cmd - 3"
+ctrl - 4 : skhd -k "cmd - 4"
+ctrl - 5 : skhd -k "cmd - 5"
+ctrl - 6 : skhd -k "cmd - 6"
+ctrl - 7 : skhd -k "cmd - 7"
+ctrl - 8 : skhd -k "cmd - 8"
+ctrl - 9 : skhd -k "cmd - 9"
+ctrl - 0 : skhd -k "cmd - 0"
 #################### Window Movement ####################
 
 # Focus Windows
@@ -86,9 +102,6 @@ cmd + shift + ctrl - j : aerospace join-with down
 cmd + shift + ctrl - k : aerospace join-with up
 cmd + shift + ctrl - l : aerospace join-with right 
 
-# Cycle Window Focus
-cmd - tab : aerospace focus-back-and-forth
-
 #################### Window Layout & Sizing ####################
 
 # Window Sizing
@@ -101,37 +114,34 @@ cmd + shift - n    : aerospace flatten-workspace-tree
 cmd + shift - m    : aerospace fullscreen
 cmd + shift - 0x2C : aerospace layout floating tiling
 
-# Popup float
-cmd + shift - 0x2F : aerospace-pop
+# Popup float (cmd + shift - tilde)
+cmd + shift - 0x32 : aerospace-pop
 
 #################### Workspaces ####################
 
 # Cycle through workspaces
-alt - tab: aerospace workspace --wrap-around next 
-
-# Cycle through monitors
-alt + cmd - tab : aerospace focus-monitor --wrap-around next
+cmd - tab: aerospace focus-monitor --wrap-around next 
 
 # Go to Workspace
-alt - 1: aerospace workspace 1
-alt - 2: aerospace workspace 2
-alt - 3: aerospace workspace 3
-alt - 4: aerospace workspace 4
-alt - 5: aerospace workspace 5
-alt - 6: aerospace workspace 6
-alt - 7: aerospace workspace 7
-alt - 8: aerospace workspace 8
-alt - 9: aerospace workspace 9
-alt - 0: aerospace workspace 10
+cmd - 1: aerospace workspace 1
+cmd - 2: aerospace workspace 2
+cmd - 3: aerospace workspace 3
+cmd - 4: aerospace workspace 4
+cmd - 5: aerospace workspace 5
+cmd - 6: aerospace workspace 6
+cmd - 7: aerospace workspace 7
+cmd - 8: aerospace workspace 8
+cmd - 9: aerospace workspace 9
+cmd - 0: aerospace workspace 10
 
 # Move to Workspace
-alt + shift - 1: aerospace move-node-to-workspace 1
-alt + shift - 2: aerospace move-node-to-workspace 2
-alt + shift - 3: aerospace move-node-to-workspace 3
-alt + shift - 4: aerospace move-node-to-workspace 4
-alt + shift - 5: aerospace move-node-to-workspace 5
-alt + shift - 6: aerospace move-node-to-workspace 6
-alt + shift - 7: aerospace move-node-to-workspace 7
-alt + shift - 8: aerospace move-node-to-workspace 8
-alt + shift - 9: aerospace move-node-to-workspace 9
-alt + shift - 0: aerospace move-node-to-workspace 10
+cmd + shift - 1: aerospace move-node-to-workspace 1
+cmd + shift - 2: aerospace move-node-to-workspace 2
+cmd + shift - 3: aerospace move-node-to-workspace 3
+cmd + shift - 4: aerospace move-node-to-workspace 4
+cmd + shift - 5: aerospace move-node-to-workspace 5
+cmd + shift - 6: aerospace move-node-to-workspace 6
+cmd + shift - 7: aerospace move-node-to-workspace 7
+cmd + shift - 8: aerospace move-node-to-workspace 8
+cmd + shift - 9: aerospace move-node-to-workspace 9
+cmd + shift - 0: aerospace move-node-to-workspace 10

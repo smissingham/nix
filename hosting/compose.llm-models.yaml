@@ -1,0 +1,49 @@
+name: llm
+
+services:
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    restart: always
+    hostname: ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
+      HOME: /home/ollama
+    volumes:
+      - ${APPDATA_PATH}/llm-models/ollama:/home/ollama/.ollama:U
+    devices:
+      - nvidia.com/gpu=all
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ollama.rule=Host(`ollama.${HOSTNAME}.${HOSTING_ROOT}`)
+      - traefik.http.routers.ollama.tls=true
+      - traefik.http.routers.ollama.entrypoints=websecure
+      - traefik.http.routers.ollama.tls.certresolver=resolver
+      - traefik.http.services.ollama.loadbalancer.server.port=11434
+
+  # llamacpp-glm-flash:
+  #   container_name: llamacpp-glm-flash
+  #   image: ghcr.io/ggml-org/llama.cpp:server-cuda
+  #   restart: always
+  #   ipc: host
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - "${APPDATA_PATH}/llm-models:/models"
+  #   devices:
+  #     - nvidia.com/gpu=all
+  #   command: >
+  #     --model /models/huggingface/gguf/GLM-4.7-Flash-REAP-23B-A3B-Q4_K_M.gguf
+  #     --host 0.0.0.0
+  #     --port 8000
+  #     --ctx-size 32768
+  #     --n-gpu-layers 32
+  #     --kv-offload
+  #     --batch-size 512
+  #     --ubatch-size 128
+  #     --mlock
+  #     --jinja
+  #     --temp 0.7
+  #     --top-p 1.0
+  #     --min-p 0.01
+  #     --repeat-penalty 1.0

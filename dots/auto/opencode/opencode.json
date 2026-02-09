@@ -14,9 +14,9 @@
     },
     "prettierd": {
       "command": [
-        "prettierd",
-        "--stdin-filepath",
-        "$FILE"
+        "sh",
+        "-c",
+        "prettierd --stdin-filepath \"$FILE\" < \"$FILE\""
       ],
       "extensions": [
         ".md"
@@ -92,6 +92,26 @@
       "options": {
         "baseURL": "http://localhost:1234/v1"
       }
+    },
+    "glm-flash-llamacpp": {
+      "models": {
+        "GLM-4.7-Flash-REAP-23B-A3B-Q4_K_M.gguf": {
+          "name": "GLM-4.7 Flash REAP"
+        }
+      },
+      "options": {
+        "baseURL": "http://localhost:8000",
+      }
+    },
+    "glm-flash-vllm": {
+      "models": {
+        "unsloth/GLM-4.7-Flash-FP8-Dynamic": {
+          "name": "GLM-4.7 Flash FP8"
+        }
+      },
+      "options": {
+        "baseURL": "http://localhost:8000",
+      }
     }
   },
   "mcp": {
@@ -104,7 +124,7 @@
       }
     },
     "searxng": {
-      "enabled": true,
+      "enabled": false,
       "type": "local",
       "command": [
         "bunx",
@@ -153,19 +173,5 @@
         "mcp-server-git"
       ]
     },
-    "copilotfx": {
-      "enabled": false,
-      "type": "local",
-      "command": [
-        "bunx",
-        "mcp-remote",
-        "https://mcp.pricefx.com/mcp/demofx-staging.pricefx.com/copilotfx",
-        "3334",
-        "--host",
-        "localhost",
-        "--static-oauth-client-info",
-        "{ \"client_id\": \"devenv\", \"redirect_uri\": \"http://localhost:3334/oauth/callback\"}"
-      ]
-    }
   }
 }
