@@ -32,58 +32,60 @@ in
       exportKeys = builtins.attrNames mainUser.sops.secrets.autoExport;
     in
     {
-      home-manager.users.${mainUser.username} = {
-        imports = [
-          inputs.sops-nix.homeManagerModules.sops
-        ];
-
-        sops = {
-          defaultSopsFile = /. + secretsFile;
-          validateSopsFiles = false;
-
-          age = {
-            keyFile = ageKeyFile;
-          };
-
-          secrets = mainUser.sops.secrets.autoExport // mainUser.sops.secrets.other;
-        };
-
-        home = {
-          packages = with pkgs; [
-            age
-            sops
-            ssh-to-age
-            age-plugin-yubikey
-            yubico-piv-tool
-            yubikey-manager
+      home-manager.users.${mainUser.username} =
+        { lib, ... }:
+        {
+          imports = [
+            inputs.sops-nix.homeManagerModules.sops
           ];
-          sessionVariables = {
-            SOPS_CONFIG = "${sopsPath}/.sops.yaml";
-            SOPS_AGE_KEY_FILE = "${ageKeyFile}";
-          }
-          // builtins.mapAttrs (_name: value: "$(cat ${value.path})") (
-            lib.filterAttrs (name: _value: builtins.elem name exportKeys) (
-              sysConfig.home-manager.users.${mainUser.username}.sops.secrets or { }
-            )
-          );
-          activation = {
-            createKeyIfNotExists = ''
-              if [ ! -d ${sopsPath} ]; then
-                mkdir -p ${sopsPath}
-              fi
 
-              # Make an age ID at given path if none there, prefer to use SSH key if present
-              if [ ! -f ${ageKeyFile} ]; then
-                if [ -f ~/.ssh/id_ed25519 ]; then
-                  ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ${ageKeyFile}
-                else
-                  ${pkgs.age}/bin/age-keygen -o ${ageKeyFile}
+          sops = {
+            defaultSopsFile = /. + secretsFile;
+            validateSopsFiles = false;
+
+            age = {
+              keyFile = ageKeyFile;
+            };
+
+            secrets = mainUser.sops.secrets.autoExport // mainUser.sops.secrets.other;
+          };
+
+          home = {
+            packages = with pkgs; [
+              age
+              sops
+              ssh-to-age
+              age-plugin-yubikey
+              yubico-piv-tool
+              yubikey-manager
+            ];
+            sessionVariables = {
+              SOPS_CONFIG = "${sopsPath}/.sops.yaml";
+              SOPS_AGE_KEY_FILE = "${ageKeyFile}";
+            }
+            // builtins.mapAttrs (_name: value: "$(cat ${value.path})") (
+              lib.filterAttrs (name: _value: builtins.elem name exportKeys) (
+                sysConfig.home-manager.users.${mainUser.username}.sops.secrets or { }
+              )
+            );
+            activation = {
+              createKeyIfNotExists = lib.hm.dag.entryBefore [ "setupSops" ] ''
+                if [ ! -d ${sopsPath} ]; then
+                  mkdir -p ${sopsPath}
                 fi
-              fi
-            '';
+
+                # Make an age ID at given path if none there, prefer to use SSH key if present
+                if [ ! -f ${ageKeyFile} ]; then
+                  if [ -f ~/.ssh/id_ed25519 ]; then
+                    ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ${ageKeyFile}
+                  else
+                    ${pkgs.age}/bin/age-keygen -o ${ageKeyFile}
+                  fi
+                fi
+              '';
+            };
           };
         };
-      };
     }
   );
 }

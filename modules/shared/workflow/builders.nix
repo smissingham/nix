@@ -6,19 +6,7 @@
   ...
 }:
 let
-  moduleSet = "mySharedModules";
-  moduleCategory = "workflow";
-  moduleName = "builders";
-
-  optionPath = [
-    moduleSet
-    moduleCategory
-    moduleName
-  ];
-  enablePath = optionPath ++ [ "enable" ];
-  systemsPath = optionPath ++ [ "systems" ];
-
-  localHostName = config.networking.hostName;
+  cfg = config.mySharedModules.workflow.builders;
 
   builderHosts = [
     {
@@ -41,19 +29,45 @@ let
     }
   ];
 
-  registeredHosts = builtins.filter (builder: builder.hostName != localHostName) builderHosts;
+  remoteBuilders = lib.filter (b: b.hostName != config.networking.hostName) builderHosts;
 
-  builderStrings = builtins.map (
-    builder:
+  builderStrings = map (
+    b:
     let
-      systemString = builtins.concatStringsSep "," builder.systems;
+      systems = lib.concatStringsSep "," b.systems;
     in
-    "ssh-ng://${mainUser.username}@${builder.hostName} ${systemString} - - ${toString builder.maxJobs} ${toString builder.speedFactor}"
-  ) registeredHosts;
+    "ssh-ng://${mainUser.username}@${b.hostName} ${systems} - - ${toString b.maxJobs} ${toString b.speedFactor}"
+  ) remoteBuilders;
+
+  userSshDir = "${mainUser.getHome { }}/.ssh";
+  userKey = "${userSshDir}/id_ed25519";
+  userHosts = "${userSshDir}/known_hosts";
+
+  copyKeyScript =
+    rootSshDir: rootGroup:
+    lib.concatStringsSep "\n" [
+      ''
+        if [ -f "${userKey}" ]; then
+          mkdir -p "${rootSshDir}"
+          chmod 700 "${rootSshDir}"
+          cp "${userKey}" "${rootSshDir}/id_ed25519"
+          chmod 600 "${rootSshDir}/id_ed25519"
+          chown root:${rootGroup} "${rootSshDir}/id_ed25519"
+        fi
+      ''
+      ''
+        if [ -f "${userHosts}" ]; then
+          mkdir -p "${rootSshDir}"
+          cp "${userHosts}" "${rootSshDir}/known_hosts"
+          chmod 644 "${rootSshDir}/known_hosts"
+          chown root:${rootGroup} "${rootSshDir}/known_hosts"
+        fi
+      ''
+    ];
 in
 {
-  options = lib.setAttrByPath optionPath {
-    enable = lib.mkEnableOption moduleName;
+  options.mySharedModules.workflow.builders = {
+    enable = lib.mkEnableOption "remote builders";
     systems = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -61,51 +75,28 @@ in
     };
   };
 
-  config = lib.mkIf (lib.getAttrFromPath enablePath config) (
-    let
-      rootGroup = if pkgs.stdenv.isDarwin then "wheel" else "root";
-      userSshDir = "${mainUser.getHome { }}/.ssh";
-      rootSshDir = "/var/root/.ssh";
-      userKeyPath = "${userSshDir}/id_ed25519";
-      userKnownHostsPath = "${userSshDir}/known_hosts";
-      syncRootSshKeyScript = ''
-        if [ -f "${userKeyPath}" ]; then
-          mkdir -p "${rootSshDir}"
-          chmod 700 "${rootSshDir}"
-          cp "${userKeyPath}" "${rootSshDir}/id_ed25519"
-          chmod 600 "${rootSshDir}/id_ed25519"
-          chown root:${rootGroup} "${rootSshDir}/id_ed25519"
-        fi
-
-        if [ -f "${userKnownHostsPath}" ]; then
-          mkdir -p "${rootSshDir}"
-          cp "${userKnownHostsPath}" "${rootSshDir}/known_hosts"
-          chmod 644 "${rootSshDir}/known_hosts"
-          chown root:${rootGroup} "${rootSshDir}/known_hosts"
-        fi
-      '';
-    in
+  config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
         nix.settings = {
           builders = lib.mkForce builderStrings;
           builders-use-substitutes = true;
-          extra-platforms = lib.getAttrFromPath systemsPath config;
+          extra-platforms = cfg.systems;
           trusted-users = [
             "root"
             mainUser.username
           ];
         };
 
-        environment.systemPackages = with pkgs; [
-          nixpkgs-review
-        ];
+        environment.systemPackages = [ pkgs.nixpkgs-review ];
       }
       (lib.mkIf pkgs.stdenv.isDarwin {
-        system.activationScripts.extraActivation.text = lib.mkAfter syncRootSshKeyScript;
+        system.activationScripts.extraActivation.text = lib.mkAfter (
+          copyKeyScript "/var/root/.ssh" "wheel"
+        );
       })
       (lib.mkIf (!pkgs.stdenv.isDarwin) {
-        system.activationScripts.syncRootSshKey.text = syncRootSshKeyScript;
+        system.activationScripts.syncRootSshKey.text = copyKeyScript "/root/.ssh" "root";
       })
     ]
   );

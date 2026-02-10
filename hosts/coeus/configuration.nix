@@ -30,6 +30,7 @@
   };
 
   mySharedModules = {
+    ssh.enable = true;
     #browsers.floorp.enable = true;
     workflow = {
       sops.enable = true;
@@ -57,7 +58,6 @@
     entertainment.gaming.enable = true;
 
     access = {
-      ssh.enable = true;
       fail2ban.enable = true;
       sunshine.enable = true;
       sunshine.withMoonlight = true;
@@ -83,29 +83,33 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   #----- Applications in User Space -----#
-  home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+  home-manager.users.${mainUser.username} =
+    { ... }:
+    {
+      home.packages = with pkgs; [
 
-    # Personal Workflow
-    mynixpkgs.filen-desktop
-    spotify
-    obsidian
-    ghostty
-    #chromium
-    brave
+        # Personal Workflow
+        mynixpkgs.filen-desktop
+        spotify
+        obsidian
+        ghostty
+        #chromium
+        brave
 
-    # comms
-    signal-desktop
-    vesktop
+        # comms
+        signal-desktop
+        vesktop
 
-    # Productivity
-    #libreoffice
-    onlyoffice-desktopeditors
-    winboat
+        # Productivity
+        #libreoffice
+        onlyoffice-desktopeditors
+        winboat
 
-    # Dev
-    jetbrains.idea-oss
-    mynixpkgs.surrealist
-  ];
+        # Dev
+        jetbrains.idea-oss
+        mynixpkgs.surrealist
+      ];
+    };
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

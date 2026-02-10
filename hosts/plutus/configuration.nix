@@ -12,6 +12,7 @@
   };
 
   myDarwinModules = {
+    # SSH server enabled via mySharedModules.ssh
     workflow = {
       aerospace.enable = true;
     };
@@ -23,6 +24,7 @@
   };
 
   mySharedModules = {
+    ssh.enable = true;
     browsers = {
       floorp.enable = true;
       brave.enable = true;
@@ -48,23 +50,27 @@
   };
 
   #----- Nixpkgs Applications in User Space -----#
-  home-manager.users.${mainUser.username}.home.packages = with pkgs; [
+  home-manager.users.${mainUser.username} =
+    { ... }:
+    {
+      home.packages = with pkgs; [
 
-    # General productivity & workflow
-    obsidian
-    mynixpkgs.filen-desktop
-    moonlight-qt # rdp client for sunlight backend
+        # General productivity & workflow
+        obsidian
+        mynixpkgs.filen-desktop
+        moonlight-qt # rdp client for sunlight backend
 
-    # Dev tools
-    mynixpkgs.surrealist
-    jetbrains-toolbox
-    #jetbrains.idea-oss
-    #postman
-    #bruno
+        # Dev tools
+        mynixpkgs.surrealist
+        jetbrains-toolbox
+        #jetbrains.idea-oss
+        #postman
+        #bruno
 
-    # CLI Stuff
-    myoverlays.pfxpackage
-  ];
+        # CLI Stuff
+        myoverlays.pfxpackage
+      ];
+    };
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [

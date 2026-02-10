@@ -50,7 +50,11 @@ let
       };
 
       # Put secrets here that are needed in nix but not auto-exported to env
-      other = { };
+      other = {
+        # SSH public keys for passwordless auth between hosts (pattern: SSH_PUBKEY_*)
+        SSH_PUBKEY_COEUS = { };
+        SSH_PUBKEY_PLUTUS = { };
+      };
     };
   };
 
