@@ -57,7 +57,7 @@ hyper - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-ctrl - o          : skhd -k "cmd - o" # conflicts with a lot of terminal bindings
+#ctrl - o          : skhd -k "cmd - o" # conflicts with a lot of terminal bindings
 ctrl - p          : skhd -k "cmd - p"
 ctrl - f          : skhd -k "cmd - f"
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus

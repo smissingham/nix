@@ -31,6 +31,7 @@
     };
     devtools = {
       tmux.enable = true;
+      codesigning.enable = true;
       smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
@@ -98,6 +99,8 @@
       "spotify"
       "vlc"
       "obs"
+      "inkscape"
+      "gimp"
       #"obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #

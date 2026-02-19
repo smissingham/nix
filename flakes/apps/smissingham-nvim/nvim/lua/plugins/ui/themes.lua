@@ -4,7 +4,7 @@ return {
     priority = 1000,
     opts = {},
     config = function()
-      vim.cmd.colorscheme("gruvbox")
+      --vim.cmd.colorscheme("gruvbox")
     end
   },
   {
@@ -16,6 +16,9 @@ return {
       term_colors = true,
       --transparent_background = true,
     },
+    config = function()
+      vim.cmd.colorscheme("catppuccin-macchiato")
+    end
   },
   {
     "folke/tokyonight.nvim",

@@ -108,6 +108,7 @@
         # Dev
         jetbrains.idea-oss
         mynixpkgs.surrealist
+        zed-editor
       ];
     };
   programs.nix-ld = {
