@@ -18,6 +18,7 @@
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username}.home.packages = with pkgs; [
     obsidian
+    pkgsUnstable.claude-code
   ];
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = with pkgs; [
@@ -38,6 +39,7 @@
       # Workflow & PKM
       "raycast"
       "obsidian"
+      "brainfm"
 
       # Productivity
       "microsoft-teams"
@@ -49,6 +51,7 @@
       "todoist-app"
       "windows-app"
       "onedrive"
+      "deskpad"
 
       # Data Science & Coding
       "knime"
@@ -56,6 +59,7 @@
       "visual-studio-code"
       "gitkraken"
       "chatgpt"
+      "claude"
       # "r" is weird, it installs and uninstalls everytime nxr is run
 
       # Mac Utils
@@ -66,7 +70,10 @@
       "logitune"
       "pearcleaner"
       "finicky"
-      "browserosaurus"
+      #"browserosaurus"
+      #"tabtab"
+      "alt-tab"
+      #"disk-expert"
 
       # Messaging
       "whatsapp"
@@ -75,6 +82,7 @@
       # 3D Printing & Design
       "bambu-studio"
       "autodesk-fusion"
+      "gimp"
 
       # Gaming & Media
       "nvidia-geforce-now"

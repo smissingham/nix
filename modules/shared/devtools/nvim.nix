@@ -1,6 +1,7 @@
 {
   mainUser,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 let
@@ -18,7 +19,7 @@ in
       # ----- Developer Tools -----#
       lazygit
       #mypkgs.mcp-hub
-      mypkgs.claude-code
+      pkgsUnstable.claude-code
 
       # ----- CLI Utilities -----#
       fd

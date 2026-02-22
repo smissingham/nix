@@ -87,8 +87,8 @@ in
 
         programs.git = {
           enable = true;
-          userName = mainUser.name;
-          userEmail = mainUser.email;
+          settings.user.name = mainUser.name;
+          settings.user.email = mainUser.email;
         };
 
         programs.bash = {
@@ -111,11 +111,18 @@ in
         programs.zsh = {
           enable = true;
           enableCompletion = true;
+          dotDir = config.home.homeDirectory;
           shellAliases = shellAliases;
           syntaxHighlighting.enable = true;
-          initExtra = ''
+          initContent = ''
             source ~/.p10k.zsh
             source ~/.secrets/api-keys.env
+
+            # Auto-start Claude Code when in POPMART vault (for Obsidian Terminal plugin)
+            if [[ "$PWD" == "/Users/regionativo/Documents/POPMART/POPMART" ]] && [[ -z "$CLAUDE_STARTED" ]]; then
+                export CLAUDE_STARTED=1
+                claude
+            fi
           '';
 
           history = {

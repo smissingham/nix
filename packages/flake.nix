@@ -46,7 +46,6 @@
         in
         {
           filen-desktop = pkgs.callPackage ./filen-desktop/package.appimage.nix { };
-          claude-code = pkgs.callPackage ./claude-code/package.nix { };
           #mcp-hub = inputs.mcp-hub.packages."${system}".default;
         }
       );

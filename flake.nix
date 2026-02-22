@@ -15,10 +15,6 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -99,11 +95,7 @@
       sharedModules = [ importSharedModules ];
       darwinModules = sharedModules ++ [
         importDarwinModules
-        inputs.mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
-        ({
-          home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
-        })
       ];
       nixosModules = sharedModules ++ [
         importNixosModules

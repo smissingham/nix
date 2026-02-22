@@ -32,7 +32,7 @@
     yazi
     tmux
 
-    nixfmt-rfc-style # formatter
+    nixfmt # formatter
     nixd # lsp
   ];
 }
