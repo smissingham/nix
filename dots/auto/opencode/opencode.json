@@ -16,7 +16,11 @@
       "command": [
         "sh",
         "-c",
-        "prettierd --stdin-filepath \"$FILE\" < \"$FILE\""
+        "prettierd",
+        "--stdin-filepath",
+        "$FILE",
+        "<",
+        "$FILE"
       ],
       "extensions": [
         ".md"
@@ -134,6 +138,10 @@
       "environment": {
         "SEARXNG_URL": "{env:SEARXNG_URL}"
       }
+    },
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app"
     },
     "sequential-thinking": {
       "enabled": true,

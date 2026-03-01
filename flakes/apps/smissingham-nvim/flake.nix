@@ -62,7 +62,7 @@
             lazydocker
 
             # ----- AI Helpers -----#
-            # pkgsUnstable.vectorcode # for minuet RAG context
+            pkgsUnstable.vectorcode # for minuet RAG context
             pkgsUnstable.opencode
             pkgsUnstable.claude-code
             #inputs.mcp-hub.packages."${system}".default

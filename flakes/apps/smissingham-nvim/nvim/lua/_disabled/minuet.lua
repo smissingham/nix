@@ -67,21 +67,37 @@ local function create_standard_template_with_rag(rag_context_window_size)
 end
 
 local models = {
+  zai_glm_47_flash = {
+    provider = "openai_compatible",
+    context_window = 8192,
+    provider_options = {
+      name = "Z.AI",
+      model = "glm-4.7-flash",
+      api_key = "HOSTING_ZAI_API_KEY",
+      end_point = "https://api.z.ai/api/coding/paas/v4/chat/completions",
+      stream = true,
+      optional = {
+        top_p = 0.95,
+        temperature = 0.5,
+      },
+    },
+    template = create_standard_template_with_rag()
+  },
   cerebras_glm_47 = {
     provider = "openai_compatible",
     context_window = 8192,
     provider_options = {
-      name = "LiteLLM",
-      model = "cerebras-glm-4.7",
-      api_key = "HOSTING_COMMON_MASTER_KEY",
-      end_point = vim.env.LITELLM_API_URL .. "/chat/completions",
+      name = "Cerebras",
+      model = "zai-glm-4.7",
+      api_key = "HOSTING_CEREBRAS_API_KEY",
+      end_point = "https://api.cerebras.ai/v1/chat/completions",
       stream = true,
       optional = {
-        --max_tokens = 256,
-        top_p = 0.9,
-        temperature = 0.3,
+        top_p = 0.95,
+        temperature = 0.5,
       },
     },
+    template = create_standard_template_with_rag()
   },
   claude4_sonnet = {
     provider = "openai_compatible",

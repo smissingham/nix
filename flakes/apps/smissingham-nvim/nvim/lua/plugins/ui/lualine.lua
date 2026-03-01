@@ -12,7 +12,7 @@ return {
             },
           },
           lualine_x = {
-            --{ require("minuet.lualine") },
+            -- { require("minuet.lualine") },
             { require("opencode").statusline },
             "encoding",
             "fileformat",

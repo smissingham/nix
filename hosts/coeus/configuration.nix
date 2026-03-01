@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -95,6 +96,7 @@
         ghostty
         #chromium
         brave
+        inkscape
 
         # comms
         signal-desktop
@@ -102,13 +104,18 @@
 
         # Productivity
         #libreoffice
-        onlyoffice-desktopeditors
-        winboat
+        #onlyoffice-desktopeditors
+        #winboat
 
         # Dev
-        jetbrains.idea-oss
+        pkgsUnstable.jetbrains.idea-oss
         mynixpkgs.surrealist
         zed-editor
+
+        # System Settings
+        displaycal
+        argyllcms
+        nvitop
       ];
     };
   programs.nix-ld = {
@@ -118,8 +125,8 @@
       bun
       nodejs_24
       cudaPackages.cudnn
-      cudaPackages.cuda_cudart
-      cudaPackages.cuda_nvcc
+      # cudaPackages.cuda_cudart
+      # cudaPackages.cuda_nvcc
       libGLU
     ];
   };

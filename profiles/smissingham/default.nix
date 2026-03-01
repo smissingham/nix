@@ -7,6 +7,12 @@ let
   terminal = "ghostty";
   browser = "brave";
 
+  #----- Extended User Info -----#
+  city = "Chicago";
+  state = "Illinois";
+  country = "US";
+  orgUnit = "Software Development";
+
   emailAccounts = [
     {
       name = "personal";
@@ -32,6 +38,7 @@ let
       # Add nothing here that you might not want stolen by a malicious CLI app
       autoExport = {
         HOME_NOTES = { };
+        CACHIX_AUTH_TOKEN = { };
 
         # home hosted
         SEARXNG_URL = { };
@@ -65,6 +72,10 @@ let
     gg = "lazygit";
     ll = "eza -l";
     la = "eza -la";
+
+    tp = "btop";
+    nv = "nvitop";
+
     ez = "env | fzf | clip";
     ezk = "env | fzf | awk -F= '{print $1}' | clip";
     ezv = "env | fzf | awk -F= '{print $2}' | clip";
@@ -96,6 +107,10 @@ in
     username
     name
     email
+    country
+    state
+    city
+    orgUnit
     editor
     terminal
     browser
