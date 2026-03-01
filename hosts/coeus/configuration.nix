@@ -24,10 +24,7 @@
   time.timeZone = "America/Chicago";
 
   myPrivateModules = {
-    backup = {
-      syncthing.enable = true;
-      restic.enable = true;
-    };
+    backup.syncthing.enable = true;
   };
 
   mySharedModules = {

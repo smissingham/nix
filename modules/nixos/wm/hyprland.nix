@@ -89,7 +89,6 @@ in
 
     home-manager.users.${mainUser.username} =
       {
-        lib,
         config,
         ...
       }:
@@ -117,10 +116,10 @@ in
           wallpaper = , ${wallpaperPath}
         '';
 
-        home.activation.linkElephantProviders = lib.hm.dag.entryAfter [ "stowDotfiles" ] ''
-          $DRY_RUN_CMD rm -rf ${config.xdg.configHome}/elephant/providers
-          $DRY_RUN_CMD ln -sf ${elephant}/lib/elephant/providers ${config.xdg.configHome}/elephant/providers
-        '';
+        # home.activation.linkElephantProviders = lib.hm.dag.entryAfter [ "stowDotfiles" ] ''
+        #   $DRY_RUN_CMD rm -rf ${config.xdg.configHome}/elephant/providers
+        #   $DRY_RUN_CMD ln -sf ${elephant}/lib/elephant/providers ${config.xdg.configHome}/elephant/providers
+        # '';
       };
   };
 }

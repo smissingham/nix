@@ -1,11 +1,10 @@
-#!/bin/bash
 
 # ===== CONFIGURATION =====
 # LVM Configuration
 VG_NAME="vg0"
 LV_ROOT="root"
 LV_DATA="data"
-LV_ROOT_SIZE="500G"
+LV_ROOT_SIZE="2T"
 LUKS_NAME="luksroot"
 RAID_DEVICE="/dev/md0"
 
@@ -168,7 +167,7 @@ function installNixOS() {
 
   # Install and configure
   echo "Running nixos-install..."
-  nixos-install --root /mnt --no-root-passwd --flake /mnt/etc/nixos#coeus
+  nixos-install --root /mnt --no-root-passwd --flake /mnt/etc/nixos#coeus --impure
 
   echo "Setting user password..."
   nixos-enter --root /mnt -c 'passwd smissingham'

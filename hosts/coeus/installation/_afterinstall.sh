@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Safety Check: Prevent running as root or with sudo
@@ -27,7 +27,6 @@ fi
 # ─────────────────────────────────────────────────────────────────────────────
 dotfolders=(
     ".ssh"
-    ".steam"
 )
 
 for folder in "${dotfolders[@]}"; do

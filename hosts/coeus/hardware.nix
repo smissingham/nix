@@ -7,7 +7,7 @@
 }:
 let
   # Dynamically fetch RAID array UUID using mdadm with fallback
-  ARRAY_UUID_NVME_R10 = "15c09973:5a7c5d14:fbf6a709:77a116cb";
+  ARRAY_UUID_NVME_R10 = "1a4472d8:968793fc:43c574a9:8a440ed9";
 in
 {
   imports = [
