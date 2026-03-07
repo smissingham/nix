@@ -50,7 +50,7 @@ in
 
         shellInitScript = ''
           clear
-          fastfetch --structure os:kernel:shell:terminal:cpu:memory:disk --logo none
+          fastfetch
         '';
 
         # Generate aliases for nushell as 'custom commands' to support chaining in aliases

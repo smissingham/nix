@@ -19,6 +19,8 @@ services:
       - ${APPDATA_PATH}/core/traefik/letsencrypt:/letsencrypt
       #- /var/run/docker.sock:/var/run/docker.sock:ro
       - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
+    devices:
+      - nvidia.com/gpu=all
     command:
       - --log.level=ERROR
       - --api.dashboard=true

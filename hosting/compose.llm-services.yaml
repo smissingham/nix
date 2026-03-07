@@ -1,5 +1,25 @@
 name: llm
 services:
+  akuna:
+    container_name: akuna
+    image: akunasoftware/akuna:latest
+    restart: always
+    environment:
+      AKUNA_CONFIG_DIR: /root/config
+      AKUNA_DATA_DIR: /root/data
+      HOME: /root
+      XDG_CACHE_HOME: /root/.cache
+    volumes:
+      - ${APPCONF_PATH}/llm-services/akuna:/root/config:U
+      - ${APPDATA_PATH}/llm-services/akuna:/root/data:U
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.akuna.rule=Host(`akuna.${HOSTNAME}.${HOSTING_ROOT}`)"
+      - "traefik.http.routers.akuna.tls=true"
+      - "traefik.http.routers.akuna.entrypoints=websecure"
+      - "traefik.http.routers.akuna.tls.certresolver=resolver"
+      - "traefik.http.services.akuna.loadbalancer.server.port=9876"
+
   litellm-postgres:
     container_name: litellm-postgres
     image: postgres:15-alpine

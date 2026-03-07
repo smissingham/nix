@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgsUnstable,
   lib,
   mainUser,
   ...
@@ -11,13 +12,6 @@ let
   moduleName = "hyprland";
 
   moduleDots = "${config.environment.variables.NIX_CONFIG_HOME}/modules/nixos/${moduleCategory}/dots/${moduleName}";
-
-  # Fetch elephant and walker from flakes
-  elephantFlake = builtins.getFlake "github:abenz1267/elephant";
-  elephant = elephantFlake.packages.${pkgs.system}.default;
-
-  walkerFlake = builtins.getFlake "github:abenz1267/walker";
-  walker = walkerFlake.packages.${pkgs.system}.default;
 
   optionPath = [
     moduleSet
@@ -42,42 +36,40 @@ in
     };
 
     programs.nm-applet.enable = true;
-    programs.thunar.enable = true;
 
-    environment.systemPackages =
-      (with pkgs; [
-        kitty # backup / default terminal for hyprland
+    environment.systemPackages = with pkgs; [
+      kitty # backup / default terminal for hyprland
+      kdePackages.dolphin # file explorer
 
-        # Base UI Addons
-        hyprlock
-        hyprpaper
-        waybar
+      # Base UI Addons
+      hyprlock
+      hyprpaper
+      waybar
 
-        # Launcher & Clipboard
-        wl-clipboard
+      # Launcher & Clipboard
+      wl-clipboard
 
-        # System Utils
-        bc
-        blueberry
-        pamixer
-        pavucontrol
-        playerctl
+      # System Utils
+      bc
+      blueberry
+      pamixer
+      pavucontrol
+      playerctl
 
-        # TUI's
-        wiremix # audio
-        bluetui # bluetooth
-        yazi # file explorer
+      # TUI's
+      wiremix # audio
+      bluetui # bluetooth
+      yazi # file explorer
 
-        # Screenshot tools
-        grim # Screenshot utility for Wayland
-        slurp # Select a region in Wayland
-        swappy # Screenshot editor
-      ])
-      ++ [
-        # From flakes
-        elephant
-        walker
-      ];
+      # Screenshot tools
+      grim # Screenshot utility for Wayland
+      slurp # Select a region in Wayland
+      swappy # Screenshot editor
+
+      # launcher & application providers
+      pkgsUnstable.elephant
+      pkgsUnstable.walker
+    ];
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -98,28 +90,11 @@ in
       {
         # Stylix handles GTK theming automatically
 
-        # But we need to configure xfconf for Thunar/XFCE apps
-        xfconf.settings = {
-          xsettings = {
-            "Net/ThemeName" = "adw-gtk3-dark";
-            "Net/IconThemeName" = "Papirus-Dark";
-            "Gtk/CursorThemeName" = "catppuccin-mocha-dark-cursors";
-            "Gtk/CursorThemeSize" = 32;
-            "Net/EnableEventSounds" = false;
-            "Net/EnableInputFeedbackSounds" = false;
-          };
-        };
-
         # Generate hyprpaper config with Stylix wallpaper
         xdg.configFile."hypr/hyprpaper.conf".text = ''
           preload = ${wallpaperPath}
           wallpaper = , ${wallpaperPath}
         '';
-
-        # home.activation.linkElephantProviders = lib.hm.dag.entryAfter [ "stowDotfiles" ] ''
-        #   $DRY_RUN_CMD rm -rf ${config.xdg.configHome}/elephant/providers
-        #   $DRY_RUN_CMD ln -sf ${elephant}/lib/elephant/providers ${config.xdg.configHome}/elephant/providers
-        # '';
       };
   };
 }

@@ -1,0 +1,5 @@
+knowledge:
+  sources:
+    - name: pfxkb
+      type: filesystem
+      path: /root/data/pfxkb

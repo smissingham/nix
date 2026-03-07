@@ -45,6 +45,7 @@
         systems = [
           "aarch64-darwin"
           "x86_64-darwin"
+          # "aarch64-linux"
         ];
       };
     };
@@ -113,6 +114,7 @@
       "microsoft-powerpoint"
       "microsoft-word"
       "onedrive"
+      "libreoffice"
       #"google-drive"
       #"macfuse"
 

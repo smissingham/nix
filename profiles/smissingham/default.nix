@@ -73,6 +73,9 @@ let
     ll = "eza -l";
     la = "eza -la";
 
+    ff = "fastfetch";
+    ffa = "fastfetch --config none";
+
     tp = "btop";
     nv = "nvitop";
 

@@ -11,8 +11,7 @@ return {
         sections = {
           {
             section = "terminal",
-            cmd =
-            "fastfetch --logo small --structure Title:Separator:OS:Kernel:CPU:Memory --pipe false | sed 's/CPU\\([^:]*\\): .*Intel(R) Core(TM) /CPU\\1: /'",
+            cmd = "fastfetch",
             height = 8,
             padding = 1,
           },

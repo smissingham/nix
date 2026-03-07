@@ -1,0 +1,22 @@
+{
+  "logo": {
+    "type": "none"
+  },
+  "modules": [
+    "os",
+    "kernel",
+    "shell",
+    "terminal",
+    "cpu",
+    "memory",
+    "network",
+    {
+      "type": "disk",
+      "folders": [
+        "/",
+        "/home/smissingham",
+        "/Users/smissingham"
+      ]
+    }
+  ]
+}
