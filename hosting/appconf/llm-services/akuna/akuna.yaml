@@ -1,5 +1,37 @@
+# yaml-language-server: $schema=https://akuna.software/schemas/config.json
+
 knowledge:
-  sources:
-    - name: pfxkb
+  spaces:
+    - name: employer-accounts
+      description: |
+        Customer or prospect account notes pertaining to work for my employer, 
+          a software company servicing many enterprise orgs
       type: filesystem
-      path: /root/data/pfxkb
+      path: /akuna/notes/Employer/Accounts
+
+    - name: employer-contracts
+      description: |
+        Contracts & agreements signed between myself and my employer
+      type: filesystem
+      path: /akuna/notes/Employer/Contracts
+
+    - name: employer-co-innovation
+      description: |
+        A space for key notes about customer co-innovation efforts.
+        What the project is about, key knowledge, milestones, engagements, documentation etc.
+      type: filesystem
+      path: /akuna/notes/Employer/Co-Innovation
+
+auth:
+  root:
+    enabled: false
+    #token: secure-root-token
+  users:
+    - name: guest
+      groups:
+        - guest
+      knowledge:
+        allow:
+          - search
+          - read
+          - feedback

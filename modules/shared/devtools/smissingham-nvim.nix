@@ -72,7 +72,7 @@ in
               # ---- Launch Shortcuts -----#
               sv = "${binaryName}"; # --- Launch Main Binary
               svf = "nix develop ${flakePath}#default -c ${binaryName}"; # --- Launch Nix Flake In Place
-              cn = "containix";
+              prettier = "prettierd";
 
               # ----- Config & State Resetting -----#
               svda = "svdPerms && svdConfig && svdShare && svdState && svdLink";

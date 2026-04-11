@@ -23,6 +23,22 @@ if not functions.has_nvim_lua_with_pattern("vim%.lsp") then
   })
   vim.lsp.enable("ruff")
 
+  -- Optional: Only required if you need to update the language server settings
+  vim.lsp.config('ty', {
+    settings = {
+      ty = {
+        -- ty language server settings go here
+      }
+    },
+    root_markers = {
+      "ty.toml",
+      "pyproject.toml",
+      "requirements.txt",
+      ".git",
+    },
+  })
+  vim.lsp.enable('ty')
+
   -- Type checking
   vim.lsp.config("basedpyright", {
     root_markers = {
@@ -38,15 +54,15 @@ if not functions.has_nvim_lua_with_pattern("vim%.lsp") then
           useLibraryCodeForTypes = true,
           diagnosticMode = "workspace",
           typeCheckingMode = "recommended",
-          inlayHints = {
-            variableTypes = true,
-            functionReturnTypes = true,
-            callArgumentNames = false,
-          },
+          -- inlayHints = {
+          --   variableTypes = true,
+          --   functionReturnTypes = true,
+          --   callArgumentNames = false,
+          -- },
           autoFormatStrings = true,
         },
       },
     },
   })
-  vim.lsp.enable("basedpyright")
+  --vim.lsp.enable("basedpyright")
 end

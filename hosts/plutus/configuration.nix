@@ -51,6 +51,11 @@
     };
   };
 
+  # nix = {
+  #   linux-builder.enable = true;
+  #   settings.trusted-users = [ "@smissingham" ];
+  # };
+
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username} =
     { ... }:
@@ -59,7 +64,7 @@
 
         # General productivity & workflow
         obsidian
-        mynixpkgs.filen-desktop
+        #mynixpkgs.filen-desktop
         moonlight-qt # rdp client for sunlight backend
 
         # Dev tools
@@ -70,7 +75,7 @@
         #bruno
 
         # CLI Stuff
-        myoverlays.pfxpackage
+        #myoverlays.pfxpackage
       ];
     };
 

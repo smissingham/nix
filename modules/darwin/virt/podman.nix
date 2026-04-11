@@ -47,12 +47,15 @@ in
     lib.mkIf cfg.enable {
       mySharedModules.home.shells.aliases = lib.mkMerge [
         (lib.mkIf cfg.dockerCompat {
-          docker = "podman";
+          docker = "exec podman \"$@\"";
         })
       ];
 
-      environment.variables.DOCKER_HOST = "unix://${runtimeLinkPath}/podman-machine-default-api.sock";
-      environment.variables.DOCKER_SOCKET = "${runtimeLinkPath}/podman-machine-default-api.sock";
+      environment.variables = {
+        DOCKER_HOST = "unix://${runtimeLinkPath}/podman-machine-default-api.sock";
+        DOCKER_SOCKET = "${runtimeLinkPath}/podman-machine-default-api.sock";
+        PODMAN_COMPOSE_WARNING_LOGS = "false";
+      };
 
       environment.systemPackages =
         with pkgs;

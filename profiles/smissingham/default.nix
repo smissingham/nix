@@ -66,6 +66,7 @@ let
   };
 
   shellAliases = {
+    sm = "sm-devenv";
     q = "exit";
     cl = "clear";
     ls = "eza";
@@ -79,6 +80,7 @@ let
     tp = "btop";
     nv = "nvitop";
 
+    vim = "smissingham-nvim";
     ez = "env | fzf | clip";
     ezk = "env | fzf | awk -F= '{print $1}' | clip";
     ezv = "env | fzf | awk -F= '{print $2}' | clip";
@@ -93,8 +95,6 @@ let
     cc = "claude";
     pd = "podman";
     pdc = "podman-compose";
-
-    ralph = "bunx --bun @th0rgal/ralph-wiggum";
   };
 
   # ----- Helper Functions -----#

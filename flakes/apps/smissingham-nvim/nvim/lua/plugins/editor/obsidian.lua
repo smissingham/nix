@@ -8,12 +8,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- TODO: Get this working
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
   pattern = obsidian_root .. "/*",
   callback = function()
     if vim.bo.modified then
-      vim.cmd("silent! write")
+      vim.cmd("silent! write!")
     end
   end,
 })

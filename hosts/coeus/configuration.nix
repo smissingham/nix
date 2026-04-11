@@ -5,6 +5,27 @@
   mainUser,
   ...
 }:
+let
+  # onnxruntimePkg = pkgs.onnxruntime.override {
+  #   cudaSupport = true;
+  #   cudaPackages = pkgs.cudaPackages.overrideScope (
+  #     _: _prev: {
+  #       cuda_compat = null;
+  #     }
+  #   );
+  # };
+
+  cudaDeps = with pkgs; [
+    cudaPackages.cudnn
+    cudaPackages.cuda_cudart
+    cudaPackages.cuda_nvcc
+    linuxPackages.nvidiaPackages.stable
+    # onnxruntimePkg
+    libGLU
+    libGL
+    ncurses
+  ];
+in
 {
   imports = [
     ./hardware.nix
@@ -87,7 +108,7 @@
       home.packages = with pkgs; [
 
         # Personal Workflow
-        mynixpkgs.filen-desktop
+        #mynixpkgs.filen-desktop
         spotify
         obsidian
         ghostty
@@ -115,23 +136,24 @@
         nvitop
       ];
     };
+
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [
-      uv
-      bun
-      nodejs_24
-      cudaPackages.cudnn
-      # cudaPackages.cuda_cudart
-      # cudaPackages.cuda_nvcc
-      libGLU
-    ];
+    libraries =
+      #with pkgs;
+      [
+        # uv
+        # bun
+        # nodejs_24
+      ]
+      ++ cudaDeps;
   };
-  environment.sessionVariables.NIX_LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/share/nix-ld/lib:/run/opengl-driver/lib";
+  environment.sessionVariables.NIX_LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/share/nix-ld/lib";
 
   #----- Applications in System Space -----#
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = [
+  ]
+  ++ cudaDeps;
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 

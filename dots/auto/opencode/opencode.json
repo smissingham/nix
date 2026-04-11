@@ -1,123 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
-  "theme": "catppuccin",
-  "formatter": {
-    "nix": {
-      "command": [
-        "nixfmt",
-        "$FILE"
-      ],
-      "extensions": [
-        ".nix"
-      ]
-    },
-    "prettierd": {
-      "command": [
-        "sh",
-        "-c",
-        "prettierd",
-        "--stdin-filepath",
-        "$FILE",
-        "<",
-        "$FILE"
-      ],
-      "extensions": [
-        ".md"
-      ]
-    }
-  },
-  "lsp": {
-    "nixd": {
-      "command": [
-        "nixd"
-      ],
-      "extensions": [
-        ".nix"
-      ],
-      "settings": {
-        "nixd": {
-          "nixpkgs": {
-            "expr": "import (builtins.getFlake (\"git+file://\" + toString ./.)).inputs.nixpkgs { }"
-          },
-          "formatting": {
-            "command": [
-              "nixfmt"
-            ]
-          },
-          "options": {
-            "nixos": {
-              "expr": "(let pkgs = import (builtins.getFlake (\"git+file://\" + toString ./.)).inputs.nixpkgs { }; in (pkgs.lib.evalModules { modules = (import (builtins.getFlake (\"git+file://\" + toString ./.)).inputs.nixpkgs + \"/nixos/modules/module-list.nix\") ++ [ ({...}: { nixpkgs.hostPlatform = builtins.currentSystem; }) ]; })).options"
-            },
-            "home_manager": {
-              "expr": "(let pkgs = import (builtins.getFlake (\"git+file://\" + toString ./.)).inputs.nixpkgs { }; lib = import ((builtins.getFlake (\"git+file://\" + toString ./.)).inputs.home-manager + \"/modules/lib/stdlib-extended.nix\") pkgs.lib; in (lib.evalModules { modules = (import ((builtins.getFlake (\"git+file://\" + toString ./.)).inputs.home-manager + \"/modules/modules.nix\")) { inherit lib pkgs; check = false; }; })).options"
-            }
-          }
-        }
-      }
-    }
-  },
-  "provider": {
-    "litellm": {
-      "npm": "@ai-sdk/openai-compatible",
-      "models": {
-        "glm-4.7": {
-          "name": "GLM 4.7"
-        },
-        "glm-4.7-flash": {
-          "name": "GLM 4.7 Flash"
-        },
-        "glm-flash": {
-          "name": "GLM Flash Local"
-        }
-      },
-      "options": {
-        "baseURL": "{env:LITELLM_API_URL}",
-        "apiKey": "{env:HOSTING_COMMON_MASTER_KEY}"
-      }
-    },
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "models": {
-        "glm-4.7-flash": {
-          "name": "GLM Flash Local"
-        }
-      },
-      "options": {
-        "baseURL": "{env:HOSTING_OLLAMA_API_URL}",
-      }
-    },
-    "lmstudio": {
-      "models": {
-        "qwen/qwen3-30b-a3b-2507": {
-          "name": "Qwen 3 30B A3B 2507"
-        }
-      },
-      "options": {
-        "baseURL": "http://localhost:1234/v1"
-      }
-    },
-    "glm-flash-llamacpp": {
-      "models": {
-        "GLM-4.7-Flash-REAP-23B-A3B-Q4_K_M.gguf": {
-          "name": "GLM-4.7 Flash REAP"
-        }
-      },
-      "options": {
-        "baseURL": "http://localhost:8000",
-      }
-    },
-    "glm-flash-vllm": {
-      "models": {
-        "unsloth/GLM-4.7-Flash-FP8-Dynamic": {
-          "name": "GLM-4.7 Flash FP8"
-        }
-      },
-      "options": {
-        "baseURL": "http://localhost:8000",
-      }
-    }
-  },
   "mcp": {
     "jina": {
       "enabled": true,
@@ -126,40 +9,6 @@
       "headers": {
         "Authorization": "Bearer {env:JINA_API_KEY}"
       }
-    },
-    "searxng": {
-      "enabled": false,
-      "type": "local",
-      "command": [
-        "bunx",
-        "-y",
-        "mcp-searxng@latest"
-      ],
-      "environment": {
-        "SEARXNG_URL": "{env:SEARXNG_URL}"
-      }
-    },
-    "gh_grep": {
-      "type": "remote",
-      "url": "https://mcp.grep.app"
-    },
-    "sequential-thinking": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "bunx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "memory": {
-      "enabled": false,
-      "type": "local",
-      "command": [
-        "bunx",
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
     },
     "context7": {
       "enabled": true,
@@ -172,14 +21,6 @@
       "environment": {
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
-    },
-    "git": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "uvx",
-        "mcp-server-git"
-      ]
     },
   }
 }

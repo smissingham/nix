@@ -47,6 +47,9 @@ in
             stateVersion = stateVersion;
             username = mainUser.username;
             homeDirectory = mainUserHome;
+
+            sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+
             sessionVariables = {
               TERMINAL = lib.mkDefault mainUser.terminal;
               BROWSER = lib.mkDefault (mainUser.browser);

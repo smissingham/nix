@@ -23,6 +23,12 @@ vim.keymap.set({ "n", "v" }, "<leader>bd", ":bd!<cr>", { desc = "Delete Buffer (
 vim.keymap.set({ "n", "v" }, "<leader>bw", ":w!<cr>", { desc = "Write Buffer (Forced)" })
 vim.keymap.set({ "n", "v" }, "<leader>be", ":e!<cr>", { desc = "Reset Buffer (Forced)" })
 
+-- Tab Actions
+vim.keymap.set("n", "<leader>tn", ":tabnew<cr>", { desc = "New Tab" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<cr>", { desc = "Close Tab" })
+vim.keymap.set("n", "<leader><Tab>", ":tabnext<cr>", { desc = "Next Tab" })
+vim.keymap.set("n", "<leader><S-Tab>", ":tabprevious<cr>", { desc = "Previous Tab" })
+
 -- LSP
 vim.keymap.set({ "n", "v" }, "<leader>lI", ":checkhealth vim.lsp<cr>", { desc = "Lsp Info" })
 vim.keymap.set({ "n", "v" }, "<leader>lR", ":LspRestart<cr>", { desc = "Lsp Restart" })

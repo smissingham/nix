@@ -50,7 +50,7 @@ in
 
         shellInitScript = ''
           clear
-          fastfetch
+          #fastfetch
         '';
 
         # Generate aliases for nushell as 'custom commands' to support chaining in aliases
@@ -99,6 +99,8 @@ in
             ripgrep-all
             eza
             fzf
+            television
+            asciinema_3
             tldr
             xclip
           ]

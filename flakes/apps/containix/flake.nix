@@ -18,7 +18,6 @@
       nixpkgs,
       nixpkgs-unstable,
       flake-utils,
-      smissingham-nvim,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -39,9 +38,10 @@
           system = linuxSystem;
           inherit overlays;
         };
+        containerSystem = nixpkgs.lib.nixosSystem {
+          system = linuxSystem;
+        };
 
-        # where to build the container image on disk
-        buildDir = "/tmp/containix";
         containerUserHomeDir = "/root";
         containerUserConfigDir = "${containerUserHomeDir}/.config";
         containerWorkingDir = "/data";
@@ -51,29 +51,33 @@
         pVersion = "0.1";
         containerId = "${pName}:${pVersion}";
 
-        # TODO: connect to socket instead of assuming cli
-        dockerAlias = "podman";
         dockerArch = if pkgs.stdenv.isAarch64 then "aarch64" else "x86_64";
-
-        pWrapper = pkgs.writeShellScriptBin pName ''
-          # only build and load if image doesn't already exist on host
-          # TODO: make this detect hash diff
-          if [[ -z $(${dockerAlias} images -q ${containerId}) ]]; then
-            echo "Building ${pName} image..."
-            mkdir -p ${buildDir}
-
-          # TODO: fix dependency on local file build path
-            nix build .#docker -o ${buildDir}/${pName}-docker-image.tar.gz
-
-            echo "Loading ${pName} image to ${dockerAlias}..."
-            ${dockerAlias} load < ${buildDir}/${pName}-docker-image.tar.gz
-            ${dockerAlias} tag ${containerId} ${pName}:latest
-
-            echo "Cleaning up..."
-            rm ${buildDir}/${pName}-docker-image.tar.gz
-
-            echo "Done. You can now call '${dockerAlias} run ${containerId}' to use it"
+        detectContainerCli = ''
+          if [[ -n "''${PODMAN_HOST-}" || -n "''${CONTAINER_HOST-}" ]]; then
+            CONTAINER_CLI="podman"
+          elif [[ -n "''${DOCKER_HOST-}" ]]; then
+            CONTAINER_CLI="docker"
+          elif command -v podman >/dev/null 2>&1; then
+            CONTAINER_CLI="podman"
+          elif command -v docker >/dev/null 2>&1; then
+            CONTAINER_CLI="docker"
+          else
+            echo "Could not find podman or docker"
+            exit 1
           fi
+        '';
+        pWrapper = pkgs.writeShellScriptBin pName ''
+          set -euo pipefail
+          ${detectContainerCli}
+
+          echo "Building ${pName} image..."
+          IMAGE_TAR=$(nix build .#docker --no-link --print-out-paths)
+
+          echo "Loading ${pName} image to $CONTAINER_CLI..."
+          $CONTAINER_CLI load -i "$IMAGE_TAR"
+          $CONTAINER_CLI tag ${containerId} ${pName}:latest
+
+          echo "Done. You can now call '$CONTAINER_CLI run ${containerId}' to use it"
 
           # try for git-repo name, fallback to parent dir
           REPO_NAME=$(basename $(git rev-parse --show-toplevel 2>/dev/null || pwd))
@@ -84,7 +88,7 @@
           echo "Starting container with name $CONTAINER_NAME"
 
           # run the docker container, persist the root user home and bind pwd to /data
-          ${dockerAlias} run --rm \
+          $CONTAINER_CLI run --rm \
             -v containix-root:${containerUserHomeDir} \
             -v containix-nix:/nix \
             -p 4096:4096 \
@@ -93,58 +97,26 @@
             -it ${containerId} 
         '';
 
-        containerPackages = with linuxPkgs; [
-          nix
-          git
-
-          # critical cli utils
-          coreutils
-          findutils
-          gnugrep
-          gnused
-          gawk
-          less
-          curl
-
-          # nice-to-have's
-          #zsh
-          yazi
-          fzf
-          eza
-          fastfetch
-        ];
+        containerPackages = containerSystem.config.environment.systemPackages;
         #++ smissingham-nvim.packages.${linuxSystem}.systemPackages;
 
         systemPackages = [ pWrapper ];
 
         baseImageName = "nixos/nix";
-        baseImageVersion = nixpkgs.lib.trivial.release;
+        baseImageVersion = "2.33.4";
         imageManifests = {
           "x86_64" = {
-            digest = "sha256:d078d7153763895fce17c5fbbdeb86fcfcac414ca0ba875d413c1df57be19931";
-            sha256 = "sha256-D+Ktuvq6nzkB0zHEPYr+jlMUA4dcoUqfcC4pnKJfzAI=";
+            digest = "sha256:e79a39f468fc31dc811d236be65dbf724cd7f4abbbf1bab360460860892a5a9c";
+            sha256 = "sha256-8KHv9vi6r/mx1CFHlzQ4PHsCChWyhT5T0eANFhEb4As=";
           };
           "aarch64" = {
-            digest = "sha256:9ad22c733bc2c3125acf443915fc1477ae446244a7889a60a04f89fde21f57d9";
-            sha256 = "sha256-Y1UVRhqcmUWDESyczsPI6IQBU11wQfISNDGzmZQKDrg=";
+            digest = "";
+            sha256 = "";
           };
         };
 
       in
       {
-
-        # Development shell, for testing & building this as a package
-        devShells.default = pkgs.mkShell {
-          buildInputs = containerPackages ++ [
-            # devshell aliases
-            (pkgs.writeShellScriptBin "inspect" ''
-              ${dockerAlias} manifest inspect ${baseImageName} --verbose
-            '')
-          ];
-          shellHook = ''
-            Welcome to the ${pName} dev shell, for testing and building this flake.
-          '';
-        };
 
         # Main docker image sandbox (the primary output of this flake)
         packages.docker = pkgsUnstable.dockerTools.buildLayeredImage {
@@ -168,7 +140,7 @@
             Cmd = [
               "sh"
               "-c"
-              "cd /data && fastfetch"
+              "cd /data && fastfetch && exec sh"
             ];
             Env = [
               "TERM=xterm-256color"
@@ -181,15 +153,8 @@
 
           contents =
             containerPackages
-            ++ smissingham-nvim.packages.${system}.systemPackages
+            #++ smissingham-nvim.packages.${system}.systemPackages
             ++ [
-              # TODO: A nicer attrset to house these and parse to bins
-              (pkgs.writeShellScriptBin "q" "exit")
-              (pkgs.writeShellScriptBin "cl" "clear")
-              (pkgs.writeShellScriptBin "oc" "opencode")
-              (pkgs.writeShellScriptBin "sv" "smissingham-nvim")
-              # TODO: put a nix config file in so the features are enabled by default
-              (pkgs.writeShellScriptBin "nd" ''nix develop --extra-experimental-features "nix-command flakes"'')
             ];
         };
 

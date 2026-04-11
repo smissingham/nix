@@ -72,8 +72,8 @@ services:
     image: ghcr.io/immich-app/immich-machine-learning:v2.4.1
     volumes:
       - model-cache:/cache
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     restart: always
 
   immich_redis:

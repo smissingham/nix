@@ -63,6 +63,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
+    dendritic = {
+      url = "path:dendritic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -80,6 +84,7 @@
       overlays = [
         inputs.myoverlays.overlays.default
         inputs.myapps.overlays.default
+        inputs.dendritic.overlays.default
         (_final: prev: {
           mynixpkgs = import inputs.mynixpkgs {
             #inherit (prev) system;
@@ -114,7 +119,10 @@
           };
 
       mkBase =
-        { mainUser }:
+        {
+          mainUser,
+          system,
+        }:
         let
           pkgs = import nixpkgs {
             #inherit system;
@@ -148,6 +156,8 @@
               mainUser
               serviceUtils
               ;
+
+            dendritic = inputs.dendritic.packages.${system};
           };
 
           sharedModules = [
@@ -171,7 +181,9 @@
           systemModules,
         }:
         let
-          base = mkBase { inherit mainUser; };
+          base = mkBase {
+            inherit mainUser system;
+          };
           platformModules =
             if isDarwin system then
               [
@@ -188,7 +200,7 @@
                       "homebrew/homebrew-cask" = inputs.homebrew-cask;
                       "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
                     };
-                    mutableTaps = false;
+                    mutableTaps = true;
                   };
                 }
                 (importDir (base.privateModulesPath + "/darwin"))

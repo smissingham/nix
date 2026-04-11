@@ -3,6 +3,7 @@
   config,
   mainUser,
   pkgs,
+  dendritic,
   ...
 }:
 {
@@ -37,6 +38,8 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
+    dendritic.sm-devenv
+
     # General CLI Utils
     lsof
     zip

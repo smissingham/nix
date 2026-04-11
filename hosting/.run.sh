@@ -52,12 +52,25 @@ init_containers() {
   }
 }
 
+down() {
+  for compose_file in $(get_compose_files); do
+    echo "Running $compose_file"
+    "$COMPOSE_ALIAS" -f "$compose_file" down
+  done
+
+  docker container prune -f
+  docker image prune -f
+
+  list_containers
+}
+
 up() {
   create_shared_networks
   create_app_directories
 
   for compose_file in $(get_compose_files); do
-    "$COMPOSE_ALIAS" -f "$compose_file" up -d 2>/dev/null || true
+    echo "Running $compose_file"
+    "$COMPOSE_ALIAS" -f "$compose_file" up -d 2>/dev/null
   done
 
   list_containers
@@ -71,8 +84,8 @@ rl() {
   compose_file="compose.${stack_name}.yaml"
   [ ! -f "$compose_file" ] && echo "Stack $stack_name not found" && return 1
 
-  "$COMPOSE_ALIAS" -f "$compose_file" down 2>/dev/null
-  "$COMPOSE_ALIAS" -f "$compose_file" up -d 2>/dev/null
+  "$COMPOSE_ALIAS" -f "$compose_file" down
+  "$COMPOSE_ALIAS" -f "$compose_file" up -d
 }
 
 if [ -f .setenv.sh ]; then

@@ -1,17 +1,16 @@
 name: llm
 services:
-  akuna:
-    container_name: akuna
-    image: akunasoftware/akuna:latest
+  akuna-home:
+    container_name: akuna-home
+    #image: akunasoftware/akuna:latest
+    image: localhost/akuna:v0.1.1
     restart: always
-    environment:
-      AKUNA_CONFIG_DIR: /root/config
-      AKUNA_DATA_DIR: /root/data
-      HOME: /root
-      XDG_CACHE_HOME: /root/.cache
     volumes:
-      - ${APPCONF_PATH}/llm-services/akuna:/root/config:U
-      - ${APPDATA_PATH}/llm-services/akuna:/root/data:U
+      - ${APPCONF_PATH}/llm-services/akuna:/akuna/config/akuna:U
+      #- ${APPDATA_PATH}/llm-services/akuna:/akuna/data/akuna:U
+      - ~/Documents/Notes/second-brain:/akuna/notes:U
+    devices:
+      - nvidia.com/gpu=all
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.akuna.rule=Host(`akuna.${HOSTNAME}.${HOSTING_ROOT}`)"
@@ -20,70 +19,70 @@ services:
       - "traefik.http.routers.akuna.tls.certresolver=resolver"
       - "traefik.http.services.akuna.loadbalancer.server.port=9876"
 
-  litellm-postgres:
-    container_name: litellm-postgres
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
-      POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      POSTGRES_DB: litellm
-    volumes:
-      - ${APPDATA_PATH}/llm-services/litellm-postgres/data:/var/lib/postgresql/data:U
-
-  litellm:
-    container_name: litellm
-    restart: always
-    image: ghcr.io/berriai/litellm:main-latest
-    depends_on:
-      - ollama
-      - litellm-postgres
-    environment:
-      UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
-      UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
-      LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
-      LITELLM_LOG: ERROR
-      JSON_LOGS: "True"
-
-      # Providers
-      ZAI_API_KEY: ${HOSTING_ZAI_API_KEY}
-      JINA_API_KEY: ${JINA_API_KEY}
-
-    volumes:
-      - ${APPCONF_PATH}/llm/litellm/config:/config:U
-      - ${APPDATA_PATH}/llm-services/litellm/data:/data:U
-    command:
-      - --config=/config/config.yaml
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)"
-      - "traefik.http.routers.litellm.tls=true"
-      - "traefik.http.routers.litellm.entrypoints=websecure"
-      - "traefik.http.routers.litellm.tls.certresolver=resolver"
-      - "traefik.http.services.litellm.loadbalancer.server.port=4000"
-
-  opencode:
-    container_name: opencode
-    image: ghcr.io/anomalyco/opencode
-    restart: always
-    command: ["web", "--port", "9090", "--hostname", "0.0.0.0"]
-    working_dir: /projects
-    environment:
-      LITELLM_URL: http://litellm:4000
-      LITELLM_API_URL: http://litellm:4000/v1
-      HOSTING_COMMON_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
-      OPENCODE_CONFIG: /root/.config/opencode/opencode.json
-    volumes:
-      - ${XDG_CONFIG_HOME}/opencode:/root/.config/opencode:U
-      - ${HOME}/Projects:/projects:U
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.opencode.rule=Host(`opencode.${HOSTNAME}.${HOSTING_ROOT}`)"
-      - "traefik.http.routers.opencode.tls=true"
-      - "traefik.http.routers.opencode.entrypoints=websecure"
-      - "traefik.http.routers.opencode.tls.certresolver=resolver"
-      - "traefik.http.services.opencode.loadbalancer.server.port=9090"
+  # litellm-postgres:
+  #   container_name: litellm-postgres
+  #   image: postgres:15-alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${HOSTING_ADMIN_USERNAME}
+  #     POSTGRES_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     POSTGRES_DB: litellm
+  #   volumes:
+  #     - ${APPDATA_PATH}/llm-services/litellm-postgres/data:/var/lib/postgresql/data:U
+  #
+  # litellm:
+  #   container_name: litellm
+  #   restart: always
+  #   image: ghcr.io/berriai/litellm:main-latest
+  #   depends_on:
+  #     - ollama
+  #     - litellm-postgres
+  #   environment:
+  #     UI_USERNAME: ${HOSTING_ADMIN_USERNAME}
+  #     UI_PASSWORD: ${HOSTING_ADMIN_PASSWORD}
+  #     LITELLM_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     DATABASE_URL: postgresql://${HOSTING_ADMIN_USERNAME}:${HOSTING_ADMIN_PASSWORD}@litellm-postgres:5432/litellm
+  #     LITELLM_LOG: ERROR
+  #     JSON_LOGS: "True"
+  #
+  #     # Providers
+  #     ZAI_API_KEY: ${HOSTING_ZAI_API_KEY}
+  #     JINA_API_KEY: ${JINA_API_KEY}
+  #
+  #   volumes:
+  #     - ${APPCONF_PATH}/llm/litellm/config:/config:U
+  #     - ${APPDATA_PATH}/llm-services/litellm/data:/data:U
+  #   command:
+  #     - --config=/config/config.yaml
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.litellm.rule=Host(`litellm.${HOSTNAME}.${HOSTING_ROOT}`)"
+  #     - "traefik.http.routers.litellm.tls=true"
+  #     - "traefik.http.routers.litellm.entrypoints=websecure"
+  #     - "traefik.http.routers.litellm.tls.certresolver=resolver"
+  #     - "traefik.http.services.litellm.loadbalancer.server.port=4000"
+  #
+  # opencode:
+  #   container_name: opencode
+  #   image: ghcr.io/anomalyco/opencode
+  #   restart: always
+  #   command: ["web", "--port", "9090", "--hostname", "0.0.0.0"]
+  #   working_dir: /projects
+  #   environment:
+  #     LITELLM_URL: http://litellm:4000
+  #     LITELLM_API_URL: http://litellm:4000/v1
+  #     HOSTING_COMMON_MASTER_KEY: ${HOSTING_COMMON_MASTER_KEY}
+  #     OPENCODE_CONFIG: /root/.config/opencode/opencode.json
+  #   volumes:
+  #     - ${XDG_CONFIG_HOME}/opencode:/root/.config/opencode:U
+  #     - ${HOME}/Projects:/projects:U
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.opencode.rule=Host(`opencode.${HOSTNAME}.${HOSTING_ROOT}`)"
+  #     - "traefik.http.routers.opencode.tls=true"
+  #     - "traefik.http.routers.opencode.entrypoints=websecure"
+  #     - "traefik.http.routers.opencode.tls.certresolver=resolver"
+  #     - "traefik.http.services.opencode.loadbalancer.server.port=9090"
 
   # openwebui:
   #   image: ghcr.io/open-webui/open-webui:main

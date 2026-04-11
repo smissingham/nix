@@ -15,7 +15,7 @@
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
-      _system:
+      system:
       let
         pkgs = import nixpkgs {
           #inherit system;
@@ -28,7 +28,7 @@
         };
 
         pkgsUnstable = import nixpkgs-unstable {
-          #inherit system;
+          inherit system;
           config.allowUnfree = true;
         };
 
@@ -90,6 +90,7 @@
             astro-language-server # astro
             tailwindcss-language-server # tailwind
             prettierd # formatter
+            pkgsUnstable.biome # formatter
 
             # ----- Rust Support -----#
             rust-analyzer # lsp
@@ -104,13 +105,16 @@
 
             # ----- Python Support -----#
             pkgsUnstable.uv # package manager
+            pkgsUnstable.ty # type checker
+            pkgsUnstable.ruff # lsp, lint, format
+
             poetry # package manager
             black # formatter
-            pkgsUnstable.ruff # lsp, lint, format
             basedpyright # type checker
 
             # ----- CLI Utils -----#
             curl
+            wget
             bat
             btop
             dig
