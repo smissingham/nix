@@ -22,5 +22,22 @@
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
     },
+    "personal-notes": {
+      "type": "local",
+      "command": [
+        "bash",
+        "-lc",
+        "cd ~/Documents/Notes && akuna mcp"
+      ]
+    },
+    "pricefx-workspace": {
+      "enabled": false,
+      "type": "local",
+      "command": [
+        "bash",
+        "-lc",
+        "cd ~/Employer/workspace-product && akuna mcp"
+      ]
+    },
   }
 }

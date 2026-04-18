@@ -122,7 +122,7 @@ in
 
         # Productivity
         #libreoffice
-        #onlyoffice-desktopeditors
+        onlyoffice-desktopeditors
         #winboat
 
         # Dev

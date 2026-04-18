@@ -65,8 +65,9 @@ let
     };
   };
 
+  dendritic = "$NIX_CONFIG_HOME/dendritic";
+
   shellAliases = {
-    sm = "sm-devenv";
     q = "exit";
     cl = "clear";
     ls = "eza";
@@ -74,11 +75,15 @@ let
     ll = "eza -l";
     la = "eza -la";
 
-    ff = "fastfetch";
-    ffa = "fastfetch --config none";
+    ff = "tv files";
+    # ff = "fastfetch";
+    # ffa = "fastfetch --config none";
 
     tp = "btop";
     nv = "nvitop";
+
+    ds = "nix run ${dendritic}#sm-devshell";
+    dc = "nix run ${dendritic}#sm-devcontainer";
 
     vim = "smissingham-nvim";
     ez = "env | fzf | clip";

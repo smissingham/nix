@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgsUnstable,
   config,
   mainUser,
   ...
@@ -140,15 +141,16 @@ in
           enableZshIntegration = true;
         };
 
-        programs.starship = {
-          enable = true;
-          enableBashIntegration = true;
-          enableZshIntegration = true;
-          enableNushellIntegration = true;
-        };
+        # programs.starship = {
+        #   enable = true;
+        #   enableBashIntegration = true;
+        #   enableZshIntegration = true;
+        #   enableNushellIntegration = true;
+        # };
 
         programs.atuin = {
           enable = true;
+          package = pkgsUnstable.atuin;
           enableBashIntegration = true;
           enableZshIntegration = true;
           enableNushellIntegration = true;

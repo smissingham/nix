@@ -1,6 +1,21 @@
 name: home
 
 services:
+  brain:
+    container_name: brain
+    image: akunasoftware/akuna:latest
+    volumes:
+      - ~/Documents/Notes:/akuna:U
+    devices:
+      - nvidia.com/gpu=all
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.brain.rule=Host(`brain.${HOSTNAME}.${HOSTING_ROOT}`)"
+      - "traefik.http.routers.brain.tls=true"
+      - "traefik.http.routers.brain.entrypoints=websecure"
+      - "traefik.http.routers.brain.tls.certresolver=resolver"
+      - "traefik.http.services.brain.loadbalancer.server.port=9876"
+
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto:latest

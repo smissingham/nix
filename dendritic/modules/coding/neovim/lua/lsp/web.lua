@@ -1,0 +1,95 @@
+-- HTML, CSS and JSON language servers
+vim.lsp.config("html", {})
+vim.lsp.enable("html")
+
+vim.lsp.config("cssls", {})
+vim.lsp.enable("cssls")
+
+vim.lsp.config("jsonls", {})
+vim.lsp.enable("jsonls")
+
+vim.lsp.config("tailwindcss", {})
+vim.lsp.enable("tailwindcss")
+
+vim.lsp.config("eslint", {
+  settings = {
+    rulesCustomizations = {
+      { rule = "tailwindcss/classnames-order", severity = "off" },
+    },
+    codeActionOnSave = {
+      enable = true,
+      mode = "all",
+    },
+    validate = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "svelte",
+      "astro",
+    },
+  },
+})
+vim.lsp.enable("eslint")
+
+vim.lsp.config("vtsls", {
+  settings = {
+    typescript = {
+      suggest = {
+        autoImports = true,
+        completeFunctionCalls = true,
+      },
+      preferences = {
+        importModuleSpecifier = "relative",
+        includePackageJsonAutoImports = "auto",
+      },
+      updateImportsOnFileMove = {
+        enabled = "always",
+      },
+    },
+    javascript = {
+      suggest = {
+        autoImports = true,
+        completeFunctionCalls = true,
+      },
+      preferences = {
+        importModuleSpecifier = "relative",
+        includePackageJsonAutoImports = "auto",
+      },
+      updateImportsOnFileMove = {
+        enabled = "always",
+      },
+    },
+    vtsls = {
+      experimental = {
+        completion = {
+          enableServerSideFuzzyMatch = true,
+        },
+      },
+    },
+  },
+})
+vim.lsp.enable("vtsls")
+
+vim.lsp.config("svelte", {
+  settings = {
+    svelte = {
+      plugin = {
+        typescript = {
+          enable = true,
+          diagnostics = { enable = true },
+        },
+        css = { enable = true },
+        html = { enable = true },
+      },
+    },
+  },
+})
+vim.lsp.enable("svelte")
+
+vim.lsp.config("astro", {
+  root_markers = {
+    "astro.config.mjs",
+  },
+})
+vim.lsp.enable("astro")

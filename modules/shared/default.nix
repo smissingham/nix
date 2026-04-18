@@ -38,7 +38,7 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = with pkgs; [
-    dendritic.sm-devenv
+    dendritic.sm-devcontainer
 
     # General CLI Utils
     lsof
