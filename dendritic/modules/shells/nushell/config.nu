@@ -1,4 +1,3 @@
-
 ########## CONFIG ##########
 $env.config.show_banner = false
 
@@ -13,3 +12,9 @@ def autoload-path [name: string] {
 
 # Atuin
 atuin init nu | save -f (autoload-path "atuin")
+
+# Television
+tv init nu | save -f (autoload-path "tv")
+
+# Zoxide
+zoxide init nushell | save -f (autoload-path "zoxide")

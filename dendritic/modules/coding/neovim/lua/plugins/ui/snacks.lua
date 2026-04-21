@@ -11,12 +11,22 @@ return {
         enabled = true,
         sections = {
           {
-            section = "terminal",
-            cmd = "fastfetch",
-            height = 8,
-            padding = 1,
+          text = {
+            { "  Neovim\n", hl = "SnacksDashboardHeader" },
+            {
+              string.format(
+                "v%d.%d.%d",
+                vim.version().major,
+                vim.version().minor,
+                vim.version().patch
+              ),
+              hl = "SnacksDashboardDesc",
+            },
           },
-          { section = "keys", gap = 1, padding = 1 },
+          align = "center",
+          padding = 1,
+        }, 
+        { section = "keys", gap = 1, padding = 1 },
           {
             pane = 2,
             icon = "⏳",
@@ -34,32 +44,20 @@ return {
             enabled = function()
               return Snacks.git.get_root() ~= nil
             end,
-            cmd = "git -c color.status=always status --short --branch",
+            cmd = { "git", "-c", "color.status=always", "status", "--short", "--branch" },
             height = 5,
             padding = 1,
             ttl = 5 * 60,
             indent = 1,
           },
           {
-            pane = 2,
-            icon = "🌤️",
-            title = "Weather",
+            icon = "🖥️",
+            title = "Sys Info",
             section = "terminal",
-            cmd = "curl -s 'wttr.in/?format=%l:+%c+%t+%w&m'",
-            height = 2,
-            padding = 1,
-            indent = 2,
-            ttl = 30 * 60,
-          },
-          {
+            cmd = {"fastfetch"},
             pane = 2,
-            icon = "🦉",
-            title = "Wisdom",
-            section = "terminal",
-            cmd = "fortune -s wisdom | fmt -w 60",
-            height = 5,
+            height = 8,
             padding = 1,
-            indent = 2,
           },
         },
       },

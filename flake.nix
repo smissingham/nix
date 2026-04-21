@@ -65,7 +65,7 @@
     };
     dendritic = {
       url = "path:dendritic";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -220,28 +220,6 @@
               { nixpkgs.hostPlatform = system; }
             ];
         };
-
-      # mkContainer =
-      #   {
-      #     mainUser,
-      #     system,
-      #     systemModules ? [ ],
-      #     format ? "docker",
-      #   }:
-      #   let
-      #     base = mkBase { inherit mainUser system; };
-      #   in
-      #   inputs.nixos-generators.nixosGenerate {
-      #     inherit system format;
-      #     inherit (base) specialArgs;
-      #     modules =
-      #       systemModules
-      #       ++ base.sharedModules
-      #       ++ base.nixosModules
-      #       ++ [
-      #         { boot.isContainer = true; }
-      #       ];
-      #   };
     in
     {
       darwinConfigurations = {
@@ -264,16 +242,5 @@
           ];
         };
       };
-
-      # packages = forAllSystems (system: {
-      #   thalos = mkContainer {
-      #     #inherit system;
-      #     system = linuxSystemFor system;
-      #     mainUser = import ./profiles/smissingham/default.nix;
-      #     systemModules = [
-      #       ./hosts/containix/configuration.nix
-      #     ];
-      #   };
-      # });
     };
 }

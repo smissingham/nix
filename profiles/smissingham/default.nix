@@ -49,8 +49,8 @@ let
         # api keys & such
         OPENAI_API_URL = { };
         OPENAI_API_KEY = { };
-        HF_IE_API_URL = { };
-        HF_IE_API_KEY = { };
+        HF_GEMMA_URL = { };
+        HF_IE_KEY = { };
 
         JINA_API_KEY = { };
         CONTEXT7_API_KEY = { };
@@ -82,8 +82,9 @@ let
     tp = "btop";
     nv = "nvitop";
 
-    ds = "nix run ${dendritic}#sm-devshell";
-    dc = "nix run ${dendritic}#sm-devcontainer";
+    ds = "sm-shell";
+    dsl = "nix run ${dendritic}#sm-shell";
+    dcl = "nix run ${dendritic}#sm-devcontainer";
 
     vim = "smissingham-nvim";
     ez = "env | fzf | clip";

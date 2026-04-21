@@ -16,7 +16,6 @@ vim.lsp.config("rust_analyzer", {
   },
 })
 vim.lsp.enable("rust_analyzer")
--- Disabled, now configured by rustaceanvim plugin
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)

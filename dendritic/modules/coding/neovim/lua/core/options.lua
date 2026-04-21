@@ -12,3 +12,5 @@ opt.undofile = true
 opt.ignorecase = true
 opt.smartcase = true
 opt.clipboard = "unnamedplus"
+
+--vim.o.shell = "bash"

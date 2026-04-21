@@ -13,11 +13,6 @@
       url = "path:./smissingham-vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    containix = {
-      url = "path:./containix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-    };
   };
   outputs =
     {
@@ -29,7 +24,6 @@
       packages = {
         smissingham-nvim = inputs.smissingham-nvim.packages.${system};
         smissingham-vscode = inputs.smissingham-vscode.packages.${system};
-        containix = inputs.containix.packages.${system};
       };
     }))
     // {
@@ -37,7 +31,6 @@
         myapps = {
           smissingham-nvim = inputs.smissingham-nvim.packages.${final.system};
           smissingham-vscode = inputs.smissingham-vscode.packages.${final.system};
-          containix = inputs.containix.packages.${final.system};
         };
       };
       overlays.default = self.overlays.myapps;

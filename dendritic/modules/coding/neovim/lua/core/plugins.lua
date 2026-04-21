@@ -73,4 +73,5 @@ require("lazy").setup({
   spec = plugin_imports(),
   install = { colorscheme = { "habamax" } },
   checker = { enabled = false },
+  rocks = { enabled = false }
 })

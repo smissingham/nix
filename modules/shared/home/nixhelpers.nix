@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  mainUser,
   ...
 }:
 let
@@ -11,8 +10,6 @@ let
 in
 {
   config = {
-    home-manager.users.${mainUser.username}.home.packages = [ pkgs.nix-search-tv ];
-
     mySharedModules.home.shells = {
       aliases = {
         nxsh = "nix-shell -I nixpkgs=channel:nixos-unstable -p";
@@ -71,14 +68,6 @@ in
           nix-collect-garbage --delete-old
           nix-store --optimise
         '';
-
-        # Interactive fuzzy search for Nix packages
-        nxs = builtins.readFile (
-          builtins.fetchurl {
-            url = "https://raw.githubusercontent.com/3timeslazy/nix-search-tv/c7919f34fde2e87de3fe70c74bf18c7e0091f19b/nixpkgs.sh";
-            sha256 = "sha256-XkBL7EdPIETdi8B5k0ww3d66xB7QnW+mFEK2RUihWcY=";
-          }
-        );
 
         # Initialize new flake from templates in Nix config
         nxflake = ''

@@ -1,9 +1,9 @@
 {
   lib,
   pkgs,
-  pkgsUnstable,
   config,
   mainUser,
+  dendritic,
   ...
 }:
 let
@@ -35,9 +35,8 @@ in
   };
 
   config = {
-    programs.zsh.enable = true;
     users.users.${mainUser.username} = {
-      shell = pkgs.zsh;
+      shell = if pkgs.stdenv.isLinux then "${dendritic.sm-shell}/bin/sm-shell" else pkgs.zsh;
     };
     home-manager.users.${mainUser.username} =
       {
@@ -48,61 +47,15 @@ in
       let
 
         allShellAliases = config.home.shellAliases // mainUser.shellAliases // aliasesOptionAttr;
-
         shellInitScript = ''
           clear
           #fastfetch
         '';
-
-        # Generate aliases for nushell as 'custom commands' to support chaining in aliases
-        nushellAliasConfig = lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (
-            name: value:
-            let
-              commands = builtins.filter (cmd: cmd != "") (
-                map lib.strings.trim (lib.splitString ";" (builtins.replaceStrings [ "&&" ] [ ";" ] value))
-              );
-            in
-            ''
-              def ${name} [] {
-                ${lib.concatMapStringsSep "\n  " (cmd: cmd) commands}
-              }
-            ''
-          ) allShellAliases
-        );
       in
       {
         home.packages =
           with pkgs;
           [
-            # System utilities
-            pciutils
-            usbutils
-            findutils
-            fastfetch
-
-            # Development tools
-            dig
-            gnupg
-            git
-            just
-            stow
-
-            # TUI's
-            btop
-            lazygit
-
-            # CLI productivity
-            _7zz
-            bat
-            fd
-            ripgrep
-            ripgrep-all
-            eza
-            fzf
-            television
-            asciinema_3
-            tldr
             xclip
           ]
           # Convert script definitions and aliases from other modules into executable bins
@@ -127,33 +80,10 @@ in
           };
         };
 
-        programs.direnv = {
-          enable = true;
-          silent = true;
-          nix-direnv.enable = true;
-          enableBashIntegration = true;
-          enableZshIntegration = true;
-        };
-
         programs.zoxide = {
           enable = true;
           enableBashIntegration = true;
           enableZshIntegration = true;
-        };
-
-        # programs.starship = {
-        #   enable = true;
-        #   enableBashIntegration = true;
-        #   enableZshIntegration = true;
-        #   enableNushellIntegration = true;
-        # };
-
-        programs.atuin = {
-          enable = true;
-          package = pkgsUnstable.atuin;
-          enableBashIntegration = true;
-          enableZshIntegration = true;
-          enableNushellIntegration = true;
         };
 
         programs.bash = {
@@ -175,20 +105,6 @@ in
           initContent = ''
             bindkey -r '^L'
             bindkey -r '^J'
-            ${shellInitScript}
-          '';
-        };
-
-        programs.nushell = {
-          enable = true;
-          # Write empty aliases, handle them specially for nushell to support chaining
-          shellAliases = lib.mkForce { };
-          extraConfig = ''
-            $env.config = {
-              show_banner: false
-            }
-
-            ${nushellAliasConfig}
             ${shellInitScript}
           '';
         };

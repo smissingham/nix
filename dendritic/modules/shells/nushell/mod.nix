@@ -1,15 +1,22 @@
 { inputs, ... }:
 let
-  name = "sm-nu";
+  name = "sm-nushell";
 in
 {
   perSystem =
     {
+      config,
       pkgs,
       shell-common,
       ...
     }:
     let
+      runtimeInputs = [
+        pkgs.atuin
+        pkgs.starship
+        config.packages.sm-television
+        config.packages.sm-tmux
+      ];
       wrapped = inputs.wrapper-modules.wrappers.nushell.wrap {
         inherit pkgs;
 
@@ -22,7 +29,7 @@ in
     in
     {
       packages.${name} = pkgs.writeShellApplication {
-        inherit name;
+        inherit name runtimeInputs;
         text = ''exec ${wrapped}/bin/nu "$@"'';
       };
     };

@@ -1,19 +1,23 @@
 { inputs, ... }:
 let
-  name = "sm-zsh";
+  name = "sm-zshell";
 in
 {
   perSystem =
     {
+      config,
       pkgs,
       shell-common,
       ...
     }:
     let
-      aliases = shell-common.aliases;
       runtimeInputs = [
+        pkgs.atuin
+        pkgs.starship
         pkgs.zsh-autocomplete
         pkgs.zsh-autosuggestions
+        config.packages.sm-tmux
+        config.packages.sm-television
       ];
 
       wrapped = inputs.wrapper-modules.wrappers.zsh.wrap {
@@ -25,7 +29,7 @@ in
           path = ./.zshrc;
         };
 
-        zshAliases = aliases;
+        zshAliases = shell-common.aliases;
         extraPackages = runtimeInputs;
       };
     in

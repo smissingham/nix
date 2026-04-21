@@ -62,8 +62,8 @@ in
       };
     };
     devtools = {
-      tmux.enable = true;
-      smissingham-nvim.enable = true;
+      #tmux.enable = true;
+      #smissingham-nvim.enable = true;
       smissingham-vscode.enable = true;
     };
   };

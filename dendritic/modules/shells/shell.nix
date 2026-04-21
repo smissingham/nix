@@ -1,6 +1,6 @@
 { ... }:
 let
-  name = "sm-devshell";
+  name = "sm-shell";
 in
 {
   perSystem =
@@ -11,18 +11,17 @@ in
       ...
     }:
     let
+      defaultShell = "sm-nushell";
+
       runtimeInputs =
         with pkgs;
         [
           # core utilities
-          busybox
           nix
           bash
           git
           gcc
           clang
-          gdb
-          lldb
           cmake
           pkg-config
           gnumake
@@ -32,6 +31,10 @@ in
           cacert
           curl
           stow
+
+          # env
+          direnv
+          nix-direnv
 
           # sysinfo
           fastfetch
@@ -44,15 +47,11 @@ in
           jq
           yq
           bat
-          poppler
-          pandoc
 
           # browsing
-          atuin
-          television
           zoxide
           fd
-          ripgrep-all
+          ripgrep
           fzf
           eza
           yazi
@@ -60,12 +59,17 @@ in
           # appearance
           gum
 
-          # wrapped apps
-          config.packages.sm-zsh
-          config.packages.sm-nu
-          config.packages.sm-neovim
-          config.packages.sm-opencode
         ]
+        ++
+          # wrapped apps
+          (with config.packages; [
+            sm-neovim
+            sm-nushell
+            sm-opencode
+            sm-tmux
+            sm-television
+            sm-zshell
+          ])
         ++
           # custom script binaries
           shell-common.scripts;
@@ -74,7 +78,7 @@ in
     {
       packages.${name} = pkgs.writeShellApplication {
         inherit name runtimeInputs;
-        text = ''exec sm-nu "$@"'';
+        text = ''exec ${config.packages.${defaultShell}}/bin/${defaultShell} "$@"'';
       };
     };
 }

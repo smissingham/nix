@@ -7,6 +7,8 @@
   ...
 }:
 {
+  programs.zsh.enable = true;
+
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
@@ -37,20 +39,8 @@
   ];
 
   #----- Applications in System Space -----#
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
+    dendritic.sm-shell
     dendritic.sm-devcontainer
-
-    # General CLI Utils
-    lsof
-    zip
-    unzip
-    _7zz
-    jq
-    moreutils
-    dust
-
-    # Nix CLI Utils
-    nixfmt-rfc-style # formatter
-    nixd # lsp
   ];
 }

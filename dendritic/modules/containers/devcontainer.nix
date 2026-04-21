@@ -34,12 +34,12 @@ in
         '';
 
         contents = [
-          config.packages.sm-devshell
+          config.packages.sm-shell
         ];
 
         config = {
           Cmd = [
-            "sm-devshell"
+            "sm-shell"
           ];
           Env = [
             "HOME=/root"

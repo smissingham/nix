@@ -5,120 +5,53 @@ return {
     branch = "main",
     lazy = false,
     build = ":TSUpdate",
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "query" },
-        callback = function()
-          vim.diagnostic.disable(0)
-        end,
-      })
-    end,
     config = function()
-      require("nvim-treesitter").setup({
-        ensure_installed = {
+      local ts = require("nvim-treesitter");
+      ts.setup({
+        highlight = { enable = true },
+        indent = { enable = true },
+      });
+      ts.install {
+          -- Vim Related
           "lua",
           "vim",
           "vimdoc",
           "query",
-          "svelte",
-          "astro",
-          "typescript",
-          "javascript",
+    
+          -- Text / Publishing
+          "latex",
           "markdown",
-          "markdown_inline",
-          "css",
-          "html",
-          "json",
+
+          -- Shell / Sysops
           "nix",
-          "python",
-          "sql",
-          "rust",
+          "nu",
           "bash",
           "toml",
           "yaml",
-        },
-        sync_install = false,
-        auto_install = true,
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+
+          -- Programming
+          "python",
+          "sql",
+          "rust",
+
+          -- Web
+          "css",
+          "html",
+          "json",
+          "astro",
+          "javascript",
+          "typescript",
+          "tsx",
+          "svelte",
+          "vue",
+      }
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("nvim-treesitter-textobjects").setup({
-        select = {
-          lookahead = true,
-          keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["ab"] = "@block.outer",
-            ["ib"] = "@block.inner",
-            ["al"] = "@loop.outer",
-            ["il"] = "@loop.inner",
-            ["ai"] = "@conditional.outer",
-            ["ii"] = "@conditional.inner",
-            ["as"] = "@statement.outer",
-            ["is"] = "@statement.inner",
-            ["am"] = "@comment.outer",
-            ["im"] = "@comment.inner",
-          },
-        },
-        move = {
-          set_jumps = true,
-          goto_next_start = {
-            ["]f"] = "@function.outer",
-            ["]c"] = "@class.outer",
-            ["]a"] = "@parameter.outer",
-            ["]b"] = "@block.outer",
-            ["]l"] = "@loop.outer",
-            ["]i"] = "@conditional.outer",
-            ["]s"] = "@statement.outer",
-          },
-          goto_next_end = {
-            ["]F"] = "@function.outer",
-            ["]C"] = "@class.outer",
-            ["]A"] = "@parameter.outer",
-            ["]B"] = "@block.outer",
-            ["]L"] = "@loop.outer",
-            ["]I"] = "@conditional.outer",
-            ["]S"] = "@statement.outer",
-          },
-          goto_previous_start = {
-            ["[f"] = "@function.outer",
-            ["[c"] = "@class.outer",
-            ["[a"] = "@parameter.outer",
-            ["[b"] = "@block.outer",
-            ["[l"] = "@loop.outer",
-            ["[i"] = "@conditional.outer",
-            ["[s"] = "@statement.outer",
-          },
-          goto_previous_end = {
-            ["[F"] = "@function.outer",
-            ["[C"] = "@class.outer",
-            ["[A"] = "@parameter.outer",
-            ["[B"] = "@block.outer",
-            ["[L"] = "@loop.outer",
-            ["[I"] = "@conditional.outer",
-            ["[S"] = "@statement.outer",
-          },
-        },
-        swap = {
-          swap_next = {
-            ["<leader>a"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
-          },
-        },
-      })
-    end,
+    init = function()
+      vim.g.no_plugin_maps = true
+    end
   },
 }

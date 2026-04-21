@@ -23,6 +23,7 @@
       }
     },
     "personal-notes": {
+      "enabled": false,
       "type": "local",
       "command": [
         "bash",
@@ -39,5 +40,20 @@
         "cd ~/Employer/workspace-product && akuna mcp"
       ]
     },
+  },
+  "provider": {
+    "hf-gemma": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "hf-gemma",
+      "options": {
+        "baseURL": "{env:HF_GEMMA_URL}/v1",
+        "apiKey": "{env:HF_IE_KEY}",
+      },
+      "models": {
+        "unsloth/gemma-4-31B-it-GGUF": {
+          "name": "Gemma 4 31B Q8"
+        }
+      }
+    }
   }
 }

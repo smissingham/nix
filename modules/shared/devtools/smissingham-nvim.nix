@@ -63,7 +63,7 @@ in
 
           # ----- Always Install -----#
           {
-            packages = pkgs.myapps.smissingham-nvim.systemPackages ++ pkgs.myapps.containix.systemPackages;
+            packages = pkgs.myapps.smissingham-nvim.systemPackages;
           }
 
           # ----- Optional: Favourite Aliases -----#

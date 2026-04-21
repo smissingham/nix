@@ -28,8 +28,8 @@ in
 
       # Set a wallpaper - dark tropical island evening
       image = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/zhichaoh/catppuccin-wallpapers/main/landscapes/tropic_island_night.jpg";
-        sha256 = "0p296jiyc59ax99b2n2430c2j8h5ja1fxjzhf3m42v623v938vqn";
+        url = "https://images-assets.nasa.gov/image/art002e009287/art002e009287~large.jpg";
+        sha256 = "sha256-aKeMXlmAW2uo73NXkU5QY4Ym6ZQ9dZj+YyznMCNsisI=";
       };
 
       cursor = {

@@ -115,7 +115,7 @@
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
         ],
         "wrapper-modules": "wrapper-modules"
       },

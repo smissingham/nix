@@ -1,13 +1,26 @@
 { inputs, ... }:
 let
-  appName = "sm-neovim";
+  name = "sm-neovim";
 in
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, system, ... }:
     let
+      treesitter =
+        (builtins.getFlake "github:tree-sitter/tree-sitter/8a3dcc6155a9faae677544303b6bc0caf1aef296")
+        .packages.${system}.cli;
+
       # packages to be installed alongside app
       includedPackages = with pkgs; [
+        # critical cli utils
+        git
+        delta
+        lazygit
+        ripgrep
+        fd
+        treesitter
+        #tree-sitter-grammars
+
         # Package managers and runtimes used by configured language servers
         bun
         cargo
@@ -16,11 +29,14 @@ in
         uv
 
         # ------------------------- LSP's & Formatters -------------------------#
+        prettier
+        prettierd
 
         # Configuration and scripting
         bash-language-server
         yaml-language-server
         lua-language-server
+        stylua
         taplo
 
         # Nix
@@ -41,37 +57,38 @@ in
         jdt-language-server
 
         # Python
-        basedpyright
+        # basedpyright
         ruff
         ty
       ];
 
       # packages needed only within the nvim process
-      extraPackages = with pkgs; [
-      ];
+      extraPackages = [ ];
 
       # the wrapped neovim app runtime
       wrapped = inputs.wrapper-modules.wrappers.neovim.wrap {
         inherit pkgs extraPackages;
 
         env = {
-          NVIM_APPNAME = appName;
+          NVIM_APPNAME = name;
         };
 
         settings = {
           config_directory = ./.;
+          dont_link = true;
+          binName = name;
           aliases = [
-            appName
+            name
           ];
         };
       };
 
       package = pkgs.symlinkJoin {
-        name = appName;
+        name = name;
         paths = [ wrapped ] ++ includedPackages;
       };
     in
     {
-      packages.${appName} = package;
+      packages.${name} = package;
     };
 }
