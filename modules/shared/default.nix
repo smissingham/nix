@@ -3,7 +3,6 @@
   config,
   mainUser,
   pkgs,
-  dendritic,
   ...
 }:
 {
@@ -40,7 +39,7 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = [
-    dendritic.sm-shell
-    dendritic.sm-devcontainer
+    #dendritic.sm-shell
+    #dendritic.sm-devcontainer
   ];
 }

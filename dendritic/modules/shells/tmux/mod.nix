@@ -43,18 +43,19 @@ in
           cpu
           {
             plugin = vim-tmux-navigator;
-            configAfter = ''
-              # Configure vim-tmux-navigator to use C-c for clear screen instead of C-l
+            configBefore = ''
               set -g @vim_navigator_prefix_mapping_clear_screen 'C-c'
 
-              # Improve detection of nvim (wasn't working on macos when inside tmux)
               is_vim="\
+              echo '#{pane_current_command}' | grep -i 'sm-neovim$' && exit 0
               echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
-              echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
+              echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish|nu)$' && exit 1
               ps -o state= -o comm= -t '#{pane_tty}' \
-                  | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
-              set -g @vim_navigator_check "$${is_vim}"
+                  | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'
+              "
+              set -g @vim_navigator_check "''${is_vim}"
             '';
+            configAfter = "";
           }
           {
             plugin = catppuccin;

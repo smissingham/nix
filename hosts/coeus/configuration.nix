@@ -3,6 +3,7 @@
   pkgsUnstable,
   lib,
   mainUser,
+  dendritic,
   ...
 }:
 let
@@ -152,6 +153,7 @@ in
 
   #----- Applications in System Space -----#
   environment.systemPackages = [
+    dendritic.sm-shell
   ]
   ++ cudaDeps;
 

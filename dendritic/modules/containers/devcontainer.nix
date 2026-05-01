@@ -38,7 +38,7 @@ in
         ];
 
         config = {
-          Cmd = [
+          EntryPoint = [
             "sm-shell"
           ];
           Env = [

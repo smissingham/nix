@@ -14,6 +14,7 @@ in
       includedPackages = with pkgs; [
         # critical cli utils
         git
+        gnutar
         delta
         lazygit
         ripgrep
@@ -52,6 +53,7 @@ in
 
         # Rust
         rust-analyzer
+        rustfmt
 
         # JVM languages
         jdt-language-server

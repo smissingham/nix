@@ -21,6 +21,8 @@ in
           bash
           git
           gcc
+          gnutar
+          zip
           clang
           cmake
           pkg-config
@@ -60,6 +62,7 @@ in
           gum
 
         ]
+        ++ pkgs.lib.optionals pkgs.stdenv.isLinux [ busybox ]
         ++
           # wrapped apps
           (with config.packages; [
@@ -79,6 +82,10 @@ in
       packages.${name} = pkgs.writeShellApplication {
         inherit name runtimeInputs;
         text = ''exec ${config.packages.${defaultShell}}/bin/${defaultShell} "$@"'';
+      };
+
+      devShells.default = pkgs.mkShell {
+        packages = runtimeInputs;
       };
     };
 }

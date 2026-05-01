@@ -3,7 +3,6 @@
   pkgs,
   config,
   mainUser,
-  dendritic,
   ...
 }:
 let
@@ -36,7 +35,7 @@ in
 
   config = {
     users.users.${mainUser.username} = {
-      shell = if pkgs.stdenv.isLinux then "${dendritic.sm-shell}/bin/sm-shell" else pkgs.zsh;
+      shell = pkgs.zsh;
     };
     home-manager.users.${mainUser.username} =
       {
@@ -85,6 +84,13 @@ in
           enableBashIntegration = true;
           enableZshIntegration = true;
         };
+
+        # programs.direnv = {
+        #   enable = true;
+        #   enableBashIntegration = true;
+        #   enableZshIntegration = true;
+        #   nix-direnv.enable = true;
+        # };
 
         programs.bash = {
           enable = true;

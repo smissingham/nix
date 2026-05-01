@@ -3,7 +3,7 @@ let
   username = "smissingham";
   name = "Sean Missingham";
   email = "sean@missingham.com";
-  editor = "smissingham-nvim";
+  editor = "sm-neovim";
   terminal = "ghostty";
   browser = "brave";
 
@@ -49,8 +49,9 @@ let
         # api keys & such
         OPENAI_API_URL = { };
         OPENAI_API_KEY = { };
-        HF_GEMMA_URL = { };
         HF_IE_KEY = { };
+        HF_GEMMA_URL = { };
+        HF_QWEN_URL = { };
 
         JINA_API_KEY = { };
         CONTEXT7_API_KEY = { };

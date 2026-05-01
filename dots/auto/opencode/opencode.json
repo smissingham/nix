@@ -13,11 +13,7 @@
     "context7": {
       "enabled": true,
       "type": "local",
-      "command": [
-        "bunx",
-        "-y",
-        "@upstash/context7-mcp"
-      ],
+      "command": ["bunx", "-y", "@upstash/context7-mcp"],
       "environment": {
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
@@ -25,33 +21,38 @@
     "personal-notes": {
       "enabled": false,
       "type": "local",
-      "command": [
-        "bash",
-        "-lc",
-        "cd ~/Documents/Notes && akuna mcp"
-      ]
+      "command": ["bash", "-lc", "cd ~/Documents/Notes && akuna mcp"]
     },
     "pricefx-workspace": {
       "enabled": false,
       "type": "local",
-      "command": [
-        "bash",
-        "-lc",
-        "cd ~/Employer/workspace-product && akuna mcp"
-      ]
-    },
+      "command": ["bash", "-lc", "cd ~/Employer/workspace-product && akuna mcp"]
+    }
   },
   "provider": {
     "hf-gemma": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "hf-gemma",
       "options": {
-        "baseURL": "{env:HF_GEMMA_URL}/v1",
-        "apiKey": "{env:HF_IE_KEY}",
+        "baseURL": "{env:HF_GEMMA_URL}",
+        "apiKey": "{env:HF_IE_KEY}"
       },
       "models": {
         "unsloth/gemma-4-31B-it-GGUF": {
           "name": "Gemma 4 31B Q8"
+        }
+      }
+    },
+    "hf-qwen": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "hf-qwen",
+      "options": {
+        "baseURL": "{env:HF_QWEN_URL}",
+        "apiKey": "{env:HF_IE_KEY}"
+      },
+      "models": {
+        "unsloth/Qwen3.6-35B-A3B-GGUF": {
+          "name": "Qwen 3.6 35B"
         }
       }
     }

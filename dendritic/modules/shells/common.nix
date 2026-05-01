@@ -14,13 +14,17 @@
           # quick navigation
           q = "exit";
           cl = "clear";
+          la = "ls -la";
+          ll = "eza -la";
+          lt = "eza -lT";
 
           # custom wrapper exports
           nu = "sm-nushell";
           zsh = "sm-zshell";
           ds = "sm-shell";
           dv = "sm-neovim";
-          dc = "sm-devcontainer";
+          dc = "docker run -it --rm -v ./:/workspace smissingham/devcontainer";
+          dcl = "nix run $env.NIX_CONFIG_HOME/dendritic#sm-devcontainer";
           oc = "sm-opencode";
           tv = tv;
           tmux = tmux;

@@ -8,6 +8,7 @@
     {
       nixpkgs,
       flake-utils,
+      ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -16,12 +17,12 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
+          packages = with pkgs; [
             nodejs_22
             bun
             typescript
-            nodePackages.eslint
-            nodePackages.typescript-language-server
+            eslint
+            typescript-language-server
           ];
 
           shellHook = ''
