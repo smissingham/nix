@@ -69,32 +69,15 @@ let
   dendritic = "$NIX_CONFIG_HOME/dendritic";
 
   shellAliases = {
-    q = "exit";
-    cl = "clear";
-    ls = "eza";
-    gg = "lazygit";
-    ll = "eza -l";
-    la = "eza -la";
-
-    ff = "tv files";
-    # ff = "fastfetch";
-    # ffa = "fastfetch --config none";
-
-    tp = "btop";
-    nv = "nvitop";
-
     ds = "sm-shell";
     dsl = "nix run ${dendritic}#sm-shell";
     dcl = "nix run ${dendritic}#sm-devcontainer";
 
-    vim = "smissingham-nvim";
     ez = "env | fzf | clip";
     ezk = "env | fzf | awk -F= '{print $1}' | clip";
     ezv = "env | fzf | awk -F= '{print $2}' | clip";
     clip = (if isDarwin { } then "pbcopy" else "xclip -selection clipboard");
     sec = "pushd ${getSopsPath { }} && sops ${sops.secretsFileName} && popd";
-
-    notes = "cd \"$HOME/$HOME_NOTES\" && smissingham-nvim";
 
     # ----- Developer Stuff -----#
     j = "just";

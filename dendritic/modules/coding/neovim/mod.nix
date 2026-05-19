@@ -4,30 +4,25 @@ let
 in
 {
   perSystem =
-    { pkgs, system, ... }:
+    { pkgs, ... }:
     let
-      treesitter =
-        (builtins.getFlake "github:tree-sitter/tree-sitter/8a3dcc6155a9faae677544303b6bc0caf1aef296")
-        .packages.${system}.cli;
+      #treesitter =
+      #(builtins.getFlake "github:tree-sitter/tree-sitter/8a3dcc6155a9faae677544303b6bc0caf1aef296")
+      #.packages.${system}.cli;
 
       # packages to be installed alongside app
       includedPackages = with pkgs; [
         # critical cli utils
         git
-        gnutar
         delta
         lazygit
         ripgrep
         fd
-        treesitter
+        tree-sitter
         #tree-sitter-grammars
 
-        # Package managers and runtimes used by configured language servers
-        bun
-        cargo
-        maven
-        nushell
-        uv
+        # ------------------------- Coding Assistance  -------------------------#
+        opencode
 
         # ------------------------- LSP's & Formatters -------------------------#
         prettier
@@ -45,6 +40,7 @@ in
         nixfmt
 
         # Web
+        bun
         astro-language-server
         svelte-language-server
         tailwindcss-language-server
@@ -52,14 +48,17 @@ in
         vtsls
 
         # Rust
+        cargo
         rust-analyzer
         rustfmt
 
-        # JVM languages
+        # Java
+        #maven
         jdt-language-server
 
         # Python
         # basedpyright
+        uv
         ruff
         ty
       ];

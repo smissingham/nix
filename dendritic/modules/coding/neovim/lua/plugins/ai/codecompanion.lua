@@ -1,0 +1,22 @@
+return {
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			opts = {
+				log_level = "DEBUG", -- or "TRACE"
+			},
+			interactions = {
+				chat = {
+					adapter = {
+						name = "opencode",
+						model = "openai/gpt-5.3-codex-spark",
+					},
+				},
+			},
+		},
+	},
+}

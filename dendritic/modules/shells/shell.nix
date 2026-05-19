@@ -17,20 +17,19 @@ in
         with pkgs;
         [
           # core utilities
-          nix
-          bash
+          #nix
+          #bash
           git
-          gcc
+          #gcc
           gnutar
           zip
-          clang
-          cmake
-          pkg-config
-          gnumake
-          ncurses
-          coreutils
-          moreutils
-          cacert
+          #cmake
+          #pkg-config
+          #gnumake
+          #ncurses
+          #coreutils
+          #moreutils
+          #cacert
           curl
           stow
 
@@ -67,8 +66,8 @@ in
           # wrapped apps
           (with config.packages; [
             sm-neovim
+            opencode
             sm-nushell
-            sm-opencode
             sm-tmux
             sm-television
             sm-zshell

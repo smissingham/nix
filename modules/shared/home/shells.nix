@@ -48,7 +48,6 @@ in
         allShellAliases = config.home.shellAliases // mainUser.shellAliases // aliasesOptionAttr;
         shellInitScript = ''
           clear
-          #fastfetch
         '';
       in
       {

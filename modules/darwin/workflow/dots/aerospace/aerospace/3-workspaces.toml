@@ -1,6 +1,13 @@
 alt-shift-semicolon = 'mode service'
 
 [workspace-to-monitor-force-assignment]
-1 = ['secondary', 'main']
-2 = ['secondary', 'main']
-3 = ['secondary', 'main']
+1 = 'built-in'
+2 = 'built-in'
+3 = 'built-in'
+4 = 'built-in'
+5 = ['secondary', 1]
+6 = ['secondary', 1]
+7 = ['secondary', 1]
+8 = ['secondary', 3]
+9 = ['secondary', 3]
+10 = ['secondary', 3]

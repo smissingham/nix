@@ -47,12 +47,12 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "hf-qwen",
       "options": {
-        "baseURL": "{env:HF_QWEN_URL}",
+        "baseURL": "https://ujfc63m9e3kjfxy7.us-east-2.aws.endpoints.huggingface.cloud",
         "apiKey": "{env:HF_IE_KEY}"
       },
       "models": {
-        "unsloth/Qwen3.6-35B-A3B-GGUF": {
-          "name": "Qwen 3.6 35B"
+        "unsloth/Qwen3.6-27B-GGUF": {
+          "name": "Qwen 3.6 27B"
         }
       }
     }

@@ -14,6 +14,7 @@
 # 0x32 = grave (tilde)
 # 0x37 = CMD (gui)
 # 0x3D = R-CMD (gui)
+# f13  = Printscreen
 #
 # Shortcut Documentation:
 #
@@ -24,7 +25,7 @@
 #
 # Window Layout:
 #   CMD + ALT - R     : Reset (flatten workspace tree)
-#   CMD + ALT - M     : Maximise (fullscreen)
+#   CMD + ALT - M     : Toggle macOS fullscreen
 #   CMD + ALT - ,     : Preset floating 1620p
 #   CMD + ALT - .     : Preset floating 1080p
 #   CMD + ALT - /     : Tiling / toggle
@@ -32,16 +33,16 @@
 
 #################### Application Launch Shortcuts ####################
 # PWA's
-hyper - m    : $BROWSER --app=https://mail.proton.me && aerospace-pop
-hyper - p    : $BROWSER --app=https://pass.proton.me && aerospace-pop
-hyper - a    : $BROWSER --app=https://lumo.proton.me && aerospace-pop
+hyper - m    : $BROWSER --app=https://mail.proton.me
+hyper - a    : $BROWSER --app=https://chatgpt.com
 
 # Native Apps
-hyper - w    : $BROWSER
+hyper - b    : $BROWSER
 hyper - t    : open -na $TERMINAL
-hyper - s    : open -a Signal
+#hyper - s    : open -a Signal
 #hyper - m    : open -a Spotify
 #hyper - o    : open -a Obsidian
+hyper - l    : osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
 
 # TUI's
 hyper - o    : open -na $TERMINAL --args -e opencode && aerospace-pop
@@ -52,6 +53,9 @@ hyper - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
 
 
 #################### Application Control ####################
+
+# General rebinds
+f13         : screencapture -i -c # printscreen
 
 # Unbind annoying defaults
 ctrl + shift - h :
@@ -67,34 +71,44 @@ ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
 cmd - q [
   "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Window" of menu "File" of menu bar 1'
 ]
-cmd - t [
+ctrl - t [
   "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "New Tab" of menu "File" of menu bar 1'
+]
+ctrl + shift - t [
+  "Brave Browser" : skhd -k "cmd + shift - t"
+]
+ctrl - w [
+  "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Tab" of menu "File" of menu bar 1'
+]
+ctrl - l [
+  "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Open Location…" of menu "File" of menu bar 1'
 ]
 
 # Tab switching with control
-ctrl - 1 : skhd -k "cmd - 1"
-ctrl - 2 : skhd -k "cmd - 2"
-ctrl - 3 : skhd -k "cmd - 3"
-ctrl - 4 : skhd -k "cmd - 4"
-ctrl - 5 : skhd -k "cmd - 5"
-ctrl - 6 : skhd -k "cmd - 6"
-ctrl - 7 : skhd -k "cmd - 7"
-ctrl - 8 : skhd -k "cmd - 8"
-ctrl - 9 : skhd -k "cmd - 9"
-ctrl - 0 : skhd -k "cmd - 0"
+# ctrl - 1 : skhd -k "cmd - 1"
+# ctrl - 2 : skhd -k "cmd - 2"
+# ctrl - 3 : skhd -k "cmd - 3"
+# ctrl - 4 : skhd -k "cmd - 4"
+# ctrl - 5 : skhd -k "cmd - 5"
+# ctrl - 6 : skhd -k "cmd - 6"
+# ctrl - 7 : skhd -k "cmd - 7"
+# ctrl - 8 : skhd -k "cmd - 8"
+# ctrl - 9 : skhd -k "cmd - 9"
+# ctrl - 0 : skhd -k "cmd - 0"
+
 #################### Window Movement ####################
 
 # Focus Windows
-cmd - h : aerospace focus left
-cmd - j : aerospace focus down
-cmd - k : aerospace focus up
-cmd - l : aerospace focus right 
+cmd - k : aerospace focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - j : aerospace focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - h : aerospace focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - l : aerospace focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
 
 # Move Windows
-cmd + shift - h : aerospace move left
-cmd + shift - j : aerospace move down
-cmd + shift - k : aerospace move up
-cmd + shift - l : aerospace move right 
+cmd + shift - h : aerospace move left --boundaries all-monitors-outer-frame
+cmd + shift - j : aerospace move down --boundaries all-monitors-outer-frame
+cmd + shift - k : aerospace move up --boundaries all-monitors-outer-frame
+cmd + shift - l : aerospace move right --boundaries all-monitors-outer-frame
 
 # Join Windows
 cmd + shift + ctrl - h : aerospace join-with left
@@ -111,7 +125,7 @@ cmd + shift - 0x24 : aerospace balance-sizes
 
 # Layout Management
 cmd + shift - n    : aerospace flatten-workspace-tree
-cmd + shift - m    : aerospace fullscreen
+cmd + shift - m    : skhd -k "ctrl + cmd - f"
 cmd + shift - 0x2C : aerospace layout floating tiling
 
 # Popup float (cmd + shift - tilde)

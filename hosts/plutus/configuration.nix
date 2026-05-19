@@ -1,6 +1,7 @@
 {
   pkgs,
   mainUser,
+  dendritic,
   ...
 }:
 {
@@ -12,7 +13,6 @@
   };
 
   myDarwinModules = {
-    # SSH server enabled via mySharedModules.ssh
     workflow = {
       aerospace.enable = true;
     };
@@ -25,19 +25,8 @@
 
   mySharedModules = {
     ssh.enable = true;
-    browsers = {
-      floorp.enable = true;
-      brave.enable = true;
-    };
-    devtools = {
-      tmux.enable = true;
-      codesigning.enable = true;
-      smissingham-nvim.enable = true;
-      smissingham-vscode.enable = true;
-    };
-    productivity = {
-      thunderbird.enable = false;
-    };
+    browsers.brave.enable = true;
+    devtools.smissingham-vscode.enable = true;
     workflow = {
       sops.enable = true;
       builders = {
@@ -45,45 +34,26 @@
         systems = [
           "aarch64-darwin"
           "x86_64-darwin"
-          # "aarch64-linux"
         ];
       };
     };
   };
-
-  # nix = {
-  #   linux-builder.enable = true;
-  #   settings.trusted-users = [ "@smissingham" ];
-  # };
 
   #----- Nixpkgs Applications in User Space -----#
   home-manager.users.${mainUser.username} =
     { ... }:
     {
       home.packages = with pkgs; [
-
-        # General productivity & workflow
         obsidian
-        #mynixpkgs.filen-desktop
-        moonlight-qt # rdp client for sunlight backend
-
-        # Dev tools
-        mynixpkgs.surrealist
+        moonlight-qt
         jetbrains-toolbox
-        #jetbrains.idea-oss
-        #postman
-        #bruno
-
-        # CLI Stuff
-        #myoverlays.pfxpackage
       ];
     };
 
   #----- Nixpkgs Applications in System Space -----#
-  environment.systemPackages = with pkgs; [
-    bun
-    uv
-    #nodejs_24 # required for: kilo-code IJ extension
+  environment.systemPackages = [
+    dendritic.sm-shell
+    pkgs.vim
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
@@ -97,8 +67,6 @@
       "raycast"
       "ghostty"
       "protonvpn"
-      # "google-chrome"
-      # "shottr"
 
       # ----- MEDIA ----- #
       "stremio"
@@ -107,11 +75,9 @@
       "obs"
       "inkscape"
       "gimp"
-      #"obs-backgroundremoval"
 
       # ----- COMMUNICATIONS ----- #
       "signal"
-      #"legcord"
 
       # ----- WORK / PRODUCTIVITY ----- #
       "microsoft-teams"
@@ -120,27 +86,11 @@
       "microsoft-word"
       "onedrive"
       "libreoffice"
-      #"google-drive"
-      #"macfuse"
 
       # ----- OS / SYSTEM ----- #
-      # "onyx"
-      # "commander-one"
-      # "xquartz"
+      "onyx"
       # "yubico-authenticator"
       # "parallels"
-
-      # ----- DEV TOOLS ----- #
-      #"intellij-idea-ce"
-      #"jetbrains-toolbox"
-      #"claude"
-      # "cursor"
-      # "visual-studio-code"
-
-      # ----- AI TOOLS ----- #
-      #"lm-studio"
-      #"anythingllm"
-      #"comfyui"
     ];
 
     brews = [

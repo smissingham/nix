@@ -26,6 +26,9 @@ def autoload-path [name: string] {
 # Atuin
 atuin init nu | save -f (autoload-path "atuin")
 
+# Starship
+starship init nu | save -f (autoload-path "starship")
+
 # Television
 tv init nu | save -f (autoload-path "tv")
 

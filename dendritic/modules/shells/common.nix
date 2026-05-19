@@ -25,7 +25,7 @@
           dv = "sm-neovim";
           dc = "docker run -it --rm -v ./:/workspace smissingham/devcontainer";
           dcl = "nix run $env.NIX_CONFIG_HOME/dendritic#sm-devcontainer";
-          oc = "sm-opencode";
+          oc = "opencode --port";
           tv = tv;
           tmux = tmux;
 

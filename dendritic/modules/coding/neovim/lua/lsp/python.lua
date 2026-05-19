@@ -1,5 +1,7 @@
 -- Linting, formatting and imports
 vim.lsp.config("ruff", {
+  cmd = { "ruff", "server" },
+  filetypes = { "python" },
   init_options = {
     settings = {
       format = {
@@ -19,6 +21,8 @@ vim.lsp.enable("ruff")
 
 -- Optional: Only required if you need to update the language server settings
 vim.lsp.config('ty', {
+  cmd = { "ty", "server" },
+  filetypes = { "python" },
   settings = {
     ty = {
       -- ty language server settings go here
@@ -34,28 +38,25 @@ vim.lsp.config('ty', {
 vim.lsp.enable('ty')
 
 -- Type checking
-vim.lsp.config("basedpyright", {
-  root_markers = {
-    "uv.toml",
-    "pyproject.toml",
-    "requirements.txt",
-    ".git",
-  },
-  settings = {
-    basedpyright = {
-      analysis = {
-        autoSearchPaths = true,
-        useLibraryCodeForTypes = true,
-        diagnosticMode = "workspace",
-        typeCheckingMode = "recommended",
-        -- inlayHints = {
-        --   variableTypes = true,
-        --   functionReturnTypes = true,
-        --   callArgumentNames = false,
-        -- },
-        autoFormatStrings = true,
-      },
-    },
-  },
-})
---vim.lsp.enable("basedpyright")
+-- vim.lsp.config("basedpyright", {
+--   cmd = { "basedpyright-langserver", "--stdio" },
+--   filetypes = { "python" },
+--   root_markers = {
+--     "uv.toml",
+--     "pyproject.toml",
+--     "requirements.txt",
+--     ".git",
+--   },
+--   settings = {
+--     basedpyright = {
+--       analysis = {
+--         autoSearchPaths = true,
+--         useLibraryCodeForTypes = true,
+--         diagnosticMode = "workspace",
+--         typeCheckingMode = "recommended",
+--         autoFormatStrings = true,
+--       },
+--     },
+--   },
+-- })
+-- vim.lsp.enable("basedpyright")

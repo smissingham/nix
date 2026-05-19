@@ -9,7 +9,7 @@ path = "~/Documents/Nix"
 [[session]]
 name = "Notes"
 path = "~/Documents/Notes/second-brain"
-startup_command = "sv"
+startup_command = "dv"
 
 [[session]]
 name = "Employer 👔"

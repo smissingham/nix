@@ -30,6 +30,8 @@ return {
           svelte = { "prettierd" },
           astro = { "prettierd" },
 
+          lua = { "stylua" },
+
 
           ["_"] = {
             lsp_format = "prefer",
