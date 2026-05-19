@@ -53,16 +53,6 @@
     mynixpkgs = {
       url = "github:smissingham/nixpkgs/develop";
     };
-    myoverlays = {
-      url = "path:flakes/overlays";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-    };
-    myapps = {
-      url = "path:flakes/apps";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-    };
     dendritic = {
       url = "path:dendritic";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -82,8 +72,6 @@
       stateVersion = nixpkgs.lib.trivial.release;
       inherit (self) outputs;
       overlays = [
-        inputs.myoverlays.overlays.default
-        inputs.myapps.overlays.default
         inputs.dendritic.overlays.default
         (_final: prev: {
           mynixpkgs = import inputs.mynixpkgs {

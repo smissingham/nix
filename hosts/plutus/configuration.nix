@@ -26,7 +26,6 @@
   mySharedModules = {
     ssh.enable = true;
     browsers.brave.enable = true;
-    devtools.smissingham-vscode.enable = true;
     workflow = {
       sops.enable = true;
       builders = {
@@ -52,7 +51,7 @@
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = [
-    dendritic.sm-shell
+    dendritic.sm-bundle-devtools
     pkgs.vim
   ];
 

@@ -63,9 +63,6 @@ in
       };
     };
     devtools = {
-      #tmux.enable = true;
-      #smissingham-nvim.enable = true;
-      smissingham-vscode.enable = true;
     };
   };
 
@@ -153,7 +150,7 @@ in
 
   #----- Applications in System Space -----#
   environment.systemPackages = [
-    dendritic.sm-shell
+    dendritic.sm-bundle-devtools
   ]
   ++ cudaDeps;
 

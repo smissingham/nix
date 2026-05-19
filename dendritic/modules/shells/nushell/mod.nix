@@ -14,8 +14,8 @@ in
       runtimeInputs = [
         pkgs.atuin
         pkgs.starship
+        pkgs.zoxide
         config.packages.sm-television
-        config.packages.sm-tmux
       ];
       wrapped = inputs.wrapper-modules.wrappers.nushell.wrap {
         inherit pkgs;

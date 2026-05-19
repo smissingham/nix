@@ -6,61 +6,65 @@ in
   perSystem =
     { pkgs, ... }:
     let
+      delta = pkgs.writeShellScriptBin "delta" ''
+        exec ${pkgs.delta}/bin/delta --navigate --line-numbers --dark "$@"
+      '';
+
       #treesitter =
       #(builtins.getFlake "github:tree-sitter/tree-sitter/8a3dcc6155a9faae677544303b6bc0caf1aef296")
       #.packages.${system}.cli;
 
       # packages to be installed alongside app
-      includedPackages = with pkgs; [
+      includedPackages = [
         # critical cli utils
-        git
+        pkgs.git
         delta
-        lazygit
-        ripgrep
-        fd
-        tree-sitter
+        pkgs.lazygit
+        pkgs.ripgrep
+        pkgs.fd
+        pkgs.tree-sitter
         #tree-sitter-grammars
 
         # ------------------------- Coding Assistance  -------------------------#
-        opencode
+        pkgs.opencode
 
         # ------------------------- LSP's & Formatters -------------------------#
-        prettier
-        prettierd
+        pkgs.prettier
+        pkgs.prettierd
 
         # Configuration and scripting
-        bash-language-server
-        yaml-language-server
-        lua-language-server
-        stylua
-        taplo
+        pkgs.bash-language-server
+        pkgs.yaml-language-server
+        pkgs.lua-language-server
+        pkgs.stylua
+        pkgs.taplo
 
         # Nix
-        nixd
-        nixfmt
+        pkgs.nixd
+        pkgs.nixfmt
 
         # Web
-        bun
-        astro-language-server
-        svelte-language-server
-        tailwindcss-language-server
-        vscode-langservers-extracted
-        vtsls
+        pkgs.bun
+        pkgs.astro-language-server
+        pkgs.svelte-language-server
+        pkgs.tailwindcss-language-server
+        pkgs.vscode-langservers-extracted
+        pkgs.vtsls
 
         # Rust
-        cargo
-        rust-analyzer
-        rustfmt
+        pkgs.cargo
+        pkgs.rust-analyzer
+        pkgs.rustfmt
 
         # Java
         #maven
-        jdt-language-server
+        pkgs.jdt-language-server
 
         # Python
         # basedpyright
-        uv
-        ruff
-        ty
+        pkgs.uv
+        pkgs.ruff
+        pkgs.ty
       ];
 
       # packages needed only within the nvim process

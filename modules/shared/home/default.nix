@@ -56,7 +56,6 @@ in
               EDITOR = lib.mkDefault mainUser.editor;
             };
 
-            # TODO: Move dots to profile
             activation = {
               stowDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
                 for path in ${

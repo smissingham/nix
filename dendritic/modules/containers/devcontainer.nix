@@ -34,7 +34,7 @@ in
         '';
 
         contents = [
-          config.packages.sm-shell
+          config.packages.sm-bundle-devtools
         ];
 
         config = {

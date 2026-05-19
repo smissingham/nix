@@ -14,6 +14,7 @@ in
       runtimeInputs = [
         pkgs.atuin
         pkgs.starship
+        pkgs.zoxide
         pkgs.zsh-autocomplete
         pkgs.zsh-autosuggestions
         config.packages.sm-tmux

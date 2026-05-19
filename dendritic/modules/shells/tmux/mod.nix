@@ -5,6 +5,7 @@ in
 {
   perSystem =
     {
+      config,
       pkgs,
       ...
     }:
@@ -37,6 +38,7 @@ in
         sourceSensible = false;
 
         prefix = "C-Space";
+        shell = "${config.packages.sm-nushell}/bin/sm-nushell";
         configAfter = builtins.readFile ./tmux.conf;
 
         plugins = with pkgs.tmuxPlugins; [
