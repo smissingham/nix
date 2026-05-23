@@ -1,7 +1,7 @@
 -- Rust LSP Server
 vim.lsp.config("rust_analyzer", {
-  cmd = { "rust-analyzer" },
   filetypes = { "rust" },
+  cmd = { "rust-analyzer" },
   root_markers = { "Cargo.toml", ".git" },
   settings = {
     ["rust-analyzer"] = {

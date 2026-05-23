@@ -1,7 +1,13 @@
 -- Linting, formatting and imports
 vim.lsp.config("ruff", {
-  cmd = { "ruff", "server" },
   filetypes = { "python" },
+  cmd = { "ruff", "server" },
+  root_markers = {
+    "uv.toml",
+    "pyproject.toml",
+    "requirements.txt",
+    ".git",
+  },
   init_options = {
     settings = {
       format = {
@@ -10,37 +16,31 @@ vim.lsp.config("ruff", {
       organizeImports = true,
     },
   },
-  root_markers = {
-    "uv.toml",
-    "pyproject.toml",
-    "requirements.txt",
-    ".git",
-  },
 })
 vim.lsp.enable("ruff")
 
 -- Optional: Only required if you need to update the language server settings
-vim.lsp.config('ty', {
-  cmd = { "ty", "server" },
+vim.lsp.config("ty", {
   filetypes = { "python" },
-  settings = {
-    ty = {
-      -- ty language server settings go here
-    }
-  },
+  cmd = { "ty", "server" },
   root_markers = {
     "ty.toml",
     "pyproject.toml",
     "requirements.txt",
     ".git",
   },
+  settings = {
+    ty = {
+      -- ty language server settings go here
+    },
+  },
 })
-vim.lsp.enable('ty')
+vim.lsp.enable("ty")
 
 -- Type checking
 -- vim.lsp.config("basedpyright", {
---   cmd = { "basedpyright-langserver", "--stdio" },
 --   filetypes = { "python" },
+--   cmd = { "basedpyright-langserver", "--stdio" },
 --   root_markers = {
 --     "uv.toml",
 --     "pyproject.toml",

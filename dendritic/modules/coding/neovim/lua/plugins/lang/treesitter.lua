@@ -1,57 +1,59 @@
 return {
-  { "virchau13/tree-sitter-astro" },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
-    config = function()
-      local ts = require("nvim-treesitter");
-      ts.setup({
-        highlight = { enable = true },
-        indent = { enable = true },
-      });
-      ts.install {
-          -- Vim Related
-          "lua",
-          "vim",
-          "vimdoc",
-          "query",
-    
-          -- Text / Publishing
-          "latex",
-          "markdown",
+	{ "virchau13/tree-sitter-astro" },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
+		build = ":TSUpdate",
+		config = function()
+			local ts = require("nvim-treesitter")
+			ts.setup({
+				highlight = { enable = true },
+				indent = { enable = true },
+			})
+			ts.install({
+				-- Vim Related
+				"lua",
+				"vim",
+				"vimdoc",
+				"query",
 
-          -- Shell / Sysops
-          "nix",
-          "nu",
-          "bash",
-          "toml",
-          "yaml",
+				-- Text / Publishing
+				"latex",
+				"markdown",
 
-          -- Programming
-          "python",
-          "sql",
-          "rust",
+				-- Shell / Sysops
+				"nix",
+				"nu",
+				"bash",
+				"toml",
+				"yaml",
 
-          -- Web
-          "css",
-          "html",
-          "json",
-          "astro",
-          "javascript",
-          "typescript",
-          "tsx",
-          "svelte",
-          "vue",
-      }
-    end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = "main",
-    init = function()
-      vim.g.no_plugin_maps = true
-    end
-  },
+				-- Programming
+				"python",
+				"sql",
+				"rust",
+
+				-- Web
+				"css",
+				"html",
+				"html_tags",
+				"json",
+				"astro",
+				"javascript",
+				"jsx",
+				"typescript",
+				"tsx",
+				"svelte",
+				"vue",
+			})
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		init = function()
+			vim.g.no_plugin_maps = true
+		end,
+	},
 }

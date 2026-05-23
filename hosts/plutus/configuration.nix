@@ -1,7 +1,6 @@
 {
   pkgs,
   mainUser,
-  dendritic,
   ...
 }:
 {
@@ -46,13 +45,12 @@
         obsidian
         moonlight-qt
         jetbrains-toolbox
+        # mynixpkgs.filen-desktop
       ];
     };
 
   #----- Nixpkgs Applications in System Space -----#
   environment.systemPackages = [
-    dendritic.sm-bundle-devtools
-    pkgs.vim
   ];
 
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#

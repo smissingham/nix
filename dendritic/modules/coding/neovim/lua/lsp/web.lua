@@ -1,17 +1,70 @@
 -- HTML, CSS and JSON language servers
-vim.lsp.config("html", {})
+vim.lsp.config("html", {
+  filetypes = { "html" },
+  cmd = { "vscode-html-language-server", "--stdio" },
+})
 vim.lsp.enable("html")
 
-vim.lsp.config("cssls", {})
+vim.lsp.config("cssls", {
+  filetypes = { "css", "scss", "less" },
+  cmd = { "vscode-css-language-server", "--stdio" },
+})
 vim.lsp.enable("cssls")
 
-vim.lsp.config("jsonls", {})
+vim.lsp.config("jsonls", {
+  filetypes = { "json", "jsonc" },
+  cmd = { "vscode-json-language-server", "--stdio" },
+})
 vim.lsp.enable("jsonls")
 
-vim.lsp.config("tailwindcss", {})
+vim.lsp.config("tailwindcss", {
+  filetypes = {
+    "astro",
+    "css",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "svelte",
+    "typescript",
+    "typescriptreact",
+  },
+  cmd = { "tailwindcss-language-server", "--stdio" },
+  root_markers = {
+    "tailwind.config.js",
+    "tailwind.config.cjs",
+    "tailwind.config.mjs",
+    "tailwind.config.ts",
+    "postcss.config.js",
+    "postcss.config.cjs",
+    "postcss.config.mjs",
+    "postcss.config.ts",
+    "package.json",
+    ".git",
+  },
+})
 vim.lsp.enable("tailwindcss")
 
 vim.lsp.config("eslint", {
+  filetypes = {
+    "astro",
+    "javascript",
+    "javascriptreact",
+    "svelte",
+    "typescript",
+    "typescriptreact",
+  },
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  root_markers = {
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.json",
+    "package.json",
+    ".git",
+  },
   settings = {
     rulesCustomizations = {
       { rule = "tailwindcss/classnames-order", severity = "off" },
@@ -33,6 +86,19 @@ vim.lsp.config("eslint", {
 vim.lsp.enable("eslint")
 
 vim.lsp.config("vtsls", {
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  },
+  cmd = { "vtsls", "--stdio" },
+  root_markers = {
+    "tsconfig.json",
+    "jsconfig.json",
+    "package.json",
+    ".git",
+  },
   settings = {
     typescript = {
       suggest = {
@@ -72,6 +138,15 @@ vim.lsp.config("vtsls", {
 vim.lsp.enable("vtsls")
 
 vim.lsp.config("svelte", {
+  filetypes = { "svelte" },
+  cmd = { "svelte-language-server", "--stdio" },
+  root_markers = {
+    "svelte.config.js",
+    "svelte.config.cjs",
+    "svelte.config.mjs",
+    "package.json",
+    ".git",
+  },
   settings = {
     svelte = {
       plugin = {
@@ -88,8 +163,13 @@ vim.lsp.config("svelte", {
 vim.lsp.enable("svelte")
 
 vim.lsp.config("astro", {
+  filetypes = { "astro" },
+  cmd = { "astro-ls", "--stdio" },
   root_markers = {
     "astro.config.mjs",
+    "astro.config.js",
+    "astro.config.ts",
+    "package.json",
   },
 })
 vim.lsp.enable("astro")
