@@ -50,6 +50,10 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+    homebrew-voxtype = {
+      url = "github:peteonrails/homebrew-voxtype";
+      flake = false;
+    };
     mynixpkgs = {
       url = "github:smissingham/nixpkgs/develop";
     };
@@ -183,10 +187,12 @@
                     enable = true;
                     enableRosetta = true;
                     user = mainUser.username;
+                    autoMigrate = true;
                     taps = {
                       "homebrew/homebrew-core" = inputs.homebrew-core;
                       "homebrew/homebrew-cask" = inputs.homebrew-cask;
                       "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                      "peteonrails/homebrew-voxtype" = inputs.homebrew-voxtype;
                     };
                     mutableTaps = true;
                   };

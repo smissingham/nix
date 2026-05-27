@@ -287,6 +287,22 @@
         "type": "github"
       }
     },
+    "homebrew-voxtype": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777568486,
+        "narHash": "sha256-70JTkfvf4LlNs06p8J1MnmGDfFXX0TklALiPcZbCz8Q=",
+        "owner": "peteonrails",
+        "repo": "homebrew-voxtype",
+        "rev": "4f5e8ba6ee24ad0e33809788f5cea8e7c4f1f6e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "peteonrails",
+        "repo": "homebrew-voxtype",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1773693634,
@@ -494,6 +510,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-voxtype": "homebrew-voxtype",
         "mynixpkgs": "mynixpkgs",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",

@@ -45,7 +45,7 @@
         obsidian
         moonlight-qt
         jetbrains-toolbox
-        # mynixpkgs.filen-desktop
+        mynixpkgs.filen-desktop
       ];
     };
 
@@ -56,6 +56,7 @@
   # ----- HOMEBREW PACKAGES, MANAGED BY NIX -----#
   homebrew = {
     taps = [
+      "peteonrails/voxtype"
     ];
 
     casks = [
@@ -64,6 +65,7 @@
       "raycast"
       "ghostty"
       "protonvpn"
+      "voxtype"
 
       # ----- MEDIA ----- #
       "stremio"

@@ -13,6 +13,10 @@ cursor-color = #ed8796
 confirm-close-surface = false
 command = /run/current-system/sw/bin/sm-shell
 
+# Allow clipboard access over ssh
+clipboard-read = allow
+clipboard-write = allow
+
 # KeyBinds
 
 # Tmux tab-switching, Ctrl+Space is \x00, then the number

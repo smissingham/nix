@@ -12,6 +12,9 @@ vim.lsp.config("rust_analyzer", {
         allTargets = true,
         command = "clippy",
       },
+      diagnostics = {
+        disabled = { "inactive-code" },
+      },
     },
   },
 })

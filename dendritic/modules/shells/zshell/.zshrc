@@ -3,8 +3,7 @@
 bindkey -r '^L'
 bindkey -r '^J'
 
-autoload -Uz compinit
-
+autoload -Uz compinit && compinit
 eval "$(atuin init zsh)"
 eval "$(starship init zsh)"
 eval "$(tv init zsh)"
