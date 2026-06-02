@@ -6,10 +6,10 @@ vim.lsp.config("bashls", {
 vim.lsp.enable("bashls")
 
 vim.lsp.config("nushell", {
-  filetypes = {
-    "nu",
-    "justfile"
-  },
+	filetypes = {
+		"nu",
+		"just"
+	},
   cmd = { "nu", "--lsp" },
 })
 vim.lsp.enable("nushell")

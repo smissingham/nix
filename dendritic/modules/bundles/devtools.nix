@@ -51,7 +51,7 @@ in
           # nixpkgs apps
           opencode
         ]
-        ++ pkgs.lib.optionals pkgs.stdenv.isLinux [ busybox ]
+        #++ pkgs.lib.optionals pkgs.stdenv.isLinux [ busybox ]
         ++ (with config.packages; [
           sm-neovim
           sm-nushell

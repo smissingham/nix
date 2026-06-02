@@ -27,11 +27,6 @@
       "enabled": false,
       "type": "local",
       "command": ["bash", "-lc", "cd ~/Employer/workspace-product && akuna mcp"]
-    },
-    "caveman-shrink": {
-      "enabled": false,
-      "type": "local",
-      "command": ["bunx", "-y", "caveman-shrink"]
     }
   },
   "provider": {
@@ -61,6 +56,5 @@
         }
       }
     }
-  },
-  "plugin": ["./plugins/caveman/plugin.js"]
+  }
 }

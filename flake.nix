@@ -2,6 +2,8 @@
   description = "Sean's Multi-System Flake";
 
   inputs = {
+
+    # ------------------------- Core System Flakes ------------------------- #
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-25.11";
     };
@@ -19,6 +21,17 @@
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # ------------------------- Personal Flakes ------------------------- #
+    mynixpkgs = {
+      url = "github:smissingham/nixpkgs/develop";
+    };
+    dendritic = {
+      url = "path:dendritic";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # ------------------------- Configuration Helper Flakes ------------------------- #
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -50,17 +63,13 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+
+    # ------------------------- Custom Software Flakes ------------------------- #
     homebrew-voxtype = {
       url = "github:peteonrails/homebrew-voxtype";
       flake = false;
     };
-    mynixpkgs = {
-      url = "github:smissingham/nixpkgs/develop";
-    };
-    dendritic = {
-      url = "path:dendritic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+
   };
 
   outputs =

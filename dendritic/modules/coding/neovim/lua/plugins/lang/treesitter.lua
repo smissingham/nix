@@ -7,10 +7,19 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
-			ts.setup({
-				highlight = { enable = true },
-				indent = { enable = true },
+			ts.setup()
+
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					local ok = pcall(vim.treesitter.start)
+					if not ok then
+						return
+					end
+
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end,
 			})
+
 			ts.install({
 				-- Vim Related
 				"lua",
@@ -21,10 +30,12 @@ return {
 				-- Text / Publishing
 				"latex",
 				"markdown",
+				"markdown_inline",
 
 				-- Shell / Sysops
 				"nix",
 				"nu",
+				"just",
 				"bash",
 				"toml",
 				"yaml",
@@ -33,9 +44,12 @@ return {
 				"python",
 				"sql",
 				"rust",
+				"java",
+				"groovy",
 
 				-- Web
 				"css",
+				"scss",
 				"html",
 				"html_tags",
 				"json",
