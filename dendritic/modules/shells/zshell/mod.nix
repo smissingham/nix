@@ -37,6 +37,7 @@ in
     {
       packages.${name} = pkgs.writeShellApplication {
         inherit name runtimeInputs;
+        runtimeEnv = shell-common.env;
         text = ''exec ${wrapped}/bin/zsh "$@"'';
       };
     };

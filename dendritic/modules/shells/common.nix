@@ -62,16 +62,21 @@
           fastfetch
         '')
       ];
+
+      env = {
+        TERM = "xterm-256color";
+      };
     in
     {
       packages.${shell} = pkgs.writeShellApplication {
         name = shell;
+        runtimeEnv = env;
         runtimeInputs = [ config.packages.${nushell} ];
         text = ''exec ${config.packages.${nushell}}/bin/${nushell} "$@"'';
       };
 
       _module.args.shell-common = {
-        inherit aliases scripts;
+        inherit aliases env scripts;
       };
     };
 }

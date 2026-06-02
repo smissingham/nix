@@ -16,6 +16,7 @@ in
         [
           # core utilities
           git
+          gcc
           gnutar
           zip
           curl
@@ -51,7 +52,9 @@ in
           # nixpkgs apps
           opencode
         ]
-        #++ pkgs.lib.optionals pkgs.stdenv.isLinux [ busybox ]
+        ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+          #busybox -- causes logger issues on non-nixos linux installs
+        ]
         ++ (with config.packages; [
           sm-neovim
           sm-nushell
