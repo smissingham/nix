@@ -66,13 +66,7 @@ let
     };
   };
 
-  dendritic = "$NIX_CONFIG_HOME/dendritic";
-
   shellAliases = {
-    ds = "sm-shell";
-    dsl = "nix run ${dendritic}#sm-shell";
-    dcl = "nix run ${dendritic}#sm-devcontainer";
-
     ez = "env | fzf | clip";
     ezk = "env | fzf | awk -F= '{print $1}' | clip";
     ezv = "env | fzf | awk -F= '{print $2}' | clip";

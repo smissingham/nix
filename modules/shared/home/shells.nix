@@ -3,6 +3,7 @@
   pkgs,
   config,
   mainUser,
+  dendritic,
   ...
 }:
 let
@@ -34,8 +35,16 @@ in
   };
 
   config = {
+    environment.shells = [ "${dendritic.sm-shell}/bin/sm-shell" ];
+
+    system.activationScripts.extraActivation.text = lib.mkIf pkgs.stdenv.isDarwin (
+      lib.mkAfter ''
+        /usr/bin/dscl . -create /Users/${mainUser.username} UserShell ${dendritic.sm-shell}/bin/sm-shell
+      ''
+    );
+
     users.users.${mainUser.username} = {
-      shell = pkgs.zsh;
+      shell = "${dendritic.sm-shell}/bin/sm-shell";
     };
     home-manager.users.${mainUser.username} =
       {
@@ -55,34 +64,35 @@ in
           with pkgs;
           [
             xclip
+            dendritic.sm-bundle-devtools
           ]
           # Convert script definitions and aliases from other modules into executable bins
           ++ (lib.mapAttrsToList (name: alias: pkgs.writeShellScriptBin name alias) aliasesOptionAttr)
           ++ (lib.mapAttrsToList (name: script: pkgs.writeShellScriptBin name script) scriptsOptionAttr);
 
-        programs.git = {
-          enable = true;
-          settings.user = {
-            name = mainUser.name;
-            email = mainUser.email;
-          };
-        };
+        # programs.git = {
+        #   enable = true;
+        #   settings.user = {
+        #     name = mainUser.name;
+        #     email = mainUser.email;
+        #   };
+        # };
 
-        programs.delta = {
-          enable = true;
-          enableGitIntegration = true;
-          options = {
-            navigate = true;
-            line-numbers = true;
-            dark = true;
-          };
-        };
+        # programs.delta = {
+        #   enable = true;
+        #   enableGitIntegration = true;
+        #   options = {
+        #     navigate = true;
+        #     line-numbers = true;
+        #     dark = true;
+        #   };
+        # };
 
-        programs.zoxide = {
-          enable = true;
-          enableBashIntegration = true;
-          enableZshIntegration = true;
-        };
+        # programs.zoxide = {
+        #   enable = true;
+        #   enableBashIntegration = true;
+        #   enableZshIntegration = true;
+        # };
 
         # programs.direnv = {
         #   enable = true;
@@ -92,7 +102,7 @@ in
         # };
 
         programs.bash = {
-          enable = true;
+          enable = false;
           shellAliases = allShellAliases;
           enableCompletion = true;
           initExtra = ''
@@ -102,7 +112,7 @@ in
           '';
         };
         programs.zsh = {
-          enable = true;
+          enable = false;
           shellAliases = allShellAliases;
           enableCompletion = true;
           syntaxHighlighting.enable = true;

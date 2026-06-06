@@ -7,6 +7,7 @@
 
 let
   cfg = config.mySharedModules.ssh;
+  sopsEnabled = config.mySharedModules.workflow.sops.enable or false;
 
   # Find all SSH public key secrets in sops (pattern: SSH_PUBKEY_*)
   sshPubSecrets = lib.filterAttrs (name: _value: lib.hasPrefix "SSH_PUBKEY_" name) (
@@ -20,7 +21,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.users.${mainUser.username} =
+    home-manager.users.${mainUser.username} = lib.mkIf sopsEnabled (
       { config, lib, ... }:
       let
         # Build a script that concatenates all the secret files with newlines
@@ -46,6 +47,7 @@ in
           ) > $HOME/.ssh/authorized_keys
           chmod 600 $HOME/.ssh/authorized_keys
         '';
-      };
+      }
+    );
   };
 }

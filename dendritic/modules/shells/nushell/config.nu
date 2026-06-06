@@ -1,5 +1,4 @@
 ########## CONFIG ##########
-$env.EDITOR = "sm-neovim"
 $env.config.show_banner = false
 
 # Direnv

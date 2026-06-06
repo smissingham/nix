@@ -88,7 +88,7 @@
         inputs.dendritic.overlays.default
         (_final: prev: {
           mynixpkgs = import inputs.mynixpkgs {
-            #inherit (prev) system;
+            inherit (prev) system;
             config = prev.config;
           };
         })
@@ -126,11 +126,11 @@
         }:
         let
           pkgs = import nixpkgs {
-            #inherit system;
+            inherit system;
             config.allowUnfree = true;
           };
           pkgsUnstable = import nixpkgs-unstable {
-            #inherit system;
+            inherit system;
             config.allowUnfree = true;
           };
           serviceUtils = import ./lib/services.nix {
@@ -158,7 +158,7 @@
               serviceUtils
               ;
 
-            dendritic = inputs.dendritic.packages.${system};
+            dendritic = inputs.dendritic.packages.${pkgs.stdenv.hostPlatform.system};
           };
 
           sharedModules = [
@@ -188,6 +188,8 @@
           platformModules =
             if isDarwin system then
               [
+                inputs.dendritic.darwinModules.aerospace
+                inputs.dendritic.darwinModules.skhd
                 (importDir ./modules/darwin)
                 home-manager.darwinModules.home-manager
                 inputs.nix-homebrew.darwinModules.nix-homebrew

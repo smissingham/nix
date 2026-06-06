@@ -1,3 +1,5 @@
+# Bulk install package for systems, dev shells, and containers that need the
+# shared dev toolset without using sm-shell as their login/runtime entrypoint.
 { ... }:
 let
   name = "sm-bundle-devtools";
@@ -10,65 +12,15 @@ in
       shell-common,
       ...
     }:
-    let
-      packages =
-        with pkgs;
-        [
-          # core utilities
-          git
-          gcc
-          gnutar
-          zip
-          curl
-          stow
-
-          # env
-          direnv
-          nix-direnv
-
-          # sysinfo
-          fastfetch
-          tealdeer
-          btop
-          htop
-          dust
-
-          # parsing
-          jq
-          yq
-          bat
-
-          # browsing
-          zoxide
-          fd
-          ripgrep
-          fzf
-          eza
-          yazi
-
-          # appearance
-          gum
-
-          # nixpkgs apps
-          opencode
-        ]
-        ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-          #busybox -- causes logger issues on non-nixos linux installs
-        ]
-        ++ (with config.packages; [
-          sm-neovim
-          sm-nushell
-          sm-shell
-          sm-tmux
-          sm-television
-          sm-zshell
-        ])
-        ++ shell-common.scripts;
-    in
     {
       packages.${name} = pkgs.symlinkJoin {
         inherit name;
-        paths = packages;
+        paths = [
+          config.packages.sm-shell
+          config.packages.sm-cli-tools
+          config.packages.sm-tmux
+          config.packages.sm-nushell
+        ];
       };
 
       devShells.default = pkgs.mkShell {

@@ -1,5 +1,8 @@
 # Reload Config: Cmd + Shift + ,
 
+# Term session settings
+term = xterm-256color
+
 # Typography
 font-size = 14
 font-family = "JetBrainsMono Nerd Font"
@@ -11,7 +14,8 @@ cursor-color = #ed8796
 
 # Behaviours
 confirm-close-surface = false
-command = /run/current-system/sw/bin/sm-shell
+#command = /run/current-system/sw/bin/sm-shell
+#command = /bin/zsh
 
 # Allow clipboard access over ssh
 clipboard-read = allow

@@ -7,14 +7,11 @@
   networking.hostName = "plutus";
   networking.computerName = "plutus";
 
-  myPrivateModules = {
-    backup.syncthing.enable = true;
-  };
+  # myPrivateModules = {
+  #   backup.syncthing.enable = true;
+  # };
 
   myDarwinModules = {
-    workflow = {
-      aerospace.enable = true;
-    };
     virt.podman = {
       enable = true;
       withGuiTools = false;
@@ -22,11 +19,16 @@
     };
   };
 
+  dendritic.darwin = {
+    aerospace.enable = true;
+    skhd.enable = true;
+  };
+
   mySharedModules = {
     ssh.enable = true;
     browsers.brave.enable = true;
     workflow = {
-      sops.enable = true;
+      sops.enable = false;
       builders = {
         enable = true;
         systems = [
@@ -60,6 +62,8 @@
     ];
 
     casks = [
+      # "codex-app"
+      # "claude"
 
       # ----- WORKFLOW ----- #
       "raycast"

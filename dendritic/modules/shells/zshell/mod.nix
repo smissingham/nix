@@ -1,6 +1,7 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 let
   name = "sm-zshell";
+  shells = config.flake.shells;
 in
 {
   perSystem =
@@ -17,17 +18,43 @@ in
         pkgs.zoxide
         pkgs.zsh-autocomplete
         pkgs.zsh-autosuggestions
-        config.packages.sm-tmux
+        pkgs.zsh-completions
+        pkgs.zsh-fzf-tab
+        pkgs.zsh-syntax-highlighting
+        config.packages.sm-neovim
         config.packages.sm-television
       ];
 
       wrapped = inputs.wrapper-modules.wrappers.zsh.wrap {
         inherit pkgs;
 
+        env = shells.env;
+        prefixVar = [
+          [
+            "PATH"
+            ":"
+            (pkgs.lib.concatStringsSep ":" shells.path)
+          ]
+        ];
         skipGlobalRC = true;
         zdotdir = "$HOME/.config/${name}";
         zshrc = {
-          path = ./.zshrc;
+          content = ''
+            bindkey -r '^L'
+            bindkey -r '^J'
+
+            fpath=(${pkgs.zsh-completions}/share/zsh/site-functions $fpath)
+            autoload -Uz compinit && compinit
+            eval "$(atuin init zsh)"
+            eval "$(starship init zsh)"
+            eval "$(tv init zsh)"
+            eval "$(zoxide init zsh)"
+
+            source ${pkgs.zsh-autosuggestions}/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+            source ${pkgs.zsh-autocomplete}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+            source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+            source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+          '';
         };
 
         zshAliases = shell-common.aliases;
@@ -37,7 +64,7 @@ in
     {
       packages.${name} = pkgs.writeShellApplication {
         inherit name runtimeInputs;
-        runtimeEnv = shell-common.env;
+        runtimeEnv = shells.env;
         text = ''exec ${wrapped}/bin/zsh "$@"'';
       };
     };

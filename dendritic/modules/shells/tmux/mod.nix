@@ -1,5 +1,6 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 let
+  defaults = config.flake.defaults;
   name = "sm-tmux";
 in
 {
@@ -7,6 +8,7 @@ in
     {
       config,
       pkgs,
+      shell-common,
       ...
     }:
     let
@@ -57,7 +59,7 @@ in
         sourceSensible = false;
 
         prefix = "C-Space";
-        shell = "${config.packages.sm-nushell}/bin/sm-nushell";
+        shell = "${config.packages.${defaults.shell}}/bin/${defaults.shell}";
         configAfter = builtins.readFile ./tmux.conf;
 
         plugins = with pkgs.tmuxPlugins; [
@@ -127,7 +129,7 @@ in
     {
       packages.${name} = pkgs.symlinkJoin {
         name = name;
-        paths = [ wrapped ] ++ includedPackages;
+        paths = [ wrapped ] ++ includedPackages ++ shell-common.tmuxRuntimeTools;
       };
     };
 }

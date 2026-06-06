@@ -62,8 +62,6 @@ in
         ];
       };
     };
-    devtools = {
-    };
   };
 
   myNixOSModules = {

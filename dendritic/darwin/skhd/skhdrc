@@ -1,36 +1,4 @@
 
-####################
-# Project Repo: https://github.com/koekeishiya/skhd
-# Reload SKHD: `skhd -r`
-# Test Keys: `skhd -o`
-#
-# Known Special Key Chars:
-# 0x18 = plus/equal
-# 0x1B = minus/underscore 
-# 0x24 = enter
-# 0x2B = comma
-# 0x2C = slash
-# 0x2F = period
-# 0x32 = grave (tilde)
-# 0x37 = CMD (gui)
-# 0x3D = R-CMD (gui)
-# f13  = Printscreen
-#
-# Shortcut Documentation:
-#
-# Window Sizing:
-#   CMD + ALT - +     : Resize larger
-#   CMD + ALT - -     : Resize smaller
-#   CMD + ALT - Enter : Balance equal sizes
-#
-# Window Layout:
-#   CMD + ALT - R     : Reset (flatten workspace tree)
-#   CMD + ALT - M     : Toggle macOS fullscreen
-#   CMD + ALT - ,     : Preset floating 1620p
-#   CMD + ALT - .     : Preset floating 1080p
-#   CMD + ALT - /     : Tiling / toggle
-####################
-
 #################### Application Launch Shortcuts ####################
 # PWA's
 hyper - m    : $BROWSER --app=https://mail.proton.me
@@ -39,18 +7,14 @@ hyper - a    : $BROWSER --app=https://chatgpt.com
 # Native Apps
 hyper - b    : $BROWSER
 hyper - t    : open -na $TERMINAL
-#hyper - s    : open -a Signal
-#hyper - m    : open -a Spotify
-#hyper - o    : open -a Obsidian
 hyper - l    : osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
 
 # TUI's
-hyper - o    : open -na $TERMINAL --args -e opencode && aerospace-pop
-hyper - r    : open -na $TERMINAL --args -e btop && aerospace-pop
-hyper - e    : open -na $TERMINAL --args -e yazi && aerospace-pop
-hyper - p    : open -na $TERMINAL --args -e podman-tui && aerospace-pop
-hyper - n    : open -na $TERMINAL --args -e sesh connect Notes && aerospace-pop
-
+hyper - o    : open -na $TERMINAL --args -e opencode
+hyper - r    : open -na $TERMINAL --args -e btop
+hyper - e    : open -na $TERMINAL --args -e yazi
+hyper - p    : open -na $TERMINAL --args -e podman-tui
+hyper - n    : open -na $TERMINAL --args -e sesh connect Notes
 
 #################### Application Control ####################
 
@@ -61,7 +25,6 @@ f13         : screencapture -i -c # printscreen
 ctrl + shift - h :
 
 # Rebind common CMD shortcuts to CTRL
-#ctrl - o          : skhd -k "cmd - o" # conflicts with a lot of terminal bindings
 ctrl - p          : skhd -k "cmd - p"
 ctrl - f          : skhd -k "cmd - f"
 ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
@@ -84,18 +47,6 @@ ctrl - l [
   "Brave Browser" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Open Location…" of menu "File" of menu bar 1'
 ]
 
-# Tab switching with control
-# ctrl - 1 : skhd -k "cmd - 1"
-# ctrl - 2 : skhd -k "cmd - 2"
-# ctrl - 3 : skhd -k "cmd - 3"
-# ctrl - 4 : skhd -k "cmd - 4"
-# ctrl - 5 : skhd -k "cmd - 5"
-# ctrl - 6 : skhd -k "cmd - 6"
-# ctrl - 7 : skhd -k "cmd - 7"
-# ctrl - 8 : skhd -k "cmd - 8"
-# ctrl - 9 : skhd -k "cmd - 9"
-# ctrl - 0 : skhd -k "cmd - 0"
-
 #################### Window Movement ####################
 
 # Focus Windows
@@ -114,7 +65,7 @@ cmd + shift - l : aerospace move right --boundaries all-monitors-outer-frame
 cmd + shift + ctrl - h : aerospace join-with left
 cmd + shift + ctrl - j : aerospace join-with down
 cmd + shift + ctrl - k : aerospace join-with up
-cmd + shift + ctrl - l : aerospace join-with right 
+cmd + shift + ctrl - l : aerospace join-with right
 
 #################### Window Layout & Sizing ####################
 
@@ -128,13 +79,10 @@ cmd + shift - n    : aerospace flatten-workspace-tree
 cmd + shift - m    : skhd -k "ctrl + cmd - f"
 cmd + shift - 0x2C : aerospace layout floating tiling
 
-# Popup float (cmd + shift - tilde)
-cmd + shift - 0x32 : aerospace-pop
-
 #################### Workspaces ####################
 
 # Cycle through workspaces
-cmd - tab: aerospace focus-monitor --wrap-around next 
+cmd - tab: aerospace focus-monitor --wrap-around next
 
 # Go to Workspace
 cmd - 1: aerospace workspace 1

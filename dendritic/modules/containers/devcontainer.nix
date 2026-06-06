@@ -130,17 +130,11 @@ in
     in
     {
       packages = {
-        default = wrapper;
         ${appName} = wrapper;
         "${appName}-image" = image;
       };
 
       apps = {
-        default = {
-          type = "app";
-          program = "${wrapper}/bin/${appName}";
-        };
-
         ${appName} = {
           type = "app";
           program = "${wrapper}/bin/${appName}";

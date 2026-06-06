@@ -22,21 +22,49 @@
   outputs =
     inputs@{ ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        (inputs.import-tree ./darwin)
         (inputs.import-tree ./modules)
+        (inputs.import-tree ./shared)
       ];
 
-      perSystem =
-        { config, ... }:
-        {
-          overlayAttrs = config.packages;
-        };
+      options.flake.darwinModules = inputs.nixpkgs.lib.mkOption {
+        type = inputs.nixpkgs.lib.types.attrs;
+        default = { };
+        description = "nix-darwin modules exported by Dendritic.";
+      };
+
+      options.flake.defaults = inputs.nixpkgs.lib.mkOption {
+        type = inputs.nixpkgs.lib.types.attrs;
+        default = { };
+        description = "Shared Dendritic default values.";
+      };
+
+      options.flake.paths = inputs.nixpkgs.lib.mkOption {
+        type = inputs.nixpkgs.lib.types.attrs;
+        default = { };
+        description = "Shared Dendritic filesystem paths.";
+      };
+
+      options.flake.shells = inputs.nixpkgs.lib.mkOption {
+        type = inputs.nixpkgs.lib.types.attrs;
+        default = { };
+        description = "Shared Dendritic shell settings.";
+      };
+
+      config = {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ];
+
+        perSystem =
+          { config, ... }:
+          {
+            overlayAttrs = config.packages;
+          };
+      };
     };
 }

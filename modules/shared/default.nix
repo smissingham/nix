@@ -3,7 +3,6 @@
   config,
   mainUser,
   pkgs,
-  dendritic,
   ...
 }:
 {
@@ -15,7 +14,7 @@
   };
 
   environment.variables = {
-    NIX_CONFIG_HOME = mainUser.getNixConfPath { };
+    NIX_CONFIG_HOME = "${(if pkgs.stdenv.isDarwin then "/Users" else "/home")}/${mainUser.username}/Documents/Nix";
     HOSTNAME = config.networking.hostName;
   };
 
@@ -41,6 +40,5 @@
   #----- Applications in System Space -----#
   environment.systemPackages = [
     pkgs.vim
-    dendritic.sm-bundle-devtools
   ];
 }
