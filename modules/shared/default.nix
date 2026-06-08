@@ -14,7 +14,9 @@
   };
 
   environment.variables = {
-    NIX_CONFIG_HOME = "${(if pkgs.stdenv.isDarwin then "/Users" else "/home")}/${mainUser.username}/Documents/Nix";
+    NIX_CONFIG_HOME = "${
+      (if pkgs.stdenv.isDarwin then "/Users" else "/home")
+    }/${mainUser.username}/Documents/Nix";
     HOSTNAME = config.networking.hostName;
   };
 

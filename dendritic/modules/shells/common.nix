@@ -7,7 +7,9 @@ in
   perSystem =
     { config, pkgs, ... }:
     let
-      defaultShell = assert defaults.shell == "sm-zshell" || defaults.shell == "sm-nushell"; defaults.shell;
+      defaultShell =
+        assert defaults.shell == "sm-zshell" || defaults.shell == "sm-nushell";
+        defaults.shell;
 
       aliases = {
         # quick navigation
@@ -17,11 +19,14 @@ in
         ll = "eza -la";
         lt = "eza -lT";
 
+        # hero binds
+        kk = "sesh_browser";
+        kj = "sm-neovim";
+
         # custom wrapper exports
         ds = "sm-shell";
         nu = "sm-nushell";
         zsh = "sm-zshell";
-        dv = "sm-neovim";
         tv = "sm-television";
         tmux = "sm-tmux";
 
@@ -37,7 +42,6 @@ in
         fD = "sm-television downloads";
         fp = "sm-television procs";
         fj = "sm-television journal";
-        fs = "sesh_browser";
         fn = "sm-television nixpkgs";
         fe = "sm-television env";
         ft = "sm-television text";
@@ -88,10 +92,13 @@ in
           # busybox causes logger issues on non-nixos linux installs
         ];
 
-      cliToolPackages = devtools ++ config.scripts ++ [
-        config.packages.sm-neovim
-        config.packages.sm-television
-      ];
+      cliToolPackages =
+        devtools
+        ++ config.scripts
+        ++ [
+          config.packages.sm-neovim
+          config.packages.sm-television
+        ];
 
       tmuxRuntimeTools = [
         config.packages.${defaultShell}

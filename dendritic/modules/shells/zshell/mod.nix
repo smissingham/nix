@@ -19,7 +19,6 @@ in
         pkgs.zsh-autocomplete
         pkgs.zsh-autosuggestions
         pkgs.zsh-completions
-        pkgs.zsh-fzf-tab
         pkgs.zsh-syntax-highlighting
         config.packages.sm-neovim
         config.packages.sm-television
@@ -45,15 +44,17 @@ in
 
             fpath=(${pkgs.zsh-completions}/share/zsh/site-functions $fpath)
             autoload -Uz compinit && compinit
-            eval "$(atuin init zsh)"
-            eval "$(starship init zsh)"
-            eval "$(tv init zsh)"
-            eval "$(zoxide init zsh)"
 
             source ${pkgs.zsh-autosuggestions}/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
             source ${pkgs.zsh-autocomplete}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-            source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
             source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+            eval "$(${pkgs.atuin}/bin/atuin init zsh)"
+            eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+            eval "$(${pkgs.starship}/bin/starship init zsh)"
+            eval "$(${config.packages.sm-television}/bin/tv init zsh)"
+            eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+
           '';
         };
 

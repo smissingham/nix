@@ -8,7 +8,7 @@ font-size = 14
 font-family = "JetBrainsMono Nerd Font"
 
 # Aesthetics
-background-opacity = 0.9
+#background-opacity = 0.95
 theme = Atom One Dark 
 cursor-color = #ed8796
 

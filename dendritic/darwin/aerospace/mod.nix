@@ -47,6 +47,7 @@ in
   flake.darwinModules.aerospace =
     {
       config,
+      mainUser,
       pkgs,
       ...
     }:
@@ -63,15 +64,15 @@ in
         environment.etc."${configEtcPath}/aerospace/aerospace.toml".source =
           "${aerospacePackage}/etc/${configEtcPath}/aerospace/aerospace.toml";
 
+        home-manager.users.${mainUser.username}.xdg.configFile."aerospace/aerospace.toml".source =
+          "${aerospacePackage}/etc/${configEtcPath}/aerospace/aerospace.toml";
+
         launchd.user.agents = {
           aerospace = {
             serviceConfig = {
               ProgramArguments = [
                 "${aerospacePackage}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace"
               ];
-              EnvironmentVariables = {
-                XDG_CONFIG_HOME = paths.config;
-              };
               RunAtLoad = true;
               KeepAlive = true;
               StandardOutPath = "/tmp/aerospace.log";

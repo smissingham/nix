@@ -5,12 +5,13 @@ let
 in
 {
   perSystem =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     let
       # televisionFlake = builtins.getFlake "github:alexpasmantier/television/8db108d853e4d7f0d7c1a9738e2ec117c8ad6bab";
       # television = televisionFlake.packages.${pkgs.system}.default;
       television = pkgs.television;
-      shellPath = if defaults.shell == "sm-nushell" then "${pkgs.nushell}/bin/nu" else "${pkgs.zsh}/bin/zsh";
+      shellPath =
+        if defaults.shell == "sm-nushell" then "${pkgs.nushell}/bin/nu" else "${pkgs.zsh}/bin/zsh";
     in
     {
       packages.${name} = pkgs.symlinkJoin {

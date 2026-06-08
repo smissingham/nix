@@ -62,15 +62,13 @@ in
           serviceConfig = {
             EnvironmentVariables = {
               BROWSER = defaults.browser;
-              PATH = lib.makeBinPath [
-                pkgs.aerospace
-                pkgs.skhd
-              ] + ":/bin:/usr/bin:/sbin:/usr/sbin";
+              PATH =
+                lib.makeBinPath [
+                  pkgs.aerospace
+                  pkgs.skhd
+                ]
+                + ":/bin:/usr/bin:/sbin:/usr/sbin";
               TERMINAL = defaults.terminal;
-              XDG_CACHE_HOME = paths.cache;
-              XDG_CONFIG_HOME = paths.config;
-              XDG_DATA_HOME = paths.data;
-              XDG_STATE_HOME = paths.state;
             };
             ProgramArguments = [
               "${paths.bin}/skhd"

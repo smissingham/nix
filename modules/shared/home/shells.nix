@@ -70,13 +70,13 @@ in
           ++ (lib.mapAttrsToList (name: alias: pkgs.writeShellScriptBin name alias) aliasesOptionAttr)
           ++ (lib.mapAttrsToList (name: script: pkgs.writeShellScriptBin name script) scriptsOptionAttr);
 
-        # programs.git = {
-        #   enable = true;
-        #   settings.user = {
-        #     name = mainUser.name;
-        #     email = mainUser.email;
-        #   };
-        # };
+        programs.git = {
+          # enable = true;
+          settings.user = {
+            name = mainUser.name;
+            email = mainUser.email;
+          };
+        };
 
         # programs.delta = {
         #   enable = true;

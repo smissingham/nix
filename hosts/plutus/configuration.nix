@@ -48,6 +48,7 @@
         moonlight-qt
         jetbrains-toolbox
         mynixpkgs.filen-desktop
+        #bruno
       ];
     };
 
