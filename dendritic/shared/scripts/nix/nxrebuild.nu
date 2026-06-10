@@ -14,10 +14,6 @@ def main [action: string = "build"] {
     return
   }
 
-  if $action == "switch" {
-    ^sudo nixos-rebuild switch --flake $flake
-    return
-  }
-
-  ^nixos-rebuild build --flake $flake
+  # TODO: Work on removing --impure
+  ^sudo nixos-rebuild $action --flake $flake --impure
 }

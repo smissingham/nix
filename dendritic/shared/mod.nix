@@ -27,6 +27,7 @@ in
       };
 
       path = [
+        "/run/wrappers/bin"
         "/run/current-system/sw/bin"
         "/nix/var/nix/profiles/default/bin"
         "/usr/local/bin"

@@ -85,6 +85,11 @@ in
           eza
           yazi
 
+          # Services
+          gh
+          glab
+          jira-cli-go
+
           # Applications
           opencode
         ]

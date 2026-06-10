@@ -5,7 +5,7 @@ hyper - m    : $BROWSER --app=https://mail.proton.me
 hyper - a    : $BROWSER --app=https://chatgpt.com
 
 # Native Apps
-hyper - b    : $BROWSER
+hyper - w    : $BROWSER
 hyper - t    : open -na $TERMINAL
 hyper - l    : osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
 

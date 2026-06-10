@@ -7,15 +7,6 @@
   ...
 }:
 let
-  # onnxruntimePkg = pkgs.onnxruntime.override {
-  #   cudaSupport = true;
-  #   cudaPackages = pkgs.cudaPackages.overrideScope (
-  #     _: _prev: {
-  #       cuda_compat = null;
-  #     }
-  #   );
-  # };
-
   cudaDeps = with pkgs; [
     cudaPackages.cudnn
     cudaPackages.cuda_cudart
@@ -45,13 +36,8 @@ in
   '';
   time.timeZone = "America/Chicago";
 
-  myPrivateModules = {
-    backup.syncthing.enable = true;
-  };
-
   mySharedModules = {
     ssh.enable = true;
-    #browsers.floorp.enable = true;
     workflow = {
       sops.enable = true;
       builders = {
@@ -65,8 +51,6 @@ in
   };
 
   myNixOSModules = {
-    #wm.plasma6.enable = true;
-    #wm.gnome-xserver.enable = true;
     wm.hyprland.enable = true;
     stylix.enable = true;
 
