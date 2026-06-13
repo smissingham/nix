@@ -6,14 +6,25 @@ def main [action: string = "build"] {
     exit 1
   }
 
-  let hostname = (sys host | get hostname)
-  let flake = $"($env.NIX_CONFIG_HOME)#($hostname)"
+  cd $env.NIX_CONFIG_HOME
+  ^nxfmt
 
-  if (sys host | get name) == "Darwin" {
-    ^sudo darwin-rebuild $action --flake $flake
-    return
+  let hostname = (sys host | get hostname)
+  let flake = $".#($hostname)"
+
+  if $action == "switch" {
+    ^cp .git/index .git/index.backup
+    ^git add .
   }
 
-  # TODO: Work on removing --impure
-  ^sudo nixos-rebuild $action --flake $flake --impure
+  if (sys host | get name) == "Darwin" {
+    ^sudo darwin-rebuild $action --flake $flake --impure --show-trace
+  } else {
+    ^sudo nixos-rebuild $action --flake $flake --impure --show-trace
+  }
+
+  if $action == "switch" {
+    ^mv .git/index.backup .git/index
+    return
+  }
 }

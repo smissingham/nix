@@ -3,6 +3,7 @@
   config,
   mainUser,
   pkgs,
+  dendritic,
   ...
 }:
 {
@@ -41,6 +42,7 @@
 
   #----- Applications in System Space -----#
   environment.systemPackages = [
+    dendritic.sm-bundle-devtools
     pkgs.vim
   ];
 }

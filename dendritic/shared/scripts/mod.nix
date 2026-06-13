@@ -34,7 +34,21 @@ in
         buildScript =
           file:
           pkgs.writeScriptBin (scriptBinName file) ''
-            ${builtins.replaceStrings [ "@nushell@" ] [ "${pkgs.nushell}" ] (builtins.readFile file)}
+            ${builtins.replaceStrings
+              [
+                "@deadnix@"
+                "@jq@"
+                "@nixfmt@"
+                "@nushell@"
+              ]
+              [
+                "${pkgs.deadnix}"
+                "${pkgs.jq}"
+                "${pkgs.nixfmt}"
+                "${pkgs.nushell}"
+              ]
+              (builtins.readFile file)
+            }
           '';
 
         systemScriptFiles = builtins.filter (

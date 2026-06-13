@@ -33,6 +33,9 @@ in
     let
       runtimeLinkPath = "${config.users.users.${mainUser.username}.home}/.local/share/podman";
       initScriptName = "podman-init";
+      dockerCompatBin = pkgs.writeShellScriptBin "docker" ''
+        exec ${pkgs.podman}/bin/podman "$@"
+      '';
       initScriptBin = pkgs.writeShellScriptBin initScriptName ''
         ${pkgs.podman}/bin/podman machine inspect podman-machine-default >/dev/null 2>&1 || \
           ${pkgs.podman}/bin/podman machine init
@@ -45,12 +48,6 @@ in
       '';
     in
     lib.mkIf cfg.enable {
-      mySharedModules.home.shells.aliases = lib.mkMerge [
-        (lib.mkIf cfg.dockerCompat {
-          docker = "exec podman \"$@\"";
-        })
-      ];
-
       environment.variables = {
         DOCKER_HOST = "unix://${runtimeLinkPath}/podman-machine-default-api.sock";
         DOCKER_SOCKET = "${runtimeLinkPath}/podman-machine-default-api.sock";
@@ -76,7 +73,10 @@ in
           (lib.mkIf cfg.withGuiTools [ podman-desktop ])
 
           # Docker Compat Packages
-          (lib.mkIf cfg.dockerCompat [ podman-compose ])
+          (lib.mkIf cfg.dockerCompat [
+            dockerCompatBin
+            podman-compose
+          ])
         ];
 
       # Launch podman machine on system start

@@ -32,6 +32,7 @@ in
 
         # shortcuts
         dc = "docker run -it --rm -v ./:/workspace smissingham/devcontainer";
+        nxsh = "nix-shell -I nixpkgs=channel:nixos-unstable -p";
         oc = "opencode --port";
 
         # cli favourites

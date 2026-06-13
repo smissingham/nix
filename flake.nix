@@ -44,10 +44,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };

@@ -25,7 +25,6 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         (inputs.import-tree ./darwin)
-        (inputs.import-tree ./modules)
         (inputs.import-tree ./shared)
       ];
 
