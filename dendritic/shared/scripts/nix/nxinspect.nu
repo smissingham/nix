@@ -31,6 +31,46 @@ def bytes-to-size [bytes: filesize] {
   }
 }
 
+def linked-libs-darwin [program_path: string] {
+  let result = (^otool -L $program_path | complete)
+  if $result.exit_code != 0 {
+    return []
+  }
+
+  $result.stdout
+    | lines
+    | skip 1
+    | each { |line| $line | str trim | split row " " | first }
+    | where { |lib| ($lib | str trim) != "" }
+}
+
+def linked-libs-linux [program_path: string] {
+  let result = (^ldd $program_path | complete)
+  if $result.exit_code != 0 {
+    return []
+  }
+
+  $result.stdout
+    | lines
+    | each { |line|
+        let trimmed = ($line | str trim)
+        if ($trimmed | str contains "=>") {
+          $trimmed | split row "=>" | get 1 | str trim | split row " " | first
+        } else {
+          $trimmed | split row " " | first
+        }
+      }
+    | where { |lib| ($lib | str starts-with "/") }
+}
+
+def linked-libs [program_path: string] {
+  match (^uname | str downcase | str trim) {
+    "darwin" => { linked-libs-darwin $program_path }
+    "linux" => { linked-libs-linux $program_path }
+    _ => []
+  }
+}
+
 def main [app?: string] {
   if ($app == null) {
     print "usage: nxinspect <program>"
@@ -62,11 +102,7 @@ def main [app?: string] {
   let dependency_count = (($deps | length) - 1)
 
   let binary_size = (bytes-to-size (ls $program_path | first | get size))
-  let linked_libs = (^otool -L $program_path
-    | lines
-    | skip 1
-    | each { |line| $line | str trim | split row " " | first }
-    | where { |lib| ($lib | str trim) != "" })
+  let linked_libs = (linked-libs $program_path)
 
   print $"Program: ($app)"
   print $"Binary size: ($binary_size)"

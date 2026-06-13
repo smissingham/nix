@@ -67,12 +67,9 @@ in
         pkgs.ty
       ];
 
-      # packages needed only within the nvim process
-      extraPackages = [ ];
-
       # the wrapped neovim app runtime
       wrapped = inputs.wrapper-modules.wrappers.neovim.wrap {
-        inherit pkgs extraPackages;
+        inherit pkgs;
 
         env = {
           NVIM_APPNAME = name;

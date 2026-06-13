@@ -59,7 +59,7 @@ in
         };
 
         zshAliases = shell-common.aliases;
-        extraPackages = runtimeInputs;
+        runtimePkgs = runtimeInputs;
       };
     in
     {

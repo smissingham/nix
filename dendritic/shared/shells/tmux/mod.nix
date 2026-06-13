@@ -7,16 +7,16 @@ in
   perSystem =
     {
       config,
+      pkgs-stable,
       pkgs,
       shell-common,
       ...
     }:
     let
-
       includedPackages = [
-        pkgs.gitmux
-        pkgs.sesh
-        (pkgs.writeShellScriptBin "sesh_browser" ''
+        pkgs-stable.gitmux
+        pkgs-stable.sesh
+        (pkgs-stable.writeShellScriptBin "sesh_browser" ''
           sesh connect "$(
             sesh list --icons | fzf-tmux -p 80%,70% \
               --preview-window 'right:70%' \
@@ -34,7 +34,7 @@ in
         '')
       ];
 
-      gitmuxConfig = pkgs.writeText "gitmux.conf" ''
+      gitmuxConfig = pkgs-stable.writeText "gitmux.conf" ''
         tmux:
           styles:
             clear: "#[fg=#{@thm_fg}]"
@@ -53,7 +53,7 @@ in
       '';
 
       wrapped = inputs.wrapper-modules.wrappers.tmux.wrap {
-        inherit pkgs;
+        pkgs = pkgs-stable;
         aliases = [ name ];
 
         sourceSensible = false;
@@ -62,7 +62,7 @@ in
         shell = "${config.packages.${defaults.shell}}/bin/${defaults.shell}";
         configAfter = builtins.readFile ./tmux.conf;
 
-        plugins = with pkgs.tmuxPlugins; [
+        plugins = with pkgs-stable.tmuxPlugins; [
           better-mouse-mode
           {
             plugin = vim-tmux-navigator;

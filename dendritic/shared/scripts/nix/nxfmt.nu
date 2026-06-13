@@ -5,6 +5,11 @@ def nix-files [] {
 }
 
 def main [] {
-  nix-files | each { |file| ^@deadnix@/bin/deadnix -e -f $file }
-  nix-files | each { |file| ^@nixfmt@/bin/nixfmt $file }
+  for file in (nix-files) {
+    ^@deadnix@/bin/deadnix -e -f $file
+  }
+
+  for file in (nix-files) {
+    ^@nixfmt@/bin/nixfmt $file
+  }
 }

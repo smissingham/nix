@@ -63,6 +63,7 @@ in
           stow
 
           # Environment helpers
+          nh
           direnv
           nix-direnv
 

@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -60,8 +62,12 @@
         ];
 
         perSystem =
-          { config, ... }:
+          { config, system, ... }:
           {
+            _module.args.pkgs-stable = import inputs.nixpkgs-stable {
+              inherit system;
+            };
+
             overlayAttrs = config.packages;
           };
       };
