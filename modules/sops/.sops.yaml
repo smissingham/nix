@@ -1,0 +1,19 @@
+keys:
+  - hosts:
+      - &plutus_ssh age1393u0umeu6w7m2dn5vqphppuz4mfk2u8zyevg0e7qevv4t335gvqmmqqk7
+      - &coeus_ssh age1ucy00583ty8yae7sfvewfzu7hls6re6m23xthzqg2d6vl7875s9qc6evf8
+  - yubikeys:
+      - &yb_5c_kyr age1yubikey1qvmhtajxuw4y9hu6u3wyt3hrk79rfnhdtr9ww33lm232xcljxu372qxxap0
+      - &yb_5c_nfc age1yubikey1q0xuf4a3ncnm2d2ph5kk4cvjp7kh7fc9p5eelkh0g492y4m3ajl45j5r5pg
+      - &yb_5c_bk1 age1yubikey1qg83y73mgna2636eqjwhwu0f7ty4hxcrzw9j8czhtnc05kh27g9ekgm5ss0
+      - &yb_5c_bk2 age1yubikey1qdfafv8vm4rjae6c8cy7n4yh2wyaygmahc8y5k996zjacxt4z02hj6h8z3t
+creation_rules:
+  - path_regex: .*
+    key_groups:
+      - age:
+          - *plutus_ssh
+          - *coeus_ssh
+          - *yb_5c_kyr
+          - *yb_5c_nfc
+          - *yb_5c_bk1
+          - *yb_5c_bk2

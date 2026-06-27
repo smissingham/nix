@@ -1,0 +1,60 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "formatter": true,
+  "lsp": true,
+  "mcp": {
+    "jina": {
+      "enabled": false,
+      "type": "remote",
+      "url": "https://mcp.jina.ai/v1",
+      "headers": {
+        "Authorization": "Bearer {env:JINA_API_KEY}"
+      }
+    },
+    "context7": {
+      "enabled": false,
+      "type": "local",
+      "command": ["bunx", "-y", "@upstash/context7-mcp"],
+      "environment": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    }
+  },
+  "plugin": ["./plugins/caveman/plugin.js"],
+  "permission": {
+    "read": {
+      "**/.env*": "deny"
+    },
+    "bash": {
+      "*env*": "deny",
+      "*": "ask",
+      "git commit": "ask",
+      "pwd": "allow",
+      "ls": "allow",
+      "ls *": "allow",
+      "fd": "allow",
+      "fd *": "allow",
+      "rg --files*": "allow",
+      "rg -l *": "allow",
+      "rg --files-with-matches *": "allow",
+      "git show*": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git ls-files*": "allow",
+      "nxrebuild": "allow",
+      "nix flake*": "allow",
+      "nix eval*": "allow",
+      "nix fmt*": "allow",
+      "nxfmt": "allow"
+    },
+    "external_directory": {
+      "*": "ask",
+      "~/.cache/**": "allow",
+      "~/.cargo/**": "allow",
+      "/tmp/**": "allow",
+      "/nix/store/**": "allow"
+    }
+  }
+}

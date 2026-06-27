@@ -1,0 +1,35 @@
+# Reload Config: Cmd + Shift + ,
+
+# Term session settings
+term = xterm-256color
+
+# Typography
+font-size = 14
+font-family = "JetBrainsMono Nerd Font"
+
+# Aesthetics
+#background-opacity = 0.95
+theme = Atom One Dark 
+cursor-color = #ed8796
+
+# Behaviours
+confirm-close-surface = false
+#command = /run/current-system/sw/bin/sm-shell
+#command = /bin/zsh
+
+# Allow clipboard access over ssh
+clipboard-read = allow
+clipboard-write = allow
+
+# KeyBinds
+
+# Tmux tab-switching, Ctrl+Space is \x00, then the number
+keybind = ctrl+shift+1=unbind
+keybind = ctrl+shift+2=unbind
+keybind = ctrl+shift+3=unbind
+keybind = ctrl+shift+4=unbind
+keybind = ctrl+shift+5=unbind
+keybind = ctrl+shift+6=unbind
+keybind = ctrl+shift+7=unbind
+keybind = ctrl+shift+8=unbind
+keybind = ctrl+shift+9=unbind

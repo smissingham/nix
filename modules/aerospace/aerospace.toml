@@ -1,0 +1,52 @@
+
+start-at-login = false
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+automatically-unhide-macos-hidden-apps = false
+
+# Mouse lazily follows any focus (window or workspace)
+on-focus-changed = ['move-mouse window-lazy-center']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Finder'
+run = 'layout floating'
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 4
+inner.vertical = 4
+outer.left = 4
+outer.bottom = 4
+outer.top = 4
+outer.right = 4
+
+[mode.main.binding]
+alt-shift-semicolon = 'mode service'
+
+[workspace-to-monitor-force-assignment]
+1 = 'built-in'
+2 = 'built-in'
+3 = 'built-in'
+4 = 'built-in'
+5 = ['secondary', 1]
+6 = ['secondary', 1]
+7 = ['secondary', 1]
+8 = ['secondary', 3]
+9 = ['secondary', 3]
+10 = ['secondary', 3]
+
+# ----- Service Mode -----#
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']

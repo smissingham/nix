@@ -1,0 +1,10 @@
+[metadata]
+name = "nixpkgs"
+requirements = ["nix-search-tv"]
+description = "Search nixpkgs"
+
+[source]
+command = "nix-search-tv print"
+
+[preview]
+command = "nix-search-tv preview {}"

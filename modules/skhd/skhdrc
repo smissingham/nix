@@ -1,0 +1,109 @@
+
+#################### Application Launch Shortcuts ####################
+# PWA's
+hyper - m    : $BROWSER --app=https://mail.proton.me
+hyper - a    : $BROWSER --app=https://chatgpt.com
+
+# Native Apps
+hyper - w    : $BROWSER
+hyper - t    : $TERMINAL
+hyper - l    : osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
+
+# TUI's
+hyper - o    : $TERMINAL -e opencode
+hyper - r    : $TERMINAL -e btop
+hyper - e    : $TERMINAL -e yazi
+hyper - p    : $TERMINAL -e podman-tui
+hyper - n    : $TERMINAL -e sesh connect Notes
+
+#################### Application Control ####################
+
+# General rebinds
+f13         : screencapture -i -c # printscreen
+
+# Unbind annoying defaults
+ctrl + shift - h :
+
+# Rebind common CMD shortcuts to CTRL
+ctrl - p          : skhd -k "cmd - p"
+ctrl - f          : skhd -k "cmd - f"
+ctrl - 0x18       : skhd -k "cmd - 0x18" # Plus
+ctrl - 0x1B       : skhd -k "cmd - 0x1B" # Minus
+
+# Common global SUPER mappings
+cmd - q [
+  "Brave Origin" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Window" of menu "File" of menu bar 1'
+]
+ctrl - t [
+  "Brave Origin" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "New Tab" of menu "File" of menu bar 1'
+]
+ctrl + shift - t [
+  "Brave Origin" : skhd -k "cmd + shift - t"
+]
+ctrl - w [
+  "Brave Origin" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Close Tab" of menu "File" of menu bar 1'
+]
+ctrl - l [
+  "Brave Origin" : osascript -e 'tell application "System Events" to tell (first application process whose frontmost is true) to click menu item "Open Location…" of menu "File" of menu bar 1'
+]
+
+#################### Window Movement ####################
+
+# Focus Windows
+cmd - k : aerospace focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - j : aerospace focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - h : aerospace focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+cmd - l : aerospace focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors
+
+# Move Windows
+cmd + shift - h : aerospace move left --boundaries all-monitors-outer-frame
+cmd + shift - j : aerospace move down --boundaries all-monitors-outer-frame
+cmd + shift - k : aerospace move up --boundaries all-monitors-outer-frame
+cmd + shift - l : aerospace move right --boundaries all-monitors-outer-frame
+
+# Join Windows
+cmd + shift + ctrl - h : aerospace join-with left
+cmd + shift + ctrl - j : aerospace join-with down
+cmd + shift + ctrl - k : aerospace join-with up
+cmd + shift + ctrl - l : aerospace join-with right
+
+#################### Window Layout & Sizing ####################
+
+# Window Sizing
+cmd + shift - 0x18 : aerospace resize smart +240
+cmd + shift - 0x1B : aerospace resize smart -240
+cmd + shift - 0x24 : aerospace balance-sizes
+
+# Layout Management
+cmd + shift - n    : aerospace flatten-workspace-tree
+cmd + shift - m    : skhd -k "ctrl + cmd - f"
+cmd + shift - 0x2C : aerospace layout floating tiling
+
+#################### Workspaces ####################
+
+# Cycle through workspaces
+cmd - tab: aerospace focus-monitor --wrap-around next
+
+# Go to Workspace
+cmd - 1: aerospace workspace 1
+cmd - 2: aerospace workspace 2
+cmd - 3: aerospace workspace 3
+cmd - 4: aerospace workspace 4
+cmd - 5: aerospace workspace 5
+cmd - 6: aerospace workspace 6
+cmd - 7: aerospace workspace 7
+cmd - 8: aerospace workspace 8
+cmd - 9: aerospace workspace 9
+cmd - 0: aerospace workspace 10
+
+# Move to Workspace
+cmd + shift - 1: aerospace move-node-to-workspace 1
+cmd + shift - 2: aerospace move-node-to-workspace 2
+cmd + shift - 3: aerospace move-node-to-workspace 3
+cmd + shift - 4: aerospace move-node-to-workspace 4
+cmd + shift - 5: aerospace move-node-to-workspace 5
+cmd + shift - 6: aerospace move-node-to-workspace 6
+cmd + shift - 7: aerospace move-node-to-workspace 7
+cmd + shift - 8: aerospace move-node-to-workspace 8
+cmd + shift - 9: aerospace move-node-to-workspace 9
+cmd + shift - 0: aerospace move-node-to-workspace 10
