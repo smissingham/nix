@@ -7,19 +7,19 @@ Portable outputs usable directly from the flake on any system with Nix CLI.
 Enter the default dev shell:
 
 ```sh
-nix develop --refresh github:smissingham/nix
+nix develop github:smissingham/nix
 ```
 
 Show available packages:
 
 ```sh
-nix flake show --refresh github:smissingham/nix#packages
+nix flake show github:smissingham/nix#packages
 ```
 
 Install full devtools bundle:
 
 ```sh
-nix profile add --refresh github:smissingham/nix#sm-devtools
+nix profile add github:smissingham/nix#sm-devtools
 ```
 
 ### Enable Nix "experimental-features"

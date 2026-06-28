@@ -1,17 +1,15 @@
 {
-  inputs,
   lib,
   ...
 }:
 let
-  hyprland = inputs.wrapper-modules.lib.wrapModule ../../wrappers/hyprland.nix;
-
   luaString = builtins.toJSON;
 in
 {
   modules.nixos.hyprland =
     {
       config,
+      inputs,
       pkgs,
       ...
     }:
@@ -67,7 +65,7 @@ in
         programs.hyprland = {
           enable = true;
           withUWSM = true;
-          package = hyprland.wrap {
+          package = inputs.wrapper-modules.wrappers.hyprland.wrap {
             inherit pkgs;
             launchShortcut = "de";
             nvidia = cfg.nvidia;

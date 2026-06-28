@@ -1,5 +1,26 @@
 { lib, ... }:
 let
+  smissingham = rec {
+    username = "smissingham";
+    name = "Sean Missingham";
+    nixConfigHome = paths: "${paths.home}/Documents/Nix";
+
+    apps = {
+      browser = "brave-origin";
+      editor = "sm-neovim";
+      terminal = "sm-alacritty";
+    };
+
+    shell = {
+      package = "sm-zsh";
+    };
+
+    env = {
+      TERM = "xterm-256color";
+      BROWSER = apps.browser;
+      EDITOR = apps.editor;
+    };
+  };
 
   # ---------- Simple function alt to Home Manager, provides basic user env/paths etc. ----------#
   mkProfile =
@@ -22,7 +43,7 @@ let
         user = user // rec {
           shell = user.shell // {
             package = pkgs.${user.shell.package};
-            path = "${shell.package}/bin/${user.shell.binary}";
+            path = "${shell.package}${shell.package.shellPath}";
           };
 
           paths = rec {
@@ -38,6 +59,7 @@ let
             XDG_CONFIG_HOME = paths.config;
             XDG_DATA_HOME = paths.data;
             XDG_STATE_HOME = paths.state;
+            NIX_CONFIG_HOME = user.nixConfigHome paths;
           }
           // (user.env or { });
         };
@@ -68,27 +90,14 @@ in
     description = "Reusable user profile modules exported by Dendritic.";
   };
 
+  options.profileUsers = lib.mkOption {
+    type = lib.types.attrs;
+    default = { };
+    description = "Raw user profile data shared by profile modules and system adapters.";
+  };
+
   config = {
-    profiles.smissingham = mkProfile rec {
-      username = "smissingham";
-      name = "Sean Missingham";
-
-      apps = {
-        browser = "brave-origin";
-        editor = "sm-neovim";
-        terminal = "sm-alacritty";
-      };
-
-      shell = {
-        package = "sm-zsh";
-        binary = "sm-zsh";
-      };
-
-      env = {
-        TERM = "xterm-256color";
-        BROWSER = apps.browser;
-        EDITOR = apps.editor;
-      };
-    };
+    profileUsers.smissingham = smissingham;
+    profiles.smissingham = mkProfile smissingham;
   };
 }

@@ -19,7 +19,7 @@ in
         aliases = [ pname ];
 
         settings = {
-          env.TERM = "xterm-256color";
+          # env.TERM = "xterm-256color";
 
           window.decorations = "Buttonless";
 

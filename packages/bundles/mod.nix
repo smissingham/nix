@@ -24,6 +24,7 @@ in
           pkgs.zip
           pkgs.lsof
           pkgs.stow
+          pkgs.zstd
 
           # Parsing and display
           pkgs.jq
@@ -58,6 +59,7 @@ in
         cli-dev = [
           # coding assistants
           pkgs.opencode
+          #pkgs.claude-code
 
           # Build and version control
           pkgs.gcc
@@ -121,23 +123,13 @@ in
       all = [
         config.packages.sm-zsh
         config.packages.sm-tmux
+        config.packages.sm-neovim
         config.packages.sm-television
         config.packages.sm-scripts
       ]
       ++ bundles.cli-core
       ++ bundles.cli-dev;
 
-      # nix develop always starts through Nix's shell; hand off interactive sessions to sm-zsh.
-      devShell = pkgs.mkShell {
-        packages = [ config.packages.${pname} ];
-        SHELL = "${config.packages.sm-zsh}/bin/sm-zsh";
-        shellHook = ''
-          if [ -z "''${SM_ZSH_DEV_SHELL:-}" ] && [ -t 0 ]; then
-            export SM_ZSH_DEV_SHELL=1
-            exec ${config.packages.sm-zsh}/bin/sm-zsh
-          fi
-        '';
-      };
     in
     {
       packages.${pname} = pkgs.symlinkJoin {
@@ -145,8 +137,6 @@ in
         paths = all;
         meta.description = "Sean's development tool bundle";
       };
-
-      devShells.default = devShell;
 
       _module.args.sm-bundles = bundles;
     };

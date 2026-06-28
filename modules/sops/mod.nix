@@ -1,11 +1,9 @@
-{ inputs, ... }:
-let
-  sops = inputs.wrapper-modules.lib.wrapModule ../../wrappers/sops.nix;
-in
+{ ... }:
 {
   modules.shared.sops =
     {
       config,
+      inputs,
       lib,
       pkgs,
       ...
@@ -18,7 +16,7 @@ in
       options.sops.enable = lib.mkEnableOption "SOPS command-line tools";
 
       config.environment.systemPackages = lib.mkIf cfg.enable [
-        (sops.wrap {
+        (inputs.wrapper-modules.wrappers.sops.wrap {
           inherit pkgs;
           aliases = [ "sm-sops" ];
           runtimePkgs = [ pkgs.age-plugin-yubikey ];

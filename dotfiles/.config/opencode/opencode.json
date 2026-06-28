@@ -3,6 +3,8 @@
   "autoupdate": false,
   "formatter": true,
   "lsp": true,
+  "instructions": ["README.md"],
+  "plugin": ["@dietrichgebert/ponytail"],
   "mcp": {
     "jina": {
       "enabled": false,
@@ -21,7 +23,6 @@
       }
     }
   },
-  "plugin": ["./plugins/caveman/plugin.js"],
   "permission": {
     "read": {
       "**/.env*": "deny"
@@ -43,11 +44,12 @@
       "git diff*": "allow",
       "git log*": "allow",
       "git ls-files*": "allow",
-      "nxrebuild": "allow",
-      "nix flake*": "allow",
+      "nix build*": "allow",
       "nix eval*": "allow",
-      "nix fmt*": "allow",
-      "nxfmt": "allow"
+      "nix flake*": "allow",
+      "nixfmt*": "allow",
+      "nxfmt": "allow",
+      "nxrebuild": "allow"
     },
     "external_directory": {
       "*": "ask",

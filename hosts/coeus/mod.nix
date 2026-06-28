@@ -16,8 +16,8 @@ in
         imports = [
           flake.config.profiles.smissingham
           flake.config.hosts.shared
-          flake.config.modules.shared.appBundles
-          flake.config.modules.shared.nixbuilders
+          flake.config.modules.shared.appbundles
+          # flake.config.modules.shared.nixbuilders
           flake.config.modules.shared.sops
           flake.config.modules.nixos.hyprland
           flake.config.modules.nixos.noctalia
@@ -34,29 +34,31 @@ in
           pkgs.nvitop
         ];
 
-        #---------- APPLICATIONS ----------#
-        appBundles = {
+        #---------- BUNDLES ----------#
+        appbundles = {
           comms.enable = true;
           development.enable = true;
           entertainment.enable = true;
           productivity.enable = true;
         };
 
-        #---------- FEATURES ----------#
+        #---------- APPLICATIONS ----------#
         podman.enable = true;
-        nixbuilders = {
-          enable = true;
-          systems = [
-            "x86_64-linux"
-            "aarch64-linux"
-          ];
-        };
         sops.enable = true;
-        syncthing.enable = true;
         ssh.enable = true;
         steam.enable = true;
         sunshine.enable = true;
+        syncthing.enable = true;
         tailscale.enable = true;
+
+        #---------- FEATURES ----------#
+        # nixbuilders = {
+        #   enable = true;
+        #   systems = [
+        #     "x86_64-linux"
+        #     "aarch64-linux"
+        #   ];
+        # };
 
         noctalia = {
           enable = true;

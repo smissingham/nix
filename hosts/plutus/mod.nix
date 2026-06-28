@@ -8,8 +8,8 @@ flake@{ ... }:
         imports = [
           flake.config.profiles.smissingham
           flake.config.hosts.shared
-          flake.config.modules.shared.appBundles
-          flake.config.modules.darwin.appBundlesHomebrew
+          flake.config.modules.shared.appbundles
+          flake.config.modules.darwin.appbundlesHomebrew
           flake.config.modules.shared.nixbuilders
           flake.config.modules.shared.sops
           flake.config.modules.darwin.aerospace
@@ -21,28 +21,31 @@ flake@{ ... }:
         ];
 
         #---------- BUNDLES ----------#
-        appBundles = {
+        appbundles = {
           comms.enable = true;
           development.enable = true;
           entertainment.enable = true;
           productivity.enable = true;
         };
 
+        #---------- APPLICATIONS ----------#
+        podman.enable = true;
+        sops.enable = true;
+        ssh.enable = true;
+        tailscale.enable = true;
+
         #---------- FEATURES ----------#
+        skhd.enable = true;
         aerospace.enable = true;
         homebrewSetup.enable = true;
         nixbuilders = {
           enable = true;
           systems = [
+            "aarch64-linux"
             "aarch64-darwin"
             "x86_64-darwin"
           ];
         };
-        podman.enable = true;
-        skhd.enable = true;
-        sops.enable = true;
-        ssh.enable = true;
-        tailscale.enable = true;
 
         #---------- HOST IDENTITY ----------#
         networking = {

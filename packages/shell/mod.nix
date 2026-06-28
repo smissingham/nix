@@ -13,6 +13,8 @@ in
       aliases = {
         # quick navigation
         q = "exit";
+        qq = "sudo shutdown -h now";
+        qr = "sudo reboot";
         cl = "clear";
         la = "ls -la";
         ll = "eza -la";
@@ -27,10 +29,11 @@ in
         # custom wrapper overrides
         tv = "sm-television";
         tmux = "sm-tmux";
+        vm = "nix run $NIX_CONFIG_HOME#vm-dev";
 
         # television channels
         ff = "sm-television files";
-        fD = "sm-television downloads";
+        fD = "sm-television dirs";
         fp = "sm-television procs";
         fj = "sm-television journal";
         fn = "sm-television nixpkgs";
@@ -99,7 +102,19 @@ in
         name = pname;
         inherit runtimeInputs;
         text = ''exec ${wrapped}/bin/zsh "$@"'';
+        passthru.shellPath = "/bin/${pname}";
         meta.description = "Sean's wrapped zsh shell";
+      };
+
+      devShells.default = pkgs.mkShell {
+        packages = [ config.packages.sm-devtools ];
+        SHELL = "${config.packages.${pname}}/bin/${pname}";
+        shellHook = ''
+          if [ -z "''${SM_DEV_SHELL:-}" ] && [ -t 0 ]; then
+            export SM_DEV_SHELL=1
+            exec ${config.packages.${pname}}/bin/${pname}
+          fi
+        '';
       };
 
     };

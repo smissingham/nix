@@ -3,6 +3,17 @@
   lib,
   ...
 }:
+let
+  isDarwin = system: builtins.match ".*-darwin" system != null;
+
+  hostModules =
+    predicate:
+    lib.mapAttrs (_: host: host.module) (
+      lib.filterAttrs (
+        _: host: builtins.isAttrs host && host ? system && host ? module && predicate host.system
+      ) config.hosts
+    );
+in
 {
   options.hosts = lib.mkOption {
     type = lib.types.attrs;
@@ -12,8 +23,8 @@
 
   config = {
     flake = {
-      nixosModules.coeus = config.hosts.coeus.module;
-      darwinModules.plutus = config.hosts.plutus.module;
+      nixosModules = hostModules (system: !isDarwin system);
+      darwinModules = hostModules isDarwin;
     };
 
     hosts.shared =
@@ -31,13 +42,13 @@
             allowUnfreePredicate = _: true;
           };
 
+          environment.enableAllTerminfo = true;
           environment.variables = {
-            NIX_CONFIG_HOME = "${config.user.paths.home}/Documents/Nix";
             HOSTNAME = config.networking.hostName;
           };
 
           nix = {
-            optimise.automatic = true;
+            optimise.automatic = lib.mkDefault true;
             settings.experimental-features = [
               "nix-command"
               "flakes"

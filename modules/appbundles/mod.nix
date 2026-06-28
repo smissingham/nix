@@ -1,13 +1,13 @@
 flake@{ inputs, ... }:
 {
-  modules.shared.appBundles =
+  modules.shared.appbundles =
     module@{
       lib,
       pkgs,
       ...
     }:
     let
-      cfg = module.config.appBundles;
+      cfg = module.config.appbundles;
       inherit (lib) mkIf optionals;
 
       mypkgs = inputs.mypkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
@@ -20,7 +20,6 @@ flake@{ inputs, ... }:
 
         development = [
           pkgs.sm-devtools
-          pkgs.sm-neovim
         ];
 
         linuxDevelopment = [ pkgs.jetbrains.idea-oss ];
@@ -46,7 +45,7 @@ flake@{ inputs, ... }:
         flake.config.modules.shared.spacedrive
       ];
 
-      options.appBundles = {
+      options.appbundles = {
         comms.enable = lib.mkEnableOption "communications app bundle";
         development.enable = lib.mkEnableOption "development app bundle";
         productivity.enable = lib.mkEnableOption "productivity app bundle";
@@ -72,10 +71,10 @@ flake@{ inputs, ... }:
       ];
     };
 
-  modules.darwin.appBundlesHomebrew =
+  modules.darwin.appbundlesHomebrew =
     { config, lib, ... }:
     let
-      cfg = config.appBundles;
+      cfg = config.appbundles;
 
       casks = {
         productivity = [

@@ -11,6 +11,13 @@ in
       ...
     }:
     let
+      shell = config.packages.sm-zsh;
+
+      runtimeTools = sm-bundles.cli-core ++ [
+        shell
+        config.packages.sm-television
+      ];
+
       includedPackages = [
         pkgs.gitmux
         pkgs.sesh
@@ -30,11 +37,6 @@ in
               --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
           )"
         '')
-      ];
-
-      runtimeTools = sm-bundles.cli-core ++ [
-        config.packages.sm-zsh
-        config.packages.sm-television
       ];
 
       gitmuxConfig = pkgs.writeText "gitmux.conf" ''
@@ -62,7 +64,7 @@ in
         sourceSensible = false;
 
         prefix = "C-Space";
-        shell = "${config.packages.sm-zsh}/bin/sm-zsh";
+        shell = "${shell}${shell.shellPath}";
         configAfter = builtins.readFile ./tmux.conf;
 
         plugins = [
