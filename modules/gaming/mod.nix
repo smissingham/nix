@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  modules.nixos.steam =
+  modules.nixos.gaming =
     { config, pkgs, ... }:
     let
       cfg = config.steam;
@@ -9,23 +9,20 @@
       options.steam.enable = lib.mkEnableOption "Steam gaming setup";
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [
-          pkgs.protonup-ng
-          pkgs.gamescope
-        ];
 
         programs = {
+          gamemode.enable = true;
           steam = {
             enable = true;
             remotePlay.openFirewall = true;
-            extest.enable = true;
             extraCompatPackages = [ pkgs.proton-ge-bin ];
           };
-
-          gamemode.enable = true;
         };
 
         hardware.xone.enable = true;
+        hardware.graphics.enable = true;
+        hardware.graphics.enable32Bit = true;
+
       };
     };
 }

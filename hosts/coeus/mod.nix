@@ -23,7 +23,7 @@ in
           flake.config.modules.nixos.noctalia
           flake.config.modules.nixos.podman
           flake.config.modules.nixos.ssh
-          flake.config.modules.nixos.steam
+          flake.config.modules.nixos.gaming
           flake.config.modules.nixos.syncthing
           flake.config.modules.nixos.sunshine
           flake.config.modules.nixos.tailscale
