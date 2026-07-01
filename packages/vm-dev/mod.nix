@@ -4,6 +4,10 @@ let
 
   dotfiles = ../../dotfiles;
 
+  mutableDotfileApps = [
+    "opencode"
+  ];
+
   microVmsDataPath = "$HOME/.local/share/microvms";
 
   guestSystemFor = system: lib.replaceStrings [ "darwin" ] [ "linux" ] system;
@@ -15,7 +19,7 @@ let
       hypervisor,
       vmHostPackages,
     }:
-    { config, pkgs, ... }:
+    { config, lib, ... }:
     {
       imports = [
         flake.config.profiles.smissingham
@@ -60,6 +64,7 @@ let
       # ---------- USER SETTINGS ----------#
       users.users.${config.user.username} = {
         isNormalUser = true;
+        group = "users";
         hashedPassword = "!";
         extraGroups = [ "wheel" ];
       };
@@ -92,19 +97,39 @@ let
         "d ${config.user.paths.home} 0700 ${config.user.username} users -"
         "d ${config.user.paths.config} - ${config.user.username} users -"
         "d ${config.user.paths.home}/.local 0700 ${config.user.username} users -"
+        "d ${config.user.paths.data} - ${config.user.username} users -"
+        "d ${config.user.paths.state} - ${config.user.username} users -"
       ];
 
-      system.activationScripts.dotfiles.text = ''
-        mkdir -p ${config.user.paths.config}
+      system.activationScripts.dotfiles = lib.stringAfter [ "users" ] ''
+        mkdir -p ${config.user.paths.config} ${config.user.paths.data} ${config.user.paths.state}
 
-        # Copy dotfiles into the mutable guest home instead of symlinking into
-        # /nix/store; tools like opencode write state into their config dirs.
+        # Copy config into the mutable guest home instead of symlinking into
+        # /nix/store; some tools write state into their config dirs.
         for source in ${dotfiles}/.config/*; do
           target=${config.user.paths.config}/$(basename "$source")
 
           rm -rf "$target"
           cp -R "$source" "$target"
           chown -R ${config.user.username}:users "$target"
+        done
+
+        for app in ${lib.escapeShellArgs mutableDotfileApps}; do
+          for pair in \
+            "${dotfiles}/.local/share/$app:${config.user.paths.data}/$app" \
+            "${dotfiles}/.local/state/$app:${config.user.paths.state}/$app"
+          do
+            source=''${pair%%:*}
+            target=''${pair#*:}
+
+            if [ ! -e "$source" ]; then
+              continue
+            fi
+
+            rm -rf "$target"
+            cp -R "$source" "$target"
+            chown -R ${config.user.username}:users "$target"
+          done
         done
       '';
 
@@ -223,7 +248,11 @@ in
             restore_tty() {
               stty "$old_stty"
             }
-            trap restore_tty EXIT
+            cleanup() {
+              restore_tty
+              release_lock
+            }
+            trap cleanup EXIT
             stty intr undef
           fi
 

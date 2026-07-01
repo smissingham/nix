@@ -20,6 +20,7 @@ flake@{ inputs, ... }:
 
         development = [
           pkgs.sm-devtools
+          mypkgs.krunvm
         ];
 
         linuxDevelopment = [ pkgs.jetbrains.idea-oss ];

@@ -28,35 +28,10 @@
       "**/.env*": "deny"
     },
     "bash": {
-      "*env*": "deny",
-      "*": "ask",
-      "git commit": "ask",
-      "pwd": "allow",
-      "ls": "allow",
-      "ls *": "allow",
-      "fd": "allow",
-      "fd *": "allow",
-      "rg --files*": "allow",
-      "rg -l *": "allow",
-      "rg --files-with-matches *": "allow",
-      "git show*": "allow",
-      "git status*": "allow",
-      "git diff*": "allow",
-      "git log*": "allow",
-      "git ls-files*": "allow",
-      "nix build*": "allow",
-      "nix eval*": "allow",
-      "nix flake*": "allow",
-      "nixfmt*": "allow",
-      "nxfmt": "allow",
-      "nxrebuild": "allow"
+      "*": "allow"
     },
     "external_directory": {
-      "*": "ask",
-      "~/.cache/**": "allow",
-      "~/.cargo/**": "allow",
-      "/tmp/**": "allow",
-      "/nix/store/**": "allow"
+      "*": "allow"
     }
   }
 }

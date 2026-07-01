@@ -107,6 +107,7 @@
           (inputs.import-tree ./hosts)
           (inputs.import-tree ./modules)
           (inputs.import-tree ./packages)
+          (inputs.import-tree ./containers)
         ];
 
         config = {

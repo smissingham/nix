@@ -69,7 +69,6 @@ in
           # Services
           pkgs.gh
           pkgs.glab
-          pkgs.jira-cli-go
         ];
 
         cli-lang = [
@@ -94,21 +93,21 @@ in
 
           # Web
           pkgs.bun
-          pkgs.astro-language-server
+          # pkgs.astro-language-server
           pkgs.prettier
           pkgs.prettierd
-          pkgs.svelte-language-server
-          pkgs.tailwindcss-language-server
+          # pkgs.svelte-language-server
+          # pkgs.tailwindcss-language-server
           pkgs.vscode-langservers-extracted
           pkgs.vtsls
 
           # Rust
-          pkgs.cargo
-          pkgs.rustfmt
-          pkgs.rust-analyzer
+          # pkgs.cargo
+          # pkgs.rustfmt
+          # pkgs.rust-analyzer
 
           # Java
-          pkgs.jdt-language-server
+          # pkgs.jdt-language-server
 
           # Python
           pkgs.uv

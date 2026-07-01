@@ -121,11 +121,11 @@
     },
     "mypkgs": {
       "locked": {
-        "lastModified": 1782574973,
-        "narHash": "sha256-vM0APXMIzOf9BsBbsLAocXAepWxSj8CPTEbMy7cOXpo=",
+        "lastModified": 1782853076,
+        "narHash": "sha256-qnZSyUZY5gc0BCvXwCVq5kUsd6cbhi/4msAVSkYf8WI=",
         "owner": "smissingham",
         "repo": "nixpkgs",
-        "rev": "ffda305018a45e187c403975ac6219b205ad247a",
+        "rev": "e8208168c9fe014ec75d986cc6816718ef596050",
         "type": "github"
       },
       "original": {
