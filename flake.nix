@@ -1,22 +1,30 @@
-{
+rec {
   description = "Reusable nix components and exposed packages";
 
+  nixConfig.extra-experimental-features = [
+    "nix-command"
+    "flakes"
+    "pipe-operators"
+  ];
+
   inputs = {
+    # ---------- Nix Base ---------- #
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
+    # ---------- Core Flake Organisation ---------- #
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
+    # ---------- Custom Package Sources ---------- #
+    mypkgs.url = "github:smissingham/nixpkgs/develop";
     microvm-nix.url = "github:microvm-nix/microvm.nix";
     microvm-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    mypkgs.url = "github:smissingham/nixpkgs/develop";
-
+    # ---------- Nix on Darwin ---------- #
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core.url = "github:homebrew/homebrew-core";
     homebrew-core.flake = false;
@@ -31,6 +39,8 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
       { config, lib, ... }:
       let
+        nixExperimentalFeatures = nixConfig.extra-experimental-features;
+
         # Keep compatibility versions centralized so hosts cannot drift.
         nixosStateVersion = inputs.nixpkgs-stable.lib.trivial.release;
         darwinStateVersion = 5;
@@ -65,13 +75,17 @@
               inherit (host) system;
             };
             builder =
-              if isDarwin host.system then inputs.nix-darwin.lib.darwinSystem else inputs.nixpkgs.lib.nixosSystem;
+              if isDarwin host.system then
+                inputs.nix-darwin.lib.darwinSystem
+              else
+                inputs.nixpkgs.lib.nixosSystem;
           in
           builder {
             # Host modules receive wrapper-modules with local wrapper overlay applied.
             specialArgs = {
               inputs = wrappedInputs;
               inherit pkgsstable;
+              inherit nixExperimentalFeatures;
             };
             modules = [
               host.module
@@ -83,7 +97,8 @@
                   config.flake.overlays.default
                 ];
 
-                system.stateVersion = if isDarwin host.system then darwinStateVersion else nixosStateVersion;
+                system.stateVersion =
+                  if isDarwin host.system then darwinStateVersion else nixosStateVersion;
               }
             ];
           };

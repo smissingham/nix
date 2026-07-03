@@ -6,19 +6,23 @@ in
   perSystem =
     { pkgs, ... }:
     let
-      relativePath = file: lib.removePrefix "${toString ./.}/" (toString file);
-      scriptName = file: lib.removeSuffix ".nu" (lib.removeSuffix ".sh" (builtins.baseNameOf file));
+      relativePath = file: file |> toString |> lib.removePrefix "${toString ./.}/";
+      scriptName =
+        file: baseNameOf file |> lib.removeSuffix ".sh" |> lib.removeSuffix ".nu";
 
-      scripts = builtins.filter (
-        file:
-        !(lib.hasSuffix ".nix" (toString file))
-        && (pkgs.stdenv.isDarwin || !(lib.hasPrefix "macos/" (relativePath file)))
-      ) (lib.filesystem.listFilesRecursive ./.);
+      scripts =
+        lib.filesystem.listFilesRecursive ./.
+        |> builtins.filter (
+          file:
+          !(lib.hasSuffix ".nix" (toString file))
+          && (pkgs.stdenv.isDarwin || !(lib.hasPrefix "macos/" (relativePath file)))
+        );
 
       wrap =
         file:
         let
-          command = if lib.hasSuffix ".nu" (toString file) then "nu ${file}" else toString file;
+          command =
+            if lib.hasSuffix ".nu" (toString file) then "nu ${file}" else toString file;
         in
         pkgs.writeShellApplication {
           name = scriptName file;
@@ -35,7 +39,7 @@ in
     {
       packages.${pname} = pkgs.symlinkJoin {
         name = pname;
-        paths = map wrap scripts;
+        paths = scripts |> map wrap;
         meta.description = "Sean's utility scripts";
       };
     };

@@ -143,7 +143,9 @@ in
               gtk-theme-name=${cfg.gtk.themeName}
               gtk-cursor-theme-name=${cfg.cursor.name}
               gtk-cursor-theme-size=${toString cfg.cursor.size}
-              ${lib.optionalString (cfg.gtk.xftDpi != null) "gtk-xft-dpi=${toString cfg.gtk.xftDpi}"}
+              ${lib.optionalString (
+                cfg.gtk.xftDpi != null
+              ) "gtk-xft-dpi=${toString cfg.gtk.xftDpi}"}
             '';
 
             "xdg/gtk-4.0/settings.ini".text = ''
@@ -152,7 +154,9 @@ in
               gtk-theme-name=${cfg.gtk.themeName}
               gtk-cursor-theme-name=${cfg.cursor.name}
               gtk-cursor-theme-size=${toString cfg.cursor.size}
-              ${lib.optionalString (cfg.gtk.xftDpi != null) "gtk-xft-dpi=${toString cfg.gtk.xftDpi}"}
+              ${lib.optionalString (
+                cfg.gtk.xftDpi != null
+              ) "gtk-xft-dpi=${toString cfg.gtk.xftDpi}"}
             '';
           };
         };

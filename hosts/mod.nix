@@ -10,7 +10,8 @@ let
     predicate:
     lib.mapAttrs (_: host: host.module) (
       lib.filterAttrs (
-        _: host: builtins.isAttrs host && host ? system && host ? module && predicate host.system
+        _: host:
+        builtins.isAttrs host && host ? system && host ? module && predicate host.system
       ) config.hosts
     );
 in
@@ -30,6 +31,7 @@ in
     hosts.shared =
       {
         config,
+        nixExperimentalFeatures,
         pkgs,
         ...
       }:
@@ -49,10 +51,7 @@ in
 
           nix = {
             optimise.automatic = lib.mkDefault true;
-            settings.experimental-features = [
-              "nix-command"
-              "flakes"
-            ];
+            settings.experimental-features = nixExperimentalFeatures;
           };
 
           fonts.packages = [

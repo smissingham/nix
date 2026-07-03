@@ -7,15 +7,14 @@ in
     {
       config,
       pkgs,
-      sm-bundles,
+      sm-clibundles,
       ...
     }:
     let
       shell = config.packages.sm-zsh;
 
-      runtimeTools = sm-bundles.cli-core ++ [
+      runtimeTools = sm-clibundles.core ++ [
         shell
-        config.packages.sm-television
       ];
 
       includedPackages = [

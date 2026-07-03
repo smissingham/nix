@@ -16,7 +16,9 @@ in
     }:
     let
       cfg = config.aerospace;
-      aerospaceConfig = pkgs.writeText "aerospace.toml" (builtins.readFile ./aerospace.toml);
+      aerospaceConfig = pkgs.writeText "aerospace.toml" (
+        builtins.readFile ./aerospace.toml
+      );
       userConfigPath = "${config.user.paths.config}/aerospace/aerospace.toml";
       reloadAerospace = pkgs.writeShellScriptBin "reload-aerospace" ''
         set -euo pipefail

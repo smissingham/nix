@@ -7,6 +7,7 @@ in
     {
       config,
       pkgs,
+      sm-clibundles,
       ...
     }:
     let
@@ -21,6 +22,7 @@ in
         lt = "eza -lT";
 
         # hero binds
+        y = "sm-yazi";
         kk = "sesh_browser";
         kj = "sm-neovim";
         oc = "opencode --port";
@@ -51,7 +53,6 @@ in
         pkgs.zsh-autosuggestions
         pkgs.zsh-completions
         pkgs.zsh-syntax-highlighting
-        config.packages.sm-television
       ];
 
       wrapped = inputs.wrapper-modules.wrappers.zsh.wrap {
@@ -61,16 +62,19 @@ in
           [
             "PATH"
             ":"
-            (pkgs.lib.concatStringsSep ":" [
-              "/run/wrappers/bin"
-              "/run/current-system/sw/bin"
-              "/nix/var/nix/profiles/default/bin"
-              "/usr/local/bin"
-              "/usr/bin"
-              "/bin"
-              "/usr/sbin"
-              "/sbin"
-            ])
+            (
+              [
+                "/run/wrappers/bin"
+                "/run/current-system/sw/bin"
+                "/nix/var/nix/profiles/default/bin"
+                "/usr/local/bin"
+                "/usr/bin"
+                "/bin"
+                "/usr/sbin"
+                "/sbin"
+              ]
+              |> pkgs.lib.concatStringsSep ":"
+            )
           ]
         ];
         skipGlobalRC = true;
@@ -88,7 +92,6 @@ in
           eval "$(${pkgs.atuin}/bin/atuin init zsh)"
           eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
           eval "$(${pkgs.starship}/bin/starship init zsh)"
-          eval "$(${config.packages.sm-television}/bin/tv init zsh)"
           eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
         '';
 
@@ -96,6 +99,13 @@ in
         runtimePkgs = runtimeInputs;
       };
 
+      # hook script to trigger start/open of devshell
+      shellHook = ''
+        if [ -z "''${SM_DEV_SHELL:-}" ] && [ -t 0 ]; then
+          export SM_DEV_SHELL=1
+          exec ${config.packages.${pname}}/bin/${pname}
+        fi
+      '';
     in
     {
       packages.${pname} = pkgs.writeShellApplication {
@@ -106,15 +116,20 @@ in
         meta.description = "Sean's wrapped zsh shell";
       };
 
+      # Minimal devshell
       devShells.default = pkgs.mkShell {
-        packages = [ config.packages.sm-devtools ];
+        inherit shellHook;
+        packages = [
+          sm-clibundles.core
+        ];
         SHELL = "${config.packages.${pname}}/bin/${pname}";
-        shellHook = ''
-          if [ -z "''${SM_DEV_SHELL:-}" ] && [ -t 0 ]; then
-            export SM_DEV_SHELL=1
-            exec ${config.packages.${pname}}/bin/${pname}
-          fi
-        '';
+      };
+
+      # Maximal devshell
+      devShells.full = pkgs.mkShell {
+        inherit shellHook;
+        packages = [ sm-clibundles.devtools ];
+        SHELL = "${config.packages.${pname}}/bin/${pname}";
       };
 
     };

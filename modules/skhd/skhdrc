@@ -12,7 +12,7 @@ hyper - l    : osascript -e 'tell application "System Events" to keystroke "q" u
 # TUI's
 hyper - o    : $TERMINAL -e opencode
 hyper - r    : $TERMINAL -e btop
-hyper - e    : $TERMINAL -e yazi
+hyper - e    : $TERMINAL -e sm-yazi
 hyper - p    : $TERMINAL -e podman-tui
 hyper - n    : $TERMINAL -e sesh connect Notes
 

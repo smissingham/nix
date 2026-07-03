@@ -16,7 +16,9 @@ let
         "bezier"
         "animation"
       ];
-      preferredNames = builtins.filter (name: builtins.hasAttr name attrs) preferredOrder;
+      preferredNames = builtins.filter (
+        name: builtins.hasAttr name attrs
+      ) preferredOrder;
       remainingNames = lib.subtractLists preferredNames (lib.attrNames attrs);
     in
     map (name: {
@@ -24,7 +26,8 @@ let
       value = attrs.${name};
     }) (preferredNames ++ remainingNames);
 
-  renderValue = value: if lib.isBool value then lib.boolToString value else toString value;
+  renderValue =
+    value: if lib.isBool value then lib.boolToString value else toString value;
 
   renderSetting =
     name: value:
@@ -34,7 +37,9 @@ let
       ''
         ${name} {
           ${indent (
-            lib.concatMapStringsSep "\n" ({ name, value }: renderSetting name value) (orderedAttrsToList value)
+            lib.concatMapStringsSep "\n" ({ name, value }: renderSetting name value) (
+              orderedAttrsToList value
+            )
           )}
         }
       ''
@@ -162,7 +167,8 @@ in
             )
           else
             lib.concatStringsSep "\n" (lib.mapAttrsToList renderSetting config.settings);
-        relPath = if config.luaConfig.content != null then "hyprland.lua" else "hyprland.conf";
+        relPath =
+          if config.luaConfig.content != null then "hyprland.lua" else "hyprland.conf";
       };
 
       launchShortcut = lib.mkIf (config.launchShortcut != null) {
@@ -186,9 +192,12 @@ in
           "__GLX_VENDOR_LIBRARY_NAME,nvidia"
           "LIBVA_DRIVER_NAME,nvidia"
         ]
-        ++ lib.optionals (config.nvidia.enable && config.nvidia.disableWebKitDmabufRenderer) [
-          "WEBKIT_DISABLE_DMABUF_RENDERER,1"
-        ]
+        ++
+          lib.optionals
+            (config.nvidia.enable && config.nvidia.disableWebKitDmabufRenderer)
+            [
+              "WEBKIT_DISABLE_DMABUF_RENDERER,1"
+            ]
       )
     );
 
@@ -200,9 +209,12 @@ in
             ''hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")''
             ''hl.env("LIBVA_DRIVER_NAME", "nvidia")''
           ]
-          ++ lib.optionals (config.nvidia.enable && config.nvidia.disableWebKitDmabufRenderer) [
-            ''hl.env("WEBKIT_DISABLE_DMABUF_RENDERER", "1")''
-          ]
+          ++
+            lib.optionals
+              (config.nvidia.enable && config.nvidia.disableWebKitDmabufRenderer)
+              [
+                ''hl.env("WEBKIT_DISABLE_DMABUF_RENDERER", "1")''
+              ]
         )
       )
     );

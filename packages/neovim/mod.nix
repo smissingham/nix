@@ -6,7 +6,7 @@ in
   perSystem =
     {
       pkgs,
-      sm-bundles,
+      sm-clibundles,
       ...
     }:
     let
@@ -15,23 +15,19 @@ in
       '';
 
       # packages to be installed alongside app
-      includedPackages =
-        sm-bundles.cli-core
-        ++ sm-bundles.cli-dev
-        ++ sm-bundles.cli-lang
-        ++ [
-          # local wrappers
-          delta
-        ];
+      includedPackages = [
+        pkgs.pandoc
+        delta
+      ]
+      ++ sm-clibundles.core
+      ++ sm-clibundles.dev
+      ++ sm-clibundles.lang;
 
       # the wrapped neovim app runtime
       wrapped = inputs.wrapper-modules.wrappers.neovim.wrap {
         inherit pkgs;
 
-        env = {
-          NVIM_APPNAME = pname;
-          #PATH = pkgs.lib.makeBinPath includedPackages;
-        };
+        env.NVIM_APPNAME = pname;
 
         settings = {
           config_directory = ./.;

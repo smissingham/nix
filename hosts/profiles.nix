@@ -60,6 +60,7 @@ let
             XDG_DATA_HOME = paths.data;
             XDG_STATE_HOME = paths.state;
             NIX_CONFIG_HOME = user.nixConfigHome paths;
+            NH_OS_FLAKE = user.nixConfigHome paths;
           }
           // (user.env or { });
         };

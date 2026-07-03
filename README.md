@@ -4,22 +4,28 @@ Nix flake for reusable packages and personal host configuration.
 
 Portable outputs usable directly from the flake on any system with Nix CLI.
 
-Enter the default dev shell:
+Enter the default (minimal) dev shell:
 
 ```sh
 nix develop github:smissingham/nix
 ```
 
+Enter the full (maximal) dev shell:
+
+```sh
+nix develop github:smissingham/nix#full
+```
+
 Show available packages:
 
 ```sh
-nix flake show github:smissingham/nix#packages
+nix flake show github:smissingham/nix --all-systems | sed -n '/packages/,/devShells/p'
 ```
 
 Install full devtools bundle:
 
 ```sh
-nix profile add github:smissingham/nix#sm-devtools
+nix profile add github:smissingham/nix#sm-cli-devtools
 ```
 
 ### Enable Nix "experimental-features"
@@ -27,7 +33,7 @@ nix profile add github:smissingham/nix#sm-devtools
 If these commands fail on experimental features, enable flakes once:
 
 ```sh
-mkdir -p ~/.config/nix && printf 'experimental-features = nix-command flakes\n' >> ~/.config/nix/nix.conf
+mkdir -p ~/.config/nix && printf 'experimental-features = nix-command flakes pipe-operators\n' >> ~/.config/nix/nix.conf
 ```
 
 ## Contents

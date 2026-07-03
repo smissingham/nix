@@ -82,7 +82,6 @@ in
               pkgs.wiremix
               pkgs.wl-clipboard
               pkgs.wtype
-              pkgs.yazi
             ]
             ++ lib.optionals (pkgs ? podman-tui) [ pkgs.podman-tui ];
 

@@ -98,7 +98,10 @@ in
       host = hosts.${hostName};
 
       folderDeviceNames =
-        folderId: builtins.attrNames (lib.filterAttrs (_: peer: builtins.elem folderId peer.folders) hosts);
+        folderId:
+        builtins.attrNames (
+          lib.filterAttrs (_: peer: builtins.elem folderId peer.folders) hosts
+        );
 
       folderSettings = builtins.listToAttrs (
         map (folderId: {
@@ -130,12 +133,13 @@ in
 
       config = lib.mkIf cfg.enable {
         # Syncthing does not manage .stignore through settings, so write one into each synced folder.
-        system.activationScripts.syncthingStignore.text = lib.concatMapStringsSep "\n" (folderId: ''
-          install -d -m 0755 -o ${config.user.username} -g users "${config.user.paths.home}/${folderId}"
-          printf '%s' ${lib.escapeShellArg ignoreText} > "${config.user.paths.home}/${folderId}/.stignore"
-          chown ${config.user.username}:users "${config.user.paths.home}/${folderId}/.stignore"
-          chmod 0644 "${config.user.paths.home}/${folderId}/.stignore"
-        '') host.folders;
+        system.activationScripts.syncthingStignore.text = lib.concatMapStringsSep "\n" (
+          folderId: ''
+            install -d -m 0755 -o ${config.user.username} -g users "${config.user.paths.home}/${folderId}"
+            printf '%s' ${lib.escapeShellArg ignoreText} > "${config.user.paths.home}/${folderId}/.stignore"
+            chown ${config.user.username}:users "${config.user.paths.home}/${folderId}/.stignore"
+            chmod 0644 "${config.user.paths.home}/${folderId}/.stignore"
+          '') host.folders;
 
         services.syncthing = {
           enable = true;

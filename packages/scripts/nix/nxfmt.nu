@@ -14,7 +14,7 @@ def main [] {
   }
 
   for file in (nix-files) {
-    let result = (do { ^nixfmt $file } | complete)
+    let result = (do { ^nixfmt --width 80 $file } | complete)
 
     if ($result.stderr | str trim) != "" {
       print $result.stderr

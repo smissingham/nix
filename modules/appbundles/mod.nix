@@ -19,7 +19,7 @@ flake@{ inputs, ... }:
         ];
 
         development = [
-          pkgs.sm-devtools
+          pkgs.sm-cli-devtools
           mypkgs.krunvm
         ];
 
@@ -62,10 +62,14 @@ flake@{ inputs, ... }:
         })
         {
           environment.systemPackages =
-            optionals (cfg.development.enable && pkgs.stdenv.isLinux) packages.linuxDevelopment
+            optionals (
+              cfg.development.enable && pkgs.stdenv.isLinux
+            ) packages.linuxDevelopment
             ++ optionals cfg.development.enable packages.development
             ++ optionals cfg.productivity.enable packages.productivity
-            ++ optionals (cfg.productivity.enable && pkgs.stdenv.isLinux) packages.linuxProductivity
+            ++ optionals (
+              cfg.productivity.enable && pkgs.stdenv.isLinux
+            ) packages.linuxProductivity
             ++ optionals cfg.entertainment.enable packages.entertainment
             ++ optionals cfg.comms.enable packages.comms;
         }

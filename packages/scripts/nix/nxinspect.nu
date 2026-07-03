@@ -77,27 +77,47 @@ def linked-libs [program_path: string] {
   }
 }
 
+def resolve-program [app: string] {
+  let matches = (which $app)
+  if not ($matches | is-empty) {
+    let match = ($matches | first)
+    let match_path = if (($match.path? | default "") != "") {
+      $match.path
+    } else {
+      $match.external? | default ""
+    }
+
+    let program_path = (^realpath $match_path | str trim)
+    return { program_path: $program_path, store_path: $program_path }
+  }
+
+  let build = (^nix build --no-link --print-out-paths $app | complete)
+  if $build.exit_code != 0 {
+    print $"program or flake output not found: ($app)"
+    exit 1
+  }
+
+  let store_path = ($build.stdout | lines | first | str trim)
+  let bins = (ls ($"($store_path)/bin/*" | into glob))
+  if ($bins | is-empty) {
+    print $"flake output has no binaries: ($app)"
+    exit 1
+  }
+
+  { program_path: ($bins | first | get name), store_path: $store_path }
+}
+
 def main [app?: string] {
   if ($app == null) {
-    print "usage: nxinspect <program>"
+    print "usage: nxinspect <program|flake-output>"
     exit 1
   }
 
-  let matches = (which $app)
-  if ($matches | is-empty) {
-    print $"program not found: ($app)"
-    exit 1
-  }
+  let resolved = (resolve-program $app)
+  let program_path = $resolved.program_path
+  let store_path = $resolved.store_path
 
-  let match = ($matches | first)
-  let match_path = if (($match.path? | default "") != "") {
-    $match.path
-  } else {
-    $match.external? | default ""
-  }
-  let program_path = (^realpath $match_path | str trim)
-
-  let deps = (^nix path-info -rSh $program_path
+  let deps = (^nix path-info -rSh $store_path
     | lines
     | where { |line| ($line | str trim) != "" }
     | parse --regex '^(?P<path>\S+)\s+(?P<size_value>\d+(?:\.\d+)?)\s+(?P<size_unit>\S+)$'
@@ -111,6 +131,7 @@ def main [app?: string] {
   let linked_libs = (linked-libs $program_path)
 
   print $"Program: ($app)"
+  print $"Binary: ($program_path)"
   print $"Binary size: ($binary_size)"
   print $"Linked libs: ($linked_libs | length)"
   $linked_libs | each { |lib| print $"  - ($lib)" }

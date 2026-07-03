@@ -11,7 +11,8 @@ let
   microVmsDataPath = "$HOME/.local/share/microvms";
 
   guestSystemFor = system: lib.replaceStrings [ "darwin" ] [ "linux" ] system;
-  hypervisorFor = pkgs: if pkgs.stdenv.hostPlatform.isDarwin then "vfkit" else "qemu";
+  hypervisorFor =
+    pkgs: if pkgs.stdenv.hostPlatform.isDarwin then "vfkit" else "qemu";
 
   mkVmModule =
     {
@@ -36,7 +37,7 @@ let
       environment = {
         systemPackages = [
           config.user.shell.package
-          inputs.self.packages.${guestSystem}.sm-devtools
+          inputs.self.packages.${guestSystem}.sm-cli-devtools
         ];
       };
 

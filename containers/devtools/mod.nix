@@ -9,7 +9,9 @@ in
     let
       user = profileUser;
       home = "/home/${user.username}";
-      containerSystem = pkgs.lib.replaceStrings [ "darwin" ] [ "linux" ] pkgs.stdenv.hostPlatform.system;
+      containerSystem =
+        pkgs.stdenv.hostPlatform.system
+        |> pkgs.lib.replaceStrings [ "darwin" ] [ "linux" ];
       cpkgs = inputs.nixpkgs.legacyPackages.${containerSystem};
     in
     {
@@ -17,10 +19,14 @@ in
         name = pname;
         tag = "latest";
 
-        contents = [
-          inputs.self.packages.${containerSystem}.sm-devtools
-          cpkgs.dockerTools.fakeNss
-        ];
+        copyToRoot = cpkgs.buildEnv {
+          name = "${pname}-root";
+          paths = [
+            inputs.self.packages.${containerSystem}.sm-cli-devtools
+            cpkgs.dockerTools.fakeNss
+          ];
+          pathsToLink = [ "/" ];
+        };
 
         extraCommands = ''
           mkdir -p .${home}
@@ -32,7 +38,7 @@ in
           Env = [
             "HOME=${home}"
             "USER=${user.username}"
-            "PATH=${inputs.self.packages.${containerSystem}.sm-devtools}/bin"
+            "PATH=${inputs.self.packages.${containerSystem}.sm-cli-devtools}/bin"
           ];
           Cmd = [ "sm-zsh" ];
         };

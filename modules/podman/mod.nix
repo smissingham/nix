@@ -96,19 +96,8 @@
     let
       cfg = config.podman;
       runtimeLinkPath = "${config.user.paths.data}/podman";
-      initScriptName = "podman-init";
       dockerCompatBin = pkgs.writeShellScriptBin "docker" ''
         exec ${pkgs.podman}/bin/podman "$@"
-      '';
-      initScriptBin = pkgs.writeShellScriptBin initScriptName ''
-        ${pkgs.podman}/bin/podman machine inspect podman-machine-default >/dev/null 2>&1 || \
-          ${pkgs.podman}/bin/podman machine init
-        ${pkgs.podman}/bin/podman machine start
-
-        rm -rf ${runtimeLinkPath}
-
-        RUNTIME_PATH=$(${pkgs.fd}/bin/fd "podman.*\.sock" /var/folders -x dirname | head -n1)
-        ln -s $RUNTIME_PATH ${runtimeLinkPath}
       '';
     in
     {
@@ -124,19 +113,10 @@
         environment.systemPackages = [
           pkgs.dive
           dockerCompatBin
-          initScriptBin
           pkgs.podman
           pkgs.podman-compose
           pkgs.podman-tui
         ];
-
-        launchd.user.agents.podman-machine.serviceConfig = {
-          ProgramArguments = [ "${config.system.path}/bin/${initScriptName}" ];
-          RunAtLoad = true;
-          KeepAlive = false;
-          StandardOutPath = "/tmp/podman-machine.log";
-          StandardErrorPath = "/tmp/podman-machine.err.log";
-        };
       };
     };
 }
