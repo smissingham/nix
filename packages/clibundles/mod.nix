@@ -77,6 +77,9 @@
           # Services
           gh
           glab
+          python313Packages.huggingface-hub
+          git-xet
+          git-lfs
         ];
 
         # ---------- LANGUAGE SUPPORT ---------- #
