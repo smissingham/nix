@@ -14,7 +14,7 @@ flake@{ inputs, ... }:
 
       packages = {
         comms = [
-          # pkgs.signal-desktop
+          pkgs.signal-desktop
           pkgs.vesktop
         ];
 

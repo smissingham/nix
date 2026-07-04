@@ -16,35 +16,21 @@ in
     {
       packages.${pname} = inputs.wrapper-modules.wrappers.yazi.wrap {
         inherit pkgs;
-        aliases = [ pname ];
+        binName = pname;
+        drv = {
+          inherit pname;
+          name = pname;
+        };
+        filesToExclude = [ "bin/yazi" ];
+        runtimePkgs = [ pkgs.starship ];
+
+        constructFiles.init = {
+          relPath = "${pname}-config/init.lua";
+          content = builtins.readFile ./init.lua;
+        };
 
         flavors.tokyo-night = tokyo-night;
-        settings.theme.flavor.dark = "tokyo-night";
-
-        settings.yazi.plugin.prepend_previewers = [
-          {
-            url = "*";
-            run = ''piper -- akuna extract --text "$1"'';
-          }
-        ];
-
-        settings.keymap.mgr.prepend_keymap = [
-          {
-            on = "?";
-            run = "help";
-            desc = "Open help";
-          }
-          {
-            on = "<C-u>";
-            run = "seek -10";
-            desc = "Scroll preview up one page";
-          }
-          {
-            on = "<C-d>";
-            run = "seek 10";
-            desc = "Scroll preview down one page";
-          }
-        ];
+        settings = ./settings.toml |> builtins.readFile |> fromTOML;
 
         plugins = {
           inherit (pkgs.yaziPlugins)

@@ -5,7 +5,7 @@ def check-host-output [attr: string, build_attr: string] {
   let hosts = (^nix eval $".#($attr)" --apply builtins.attrNames --json | from json)
 
   $hosts | each { |host|
-    ^nom build $".#($attr).($host).($build_attr)" --dry-run --show-trace
+    ^nix build $".#($attr).($host).($build_attr)" --dry-run --show-trace
   }
 }
 

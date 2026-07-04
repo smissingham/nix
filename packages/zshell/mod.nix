@@ -26,6 +26,7 @@ in
         kk = "sesh_browser";
         kj = "sm-neovim";
         oc = "opencode --port";
+        ocs = "opencode serve --hostname 0.0.0.0";
         gg = "lazygit";
 
         # custom wrapper overrides

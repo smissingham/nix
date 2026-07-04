@@ -1,0 +1,59 @@
+[theme.flavor]
+dark = "tokyo-night"
+
+[[yazi.plugin.prepend_fetchers]]
+url = "*"
+run = "git"
+group = "git"
+
+[[yazi.plugin.prepend_fetchers]]
+url = "*/"
+run = "git"
+group = "git"
+
+[[yazi.plugin.prepend_previewers]]
+url = "*"
+run = 'piper -- akuna extract --text "$1"'
+
+[[keymap.mgr.prepend_keymap]]
+on = "?"
+run = "help"
+desc = "Open help"
+
+[[keymap.mgr.prepend_keymap]]
+on = "<Space>"
+run = "noop"
+
+[[keymap.mgr.prepend_keymap]]
+on = "<Tab>"
+run = ["toggle", "arrow 1"]
+desc = "Toggle the current selection state"
+
+[[keymap.mgr.prepend_keymap]]
+on = "<C-u>"
+run = "seek -10"
+desc = "Scroll preview up one page"
+
+[[keymap.mgr.prepend_keymap]]
+on = "<C-d>"
+run = "seek 10"
+desc = "Scroll preview down one page"
+
+[[keymap.mgr.prepend_keymap]]
+on = "l"
+run = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[keymap.mgr.prepend_keymap]]
+on = "<C-S-d>"
+run = "plugin drag"
+desc = "Drag files"
+
+[[keymap.help.prepend_keymap]]
+on = "f"
+run = "noop"
+
+[[keymap.help.prepend_keymap]]
+on = "/"
+run = "filter"
+desc = "Apply a filter for the help items"

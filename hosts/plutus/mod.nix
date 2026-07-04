@@ -13,6 +13,7 @@ flake@{ ... }:
           flake.config.modules.shared.nixbuilders
           flake.config.modules.shared.sops
           flake.config.modules.darwin.aerospace
+          flake.config.modules.darwin.firewall
           flake.config.modules.darwin.homebrew
           flake.config.modules.darwin.podman
           flake.config.modules.darwin.skhd
@@ -52,6 +53,8 @@ flake@{ ... }:
           hostName = "plutus";
           computerName = "plutus";
         };
+
+        firewall.allowedTCPPorts = [ 4096 ];
 
         #---------- SYSTEM BEHAVIOR ----------#
         system = {

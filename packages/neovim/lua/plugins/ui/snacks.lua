@@ -147,6 +147,8 @@ return {
 				win = {
 					input = {
 						keys = {
+							["<C-u>"] = { "preview_scroll_up", mode = { "n", "i" } },
+							["<C-d>"] = { "preview_scroll_down", mode = { "n", "i" } },
 							["<PageUp>"] = { "preview_scroll_up", mode = { "n", "i" } },
 							["<PageDown>"] = { "preview_scroll_down", mode = { "n", "i" } },
 						},

@@ -19,6 +19,7 @@ in
           flake.config.modules.shared.appbundles
           # flake.config.modules.shared.nixbuilders
           flake.config.modules.shared.sops
+          flake.config.modules.nixos.firewall
           flake.config.modules.nixos.hyprland
           flake.config.modules.nixos.noctalia
           flake.config.modules.nixos.podman
@@ -97,13 +98,14 @@ in
           useDHCP = lib.mkDefault true;
           firewall.enable = lib.mkDefault true;
           networkmanager.enable = lib.mkDefault true;
-          firewall.allowedTCPPorts = [
-            3000
-            9876
-            9877
-            9878
-          ];
         };
+
+        firewall.allowedTCPPorts = [
+          3000
+          9876
+          9877
+          9878
+        ];
 
         services.fail2ban = {
           enable = true;
