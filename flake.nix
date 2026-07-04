@@ -21,6 +21,8 @@ rec {
     mypkgs.url = "github:smissingham/nixpkgs/develop";
     microvm-nix.url = "github:microvm-nix/microvm.nix";
     microvm-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-cix-cd8180.url = "github:i-am-logger/nixos-cix-cd8180";
+    nixos-cix-cd8180.inputs.nixpkgs.follows = "nixpkgs";
 
     # ---------- Nix on Darwin ---------- #
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
