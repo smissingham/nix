@@ -9,8 +9,8 @@ rec {
 
   inputs = {
     # ---------- Nix Base ---------- #
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # ---------- Core Flake Organisation ---------- #
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -25,7 +25,7 @@ rec {
     nixos-cix-cd8180.inputs.nixpkgs.follows = "nixpkgs";
 
     # ---------- Nix on Darwin ---------- #
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core.url = "github:homebrew/homebrew-core";
@@ -44,7 +44,7 @@ rec {
         nixExperimentalFeatures = nixConfig.extra-experimental-features;
 
         # Keep compatibility versions centralized so hosts cannot drift.
-        nixosStateVersion = inputs.nixpkgs-stable.lib.trivial.release;
+        nixosStateVersion = inputs.nixpkgs.lib.trivial.release;
         darwinStateVersion = 5;
 
         isDarwin = system: builtins.match ".*-darwin" system != null;
@@ -73,8 +73,9 @@ rec {
         mkHostSystem =
           host:
           let
-            pkgsstable = import inputs.nixpkgs-stable {
+            pkgsunstable = import inputs.nixpkgs-unstable {
               inherit (host) system;
+              config.allowUnfree = true;
             };
             builder =
               if isDarwin host.system then
@@ -86,7 +87,7 @@ rec {
             # Host modules receive wrapper-modules with local wrapper overlay applied.
             specialArgs = {
               inputs = wrappedInputs;
-              inherit pkgsstable;
+              inherit pkgsunstable;
               inherit nixExperimentalFeatures;
             };
             modules = [

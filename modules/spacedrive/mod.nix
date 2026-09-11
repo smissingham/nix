@@ -3,7 +3,7 @@
   modules.shared.spacedrive =
     {
       config,
-      pkgsstable,
+      pkgs,
       ...
     }:
     let
@@ -15,7 +15,7 @@
       };
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ pkgsstable.spacedrive ];
+        environment.systemPackages = [ pkgs.spacedrive ];
       };
     };
 }

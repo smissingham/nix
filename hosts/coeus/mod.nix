@@ -9,6 +9,7 @@ in
       {
         config,
         lib,
+        options,
         pkgs,
         ...
       }:
@@ -220,12 +221,16 @@ in
         programs.nix-ld.enable = true;
         environment.sessionVariables.NIX_LD_LIBRARY_PATH = lib.mkForce "/run/current-system/sw/share/nix-ld/lib";
 
-        systemd.sleep.settings.Sleep = {
-          AllowSuspend = "no";
-          AllowHibernation = "no";
-          AllowHybridSleep = "no";
-          AllowSuspendThenHibernate = "no";
-        };
+        systemd =
+          lib.optionalAttrs (options.systemd ? sleep && options.systemd.sleep ? settings)
+            {
+              sleep.settings.Sleep = {
+                AllowSuspend = "no";
+                AllowHibernation = "no";
+                AllowHybridSleep = "no";
+                AllowSuspendThenHibernate = "no";
+              };
+            };
 
         services.udev.extraRules = ''
           SUBSYSTEM=="usb", ATTRS{idVendor}=="3511", ATTRS{idProduct}=="2f06", DRIVER=="usbhid", ATTR{authorized}="0"

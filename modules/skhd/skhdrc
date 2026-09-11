@@ -19,6 +19,10 @@ hyper - n    : $TERMINAL -e sesh connect Notes
 #################### Application Control ####################
 
 # General rebinds
+fn - h      : skhd -k "left"
+fn - j      : skhd -k "down"
+fn - k      : skhd -k "up"
+fn - l      : skhd -k "right"
 f13         : screencapture -i -c # printscreen
 
 # Unbind annoying defaults

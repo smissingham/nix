@@ -26,6 +26,7 @@ flake@{ ... }:
           comms.enable = true;
           development.enable = true;
           entertainment.enable = true;
+          photography.enable = true;
           productivity.enable = true;
         };
 
@@ -58,11 +59,6 @@ flake@{ ... }:
 
         #---------- SYSTEM BEHAVIOR ----------#
         system = {
-          keyboard = {
-            enableKeyMapping = true;
-            remapCapsLockToEscape = true;
-          };
-
           defaults = {
             ".GlobalPreferences"."com.apple.mouse.scaling" = 2.5;
             spaces.spans-displays = false;

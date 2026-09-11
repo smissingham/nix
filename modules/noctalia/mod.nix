@@ -7,12 +7,13 @@ in
     {
       config,
       pkgs,
+      pkgsunstable,
       ...
     }:
     let
       cfg = config.noctalia;
       package = noctalia.wrap {
-        inherit pkgs;
+        pkgs = pkgsunstable;
         settings = {
           colorSchemes = {
             darkMode = true;

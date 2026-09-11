@@ -44,7 +44,7 @@ in
             allowUnfreePredicate = _: true;
           };
 
-          environment.enableAllTerminfo = true;
+          #environment.enableAllTerminfo = true;
           environment.variables = {
             HOSTNAME = config.networking.hostName;
           };

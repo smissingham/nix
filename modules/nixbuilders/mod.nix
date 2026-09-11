@@ -5,7 +5,6 @@
       config,
       options,
       pkgs,
-      pkgsstable,
       ...
     }:
     let
@@ -49,7 +48,7 @@
               package = pkgs.darwin.linux-builder.override {
                 modules = [
                   ({ lib, ... }: {
-                    virtualisation.host.pkgs = lib.mkForce pkgsstable;
+                    virtualisation.host.pkgs = lib.mkForce pkgs;
                   })
                 ];
               };

@@ -11,6 +11,7 @@ in
       config,
       inputs,
       pkgs,
+      pkgsunstable,
       ...
     }:
     let
@@ -75,7 +76,7 @@ in
               pkgs.bluetui
               pkgs.btop
               pkgs.cliphist
-              pkgs.handy
+              pkgsunstable.handy
               pkgs.hyprlock
               pkgs.playerctl
               pkgs.sesh

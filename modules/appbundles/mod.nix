@@ -4,6 +4,7 @@ flake@{ inputs, ... }:
     module@{
       lib,
       pkgs,
+      pkgsunstable,
       ...
     }:
     let
@@ -14,8 +15,8 @@ flake@{ inputs, ... }:
 
       packages = {
         comms = [
-          pkgs.signal-desktop
-          pkgs.vesktop
+          pkgsunstable.signal-desktop
+          # pkgs.vesktop
         ];
 
         development = [
@@ -25,12 +26,18 @@ flake@{ inputs, ... }:
 
         linuxDevelopment = [ pkgs.jetbrains.idea-oss ];
 
+        photography = [
+          #pkgs.darktable
+          pkgs.exiftool
+        ];
+
         productivity = [
+          mypkgs.filen-desktop
           mypkgs.brave-origin
-          pkgs.handy
           pkgs.inkscape
           pkgs.obsidian
-        ];
+        ]
+        ++ optionals (pkgsunstable ? handy) [ pkgsunstable.handy ];
 
         linuxProductivity = [
           pkgs.gimp
@@ -50,6 +57,7 @@ flake@{ inputs, ... }:
         comms.enable = lib.mkEnableOption "communications app bundle";
         development.enable = lib.mkEnableOption "development app bundle";
         productivity.enable = lib.mkEnableOption "productivity app bundle";
+        photography.enable = lib.mkEnableOption "photography app bundle";
         entertainment.enable = lib.mkEnableOption "entertainment app bundle";
       };
 
@@ -67,6 +75,7 @@ flake@{ inputs, ... }:
             ) packages.linuxDevelopment
             ++ optionals cfg.development.enable packages.development
             ++ optionals cfg.productivity.enable packages.productivity
+            ++ optionals cfg.photography.enable packages.photography
             ++ optionals (
               cfg.productivity.enable && pkgs.stdenv.isLinux
             ) packages.linuxProductivity

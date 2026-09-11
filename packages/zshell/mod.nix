@@ -30,6 +30,7 @@ in
         gg = "lazygit";
 
         # custom wrapper overrides
+        herdr = "sm-herdr";
         tv = "sm-television";
         tmux = "sm-tmux";
         vm = "nix run $NIX_CONFIG_HOME#vm-dev";

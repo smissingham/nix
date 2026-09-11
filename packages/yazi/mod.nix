@@ -34,7 +34,6 @@ in
 
         plugins = {
           inherit (pkgs.yaziPlugins)
-            drag
             full-border
             git
             piper

@@ -27,7 +27,6 @@
           pass in proto tcp from 172.16.0.0/12 to any port ${toString port}
         '')
         |> lib.concatStringsSep "\n";
-      anchorFile = builtins.toFile "nix-firewall-pf-anchor" anchorText;
     in
     {
       options.firewall.allowedTCPPorts = lib.mkOption {
@@ -40,9 +39,6 @@
         environment.etc."pf.anchors/nix-firewall".text = anchorText;
 
         system.activationScripts.extraActivation.text = lib.mkAfter ''
-          /bin/mkdir -p /etc/pf.anchors
-          /bin/cp ${anchorFile} /etc/pf.anchors/nix-firewall
-
           if ! /usr/bin/grep -q 'anchor "nix-firewall"' /etc/pf.conf; then
             /usr/bin/printf '\nanchor "nix-firewall"\nload anchor "nix-firewall" from "/etc/pf.anchors/nix-firewall"\n' >> /etc/pf.conf
           fi

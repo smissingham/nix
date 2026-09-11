@@ -1,0 +1,56 @@
+onboarding = false
+
+[terminal]
+default_shell = "sm-zsh"
+
+[keys]
+prefix = "ctrl+space"
+split_vertical = ["prefix+v", "prefix+ctrl+l"]
+split_horizontal = ["prefix+minus", "prefix+ctrl+j"]
+switch_tab = ["prefix+1..9", "alt+1..9"]
+last_pane = "prefix+s"
+goto = ["prefix+g", "prefix+shift+s"]
+
+# Herdr has no native left/up split, so compose split, swap, and focus.
+[[keys.command]]
+key = "prefix+ctrl+h"
+type = "shell"
+description = "split pane left"
+command = "\"$HERDR_BIN_PATH\" pane split \"$HERDR_ACTIVE_PANE_ID\" --direction right --cwd \"$HERDR_ACTIVE_PANE_CWD\" --no-focus && \"$HERDR_BIN_PATH\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction right && \"$HERDR_BIN_PATH\" pane focus --pane \"$HERDR_ACTIVE_PANE_ID\" --direction left"
+
+[[keys.command]]
+key = "prefix+ctrl+k"
+type = "shell"
+description = "split pane up"
+command = "\"$HERDR_BIN_PATH\" pane split \"$HERDR_ACTIVE_PANE_ID\" --direction down --cwd \"$HERDR_ACTIVE_PANE_CWD\" --no-focus && \"$HERDR_BIN_PATH\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction down && \"$HERDR_BIN_PATH\" pane focus --pane \"$HERDR_ACTIVE_PANE_ID\" --direction up"
+
+# Direct directional resize matches tmux's prefix+h/j/k/l bindings.
+[[keys.command]]
+key = "prefix+h"
+type = "shell"
+description = "resize pane left"
+command = "\"$HERDR_BIN_PATH\" pane resize --pane \"$HERDR_ACTIVE_PANE_ID\" --direction left"
+
+[[keys.command]]
+key = "prefix+j"
+type = "shell"
+description = "resize pane down"
+command = "\"$HERDR_BIN_PATH\" pane resize --pane \"$HERDR_ACTIVE_PANE_ID\" --direction down"
+
+[[keys.command]]
+key = "prefix+k"
+type = "shell"
+description = "resize pane up"
+command = "\"$HERDR_BIN_PATH\" pane resize --pane \"$HERDR_ACTIVE_PANE_ID\" --direction up"
+
+[[keys.command]]
+key = "prefix+l"
+type = "shell"
+description = "resize pane right"
+command = "\"$HERDR_BIN_PATH\" pane resize --pane \"$HERDR_ACTIVE_PANE_ID\" --direction right"
+
+[[keys.command]]
+key = "prefix+shift+q"
+type = "shell"
+description = "stop Herdr server"
+command = "\"$HERDR_BIN_PATH\" server stop"

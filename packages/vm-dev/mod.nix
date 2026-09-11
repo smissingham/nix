@@ -29,7 +29,7 @@ let
 
       # ---------- NIX SYSTEM SETTINGS ----------#
 
-      system.stateVersion = inputs.nixpkgs-stable.lib.trivial.release;
+      system.stateVersion = inputs.nixpkgs.lib.trivial.release;
       nixpkgs.hostPlatform = guestSystem;
       nixpkgs.overlays = [ (_: _: inputs.self.packages.${guestSystem}) ];
       nix.optimise.automatic = false;

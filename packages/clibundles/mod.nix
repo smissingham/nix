@@ -1,6 +1,6 @@
 # Shared raw package bundles.
 # Keep these free of wrapped app packages to avoid cycles.
-{ ... }:
+{ inputs, ... }:
 {
   perSystem =
     {
@@ -12,6 +12,14 @@
 
       # Enforce FOSS-only packages in these bundles
       pkgsFree = import pkgs.path {
+        inherit (pkgs.stdenv.hostPlatform) system;
+        config = {
+          allowUnfree = false;
+          allowUnfreePredicate = _: false;
+        };
+      };
+
+      pkgsUnstableFree = import inputs.nixpkgs-unstable {
         inherit (pkgs.stdenv.hostPlatform) system;
         config = {
           allowUnfree = false;
@@ -65,7 +73,7 @@
         # ---------- DEVELOPER TOOLING ---------- #
         dev = [
           # coding assistants
-          opencode
+          pkgsUnstableFree.opencode
 
           # Build and version control
           git
@@ -78,7 +86,7 @@
           gh
           glab
           python313Packages.huggingface-hub
-          git-xet
+          pkgsUnstableFree.git-xet
           git-lfs
         ];
 
@@ -138,6 +146,7 @@
 
           # wrapps
           config.packages.sm-neovim
+          config.packages.sm-herdr
           config.packages.sm-tmux
           config.packages.sm-television
           config.packages.sm-yazi

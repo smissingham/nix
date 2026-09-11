@@ -31,6 +31,7 @@
     {
       config,
       pkgs,
+      pkgsunstable,
       ...
     }:
     let
@@ -42,7 +43,7 @@
       config = lib.mkIf cfg.enable {
         environment.systemPackages = [
           pkgs.tailscale
-          pkgs.tailscale-gui
+          pkgsunstable.tailscale-gui
         ];
       };
     };

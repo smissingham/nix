@@ -22,6 +22,7 @@ in
           # env.TERM = "xterm-256color";
 
           window.decorations = "Buttonless";
+          window.option_as_alt = "Both";
 
           font = {
             size = 14;

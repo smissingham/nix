@@ -44,11 +44,6 @@ on = "l"
 run = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
-[[keymap.mgr.prepend_keymap]]
-on = "<C-S-d>"
-run = "plugin drag"
-desc = "Drag files"
-
 [[keymap.help.prepend_keymap]]
 on = "f"
 run = "noop"
