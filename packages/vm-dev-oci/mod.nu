@@ -67,6 +67,11 @@ def mk-vm-volume [
 def main [
   --image: string
 ] {
+  # ensure dedicated krunvm volume exists before importing the image
+  if $nu.os-info.name == "macos" {
+    mk-darwin-volume "krunvm" "/Volumes/krunvm" "Case-sensitive APFS"
+  }
+
   let use_default_image = ($image | is-empty)
   let image = if $use_default_image {
     print "No --image provided; importing built default OCI image..."
@@ -96,18 +101,13 @@ def main [
     | str join "-"
   )
 
-  # ensure dedicated krunvm volume exists if needed
-  if $nu.os-info.name == "macos" {
-    mk-darwin-volume "krunvm" "/Volumes/krunvm" "Case-sensitive APFS" 
-  }
-
   print $"Recreating MicroVM: ($vm_id)"
-
   krunvm delete $vm_id | complete | ignore
 
   print $"Creating MicroVM from image: ($image)"
   krunvm create $image --name $vm_id
 
   print $"Starting MicroVM: ($vm_id)"
-  exec krunvm start $vm_id /bin/bash -- -i
+  let shell = if $use_default_image { "/bin/sm-zsh" } else { "/bin/bash" }
+  exec krunvm start $vm_id $shell -- -i
 }

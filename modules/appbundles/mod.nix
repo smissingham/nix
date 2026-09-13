@@ -1,4 +1,4 @@
-flake@{ inputs, ... }:
+flake@{ ... }:
 {
   modules.shared.appbundles =
     module@{
@@ -11,20 +11,15 @@ flake@{ inputs, ... }:
       cfg = module.config.appbundles;
       inherit (lib) mkIf optionals;
 
-      mypkgs = inputs.mypkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-
       packages = {
         comms = [
           pkgsunstable.signal-desktop
-          # pkgs.vesktop
         ];
 
         development = [
           pkgs.sm-cli-devtools
-          mypkgs.krunvm
-        ];
-
-        linuxDevelopment = [ pkgs.jetbrains.idea-oss ];
+        ]
+        ++ optionals (pkgs.stdenv.isLinux) [ pkgs.jetbrains.idea-oss ];
 
         photography = [
           #pkgs.darktable
@@ -32,8 +27,8 @@ flake@{ inputs, ... }:
         ];
 
         productivity = [
-          mypkgs.filen-desktop
-          mypkgs.brave-origin
+          #mypkgs.filen-desktop
+          pkgsunstable.brave-origin
           pkgs.inkscape
           pkgs.obsidian
         ]
@@ -44,7 +39,7 @@ flake@{ inputs, ... }:
           pkgs.onlyoffice-desktopeditors
         ];
 
-        entertainment = [ pkgs.spotify ];
+        entertainment = [ pkgsunstable.spotify ];
       };
     in
     {
@@ -70,9 +65,7 @@ flake@{ inputs, ... }:
         })
         {
           environment.systemPackages =
-            optionals (
-              cfg.development.enable && pkgs.stdenv.isLinux
-            ) packages.linuxDevelopment
+            [ ]
             ++ optionals cfg.development.enable packages.development
             ++ optionals cfg.productivity.enable packages.productivity
             ++ optionals cfg.photography.enable packages.photography

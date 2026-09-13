@@ -182,6 +182,11 @@ in
       guestSystem = guestSystemFor system;
       vmSystem = inputs.nixpkgs.lib.nixosSystem {
         system = guestSystem;
+        specialArgs.nixExperimentalFeatures = [
+          "nix-command"
+          "flakes"
+          "pipe-operators"
+        ];
         modules = [
           inputs.microvm-nix.nixosModules.microvm
           (mkVmModule {
