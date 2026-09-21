@@ -27,7 +27,7 @@ flake@{ ... }:
         ];
 
         productivity = [
-          #mypkgs.filen-desktop
+          pkgsunstable.filen-desktop
           pkgsunstable.brave-origin
           pkgs.inkscape
           pkgs.obsidian

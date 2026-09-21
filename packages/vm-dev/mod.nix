@@ -2,13 +2,18 @@ flake@{ inputs, lib, ... }:
 let
   name = "vm-dev";
 
+  # path to dotfiles to mount (as mutable) inside microvm guest
   dotfiles = ../../dotfiles;
 
-  mutableDotfileApps = [
-    "opencode"
-  ];
-
+  # where data volumes for microvms will be stored
   microVmsDataPath = "$HOME/.local/share/microvms";
+
+  # Directories relative to $HOME, mounted read-write at the same guest paths.
+  # Guest writes affect the host directly; do not list individual files.
+  hostPaths = [
+    ".local/share/opencode"
+    ".local/state/opencode"
+  ];
 
   guestSystemFor = system: lib.replaceStrings [ "darwin" ] [ "linux" ] system;
   hypervisorFor =
@@ -20,7 +25,12 @@ let
       hypervisor,
       vmHostPackages,
     }:
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         flake.config.profiles.smissingham
@@ -35,6 +45,7 @@ let
       nix.optimise.automatic = false;
 
       environment = {
+        enableAllTerminfo = true;
         systemPackages = [
           config.user.shell.package
           inputs.self.packages.${guestSystem}.sm-cli-devtools
@@ -68,9 +79,52 @@ let
         group = "users";
         hashedPassword = "!";
         extraGroups = [ "wheel" ];
+        shell = lib.mkForce (
+          "${pkgs.writeShellScriptBin "vm-dev-shell" ''
+            cd ${lib.escapeShellArg "${config.user.paths.home}/workspace"} || exit 1
+            exec ${config.user.shell.path} "$@"
+          ''}/bin/vm-dev-shell"
+        );
       };
-      services.getty.autologinUser = config.user.username;
+      services.getty = {
+        autologinUser = config.user.username;
+        loginProgram = pkgs.writeShellScript "vm-dev-login" ''
+          if [ -f /run/microvm-control/term ]; then
+            IFS= read -r TERM < /run/microvm-control/term
+            IFS= read -r COLORTERM < /run/microvm-control/colorterm
+            export TERM COLORTERM
+          fi
+          exec ${pkgs.shadow}/bin/login -p "$@"
+        '';
+      };
       security.sudo.wheelNeedsPassword = false;
+
+      # Serial consoles carry terminal bytes, but not window-size ioctls.
+      systemd.services.vm-dev-terminal = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "run-microvm\\x2dcontrol.mount" ];
+        requires = [ "run-microvm\\x2dcontrol.mount" ];
+        unitConfig.ConditionPathExists = "/run/microvm-control/size";
+        path = [ pkgs.coreutils ];
+        script = ''
+          console=/dev/${
+            if hypervisor == "vfkit" then
+              "hvc0"
+            else if lib.hasPrefix "x86_64" guestSystem then
+              "ttyS0"
+            else
+              "ttyAMA0"
+          }
+          while sleep 0.25; do
+            read -r rows cols < /run/microvm-control/size || continue
+            [[ "$rows" =~ ^[1-9][0-9]{0,4}$ && "$cols" =~ ^[1-9][0-9]{0,4}$ ]] || continue
+            (( rows <= 65535 && cols <= 65535 )) || continue
+            if [ "$(stty -F "$console" size)" != "$rows $cols" ]; then
+              stty -F "$console" rows "$rows" cols "$cols"
+            fi
+          done
+        '';
+      };
 
       # If the host drops an executable command into the control share, run it
       # once as the VM user, write stdout/stderr/exit back, then shut down.
@@ -94,13 +148,23 @@ let
         '';
       };
 
-      systemd.tmpfiles.rules = [
-        "d ${config.user.paths.home} 0700 ${config.user.username} users -"
-        "d ${config.user.paths.config} - ${config.user.username} users -"
-        "d ${config.user.paths.home}/.local 0700 ${config.user.username} users -"
-        "d ${config.user.paths.data} - ${config.user.username} users -"
-        "d ${config.user.paths.state} - ${config.user.username} users -"
-      ];
+      systemd.tmpfiles.rules =
+        [
+          config.user.paths.home
+          config.user.paths.config
+          "${config.user.paths.home}/.local"
+          config.user.paths.data
+          config.user.paths.state
+        ]
+        |> builtins.filter (
+          path:
+          !(builtins.any (
+            shared:
+            path == "${config.user.paths.home}/${shared}"
+            || lib.hasPrefix "${config.user.paths.home}/${shared}/" path
+          ) hostPaths)
+        )
+        |> map (path: "d ${path} 0700 ${config.user.username} users -");
 
       system.activationScripts.dotfiles = lib.stringAfter [ "users" ] ''
         mkdir -p ${config.user.paths.config} ${config.user.paths.data} ${config.user.paths.state}
@@ -110,27 +174,17 @@ let
         for source in ${dotfiles}/.config/*; do
           target=${config.user.paths.config}/$(basename "$source")
 
+          # Never reset an app config that contains or lives in a host share.
+          for shared in ${lib.escapeShellArgs hostPaths}; do
+            shared=${config.user.paths.home}/$shared
+            if [[ "$target/" == "$shared/"* || "$shared/" == "$target/"* ]]; then
+              continue 2
+            fi
+          done
+
           rm -rf "$target"
           cp -R "$source" "$target"
           chown -R ${config.user.username}:users "$target"
-        done
-
-        for app in ${lib.escapeShellArgs mutableDotfileApps}; do
-          for pair in \
-            "${dotfiles}/.local/share/$app:${config.user.paths.data}/$app" \
-            "${dotfiles}/.local/state/$app:${config.user.paths.state}/$app"
-          do
-            source=''${pair%%:*}
-            target=''${pair#*:}
-
-            if [ ! -e "$source" ]; then
-              continue
-            fi
-
-            rm -rf "$target"
-            cp -R "$source" "$target"
-            chown -R ${config.user.username}:users "$target"
-          done
         done
       '';
 
@@ -155,7 +209,13 @@ let
             source = "control";
             mountPoint = "/run/microvm-control";
           }
-        ];
+        ]
+        ++ lib.imap0 (index: path: {
+          proto = "virtiofs";
+          tag = "home-${toString index}";
+          source = "home-${toString index}";
+          mountPoint = "${config.user.paths.home}/${path}";
+        }) hostPaths;
         volumes = [
           {
             # Resolved relative to the per-workspace launch dir via the symlink
@@ -197,7 +257,7 @@ in
         ];
       };
       runner = vmSystem.config.microvm.declaredRunner;
-      guestShell = vmSystem.config.user.shell.path;
+      guestShell = vmSystem.config.users.users.${vmSystem.config.user.username}.shell;
     in
     {
       packages.${name} = pkgs.writeShellApplication {
@@ -218,15 +278,24 @@ in
             exit 1
           fi
           release_lock() {
+            if [ -n "''${terminal_monitor:-}" ]; then
+              kill "$terminal_monitor" 2>/dev/null || true
+              wait "$terminal_monitor" 2>/dev/null || true
+            fi
             rmdir "$shared_data_path/lock"
           }
           trap release_lock EXIT
 
           ln -sfn "$PWD" "$vm_data_path/workspace"
+          ${lib.concatImapStringsSep "\n" (index: path: ''
+            mkdir -p "$HOME"/${lib.escapeShellArg path}
+            ln -sfn "$HOME"/${lib.escapeShellArg path} "$vm_data_path/home-${toString (index - 1)}"
+          '') hostPaths}
           # microvm volume paths are static, so use a relative image name in
           # the VM config and point it at the shared overlay from this cwd.
           ln -sfn "$shared_data_path/nix-store-overlay.img" "$vm_data_path/nix-store-overlay.img"
           rm -f "$vm_data_path/control/command" "$vm_data_path/control/stdout" "$vm_data_path/control/stderr" "$vm_data_path/control/exit"
+          rm -f "$vm_data_path/control/term" "$vm_data_path/control/colorterm" "$vm_data_path/control/size"
 
           if [ "$#" -gt 0 ]; then
             command_mode=1
@@ -250,6 +319,22 @@ in
           }
 
           if [ -t 0 ]; then
+            printf '%s\n' "''${TERM:-xterm-256color}" > "$vm_data_path/control/term"
+            printf '%s\n' "''${COLORTERM:-}" > "$vm_data_path/control/colorterm"
+            exec {terminal_fd}<&0
+            sync_terminal_size() {
+              size=$(stty size <&"$terminal_fd") || return
+              if [ "$size" != "''${previous_size:-}" ]; then
+                printf '%s\n' "$size" > "$vm_data_path/control/size.new"
+                mv "$vm_data_path/control/size.new" "$vm_data_path/control/size"
+                previous_size=$size
+              fi
+            }
+            sync_terminal_size
+            # Poll the original tty: shell WINCH traps wait for the VM to exit,
+            # and filesystem notifications do not reliably cross virtiofs.
+            (while sleep 0.25; do sync_terminal_size; done) &
+            terminal_monitor=$!
             old_stty=$(stty -g)
             restore_tty() {
               stty "$old_stty"

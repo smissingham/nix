@@ -12,6 +12,8 @@
 
 ## Code Style Guidelines
 
+- Never introduce ENV switches not asked for explicitly
+  - For ad-hoc proof tests, use code bypasses with a TODO comment so we know to come back and remove it
 - Prefer early return over nested if/else.
 - Prefer immutable variables + iterators/closures, even if language does not enforce.
 - Avoid `try` / `catch`; only use if absolutely necessary.

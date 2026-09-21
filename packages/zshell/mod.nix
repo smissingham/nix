@@ -34,6 +34,7 @@ in
         tv = "sm-television";
         tmux = "sm-tmux";
         vm = "nix run $NIX_CONFIG_HOME#vm-dev";
+        vmoci = "nix run $NIX_CONFIG_HOME#vm-dev-oci";
 
         # television channels
         ff = "sm-television files";

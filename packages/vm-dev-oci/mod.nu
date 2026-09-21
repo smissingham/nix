@@ -64,9 +64,39 @@ def mk-vm-volume [
 }
 
 
-def main [
+def --wrapped main [
   --image: string
+  ...command: string # Optional command and arguments.
 ] {
+  let command = if ($command | get --optional 0) == "--" { $command | skip 1 } else { $command }
+  let home = "/root" # krunvm explicitly sets HOME=/root for command launches.
+  let workspace = ($home | path join "workspace")
+  let host_paths = ($env.HOST_PATHS | from json)
+  # krunvm's macOS mount helper interpolates guest paths into a shell script.
+  for relative in $host_paths {
+    if ($relative !~ '^[a-zA-Z0-9_.-]+(/[a-zA-Z0-9_.-]+)*$') or ($relative | split row '/' | any {|part| $part in ["." ".."] }) or ($relative == "workspace") or ($relative | str starts-with "workspace/") {
+      error make { msg: $"Invalid home-relative directory: ($relative)" }
+    }
+  }
+  # A parent share already includes its descendants; never stack overlapping mounts.
+  let shares = ($host_paths | uniq | where {|relative|
+    not ($host_paths | any {|parent| $relative | str starts-with $"($parent)/" })
+  })
+  let volumes = ($shares | each {|relative|
+    let source = ($env.HOME | path join $relative | path expand)
+    if ($source | str contains ':') {
+      error make { msg: $"krunvm volume paths cannot contain a colon: ($source)" }
+    }
+    mkdir $source
+    if ($source | path type) != "dir" {
+      error make { msg: $"Host share must be a directory: ($source)" }
+    }
+    ["--volume" $"($source):($home)/($relative)"]
+  } | flatten)
+  if (pwd | str contains ':') {
+    error make { msg: "krunvm workspace paths cannot contain a colon" }
+  }
+
   # ensure dedicated krunvm volume exists before importing the image
   if $nu.os-info.name == "macos" {
     mk-darwin-volume "krunvm" "/Volumes/krunvm" "Case-sensitive APFS"
@@ -105,9 +135,16 @@ def main [
   krunvm delete $vm_id | complete | ignore
 
   print $"Creating MicroVM from image: ($image)"
-  krunvm create $image --name $vm_id
+  # Recreate only the image root, never copy, reset, or chown shared home data.
+  krunvm create $image --name $vm_id --workdir $workspace --volume $"(pwd):($workspace)" ...$volumes
+  if $env.LAST_EXIT_CODE != 0 {
+    error make { msg: "krunvm create failed" }
+  }
 
   print $"Starting MicroVM: ($vm_id)"
   let shell = if $use_default_image { "/bin/sm-zsh" } else { "/bin/bash" }
-  exec krunvm start $vm_id $shell -- -i
+  if ($command | is-empty) {
+    exec krunvm start $vm_id $shell -- -i
+  }
+  exec krunvm start $vm_id ($command | first) -- ...($command | skip 1)
 }
