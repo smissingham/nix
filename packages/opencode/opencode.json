@@ -1,0 +1,73 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "formatter": true,
+  "lsp": true,
+  "instructions": ["README.md"],
+  "plugin": ["@dietrichgebert/ponytail"],
+  "mcp": {
+    "jina": {
+      "enabled": true,
+      "type": "remote",
+      "url": "https://mcp.jina.ai/v1",
+      "headers": {
+        "Authorization": "Bearer {env:JINA_API_KEY}"
+      }
+    },
+    "zai-vision": {
+      "type": "local",
+      "command": ["bunx", "-y", "@z_ai/mcp-server"],
+      "environment": {
+        "Z_AI_API_KEY": "{env:Z_AI_API_KEY}",
+        "Z_AI_MODE": "ZAI"
+      }
+    },
+    "zai-web-search": {
+      "type": "remote",
+      "url": "https://api.z.ai/api/mcp/web_search_prime/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:Z_AI_API_KEY}"
+      }
+    },
+    "zai-web-reader": {
+      "type": "remote",
+      "url": "https://api.z.ai/api/mcp/web_reader/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:Z_AI_API_KEY}"
+      }
+    },
+    "zread": {
+      "type": "remote",
+      "url": "https://api.z.ai/api/mcp/zread/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:Z_AI_API_KEY}"
+      }
+    },
+    "context7": {
+      "enabled": false,
+      "type": "local",
+      "command": ["bunx", "-y", "@upstash/context7-mcp"],
+      "environment": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    }
+  },
+  "provider": {
+    "zai-coding-plan": {
+      "options": {
+        "apiKey": "{env:Z_AI_API_KEY}"
+      }
+    }
+  },
+  "permission": {
+    "read": {
+      "**/.env*": "deny"
+    },
+    "bash": {
+      "*": "allow"
+    },
+    "external_directory": {
+      "*": "allow"
+    }
+  }
+}

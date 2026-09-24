@@ -19,7 +19,6 @@ in
           flake.config.hosts.shared
           flake.config.modules.shared.appbundles
           # flake.config.modules.shared.nixbuilders
-          flake.config.modules.shared.sops
           flake.config.modules.nixos.firewall
           flake.config.modules.nixos.hyprland
           flake.config.modules.nixos.noctalia
@@ -46,7 +45,6 @@ in
 
         #---------- APPLICATIONS ----------#
         podman.enable = true;
-        sops.enable = true;
         ssh.enable = true;
         steam.enable = true;
         sunshine.enable = true;

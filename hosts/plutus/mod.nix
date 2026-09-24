@@ -11,7 +11,6 @@ flake@{ ... }:
           flake.config.modules.shared.appbundles
           flake.config.modules.darwin.appbundlesHomebrew
           flake.config.modules.shared.nixbuilders
-          flake.config.modules.shared.sops
           flake.config.modules.darwin.aerospace
           flake.config.modules.darwin.firewall
           flake.config.modules.darwin.homebrew
@@ -32,7 +31,6 @@ flake@{ ... }:
 
         #---------- APPLICATIONS ----------#
         podman.enable = true;
-        sops.enable = true;
         ssh.enable = true;
         tailscale.enable = true;
 

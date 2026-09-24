@@ -72,9 +72,6 @@
 
         # ---------- DEVELOPER TOOLING ---------- #
         dev = [
-          # coding assistants
-          pkgsUnstableFree.opencode
-
           # Build and version control
           git
           jujutsu
@@ -147,6 +144,7 @@
           # wrapps
           config.packages.sm-neovim
           config.packages.sm-herdr
+          config.packages.sm-opencode
           config.packages.sm-tmux
           config.packages.sm-television
           config.packages.sm-yazi

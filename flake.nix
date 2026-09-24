@@ -15,10 +15,11 @@ rec {
     # ---------- Core Flake Organisation ---------- #
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrapper-modules.url = "github:smissingham/nix-wrapper-modules";
 
     # ---------- Custom Package Sources ---------- #
     mypkgs.url = "github:smissingham/nixpkgs/develop";
+    opencode.url = "github:anomalyco/opencode/production";
     microvm-nix.url = "github:microvm-nix/microvm.nix";
     microvm-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-cix-cd8180.url = "github:i-am-logger/nixos-cix-cd8180";
@@ -144,6 +145,7 @@ rec {
             { config, ... }:
             {
               overlayAttrs = config.packages;
+              _module.args.localWrappers = localWrappers;
             };
         };
       }

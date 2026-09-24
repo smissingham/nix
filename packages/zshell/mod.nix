@@ -25,8 +25,9 @@ in
         y = "sm-yazi";
         kk = "sesh_browser";
         kj = "sm-neovim";
-        oc = "opencode --port";
-        ocs = "opencode serve --hostname 0.0.0.0";
+        oc = "sm-opencode --port";
+        ocs = "sm-opencode serve --hostname 0.0.0.0";
+        ocl = "nix run github:anomalyco/opencode/production -- ";
         gg = "lazygit";
 
         # custom wrapper overrides

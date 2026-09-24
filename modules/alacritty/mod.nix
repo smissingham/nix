@@ -17,6 +17,7 @@ in
         inherit pkgs;
 
         aliases = [ pname ];
+        wrapperImplementation = "binary";
 
         settings = {
           # env.TERM = "xterm-256color";

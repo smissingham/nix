@@ -1,0 +1,18 @@
+#       Serial: 32740874, Slot: 1
+#         Name: sops-2
+#      Created: Thu, 24 Sep 2026 05:53:01 +0000
+#   PIN policy: Never  (A PIN is NOT required to decrypt)
+# Touch policy: Always (A physical touch is required for every decryption)
+#    Recipient: age1yubikey1q08jxsggfcsrvcjaq8kvnl4mxwnlnqx3wwxwlcwx30x6rxleh20rzdv0pep
+AGE-PLUGIN-YUBIKEY-1P2T0XQVZXWNDDNCEKNES3
+
+
+#       Serial: 27434405, Slot: 1
+#         Name: sops-1
+#      Created: Thu, 24 Sep 2026 05:50:04 +0000
+#   PIN policy: Never  (A PIN is NOT required to decrypt)
+# Touch policy: Always (A physical touch is required for every decryption)
+#    Recipient: age1yubikey1qtpugaket6nqs3ezudp7w5n0h8xdwhdawsf6rus4ctfm249g5kg7vxm7egz
+AGE-PLUGIN-YUBIKEY-15KW6YQVZ7KY3DMGJ9LJ3N
+
+
