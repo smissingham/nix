@@ -7,19 +7,10 @@
   "plugin": ["@dietrichgebert/ponytail"],
   "mcp": {
     "jina": {
-      "enabled": true,
       "type": "remote",
       "url": "https://mcp.jina.ai/v1",
       "headers": {
         "Authorization": "Bearer {env:JINA_API_KEY}"
-      }
-    },
-    "zai-vision": {
-      "type": "local",
-      "command": ["bunx", "-y", "@z_ai/mcp-server"],
-      "environment": {
-        "Z_AI_API_KEY": "{env:Z_AI_API_KEY}",
-        "Z_AI_MODE": "ZAI"
       }
     },
     "zai-web-search": {
@@ -37,22 +28,37 @@
       }
     },
     "zread": {
+      "enabled": false,
       "type": "remote",
       "url": "https://api.z.ai/api/mcp/zread/mcp",
       "headers": {
         "Authorization": "Bearer {env:Z_AI_API_KEY}"
       }
     },
-    "context7": {
+    "zai-vision": {
       "enabled": false,
       "type": "local",
-      "command": ["bunx", "-y", "@upstash/context7-mcp"],
+      "command": ["bunx", "-y", "@z_ai/mcp-server"],
       "environment": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        "Z_AI_API_KEY": "{env:Z_AI_API_KEY}",
+        "Z_AI_MODE": "ZAI"
       }
     }
   },
   "provider": {
+    "huggingface-endpoint": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Hugging Face Inference Endpoint",
+      "options": {
+        "baseURL": "{env:HF_IE_URL}",
+        "apiKey": "{env:HF_IE_INFERENCE}"
+      },
+      "models": {
+        "Qwen/Qwen3.8-27B": {
+          "name": "Qwen 3.8 27B (Hugging Face)"
+        }
+      }
+    },
     "zai-coding-plan": {
       "options": {
         "apiKey": "{env:Z_AI_API_KEY}"
@@ -62,12 +68,6 @@
   "permission": {
     "read": {
       "**/.env*": "deny"
-    },
-    "bash": {
-      "*": "allow"
-    },
-    "external_directory": {
-      "*": "allow"
     }
   }
 }

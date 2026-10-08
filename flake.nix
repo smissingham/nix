@@ -19,7 +19,6 @@ rec {
 
     # ---------- Custom Package Sources ---------- #
     mypkgs.url = "github:smissingham/nixpkgs/develop";
-    opencode.url = "github:anomalyco/opencode/production";
     microvm-nix.url = "github:microvm-nix/microvm.nix";
     microvm-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-cix-cd8180.url = "github:i-am-logger/nixos-cix-cd8180";
@@ -126,6 +125,7 @@ rec {
           (inputs.import-tree ./hosts)
           (inputs.import-tree ./modules)
           (inputs.import-tree ./packages)
+          (inputs.import-tree ./packages-pfx)
           (inputs.import-tree ./containers)
         ];
 

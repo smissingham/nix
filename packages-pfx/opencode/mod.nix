@@ -3,18 +3,17 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.sm-opencode = inputs.wrapper-modules.wrappers.sops.wrap {
+      packages.pfx-opencode = inputs.wrapper-modules.wrappers.sops.wrap {
         inherit pkgs;
-        binName = "sm-opencode";
-        aliases = [ "opencode" ];
+        binName = "pfx-opencode";
         age.yubikey = true;
         age.keyFile = toString ../../secrets/keys.txt;
-        secrets.file = ../../secrets/llm-personal.env;
+        secrets.file = ../../secrets/llm-pricefx.env;
         secrets.env.export.keys = [
-          "Z_AI_API_KEY"
           "JINA_API_KEY"
-          "HF_IE_URL"
-          "HF_IE_INFERENCE"
+          "PFX_GW_URL"
+          "PFX_GW_KEY_LOCAL"
+          "PFX_GW_KEY_BEDROCK"
         ];
         settings.creation_rules = [
           {
@@ -33,13 +32,19 @@
           inherit pkgs;
           package =
             inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
-          aliases = [ "sm-opencode" ];
-          env.OPENCODE_CONFIG_DIR = pkgs.runCommand "opencode-config" { } ''
+          binName = "pfx-opencode";
+          env.OPENCODE_CONFIG_DIR = pkgs.runCommand "pfx-opencode-config" { } ''
             cp -r ${./.} "$out"
             chmod u+w "$out"
             ln -s ${../../dotfiles/.agents/commands} "$out/commands"
             ln -s ${../../dotfiles/.agents/AGENTS.md} "$out/AGENTS.md"
           '';
+          runShell = [
+            ''export XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}/pfx-opencode"''
+            ''export XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}/pfx-opencode"''
+            ''export XDG_STATE_HOME="''${XDG_STATE_HOME:-$HOME/.local/state}/pfx-opencode"''
+            ''export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}/pfx-opencode"''
+          ];
           settings.skills.paths = [ "${../../dotfiles/.agents/skills}" ];
           tui-settings = ./tui.json |> builtins.readFile |> builtins.fromJSON;
         };

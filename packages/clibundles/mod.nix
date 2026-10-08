@@ -145,6 +145,8 @@
           config.packages.sm-neovim
           config.packages.sm-herdr
           config.packages.sm-opencode
+          config.packages.pfx-opencode
+          config.packages.pfx-claude
           config.packages.sm-tmux
           config.packages.sm-television
           config.packages.sm-yazi

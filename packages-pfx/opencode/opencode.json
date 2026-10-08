@@ -1,0 +1,58 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "formatter": true,
+  "lsp": true,
+  "instructions": ["README.md"],
+  "plugin": ["@dietrichgebert/ponytail"],
+  "mcp": {
+    "pricefx-demo-dev": {
+      "type": "remote",
+      "url": "https://mcp.pricefx.com/mcp/demo-dev.pricefx.eu/demofx-accelerate-dev",
+      "oauth": {}
+    },
+    "pricefx-brain": {
+      "type": "remote",
+      "url": "https://brain.pricefx.net/mcp"
+    },
+    "jina": {
+      "enabled": true,
+      "type": "remote",
+      "url": "https://mcp.jina.ai/v1",
+      "headers": {
+        "Authorization": "Bearer {env:JINA_API_KEY}"
+      }
+    }
+  },
+  "provider": {
+    "pricefx-local": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "PriceFX LLM Gateway (Local)",
+      "options": {
+        "baseURL": "{env:PFX_GW_URL}",
+        "apiKey": "{env:PFX_GW_KEY_LOCAL}"
+      },
+      "models": {}
+    },
+    "pricefx-bedrock": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "PriceFX LLM Gateway (Bedrock)",
+      "options": {
+        "baseURL": "{env:PFX_GW_URL}",
+        "apiKey": "{env:PFX_GW_KEY_BEDROCK}"
+      },
+      "models": {}
+    }
+  },
+  "permission": {
+    "read": {
+      "**/.env*": "deny"
+    },
+    "bash": {
+      "*": "allow"
+    },
+    "external_directory": {
+      "*": "allow"
+    }
+  }
+}

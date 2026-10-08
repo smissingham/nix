@@ -5,6 +5,11 @@
 - Avoid verbosity. Responses always concise, terse, purpose clear.
 - NEVER edit/commit/push git unless explicit ask. Git read-only by default.
 
+## Hygiene
+
+- Consult with adversarial reviewers when taking on development of new config/code to ensure simplicity
+- Clean up after yourself. Remove empty dirs, retire unused functions etc.
+
 ## Documentation Style
 
 - Markdown / long strings: favour line breaks.
@@ -23,6 +28,8 @@
 
 ## Tool Usage
 
+- NEVER directly invoke node or python, ALWAYS use bunx or uvx instead.
+- ALWAYS use most native tooling to read/write files etc, avoid heredocs or bash scripting for manipulation.
 - Use parallel tools / subagents where useful. Async work, clean context.
 - Batch reads, searches, independent operations.
 - Target searches + reads. Wide patterns destroy context.
